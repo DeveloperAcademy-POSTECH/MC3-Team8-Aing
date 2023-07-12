@@ -94,9 +94,11 @@
 		AB2A9EA22A5EC46100D70C33 /* Diptych */ = {
 			isa = PBXGroup;
 			children = (
+				ABFD3E7C2A5ED26E008678D0 /* Global */,
+				ABFD3E8A2A5EDADB008678D0 /* Data */,
+				ABFD3E7F2A5ED280008678D0 /* Resources */,
+				ABFD3E822A5EDA35008678D0 /* Presentation */,
 				AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */,
-				AB2A9EA52A5EC46100D70C33 /* ContentView.swift */,
-				AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */,
 				AB2A9EA92A5EC46200D70C33 /* Preview Content */,
 			);
 			path = Diptych;
@@ -125,6 +127,100 @@
 				AB2A9EC02A5EC46300D70C33 /* DiptychUITestsLaunchTests.swift */,
 			);
 			path = DiptychUITests;
+			sourceTree = "<group>";
+		};
+		ABFD3E7C2A5ED26E008678D0 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				ABFD3E812A5ED981008678D0 /* Constant */,
+				ABFD3E802A5ED976008678D0 /* Extension */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		ABFD3E7F2A5ED280008678D0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		ABFD3E802A5ED976008678D0 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		ABFD3E812A5ED981008678D0 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
+		ABFD3E822A5EDA35008678D0 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				ABFD3E832A5EDA4E008678D0 /* Common */,
+				ABFD3E842A5EDA55008678D0 /* Auth */,
+				ABFD3E852A5EDA73008678D0 /* Matching */,
+				ABFD3E862A5EDA79008678D0 /* TodayDiptych */,
+				ABFD3E882A5EDAA4008678D0 /* Archive */,
+				ABFD3E892A5EDAC0008678D0 /* Profile */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		ABFD3E832A5EDA4E008678D0 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				AB2A9EA52A5EC46100D70C33 /* ContentView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		ABFD3E842A5EDA55008678D0 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		ABFD3E852A5EDA73008678D0 /* Matching */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Matching;
+			sourceTree = "<group>";
+		};
+		ABFD3E862A5EDA79008678D0 /* TodayDiptych */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TodayDiptych;
+			sourceTree = "<group>";
+		};
+		ABFD3E882A5EDAA4008678D0 /* Archive */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Archive;
+			sourceTree = "<group>";
+		};
+		ABFD3E892A5EDAC0008678D0 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		ABFD3E8A2A5EDADB008678D0 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
