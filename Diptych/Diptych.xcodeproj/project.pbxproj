@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */; };
-		AB2A9EA62A5EC46100D70C33 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA52A5EC46100D70C33 /* ContentView.swift */; };
+		AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */; };
 		AB2A9EA82A5EC46200D70C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */; };
 		AB2A9EAB2A5EC46200D70C33 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2A9EAA2A5EC46200D70C33 /* Preview Assets.xcassets */; };
 		AB2A9EB52A5EC46300D70C33 /* DiptychTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EB42A5EC46300D70C33 /* DiptychTests.swift */; };
 		AB2A9EBF2A5EC46300D70C33 /* DiptychUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EBE2A5EC46300D70C33 /* DiptychUITests.swift */; };
 		AB2A9EC12A5EC46300D70C33 /* DiptychUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EC02A5EC46300D70C33 /* DiptychUITestsLaunchTests.swift */; };
+		AB2AC1ED2A5F093B00B162E1 /* TodayDiptychView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC1EC2A5F093B00B162E1 /* TodayDiptychView.swift */; };
+		AB2AC1F02A5F094F00B162E1 /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC1EF2A5F094F00B162E1 /* ArchiveView.swift */; };
+		AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC1F22A5F097400B162E1 /* ProfileView.swift */; };
+		AB2AC1F52A5F15A100B162E1 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC1F42A5F15A100B162E1 /* Color+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +40,7 @@
 /* Begin PBXFileReference section */
 		AB2A9EA02A5EC46100D70C33 /* Diptych.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diptych.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychApp.swift; sourceTree = "<group>"; };
-		AB2A9EA52A5EC46100D70C33 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychTabView.swift; sourceTree = "<group>"; };
 		AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB2A9EAA2A5EC46200D70C33 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AB2A9EB02A5EC46200D70C33 /* DiptychTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiptychTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +48,10 @@
 		AB2A9EBA2A5EC46300D70C33 /* DiptychUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiptychUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2A9EBE2A5EC46300D70C33 /* DiptychUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychUITests.swift; sourceTree = "<group>"; };
 		AB2A9EC02A5EC46300D70C33 /* DiptychUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		AB2AC1EC2A5F093B00B162E1 /* TodayDiptychView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDiptychView.swift; sourceTree = "<group>"; };
+		AB2AC1EF2A5F094F00B162E1 /* ArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
+		AB2AC1F22A5F097400B162E1 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		AB2AC1F42A5F15A100B162E1 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +137,30 @@
 			path = DiptychUITests;
 			sourceTree = "<group>";
 		};
+		AB2AC1E92A5F091700B162E1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AB2AC1EC2A5F093B00B162E1 /* TodayDiptychView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AB2AC1EE2A5F094600B162E1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AB2AC1EF2A5F094F00B162E1 /* ArchiveView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AB2AC1F12A5F096200B162E1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AB2AC1F22A5F097400B162E1 /* ProfileView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		ABFD3E7C2A5ED26E008678D0 /* Global */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +181,7 @@
 		ABFD3E802A5ED976008678D0 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				AB2AC1F42A5F15A100B162E1 /* Color+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -176,7 +209,7 @@
 		ABFD3E832A5EDA4E008678D0 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				AB2A9EA52A5EC46100D70C33 /* ContentView.swift */,
+				AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -198,6 +231,7 @@
 		ABFD3E862A5EDA79008678D0 /* TodayDiptych */ = {
 			isa = PBXGroup;
 			children = (
+				AB2AC1E92A5F091700B162E1 /* View */,
 			);
 			path = TodayDiptych;
 			sourceTree = "<group>";
@@ -205,6 +239,7 @@
 		ABFD3E882A5EDAA4008678D0 /* Archive */ = {
 			isa = PBXGroup;
 			children = (
+				AB2AC1EE2A5F094600B162E1 /* View */,
 			);
 			path = Archive;
 			sourceTree = "<group>";
@@ -212,6 +247,7 @@
 		ABFD3E892A5EDAC0008678D0 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				AB2AC1F12A5F096200B162E1 /* View */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -353,8 +389,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB2A9EA62A5EC46100D70C33 /* ContentView.swift in Sources */,
+				AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */,
+				AB2AC1F02A5F094F00B162E1 /* ArchiveView.swift in Sources */,
+				AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */,
 				AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */,
+				AB2AC1ED2A5F093B00B162E1 /* TodayDiptychView.swift in Sources */,
+				AB2AC1F52A5F15A100B162E1 /* Color+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,6 +561,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -550,6 +591,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
