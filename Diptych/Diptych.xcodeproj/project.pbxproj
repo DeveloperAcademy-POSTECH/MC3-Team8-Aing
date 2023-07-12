@@ -1,0 +1,588 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */; };
+		AB2A9EA62A5EC46100D70C33 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA52A5EC46100D70C33 /* ContentView.swift */; };
+		AB2A9EA82A5EC46200D70C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */; };
+		AB2A9EAB2A5EC46200D70C33 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2A9EAA2A5EC46200D70C33 /* Preview Assets.xcassets */; };
+		AB2A9EB52A5EC46300D70C33 /* DiptychTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EB42A5EC46300D70C33 /* DiptychTests.swift */; };
+		AB2A9EBF2A5EC46300D70C33 /* DiptychUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EBE2A5EC46300D70C33 /* DiptychUITests.swift */; };
+		AB2A9EC12A5EC46300D70C33 /* DiptychUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EC02A5EC46300D70C33 /* DiptychUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AB2A9EB12A5EC46300D70C33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB2A9E982A5EC46100D70C33 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AB2A9E9F2A5EC46100D70C33;
+			remoteInfo = Diptych;
+		};
+		AB2A9EBB2A5EC46300D70C33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB2A9E982A5EC46100D70C33 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AB2A9E9F2A5EC46100D70C33;
+			remoteInfo = Diptych;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AB2A9EA02A5EC46100D70C33 /* Diptych.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diptych.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychApp.swift; sourceTree = "<group>"; };
+		AB2A9EA52A5EC46100D70C33 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AB2A9EAA2A5EC46200D70C33 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		AB2A9EB02A5EC46200D70C33 /* DiptychTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiptychTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB2A9EB42A5EC46300D70C33 /* DiptychTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychTests.swift; sourceTree = "<group>"; };
+		AB2A9EBA2A5EC46300D70C33 /* DiptychUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiptychUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB2A9EBE2A5EC46300D70C33 /* DiptychUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychUITests.swift; sourceTree = "<group>"; };
+		AB2A9EC02A5EC46300D70C33 /* DiptychUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AB2A9E9D2A5EC46100D70C33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB2A9EAD2A5EC46200D70C33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB2A9EB72A5EC46300D70C33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AB2A9E972A5EC46100D70C33 = {
+			isa = PBXGroup;
+			children = (
+				AB2A9EA22A5EC46100D70C33 /* Diptych */,
+				AB2A9EB32A5EC46300D70C33 /* DiptychTests */,
+				AB2A9EBD2A5EC46300D70C33 /* DiptychUITests */,
+				AB2A9EA12A5EC46100D70C33 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AB2A9EA12A5EC46100D70C33 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB2A9EA02A5EC46100D70C33 /* Diptych.app */,
+				AB2A9EB02A5EC46200D70C33 /* DiptychTests.xctest */,
+				AB2A9EBA2A5EC46300D70C33 /* DiptychUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB2A9EA22A5EC46100D70C33 /* Diptych */ = {
+			isa = PBXGroup;
+			children = (
+				AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */,
+				AB2A9EA52A5EC46100D70C33 /* ContentView.swift */,
+				AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */,
+				AB2A9EA92A5EC46200D70C33 /* Preview Content */,
+			);
+			path = Diptych;
+			sourceTree = "<group>";
+		};
+		AB2A9EA92A5EC46200D70C33 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				AB2A9EAA2A5EC46200D70C33 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		AB2A9EB32A5EC46300D70C33 /* DiptychTests */ = {
+			isa = PBXGroup;
+			children = (
+				AB2A9EB42A5EC46300D70C33 /* DiptychTests.swift */,
+			);
+			path = DiptychTests;
+			sourceTree = "<group>";
+		};
+		AB2A9EBD2A5EC46300D70C33 /* DiptychUITests */ = {
+			isa = PBXGroup;
+			children = (
+				AB2A9EBE2A5EC46300D70C33 /* DiptychUITests.swift */,
+				AB2A9EC02A5EC46300D70C33 /* DiptychUITestsLaunchTests.swift */,
+			);
+			path = DiptychUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AB2A9E9F2A5EC46100D70C33 /* Diptych */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB2A9EC42A5EC46300D70C33 /* Build configuration list for PBXNativeTarget "Diptych" */;
+			buildPhases = (
+				AB2A9E9C2A5EC46100D70C33 /* Sources */,
+				AB2A9E9D2A5EC46100D70C33 /* Frameworks */,
+				AB2A9E9E2A5EC46100D70C33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Diptych;
+			productName = Diptych;
+			productReference = AB2A9EA02A5EC46100D70C33 /* Diptych.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AB2A9EAF2A5EC46200D70C33 /* DiptychTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB2A9EC72A5EC46300D70C33 /* Build configuration list for PBXNativeTarget "DiptychTests" */;
+			buildPhases = (
+				AB2A9EAC2A5EC46200D70C33 /* Sources */,
+				AB2A9EAD2A5EC46200D70C33 /* Frameworks */,
+				AB2A9EAE2A5EC46200D70C33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AB2A9EB22A5EC46300D70C33 /* PBXTargetDependency */,
+			);
+			name = DiptychTests;
+			productName = DiptychTests;
+			productReference = AB2A9EB02A5EC46200D70C33 /* DiptychTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AB2A9EB92A5EC46300D70C33 /* DiptychUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB2A9ECA2A5EC46300D70C33 /* Build configuration list for PBXNativeTarget "DiptychUITests" */;
+			buildPhases = (
+				AB2A9EB62A5EC46300D70C33 /* Sources */,
+				AB2A9EB72A5EC46300D70C33 /* Frameworks */,
+				AB2A9EB82A5EC46300D70C33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AB2A9EBC2A5EC46300D70C33 /* PBXTargetDependency */,
+			);
+			name = DiptychUITests;
+			productName = DiptychUITests;
+			productReference = AB2A9EBA2A5EC46300D70C33 /* DiptychUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AB2A9E982A5EC46100D70C33 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					AB2A9E9F2A5EC46100D70C33 = {
+						CreatedOnToolsVersion = 14.3;
+					};
+					AB2A9EAF2A5EC46200D70C33 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = AB2A9E9F2A5EC46100D70C33;
+					};
+					AB2A9EB92A5EC46300D70C33 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = AB2A9E9F2A5EC46100D70C33;
+					};
+				};
+			};
+			buildConfigurationList = AB2A9E9B2A5EC46100D70C33 /* Build configuration list for PBXProject "Diptych" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AB2A9E972A5EC46100D70C33;
+			productRefGroup = AB2A9EA12A5EC46100D70C33 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AB2A9E9F2A5EC46100D70C33 /* Diptych */,
+				AB2A9EAF2A5EC46200D70C33 /* DiptychTests */,
+				AB2A9EB92A5EC46300D70C33 /* DiptychUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AB2A9E9E2A5EC46100D70C33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB2A9EAB2A5EC46200D70C33 /* Preview Assets.xcassets in Resources */,
+				AB2A9EA82A5EC46200D70C33 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB2A9EAE2A5EC46200D70C33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB2A9EB82A5EC46300D70C33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AB2A9E9C2A5EC46100D70C33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB2A9EA62A5EC46100D70C33 /* ContentView.swift in Sources */,
+				AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB2A9EAC2A5EC46200D70C33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB2A9EB52A5EC46300D70C33 /* DiptychTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB2A9EB62A5EC46300D70C33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB2A9EC12A5EC46300D70C33 /* DiptychUITestsLaunchTests.swift in Sources */,
+				AB2A9EBF2A5EC46300D70C33 /* DiptychUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AB2A9EB22A5EC46300D70C33 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AB2A9E9F2A5EC46100D70C33 /* Diptych */;
+			targetProxy = AB2A9EB12A5EC46300D70C33 /* PBXContainerItemProxy */;
+		};
+		AB2A9EBC2A5EC46300D70C33 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AB2A9E9F2A5EC46100D70C33 /* Diptych */;
+			targetProxy = AB2A9EBB2A5EC46300D70C33 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AB2A9EC22A5EC46300D70C33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AB2A9EC32A5EC46300D70C33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AB2A9EC52A5EC46300D70C33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
+				DEVELOPMENT_TEAM = N3H5YNSQ64;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AB2A9EC62A5EC46300D70C33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
+				DEVELOPMENT_TEAM = N3H5YNSQ64;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AB2A9EC82A5EC46300D70C33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N3H5YNSQ64;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = min.DiptychTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Diptych.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Diptych";
+			};
+			name = Debug;
+		};
+		AB2A9EC92A5EC46300D70C33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N3H5YNSQ64;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = min.DiptychTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Diptych.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Diptych";
+			};
+			name = Release;
+		};
+		AB2A9ECB2A5EC46300D70C33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N3H5YNSQ64;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = min.DiptychUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Diptych;
+			};
+			name = Debug;
+		};
+		AB2A9ECC2A5EC46300D70C33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N3H5YNSQ64;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = min.DiptychUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Diptych;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AB2A9E9B2A5EC46100D70C33 /* Build configuration list for PBXProject "Diptych" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB2A9EC22A5EC46300D70C33 /* Debug */,
+				AB2A9EC32A5EC46300D70C33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB2A9EC42A5EC46300D70C33 /* Build configuration list for PBXNativeTarget "Diptych" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB2A9EC52A5EC46300D70C33 /* Debug */,
+				AB2A9EC62A5EC46300D70C33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB2A9EC72A5EC46300D70C33 /* Build configuration list for PBXNativeTarget "DiptychTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB2A9EC82A5EC46300D70C33 /* Debug */,
+				AB2A9EC92A5EC46300D70C33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB2A9ECA2A5EC46300D70C33 /* Build configuration list for PBXNativeTarget "DiptychUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB2A9ECB2A5EC46300D70C33 /* Debug */,
+				AB2A9ECC2A5EC46300D70C33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AB2A9E982A5EC46100D70C33 /* Project object */;
+}
