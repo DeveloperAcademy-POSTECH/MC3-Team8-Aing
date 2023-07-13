@@ -8,7 +8,6 @@
 import Foundation
 
 public enum PretendardType: String {
-    
     case bold = "Pretendard-Bold"
     case light = "Pretendard-Light"
     case medium = "Pretendard-Medium"
