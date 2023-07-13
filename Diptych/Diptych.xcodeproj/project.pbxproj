@@ -51,6 +51,8 @@
 		AB2AC2282A5F922F00B162E1 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC2272A5F922F00B162E1 /* Font+.swift */; };
 		AB2AC2292A5F922F00B162E1 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC2272A5F922F00B162E1 /* Font+.swift */; };
 		AB2AC22A2A5F922F00B162E1 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC2272A5F922F00B162E1 /* Font+.swift */; };
+		ABFA53B42A5F95E700298F3B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABFA53B32A5F95E700298F3B /* Images.xcassets */; };
+		ABFA53B62A5F95FE00298F3B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABFA53B52A5F95FE00298F3B /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +99,8 @@
 		AB2AC21B2A5F282A00B162E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AB2AC2222A5F8E8700B162E1 /* PretendardType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PretendardType.swift; sourceTree = "<group>"; };
 		AB2AC2272A5F922F00B162E1 /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
+		ABFA53B32A5F95E700298F3B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		ABFA53B52A5F95FE00298F3B /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,7 +151,6 @@
 		AB2A9EA22A5EC46100D70C33 /* Diptych */ = {
 			isa = PBXGroup;
 			children = (
-				AB2AC21B2A5F282A00B162E1 /* Info.plist */,
 				ABFD3E7C2A5ED26E008678D0 /* Global */,
 				ABFD3E8A2A5EDADB008678D0 /* Data */,
 				ABFD3E7F2A5ED280008678D0 /* Resources */,
@@ -155,6 +158,7 @@
 				AB2AC21C2A5F28DB00B162E1 /* Util */,
 				AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */,
 				AB2A9EA92A5EC46200D70C33 /* Preview Content */,
+				AB2AC21B2A5F282A00B162E1 /* Info.plist */,
 			);
 			path = Diptych;
 			sourceTree = "<group>";
@@ -240,6 +244,16 @@
 			path = NameSpace;
 			sourceTree = "<group>";
 		};
+		ABFA53B22A5F95BB00298F3B /* AssetCatalog */ = {
+			isa = PBXGroup;
+			children = (
+				AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */,
+				ABFA53B32A5F95E700298F3B /* Images.xcassets */,
+				ABFA53B52A5F95FE00298F3B /* Colors.xcassets */,
+			);
+			path = AssetCatalog;
+			sourceTree = "<group>";
+		};
 		ABFD3E7C2A5ED26E008678D0 /* Global */ = {
 			isa = PBXGroup;
 			children = (
@@ -252,8 +266,8 @@
 		ABFD3E7F2A5ED280008678D0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				ABFA53B22A5F95BB00298F3B /* AssetCatalog */,
 				AB2AC1F62A5F277000B162E1 /* Font */,
-				AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -446,6 +460,7 @@
 			files = (
 				AB2A9EAB2A5EC46200D70C33 /* Preview Assets.xcassets in Resources */,
 				AB2AC2152A5F280000B162E1 /* Pretendard-Medium.otf in Resources */,
+				ABFA53B62A5F95FE00298F3B /* Colors.xcassets in Resources */,
 				AB2AC20F2A5F280000B162E1 /* Pretendard-Light.otf in Resources */,
 				AB2A9EA82A5EC46200D70C33 /* Assets.xcassets in Resources */,
 				AB2AC20C2A5F280000B162E1 /* Pretendard-Bold.otf in Resources */,
@@ -454,6 +469,7 @@
 				AB2AC2092A5F280000B162E1 /* Pretendard-Thin.otf in Resources */,
 				AB2AC2032A5F280000B162E1 /* Pretendard-Black.otf in Resources */,
 				AB2AC2002A5F280000B162E1 /* Pretendard-ExtraBold.otf in Resources */,
+				ABFA53B42A5F95E700298F3B /* Images.xcassets in Resources */,
 				AB2AC2182A5F280000B162E1 /* Pretendard-ExtraLight.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
