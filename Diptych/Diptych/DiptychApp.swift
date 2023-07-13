@@ -25,9 +25,8 @@ struct DiptychApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            DiptychTabView()
-            SignUpView()
-                .environmentObject(authViewModel)
+            DiptychTabView()
+            
         }
     }
 }
