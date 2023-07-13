@@ -22,14 +22,16 @@ struct AlbumListView: View {
         ScrollView {
             LazyVGrid(columns: columns) {
                 ForEach(1..<100) { element in
-                    VStack {
+                    // TODO: - 실제 데이터 및 상세 보기 뷰로 교체
+                    NavigationLink {
+                        Text("Temp Detail Page: \(element)")
+                    } label: {
                         Image("DummyThumbnail_\(element % 9 == 0 ? 9 : element % 9)")
                             .aspectRatio(1, contentMode: .fit)
                     }
                 }
             }
         }
-        // .padding(.horizontal)
     }
 }
 
