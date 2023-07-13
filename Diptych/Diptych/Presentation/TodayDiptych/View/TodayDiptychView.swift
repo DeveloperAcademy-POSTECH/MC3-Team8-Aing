@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct TodayDiptychView: View {
+    let days = ["월", "화", "수", "목", "금", "토", "일"]
+
     var body: some View {
         ZStack {
             Color.offWhite
+
             VStack(spacing: 0) {
                 HStack {
                     Text("오늘의 주제")
@@ -42,11 +45,15 @@ struct TodayDiptychView: View {
                     Rectangle()
                         .fill(Color.offBlack)
                 }
-                .aspectRatio(1.0, contentMode: .fill)
+                .frame(maxWidth: .infinity)
+                .aspectRatio(1.0, contentMode: .fit)
                 .padding(.bottom, 23)
 
-                Rectangle()
-                    .fill(.red)
+                HStack(spacing: 9) {
+                    ForEach(0..<7) { index in
+                        WeeklyCalenderView(day: days[index])
+                    }
+                }
             }
             .padding(.bottom, 23)
         }
