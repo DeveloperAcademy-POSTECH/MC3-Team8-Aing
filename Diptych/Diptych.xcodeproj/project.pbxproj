@@ -134,14 +134,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		445A47B22A6010B3005573DC /* Camera */ = {
+		445A47B22A6010B3005573DC /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				445A47B32A6010E9005573DC /* CameraStoryboard.storyboard */,
 				445A47B52A601231005573DC /* CameraViewController.swift */,
-				445A47B72A60125B005573DC /* CameraRepresentableView.swift */,
 			);
-			path = Camera;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		AB2A9E972A5EC46100D70C33 = {
@@ -208,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				AB2AC1EC2A5F093B00B162E1 /* TodayDiptychView.swift */,
+				445A47B72A60125B005573DC /* CameraRepresentableView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -307,7 +307,6 @@
 		ABFD3E822A5EDA35008678D0 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				445A47B22A6010B3005573DC /* Camera */,
 				ABFD3E832A5EDA4E008678D0 /* Common */,
 				ABFD3E842A5EDA55008678D0 /* Auth */,
 				ABFD3E852A5EDA73008678D0 /* Matching */,
@@ -343,6 +342,7 @@
 		ABFD3E862A5EDA79008678D0 /* TodayDiptych */ = {
 			isa = PBXGroup;
 			children = (
+				445A47B22A6010B3005573DC /* ViewController */,
 				AB2AC1E92A5F091700B162E1 /* View */,
 			);
 			path = TodayDiptych;

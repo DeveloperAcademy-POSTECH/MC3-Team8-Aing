@@ -24,5 +24,10 @@ struct CameraRepresentableView: UIViewControllerRepresentable {
 struct CameraRepresentableView_Previews: PreviewProvider {
     static var previews: some View {
         CameraRepresentableView()
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
+            .previewDisplayName("iPhone 14")
+        CameraRepresentableView()
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max"))
+            .previewDisplayName("iPhone 14 Pro Max")
     }
 }

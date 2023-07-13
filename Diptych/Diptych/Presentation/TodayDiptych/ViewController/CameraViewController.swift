@@ -8,13 +8,18 @@
 import UIKit
 
 class CameraViewController: UIViewController {
-
+    
+    @IBOutlet weak var lblTopic: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func btnActShutter(_ sender: UIButton) {
+        lblTopic.text = #function
+    }
 
     /*
     // MARK: - Navigation
