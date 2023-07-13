@@ -9,7 +9,7 @@ import SwiftUI
 
 extension Font {
 
-    static func pretendard(_ type: PretendardType, size: CGFloat = 16) -> Font {
+    static func pretendard(_ type: PretendardType = .regular, size: CGFloat) -> Font {
         return .custom(type.rawValue, size: size)
     }
 }
