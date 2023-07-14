@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+//import Firebase
+//import FirebaseAuth
 
 struct SignUpView: View {
     @State var name: String = ""
@@ -15,6 +17,7 @@ struct SignUpView: View {
     @State var emailWarning: String = ""
     @State var passwordWarning: String = ""
     @State var passwordConfirmWarning: String = ""
+    @State var isShowingAlert: Bool = false
     @EnvironmentObject var authViewModel: AuthViewModel
     var body: some View {
         NavigationView {
@@ -23,15 +26,19 @@ struct SignUpView: View {
                     .ignoresSafeArea()
                 VStack {
                     Spacer()
+                        .frame(height: 124)
                     Text("회원가입")
                         .font(.pretendard(.light, size: 28))
                     Spacer()
+//                        .frame(height: 138)
                     VStack(spacing: 37) {
                         VStack(alignment: .leading) {
                             TextField("이메일", text: $email)
                                 .font(.pretendard(.light, size: 18))
                                 .foregroundColor(.darkGray)
+                                .keyboardType(.emailAddress)
                                 .textInputAutocapitalization(.never)
+                                .disableAutocorrection(true)
                             Divider()
                             Text(emailWarning)
                                 .font(.pretendard(.light, size: 12))
@@ -61,6 +68,8 @@ struct SignUpView: View {
                     Button {
                         if checkEmail(input: email) && checkPassword(input: password) && confirmPassword(password: password, passwordConfirm: passwordConfirm){
                             authViewModel.emailAuthSignUp(email: email, password: password)
+                            authViewModel.verifyEmail(email: email, password: password)
+                            isShowingAlert.toggle()
                         } else {
                             if checkEmail(input: email) {
                                 emailWarning = ""
@@ -90,9 +99,16 @@ struct SignUpView: View {
                             .background(Color.offBlack)
                             .foregroundColor(.offWhite)
                     }
+                    .alert("입력하신 이메일로 인증 링크가 발송되었습니다.", isPresented: $isShowingAlert) {
+                        Button {
+                        } label: {
+                            Text("확인")
+                        }
+                    }
                     Spacer()
+                        .frame(height: 55)
                 }
-                
+                .ignoresSafeArea()
             }
         }
     }
@@ -103,13 +119,19 @@ struct SignUpView: View {
     }
 //
     func checkPassword(input: String) -> Bool {
-        let passwordRegEx: String = "[A-Za-z0-9!@#\\$%\\^&\\*\\(\\)\\-\\_\\+=\\{\\}\\[\\]\\?\\/\\<\\>\\,\\.\\₩\\\\|]{8,}"
+        let passwordRegEx: String = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*\\(\\)\\-\\_\\+=\\{\\}\\[\\]\\?\\/\\<\\>\\,\\.\\₩\\\\|]).{8,}$"
         return NSPredicate(format: "SELF MATCHES %@", passwordRegEx).evaluate(with: input)
     }
     
     func confirmPassword(password: String, passwordConfirm: String) -> Bool {
         return !password.isEmpty && password == passwordConfirm
     }
+    
+//    func verifyEmail(eamil: email, password: password) {
+//        guard Auth.auth().currentUser?.isEmailVerified else {
+//
+//        }
+//    }
 }
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
