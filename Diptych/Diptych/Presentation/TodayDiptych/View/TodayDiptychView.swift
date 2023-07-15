@@ -8,9 +8,19 @@
 import SwiftUI
 
 struct TodayDiptychView: View {
+    @State var isShowCamera = false
+    
     var body: some View {
         VStack {
             Text("TodayDiptychView")
+            Button {
+               isShowCamera = true
+            } label: {
+                Text("카메라 열기 (임시)")
+            }
+        }.fullScreenCover(isPresented: $isShowCamera) {
+            CameraRepresentableView()
+                 .toolbar(.hidden, for: .tabBar)
         }
     }
 }
