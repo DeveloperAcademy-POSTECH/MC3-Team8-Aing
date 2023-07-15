@@ -25,6 +25,17 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    func signInWithEmailLink(email: String) async {
+        let actionCodeSettings = ActionCodeSettings()
+        actionCodeSettings.handleCodeInApp = true
+        actionCodeSettings.url = URL(string: "")
+        do {
+            try await Auth.auth().sendSignInLink(toEmail: email, actionCodeSettings: actionCodeSettings)
+        } catch {
+            print("ERROR (Sign with email link) : \(error.localizedDescription)")
+        }
+    }
+    
     func verifyEmail(email: String, password: String) {
         Auth.auth().currentUser?.sendEmailVerification() { error in
             if let error = error {
