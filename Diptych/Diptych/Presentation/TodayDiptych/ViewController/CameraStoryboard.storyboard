@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -72,19 +73,75 @@
                     <connections>
                         <outlet property="imgViewGuideOverlay" destination="KEx-jB-uim" id="BST-4G-w4p"/>
                         <outlet property="lblTopic" destination="PzM-kO-bXw" id="5bn-QX-nhh"/>
+                        <segue destination="b1k-Ys-7fQ" kind="show" identifier="RetouchCameraSegue" id="DQ1-ss-DHq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-132" y="-55.418719211822662"/>
         </scene>
+        <!--Camera Retouch View Controller-->
+        <scene sceneID="0rA-1T-4ad">
+            <objects>
+                <viewController id="b1k-Ys-7fQ" customClass="CameraRetouchViewController" customModule="Diptych" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1ug-18-Kal">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="802"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tG6-HL-6aP">
+                                <rect key="frame" x="30" y="91" width="314" height="97"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">“상대방의 표정 중 당신이 
+가장 좋아하는 표정은?”</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E6U-f7-u2N">
+                                <rect key="frame" x="142" y="662" width="93" height="93"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="imgCircleCheckButton"/>
+                                <connections>
+                                    <action selector="btnActShutter:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="z5K-B8-eNC"/>
+                                </connections>
+                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0cP-LO-wgI">
+                                <rect key="frame" x="0.0" y="246" width="375" height="375"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Temp_imgGuide" translatesAutoresizingMaskIntoConstraints="NO" id="t2K-9o-Ttc">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <viewLayoutGuide key="contentLayoutGuide" id="OVQ-kN-Lbz"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="NhQ-i3-LGH"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Vzh-ml-xpc"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="K2l-Ap-f7e"/>
+                    <connections>
+                        <outlet property="imgViewGuide" destination="t2K-9o-Ttc" id="fmc-Nh-d8U"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hcz-Ih-USP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="716" y="-55"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Temp_imagePreviewButton" width="45" height="45"/>
         <image name="Temp_imgGuide" width="393" height="393"/>
+        <image name="imgCircleCheckButton" width="92.333335876464844" height="92.333335876464844"/>
         <image name="imgCloseButton" width="22" height="22"/>
         <image name="imgFlashButton" width="28" height="28"/>
         <image name="imgShutterButton" width="93" height="93"/>
         <image name="imgToggleButton" width="45" height="45"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

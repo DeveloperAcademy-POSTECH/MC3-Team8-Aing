@@ -74,6 +74,20 @@ class CameraViewController: UIViewController {
         captureSession.commitConfiguration()
     }
     
+    // MARK: - Navigations
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "RetouchCameraSegue":
+            let data = sender as! Data
+            let destination = segue.destination as! CameraRetouchViewController
+            destination.modalPresentationStyle = .fullScreen
+            destination.photoData = data
+        default:
+            break
+        }
+    }
+    
     // MARK: - Camera Functions
     
     func setupPhotoCamera() {
@@ -160,31 +174,6 @@ class CameraViewController: UIViewController {
         }
     }
     
-    @objc func imagePinchAction(_ sender: UIPinchGestureRecognizer) {
-        print(#function, sender.scale)
-        imgViewGuideOverlay.transform = CGAffineTransformScale(imgViewGuideOverlay.transform, sender.scale, sender.scale)
-        sender.scale = 1
-    }
-    
-    @objc func imageRotateAction(_ sender: UIRotationGestureRecognizer) {
-        switch sender.state {
-        case .changed:
-            imgViewGuideOverlay.transform = imgViewGuideOverlay.transform.rotated(by: sender.rotation)
-            sender.rotation = 0
-        default:
-            break
-        }
-    }
-    
-    func setupPhotoGestures() {
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(imagePinchAction(_:)))
-        let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(imageRotateAction(_:)))
-
-        view.addGestureRecognizer(pinchGesture)
-        view.addGestureRecognizer(rotateGesture)
-    }
-    
-    
     // MARK: - Permissions
     
     func checkCameraPermissions() {
@@ -225,11 +214,12 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
             return
         }
         
-        previewLayer.removeFromSuperlayer()
-        let originalImage = UIImage(data: data)
-        imgViewGuideOverlay.image = originalImage
-        
-        setupPhotoGestures()
+        // previewLayer.removeFromSuperlayer()
+        // let originalImage = UIImage(data: data)
+        // imgViewGuideOverlay.image = originalImage
+        //
+        // setupPhotoGestures()
         
         saveOriginalPhotoToLibrary(data: data)
+        performSegue(withIdentifier: "RetouchCameraSegue", sender: data)
     }}
