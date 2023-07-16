@@ -50,9 +50,16 @@ struct TodayDiptychView: View {
                 .padding(.bottom, 23)
 
                 HStack(spacing: 9) {
-                    ForEach(0..<7) { index in
-                        WeeklyCalenderView(day: days[index])
-                    }
+//                    ForEach(0..<7) { index in
+//                        WeeklyCalenderView(day: days[index])
+//                    }
+                    WeeklyCalenderView(day: days[0], isToday: false)
+                    WeeklyCalenderView(day: days[1], isToday: false)
+                    WeeklyCalenderView(day: days[2], isToday: true)
+                    WeeklyCalenderView(day: days[3], isToday: false)
+                    WeeklyCalenderView(day: days[4], isToday: false)
+                    WeeklyCalenderView(day: days[5], isToday: false)
+                    WeeklyCalenderView(day: days[6], isToday: false)
                 }
             }
             .padding(.bottom, 23)
