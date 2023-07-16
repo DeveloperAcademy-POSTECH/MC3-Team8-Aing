@@ -133,6 +133,8 @@ class CameraViewController: UIViewController {
             captureSession.commitConfiguration()
             // 캡처 세션 실행
             captureSession.startRunning()
+            
+            // TODO: - startRunning이 시작되면 UI/UX 동작되게 하기
         }
     }
     
@@ -141,6 +143,45 @@ class CameraViewController: UIViewController {
         view.layer.insertSublayer(previewLayer, above: imgViewGuideOverlay.layer)
         previewLayer.frame = imgViewGuideOverlay.frame
         previewLayer.videoGravity = .resizeAspectFill   // 프레임 크기에 맞춰 리사이즈(비율 깨지지 않음)
+    }
+    
+    func saveOriginalPhotoToLibrary(data: Data) {
+        // 권한 요청
+        PHPhotoLibrary.requestAuthorization { status in
+            guard status == .authorized else {
+                return
+            }
+            
+            // 사진 앨범에 저장
+            PHPhotoLibrary.shared().performChanges({
+                let creationRequest = PHAssetCreationRequest.forAsset()
+                creationRequest.addResource(with: .photo, data: data, options: nil)
+            }, completionHandler: nil)
+        }
+    }
+    
+    @objc func imagePinchAction(_ sender: UIPinchGestureRecognizer) {
+        print(#function, sender.scale)
+        imgViewGuideOverlay.transform = CGAffineTransformScale(imgViewGuideOverlay.transform, sender.scale, sender.scale)
+        sender.scale = 1
+    }
+    
+    @objc func imageRotateAction(_ sender: UIRotationGestureRecognizer) {
+        switch sender.state {
+        case .changed:
+            imgViewGuideOverlay.transform = imgViewGuideOverlay.transform.rotated(by: sender.rotation)
+            sender.rotation = 0
+        default:
+            break
+        }
+    }
+    
+    func setupPhotoGestures() {
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(imagePinchAction(_:)))
+        let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(imageRotateAction(_:)))
+
+        view.addGestureRecognizer(pinchGesture)
+        view.addGestureRecognizer(rotateGesture)
     }
     
     
@@ -179,17 +220,16 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
             return
         }
         
-        // 권한 요청
-        PHPhotoLibrary.requestAuthorization { status in
-            guard status == .authorized else {
-                return
-            }
-            
-            // 사진 앨범에 저장
-            PHPhotoLibrary.shared().performChanges({
-                let creationRequest = PHAssetCreationRequest.forAsset()
-                creationRequest.addResource(with: .photo, data: photo.fileDataRepresentation()!, options: nil)
-            }, completionHandler: nil)
+        guard let data = photo.fileDataRepresentation() else {
+            print("Error: photo.fileDataRepresentation() is nil.")
+            return
         }
-    }
-}
+        
+        previewLayer.removeFromSuperlayer()
+        let originalImage = UIImage(data: data)
+        imgViewGuideOverlay.image = originalImage
+        
+        setupPhotoGestures()
+        
+        saveOriginalPhotoToLibrary(data: data)
+    }}
