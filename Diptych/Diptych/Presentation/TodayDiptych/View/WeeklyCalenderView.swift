@@ -32,7 +32,7 @@ struct WeeklyCalenderView: View {
 
             ZStack(alignment: .top) {
                 RoundedRectangle(cornerRadius: 18)
-                    .stroke(Color.salmon, lineWidth: isToday ? 2 : 0)
+                    .stroke(Color.systemSalmon, lineWidth: isToday ? 2 : 0)
                     .frame(width: 44, height: 50)
                     .overlay(
                         Group {
@@ -40,11 +40,11 @@ struct WeeklyCalenderView: View {
                                 switch todayDiptych {
                                 case .complete:
                                     RoundedRectangle(cornerRadius: 18)
-                                        .fill(Color.salmon)
+                                        .fill(Color.systemSalmon)
                                 case .half:
                                     RoundedRectangle(cornerRadius: 18)
                                         .trim(from: 0.25, to: 0.75)
-                                        .fill(Color.salmon)
+                                        .fill(Color.systemSalmon)
                                 case .incomplete:
                                     EmptyView()
                                 }
@@ -52,7 +52,7 @@ struct WeeklyCalenderView: View {
                                 switch weeklyDiptych {
                                 case .complete:
                                     RoundedRectangle(cornerRadius: 18)
-                                        .fill(Color.salmon)
+                                        .fill(Color.systemSalmon)
                                 case .incomplete:
                                     RoundedRectangle(cornerRadius: 18)
                                         .fill(Color.lightGray)
