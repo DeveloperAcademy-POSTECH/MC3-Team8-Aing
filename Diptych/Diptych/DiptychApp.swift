@@ -18,16 +18,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct DiptychApp: App {
-    
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject var authViewModel: AuthViewModel = AuthViewModel()
     
     var body: some Scene {
         WindowGroup {
-//            DiptychTabView()
-            SignUpView()
-                .environmentObject(authViewModel)
+            DiptychTabView()
+//            TestView()
+//                .environmentObject(AuthViewModel())
         }
     }
 }

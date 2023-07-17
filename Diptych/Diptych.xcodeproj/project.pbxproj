@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E425B2A5FE17F00C682D9 /* LogInView.swift */; };
-		987E425E2A61363900C682D9 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E425D2A61363900C682D9 /* Test.swift */; };
+		987E425E2A61363900C682D9 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E425D2A61363900C682D9 /* TestView.swift */; };
 		989DFFD42A5FD1AD00EBBC12 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 989DFFD32A5FD1AD00EBBC12 /* FirebaseAnalytics */; };
 		989DFFD62A5FD1AD00EBBC12 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 989DFFD52A5FD1AD00EBBC12 /* FirebaseAuth */; };
 		989DFFD82A5FD1AD00EBBC12 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 989DFFD72A5FD1AD00EBBC12 /* FirebaseDatabase */; };
@@ -85,7 +85,8 @@
 
 /* Begin PBXFileReference section */
 		987E425B2A5FE17F00C682D9 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
-		987E425D2A61363900C682D9 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		987E425D2A61363900C682D9 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		987E425F2A627A2B00C682D9 /* Diptych.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Diptych.entitlements; sourceTree = "<group>"; };
 		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		989DFFE12A5FDA3400EBBC12 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
@@ -182,6 +183,7 @@
 		AB2A9EA22A5EC46100D70C33 /* Diptych */ = {
 			isa = PBXGroup;
 			children = (
+				987E425F2A627A2B00C682D9 /* Diptych.entitlements */,
 				ABFD3E7C2A5ED26E008678D0 /* Global */,
 				ABFD3E8A2A5EDADB008678D0 /* Data */,
 				ABFD3E7F2A5ED280008678D0 /* Resources */,
@@ -347,7 +349,7 @@
 				989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */,
 				989DFFE12A5FDA3400EBBC12 /* AuthViewModel.swift */,
 				987E425B2A5FE17F00C682D9 /* LogInView.swift */,
-				987E425D2A61363900C682D9 /* Test.swift */,
+				987E425D2A61363900C682D9 /* TestView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -566,7 +568,7 @@
 				AB2AC1F02A5F094F00B162E1 /* ArchiveView.swift in Sources */,
 				AB2AC2232A5F8E8700B162E1 /* PretendardType.swift in Sources */,
 				989DFFE52A5FDC4B00EBBC12 /* OnBoardingView.swift in Sources */,
-				987E425E2A61363900C682D9 /* Test.swift in Sources */,
+				987E425E2A61363900C682D9 /* TestView.swift in Sources */,
 				987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */,
 				AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */,
 				AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */,
@@ -732,6 +734,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Diptych/Diptych.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
@@ -762,6 +765,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Diptych/Diptych.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";

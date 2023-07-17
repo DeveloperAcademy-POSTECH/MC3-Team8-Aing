@@ -13,14 +13,20 @@ struct OnBoardingView: View {
             ZStack {
                 Color.offWhite
                     .ignoresSafeArea()
-                VStack(spacing: 28) {
+                VStack() {
+                    Spacer()
+                        .frame(height: 124)
                     Text("딥틱에서 매일 서로의 일상을 하나의 사진으로 완성해요")
                         .font(.pretendard(.light, size: 28))
                         .padding(.leading, 41)
                         .padding(.trailing, 41)
+                    Spacer()
+                        .frame(height: 28)
                     Image("diptych_sample1")
                         .resizable()
                         .scaledToFit()
+                        .frame(width: 393, height: 393)
+                    Spacer()
                     VStack(spacing: 10) { // (S) LogIn, SignUp
                         NavigationLink(destination: LogInView()) {
                             Text("로그인")
@@ -36,8 +42,12 @@ struct OnBoardingView: View {
                                 .foregroundColor(.offBlack)
                                 .border(Color.offBlack)
                         }
-                    } // (E) LogIn, SignUp
+                        
+                    }// (E) LogIn, SignUp
+                    Spacer()
+                        .frame(height: 55)
                 }
+                .ignoresSafeArea()
             }
         }
     }
