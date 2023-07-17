@@ -30,6 +30,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="imgFlashButton"/>
+                                <connections>
+                                    <action selector="btnToggleTorch:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="9bk-ym-cwu"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ay-Aq-O9x">
                                 <rect key="frame" x="141" y="663" width="93" height="93"/>

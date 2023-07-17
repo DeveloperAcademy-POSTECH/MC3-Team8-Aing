@@ -52,7 +52,6 @@ class CameraViewController: UIViewController {
         didSet {
             switch currentMode {
             case .camera:
-                print("changeCameraMode")
                 changeCameraMode()
             case .retouch:
                 changeRetouchMode()
@@ -113,6 +112,11 @@ class CameraViewController: UIViewController {
             currentMode = .camera
         }
     }
+    
+    @IBAction func btnToggleTorch(_ sender: UIButton) {
+        toggleTorch()
+    }
+    
     
     // MARK: - Navigations
     
@@ -241,6 +245,7 @@ class CameraViewController: UIViewController {
     func changeRetouchMode() {
         // TODO: - 프리뷰 가리고, 엑스버튼 백버튼으로 바꾸고, 플래시버튼 감추고, 셔터버튼 바꾸기
         // previewLayer.removeFromSuperlayer()
+        toggleTorch(forceOff: true)
         previewLayer.isHidden = true
         
         btnFlash.isHidden = true
@@ -285,6 +290,31 @@ class CameraViewController: UIViewController {
         @unknown default:
             fatalError()
         }
+    }
+    
+    func toggleTorch(forceOff: Bool = false) {
+        guard let device = AVCaptureDevice.default(for: .video) else {
+            return
+        }
+        guard device.hasTorch else {
+            return
+        }
+        
+        do {
+            try device.lockForConfiguration()
+            
+            if device.torchMode == AVCaptureDevice.TorchMode.on || forceOff {
+                device.torchMode = .off
+            } else {
+                try device.setTorchModeOn(level: 1.0)
+            }
+            
+            device.unlockForConfiguration()
+        } catch {
+            print(#function, error.localizedDescription)
+        }
+        
+        
     }
 }
 
