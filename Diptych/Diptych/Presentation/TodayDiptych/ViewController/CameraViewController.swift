@@ -49,6 +49,8 @@ class CameraViewController: UIViewController {
         setupPhotoCamera()
     }
     
+    // MARK: - IBActions
+    
     @IBAction func btnActShutter(_ sender: UIButton) {
         // lblTopic.text = #function
         photoOutput.capturePhoto(with: photoSettings, delegate: self)
@@ -72,6 +74,10 @@ class CameraViewController: UIViewController {
         
         // commitConfiguration : captureSession 의 설정 변경이 완료되었음을 알리는 함수.
         captureSession.commitConfiguration()
+    }
+    
+    @IBAction func btnActDismissView(_ sender: UIButton) {
+        dismiss(animated: true)
     }
     
     // MARK: - Navigations

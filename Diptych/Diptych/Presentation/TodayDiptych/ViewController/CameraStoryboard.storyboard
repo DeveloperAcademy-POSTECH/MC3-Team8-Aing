@@ -22,6 +22,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="imgCloseButton"/>
+                                <connections>
+                                    <action selector="btnActDismissView:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="hR3-ru-UGE"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NlX-75-jOa">
                                 <rect key="frame" x="173" y="192" width="28" height="28"/>
