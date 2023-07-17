@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		44540AE52A642A2700A988E9 /* CameraRetouchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44540AE42A642A2700A988E9 /* CameraRetouchViewController.swift */; };
 		445A47B42A6010E9005573DC /* CameraStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 445A47B32A6010E9005573DC /* CameraStoryboard.storyboard */; };
 		445A47B62A601231005573DC /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A47B52A601231005573DC /* CameraViewController.swift */; };
 		445A47B82A60125B005573DC /* CameraRepresentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A47B72A60125B005573DC /* CameraRepresentableView.swift */; };
@@ -77,7 +76,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		44540AE42A642A2700A988E9 /* CameraRetouchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRetouchViewController.swift; sourceTree = "<group>"; };
 		445A47B32A6010E9005573DC /* CameraStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CameraStoryboard.storyboard; sourceTree = "<group>"; };
 		445A47B52A601231005573DC /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		445A47B72A60125B005573DC /* CameraRepresentableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRepresentableView.swift; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 			children = (
 				445A47B32A6010E9005573DC /* CameraStoryboard.storyboard */,
 				445A47B52A601231005573DC /* CameraViewController.swift */,
-				44540AE42A642A2700A988E9 /* CameraRetouchViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -540,7 +537,6 @@
 				AB2AC2232A5F8E8700B162E1 /* PretendardType.swift in Sources */,
 				AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */,
 				AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */,
-				44540AE52A642A2700A988E9 /* CameraRetouchViewController.swift in Sources */,
 				AB2AC1ED2A5F093B00B162E1 /* TodayDiptychView.swift in Sources */,
 				445A47B82A60125B005573DC /* CameraRepresentableView.swift in Sources */,
 				AB2AC1F52A5F15A100B162E1 /* Color+.swift in Sources */,

@@ -11,9 +11,19 @@ import Photos
 
 class CameraViewController: UIViewController {
     
+    enum CurrentMode {
+        case camera, retouch
+    }
+    
     // MARK: - 스토리보드로부터 @IBOutlet으로 연결된 컴포넌트 변수
     @IBOutlet weak var lblTopic: UILabel!
+    @IBOutlet weak var scrollViewImageContainer: UIScrollView!
     @IBOutlet weak var imgViewGuideOverlay: UIImageView!
+    @IBOutlet weak var btnCloseBack: UIButton!
+    @IBOutlet weak var btnFlash: UIButton!
+    @IBOutlet weak var btnChangePosition: UIButton!
+    @IBOutlet weak var btnPhotoLibrary: UIButton!
+    @IBOutlet weak var btnShutter: UIButton!
     
     // MARK: - Vars
     var previewLayer: AVCaptureVideoPreviewLayer!
@@ -36,7 +46,21 @@ class CameraViewController: UIViewController {
         
         return settings
     }
+    
     var photoOutput: AVCapturePhotoOutput = AVCapturePhotoOutput()
+    var currentMode: CurrentMode = .camera {
+        didSet {
+            switch currentMode {
+            case .camera:
+                print("changeCameraMode")
+                changeCameraMode()
+            case .retouch:
+                changeRetouchMode()
+            }
+        }
+    }
+    
+    var photoData: Data?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +77,12 @@ class CameraViewController: UIViewController {
     
     @IBAction func btnActShutter(_ sender: UIButton) {
         // lblTopic.text = #function
-        photoOutput.capturePhoto(with: photoSettings, delegate: self)
+        switch currentMode {
+        case .camera:
+            photoOutput.capturePhoto(with: photoSettings, delegate: self)
+        case .retouch:
+            break
+        }
     }
     
     @IBAction func btnActChangeCameraPosition(_ sender: UIButton) {
@@ -77,22 +106,27 @@ class CameraViewController: UIViewController {
     }
     
     @IBAction func btnActDismissView(_ sender: UIButton) {
-        dismiss(animated: true)
+        switch currentMode {
+        case .camera:
+            dismiss(animated: true)
+        case .retouch:
+            currentMode = .camera
+        }
     }
     
     // MARK: - Navigations
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier {
-        case "RetouchCameraSegue":
-            let data = sender as! Data
-            let destination = segue.destination as! CameraRetouchViewController
-            destination.modalPresentationStyle = .fullScreen
-            destination.photoData = data
-        default:
-            break
-        }
-    }
+    // override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //     switch segue.identifier {
+    //     case "RetouchCameraSegue":
+    //         let data = sender as! Data
+    //         let destination = segue.destination as! CameraRetouchViewController
+    //         destination.modalPresentationStyle = .fullScreen
+    //         destination.photoData = data
+    //     default:
+    //         break
+    //     }
+    // }
     
     // MARK: - Camera Functions
     
@@ -160,8 +194,9 @@ class CameraViewController: UIViewController {
     
     func setCameraPreview() {
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        view.layer.insertSublayer(previewLayer, above: imgViewGuideOverlay.layer)
-        previewLayer.frame = imgViewGuideOverlay.frame
+        
+        view.layer.insertSublayer(previewLayer, above: scrollViewImageContainer.layer)
+        previewLayer.frame = scrollViewImageContainer.frame
         previewLayer.videoGravity = .resizeAspectFill   // 프레임 크기에 맞춰 리사이즈(비율 깨지지 않음)
     }
     
@@ -180,6 +215,53 @@ class CameraViewController: UIViewController {
         }
     }
     
+    @objc func imagePinchAction(_ sender: UIPinchGestureRecognizer) {
+        imgViewGuideOverlay.transform = CGAffineTransformScale(imgViewGuideOverlay.transform, sender.scale, sender.scale)
+        sender.scale = 1
+    }
+    
+    @objc func imageRotateAction(_ sender: UIRotationGestureRecognizer) {
+        switch sender.state {
+        case .changed:
+            imgViewGuideOverlay.transform = imgViewGuideOverlay.transform.rotated(by: sender.rotation)
+            sender.rotation = 0
+        default:
+            break
+        }
+    }
+    
+    func setupPhotoGestures() {
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(imagePinchAction(_:)))
+        let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(imageRotateAction(_:)))
+
+        view.addGestureRecognizer(pinchGesture)
+        view.addGestureRecognizer(rotateGesture)
+    }
+    
+    func changeRetouchMode() {
+        // TODO: - 프리뷰 가리고, 엑스버튼 백버튼으로 바꾸고, 플래시버튼 감추고, 셔터버튼 바꾸기
+        // previewLayer.removeFromSuperlayer()
+        previewLayer.isHidden = true
+        
+        btnFlash.isHidden = true
+        btnChangePosition.isHidden = true
+        btnPhotoLibrary.isHidden = true
+        
+        btnCloseBack.setImage(UIImage(named: "imgBackButton"), for: .normal)
+        btnShutter.setImage(UIImage(named: "imgCircleCheckButton"), for: .normal)
+    }
+    
+    func changeCameraMode() {
+        btnFlash.isHidden = false
+        btnChangePosition.isHidden = false
+        btnPhotoLibrary.isHidden = false
+        
+        btnCloseBack.setImage(UIImage(named: "imgCloseButton"), for: .normal)
+        btnShutter.setImage(UIImage(named: "imgShutterButton"), for: .normal)
+        
+        previewLayer.isHidden = false
+    }
+    
     // MARK: - Permissions
     
     func checkCameraPermissions() {
@@ -191,9 +273,8 @@ class CameraViewController: UIViewController {
             // TODO: - 카메라 권한 허용 유도하는 기능
             abort()
         case .notDetermined:
-            AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler:
-                                            { (authorized) in
-                if(!authorized){
+            AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { authorized in
+                if !authorized {
                     // TODO: - 카메라 권한 허용 유도하는 기능
                     abort()
                 }
@@ -226,6 +307,10 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
         //
         // setupPhotoGestures()
         
+        currentMode = .retouch
+        imgViewGuideOverlay.image = UIImage(data: data)
+        setupPhotoGestures()
         saveOriginalPhotoToLibrary(data: data)
-        performSegue(withIdentifier: "RetouchCameraSegue", sender: data)
-    }}
+        // performSegue(withIdentifier: "RetouchCameraSegue", sender: data)
+    }
+}
