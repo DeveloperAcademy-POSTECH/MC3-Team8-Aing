@@ -22,7 +22,7 @@ struct DiptychTabView: View {
                 .tag(0)
             
             ///[2] 아카이브
-            ArchiveTabView()
+            ArchiveTabView(currentTab: selection)
                 .tabItem {
                     selection == 1 ? Image("imgArchiveTabSelected") : Image("imgArchiveTab")
                     Text("보관함")

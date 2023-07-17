@@ -68,6 +68,7 @@
 		F3263A932A6543F700B4581C /* ArchiveTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A922A6543F700B4581C /* ArchiveTabView.swift */; };
 		F3263A972A65448400B4581C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A962A65448400B4581C /* CalendarView.swift */; };
 		F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A982A6544AA00B4581C /* CalendarScrollView.swift */; };
+		F3263A9E2A65B6AE00B4581C /* QuestionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A9D2A65B6AE00B4581C /* QuestionListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +127,7 @@
 		F3263A922A6543F700B4581C /* ArchiveTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveTabView.swift; sourceTree = "<group>"; };
 		F3263A962A65448400B4581C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		F3263A982A6544AA00B4581C /* CalendarScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScrollView.swift; sourceTree = "<group>"; };
+		F3263A9D2A65B6AE00B4581C /* QuestionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +244,7 @@
 				F3263A922A6543F700B4581C /* ArchiveTabView.swift */,
 				F3263A942A65441B00B4581C /* CalendarView */,
 				F3263A952A65442700B4581C /* AlbumView */,
+				F3263A9C2A65B66F00B4581C /* QuestionListView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -418,6 +421,14 @@
 			path = AlbumView;
 			sourceTree = "<group>";
 		};
+		F3263A9C2A65B66F00B4581C /* QuestionListView */ = {
+			isa = PBXGroup;
+			children = (
+				F3263A9D2A65B6AE00B4581C /* QuestionListView.swift */,
+			);
+			path = QuestionListView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -592,6 +603,7 @@
 				AB2AC2282A5F922F00B162E1 /* Font+.swift in Sources */,
 				F3263A972A65448400B4581C /* CalendarView.swift in Sources */,
 				F3263A932A6543F700B4581C /* ArchiveTabView.swift in Sources */,
+				F3263A9E2A65B6AE00B4581C /* QuestionListView.swift in Sources */,
 				AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */,
 				F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */,
 				445A47B12A5FE3DE005573DC /* AlbumNavigationView.swift in Sources */,

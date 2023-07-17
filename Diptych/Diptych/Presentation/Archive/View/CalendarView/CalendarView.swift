@@ -17,7 +17,7 @@ struct CalendarView: View {
     
     var body: some View {
         
-        return VStack {
+        return VStack(spacing: 0) {
             oneMonthCalendarView
         }//】 VStack
         .onAppear{
@@ -33,32 +33,36 @@ struct CalendarView: View {
         let daysInMonth: Int = numberOfDays(in: month)
         let firstWeekday: Int = firstWeekdayOfMonth(in: month) - 1
 
-        return VStack {
+        return VStack(spacing: 0) {
         
             /// [1]월
-            HStack{
+            HStack(spacing: 0) {
                 Text(month, formatter: Self.dateFormatter)
-                    .font(.largeTitle)
-                    .padding(.bottom)
+                    .font(.system(size:36, weight: .light))
+                    .padding(.leading,15)
                 Spacer()
                 Text(month, formatter: Self.dateFormatter2)
-                    .font(.title3)
-                    .foregroundColor(.gray.opacity(0.4))
+                    .font(.title2)
+                    .fontWeight(.light)
+                    .foregroundColor(.gray)
                     .padding(.trailing)
             }//】 HStack
+            .padding(.bottom,30)
         
             /// [2]요일
-            HStack {
+            HStack(spacing: 0) {
                 ForEach(Self.weekdaySymbols, id: \.self) { symbol in
                     Text(symbol)
+                        .font(.system(size:14, weight: .medium))
                         .frame(maxWidth: .infinity)
                 }//: Loop
             }//】 HStack
-            .padding(.bottom, 5)
+            .padding(.bottom, 10)
+            .padding(.horizontal,9)
         
             /// [3]날짜
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7),
-                      spacing: 10) {
+                      spacing: 0) {
                 ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
                     let day = index - firstWeekday + 1
                     //1일 이전
@@ -69,27 +73,23 @@ struct CalendarView: View {
                     else {
                         CellView(day: day, cellColor: .gray.opacity(0.3))
                     }
-//                    else {
-//                        CellView(day: day,
-//                                 cellColor: index - firstWeekday == Data().day ? Color.gray : Color.orange
-//                        )
-//
-//                    }
+//                  else {
+//                      CellView(day: day,
+//                              cellColor: index - firstWeekday == Data().day ? Color.gray : Color.orange
+//                      )
+//                  }
                 }//: Loop
             }//: LazyGrid
-            
-            /// [4] 구분선
-//            Divider()
-//                .padding(.vertical,25)
+            .padding(.horizontal,10)
+           
         
-        }//: VStack
-        .padding(.horizontal,10)
-        .padding(.bottom,70)
+        }//】 VStack
+        
+        .padding(.top,51)
         
     }//: oneMonthCalendarView
-    
-    
-}//CalendarView2
+
+}
 
 
 
@@ -108,19 +108,19 @@ private struct CellView: View {
     var body: some View {
         
             NavigationLink {
-//                DetailView()
+               //DetailView()
             } label: {
-                ZStack {
+                ZStack{
                     RoundedRectangle(cornerRadius: 18)
-                        .frame(width: 45, height: 50)
+                        .frame(width: 44, height: 50)
                         .foregroundColor(cellColor)
                     
                     Text(String(day))
-                        .font(.footnote)
-                        .fontWeight(.medium)
+                        .font(.system(size:16, weight: .bold))
                         .foregroundColor(.black)
                         .offset(y:-13)
                 }//】 ZStack
+                .padding(.bottom, 19)
             }//】 NavigationLink
         
         
@@ -176,7 +176,7 @@ extension CalendarView {
     
     static let dateFormatter2: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY"
+        formatter.dateFormat = "YYYY년"
         return formatter
     }()
   
