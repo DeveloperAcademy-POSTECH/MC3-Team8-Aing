@@ -67,6 +67,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="Temp_imagePreviewButton"/>
+                                <connections>
+                                    <action selector="btnActLoadPhotoFromLibrary:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="A3l-Iw-zYh"/>
+                                </connections>
                             </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wNV-bx-VUt">
                                 <rect key="frame" x="5" y="285" width="375" height="375"/>

@@ -8,6 +8,7 @@
 import UIKit
 import AVFoundation
 import Photos
+import PhotosUI
 
 class CameraViewController: UIViewController {
     
@@ -60,9 +61,26 @@ class CameraViewController: UIViewController {
     }
     
     var photoData: Data?
+    var pickerViewController: PHPickerViewController!
+    private var pinchGesture: UIPinchGestureRecognizer!
+    private var rotationGesture: UIRotationGestureRecognizer!
+    
+    // MARK: - Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupImagePicker()
+        
+        PHPhotoLibrary.requestAuthorization { status in }
+        
+        // TODO: - Limited 위한 커스텀 뷰를 또 만들어야 하는가?
+        // https://zeddios.tistory.com/620
+        // let fetchOptions = PHFetchOptions()
+        // let allPhotos = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+        //
+        // for i in 0...(allPhotos.count - 1) {
+        //     print(allPhotos.object(at: i))
+        // }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -127,6 +145,18 @@ class CameraViewController: UIViewController {
         toggleTorch()
     }
     
+    @IBAction func btnActLoadPhotoFromLibrary(_ sender: UIButton) {
+        DispatchQueue.main.async {
+            self.present(self.pickerViewController, animated: true)
+        }
+        
+        // PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: self) { identifiers in
+        //     for newlySelectedAssetIdentifier in identifiers {
+        //         // Stage asset for app interaction.
+        //         print(newlySelectedAssetIdentifier)
+        //     }
+        // }
+    }
     
     // MARK: - Navigations
     
@@ -245,18 +275,37 @@ class CameraViewController: UIViewController {
     }
     
     func setupPhotoGestures() {
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(imagePinchAction(_:)))
-        let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(imageRotateAction(_:)))
-
+        if pinchGesture == nil && rotationGesture == nil {
+            pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(imagePinchAction(_:)))
+            rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(imageRotateAction(_:)))
+        }
+        
+        addRetouchImageGestures()
+    }
+    
+    private func addRetouchImageGestures() {
+        guard let pinchGesture, let rotationGesture else {
+            return
+        }
+        
         view.addGestureRecognizer(pinchGesture)
-        view.addGestureRecognizer(rotateGesture)
+        view.addGestureRecognizer(rotationGesture)
+    }
+    
+    private func removeRetouchImageGestures() {
+        guard let pinchGesture, let rotationGesture else {
+            return
+        }
+        
+        view.removeGestureRecognizer(pinchGesture)
+        view.removeGestureRecognizer(rotationGesture)
     }
     
     func changeRetouchMode() {
-        // TODO: - 프리뷰 가리고, 엑스버튼 백버튼으로 바꾸고, 플래시버튼 감추고, 셔터버튼 바꾸기
-        // previewLayer.removeFromSuperlayer()
+        setupPhotoGestures()
+        
         toggleTorch(forceOff: true)
-        previewLayer.isHidden = true
+        previewLayer?.isHidden = true
         
         btnFlash.isHidden = true
         btnChangePosition.isHidden = true
@@ -267,6 +316,8 @@ class CameraViewController: UIViewController {
     }
     
     func changeCameraMode() {
+        removeRetouchImageGestures()
+        
         btnFlash.isHidden = false
         btnChangePosition.isHidden = false
         btnPhotoLibrary.isHidden = false
@@ -274,11 +325,19 @@ class CameraViewController: UIViewController {
         btnCloseBack.setImage(UIImage(named: "imgCloseButton"), for: .normal)
         btnShutter.setImage(UIImage(named: "imgShutterButton"), for: .normal)
         
-        previewLayer.isHidden = false
+        previewLayer?.isHidden = false
     }
     
     func resetImageViewTransform() {
         imgViewGuideOverlay.transform = .identity
+    }
+    
+    func setupImagePicker() {
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 1
+        configuration.filter = .images
+        pickerViewController = PHPickerViewController(configuration: configuration)
+        pickerViewController.delegate = self
     }
     
     // MARK: - Permissions
@@ -372,8 +431,32 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
         
         currentMode = .retouch
         imgViewGuideOverlay.image = UIImage(data: data)
-        setupPhotoGestures()
+        
         savePhotoToLibrary(data: data)
         // performSegue(withIdentifier: "RetouchCameraSegue", sender: data)
+    }
+}
+
+extension CameraViewController: PHPickerViewControllerDelegate, PHPhotoLibraryChangeObserver {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        
+        if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+                guard let image = image as? UIImage else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.imgViewGuideOverlay.image = image
+                    self.currentMode = .retouch
+                }
+            }
+        }
+        
+    }
+    
+    func photoLibraryDidChange(_ changeInstance: PHChange) {
+        
     }
 }
