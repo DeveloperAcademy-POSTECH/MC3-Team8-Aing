@@ -75,33 +75,37 @@ class CameraViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func btnActShutter(_ sender: UIButton) {
-        // lblTopic.text = #function
+        guard !UIDevice.current.isSimulator else {
+            print("시뮬레이터에서는 작동하지 않습니다.")
+            return
+        }
+        
         switch currentMode {
         case .camera:
             photoOutput.capturePhoto(with: photoSettings, delegate: self)
         case .retouch:
-            break
+            guard let data = imgViewGuideOverlay.image?.jpegData(compressionQuality: 1) else {
+                debugPrint("\(#function): Image data is nil")
+                return
+            }
+            
+            savePhotoToLibrary(data: data)
+            
+            guard let transfomredImage = transformImageBasedOnContainerView(imageView: imgViewGuideOverlay, containerView: scrollViewImageContainer),
+                  let transformedData = transfomredImage.jpegData(compressionQuality: 1) else {
+                return
+            }
+            savePhotoToLibrary(data: transformedData)
         }
     }
     
     @IBAction func btnActChangeCameraPosition(_ sender: UIButton) {
-        captureSession.beginConfiguration()
-        
-        switch captureSession.inputs[0] {
-        case backCameraInput:
-            // 후면에서 전면으로 전환
-            captureSession.removeInput(backCameraInput)
-            captureSession.addInput(frontCameraInput)
-        case frontCameraInput:
-            // 전면에서 후면으로 전환
-            captureSession.removeInput(frontCameraInput)
-            captureSession.addInput(backCameraInput)
-        default:
-            break
+        guard !UIDevice.current.isSimulator else {
+            print("시뮬레이터에서는 작동하지 않습니다.")
+            return
         }
         
-        // commitConfiguration : captureSession 의 설정 변경이 완료되었음을 알리는 함수.
-        captureSession.commitConfiguration()
+        changeCameraPosition()
     }
     
     @IBAction func btnActDismissView(_ sender: UIButton) {
@@ -109,11 +113,17 @@ class CameraViewController: UIViewController {
         case .camera:
             dismiss(animated: true)
         case .retouch:
+            resetImageViewTransform()
             currentMode = .camera
         }
     }
     
     @IBAction func btnToggleTorch(_ sender: UIButton) {
+        guard !UIDevice.current.isSimulator else {
+            print("시뮬레이터에서는 작동하지 않습니다.")
+            return
+        }
+        
         toggleTorch()
     }
     
@@ -204,7 +214,7 @@ class CameraViewController: UIViewController {
         previewLayer.videoGravity = .resizeAspectFill   // 프레임 크기에 맞춰 리사이즈(비율 깨지지 않음)
     }
     
-    func saveOriginalPhotoToLibrary(data: Data) {
+    func savePhotoToLibrary(data: Data) {
         // 권한 요청
         PHPhotoLibrary.requestAuthorization { status in
             guard status == .authorized else {
@@ -267,10 +277,15 @@ class CameraViewController: UIViewController {
         previewLayer.isHidden = false
     }
     
+    func resetImageViewTransform() {
+        imgViewGuideOverlay.transform = .identity
+    }
+    
     // MARK: - Permissions
     
     func checkCameraPermissions() {
         let cameraAuthStatus =  AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+        
         switch cameraAuthStatus {
         case .authorized:
             return
@@ -313,8 +328,26 @@ class CameraViewController: UIViewController {
         } catch {
             print(#function, error.localizedDescription)
         }
+    }
+    
+    func changeCameraPosition() {
+        captureSession.beginConfiguration()
         
+        switch captureSession.inputs[0] {
+        case backCameraInput:
+            // 후면에서 전면으로 전환
+            captureSession.removeInput(backCameraInput)
+            captureSession.addInput(frontCameraInput)
+        case frontCameraInput:
+            // 전면에서 후면으로 전환
+            captureSession.removeInput(frontCameraInput)
+            captureSession.addInput(backCameraInput)
+        default:
+            break
+        }
         
+        // commitConfiguration : captureSession 의 설정 변경이 완료되었음을 알리는 함수.
+        captureSession.commitConfiguration()
     }
 }
 
@@ -340,7 +373,7 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
         currentMode = .retouch
         imgViewGuideOverlay.image = UIImage(data: data)
         setupPhotoGestures()
-        saveOriginalPhotoToLibrary(data: data)
+        savePhotoToLibrary(data: data)
         // performSegue(withIdentifier: "RetouchCameraSegue", sender: data)
     }
 }
