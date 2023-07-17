@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct OnBoardingView: View {
+//    @EnvironmentObject var authViewModel: AuthenticationViewModel
     var body: some View {
         NavigationView {
             ZStack {
@@ -49,6 +50,11 @@ struct OnBoardingView: View {
                 }
                 .ignoresSafeArea()
             }
+//            .onAppear {
+//                print("user: \(authViewModel.user)")
+//                print("user: \(authViewModel.user?.isEmailVerified)")
+//                print("state: \(authViewModel.authenticationState)")
+//            }
         }
     }
 }
@@ -56,5 +62,6 @@ struct OnBoardingView: View {
 struct OnBoardingView_Previews: PreviewProvider {
     static var previews: some View {
         OnBoardingView()
+            .environmentObject(AuthenticationViewModel())
     }
 }

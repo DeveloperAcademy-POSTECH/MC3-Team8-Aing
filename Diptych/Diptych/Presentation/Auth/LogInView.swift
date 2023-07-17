@@ -10,6 +10,7 @@ import SwiftUI
 struct LogInView: View {
     @State var email: String = ""
     @State var password: String = ""
+    @EnvironmentObject var authViewModel: AuthenticationViewModel
     var body: some View {
         ZStack {
             Color.offWhite
@@ -20,10 +21,10 @@ struct LogInView: View {
                 Text("로그인")
                     .font(.pretendard(.light, size: 28))
                 Spacer()
-//                        .frame(height: 138)
+                //                        .frame(height: 138)
                 VStack(spacing: 37) {
                     VStack(alignment: .leading) {
-                        TextField("이메일", text: $email)
+                        TextField("이메일", text: $authViewModel.email)
                             .font(.pretendard(.light, size: 18))
                             .foregroundColor(.darkGray)
                             .keyboardType(.emailAddress)
@@ -61,14 +62,24 @@ struct LogInView: View {
                     }
                 }
                 Spacer()
-                Button {
-                    print("로그인 시도")
-                } label: {
-                    Text("로그인하기")
+                NavigationLink(destination: EmailVerificationView().environmentObject(authViewModel)) {
+                    Text("로그인")
                         .frame(width: UIScreen.main.bounds.width-30, height:  60)
                         .background(Color.offBlack)
                         .foregroundColor(.offWhite)
+//                        .onTapGesture {
+//                            print("Tap!!!")
+//                        }
                 }
+                .disabled(true)
+                //                Button {
+                //                    print("로그인 시도")
+                //                } label: {
+                //                    Text("로그인하기")
+                //                        .frame(width: UIScreen.main.bounds.width-30, height:  60)
+                //                        .background(Color.offBlack)
+                //                        .foregroundColor(.offWhite)
+                //                }
                 Spacer()
                     .frame(height: 55)
             }
@@ -80,5 +91,6 @@ struct LogInView: View {
 struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
         LogInView()
+            .environmentObject(AuthenticationViewModel())
     }
 }
