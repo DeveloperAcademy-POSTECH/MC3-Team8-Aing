@@ -82,8 +82,10 @@ class CameraViewController: UIViewController {
     
     var photoData: Data?
     var pickerViewController: PHPickerViewController!
+    
     private var pinchGesture: UIPinchGestureRecognizer!
     private var rotationGesture: UIRotationGestureRecognizer!
+    private var panGesture: UIPanGestureRecognizer!
     
     // MARK: - Lifecycles
     
@@ -309,46 +311,35 @@ class CameraViewController: UIViewController {
         }
     }
     
-    @objc func imagePinchAction(_ sender: UIPinchGestureRecognizer) {
-        imgViewGuideOverlay.transform = CGAffineTransformScale(imgViewGuideOverlay.transform, sender.scale, sender.scale)
-        sender.scale = 1
-    }
-    
-    @objc func imageRotateAction(_ sender: UIRotationGestureRecognizer) {
-        switch sender.state {
-        case .changed:
-            imgViewGuideOverlay.transform = imgViewGuideOverlay.transform.rotated(by: sender.rotation)
-            sender.rotation = 0
-        default:
-            break
-        }
-    }
-    
     func setupPhotoGestures() {
-        if pinchGesture == nil && rotationGesture == nil {
+        if pinchGesture == nil && rotationGesture == nil && panGesture == nil {
             pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(imagePinchAction(_:)))
             rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(imageRotateAction(_:)))
+            panGesture = UIPanGestureRecognizer(target: self, action: #selector(imagePanAction(_:)))
+            panGesture.minimumNumberOfTouches = 2
         }
         
         addRetouchImageGestures()
     }
     
     private func addRetouchImageGestures() {
-        guard let pinchGesture, let rotationGesture else {
+        guard let pinchGesture, let rotationGesture, let panGesture else {
             return
         }
         
         view.addGestureRecognizer(pinchGesture)
         view.addGestureRecognizer(rotationGesture)
+        view.addGestureRecognizer(panGesture)
     }
     
     private func removeRetouchImageGestures() {
-        guard let pinchGesture, let rotationGesture else {
+        guard let pinchGesture, let rotationGesture, let panGesture else {
             return
         }
         
         view.removeGestureRecognizer(pinchGesture)
         view.removeGestureRecognizer(rotationGesture)
+        view.removeGestureRecognizer(panGesture)
     }
     
     func changeRetouchMode() {
@@ -414,6 +405,43 @@ class CameraViewController: UIViewController {
                                        width: originalOverlayFrame.size.width,
                                        height: originalOverlayFrame.size.height / 2)
         }
+    }
+    
+    // MARK: - OBJC Methods
+    
+    @objc func imagePinchAction(_ sender: UIPinchGestureRecognizer) {
+        imgViewGuideOverlay.transform = CGAffineTransformScale(imgViewGuideOverlay.transform, sender.scale, sender.scale)
+        sender.scale = 1
+    }
+    
+    @objc func imageRotateAction(_ sender: UIRotationGestureRecognizer) {
+        switch sender.state {
+        case .changed:
+            imgViewGuideOverlay.transform = imgViewGuideOverlay.transform.rotated(by: sender.rotation)
+            sender.rotation = 0
+        default:
+            break
+        }
+    }
+    
+    @objc func imagePanAction(_ sender: UIPanGestureRecognizer) {
+        // Store current transfrom of UIImageView
+        let transform = imgViewGuideOverlay.transform
+        
+        // Initialize imageView.transform
+        imgViewGuideOverlay.transform = CGAffineTransform.identity
+        
+        // Move UIImageView
+        let point: CGPoint = sender.translation(in: imgViewGuideOverlay)
+        let movedPoint = CGPoint(x: imgViewGuideOverlay.center.x + point.x,
+                                 y: imgViewGuideOverlay.center.y + point.y)
+        imgViewGuideOverlay.center = movedPoint
+        
+        // Revert imageView.transform
+        imgViewGuideOverlay.transform = transform
+        
+        // Reset translation
+        sender.setTranslation(CGPoint.zero, in: imgViewGuideOverlay)
     }
     
     // MARK: - Permissions
@@ -532,7 +560,5 @@ extension CameraViewController: PHPickerViewControllerDelegate, PHPhotoLibraryCh
         
     }
     
-    func photoLibraryDidChange(_ changeInstance: PHChange) {
-        
-    }
+    func photoLibraryDidChange(_ changeInstance: PHChange) {}
 }
