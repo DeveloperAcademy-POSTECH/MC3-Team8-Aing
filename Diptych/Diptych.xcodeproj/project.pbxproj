@@ -104,6 +104,8 @@
 		989DFFE12A5FDA3400EBBC12 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		AB2A9EA02A5EC46100D70C33 /* Diptych.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diptych.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychApp.swift; sourceTree = "<group>"; };
