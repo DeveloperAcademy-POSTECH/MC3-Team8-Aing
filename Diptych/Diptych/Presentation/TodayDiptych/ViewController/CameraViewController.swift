@@ -10,6 +10,17 @@ import AVFoundation
 import Photos
 import PhotosUI
 
+enum ImageDivisionAxis {
+    /// 세로선 왼쪽에 검은칠
+    case verticalLeft
+    /// 세로선 오른쪽에 검은칠
+    case verticalRight
+    /// 가로선 위에 검은칠
+    case horizontalUp
+    /// 가로선 아래에 검은칠
+    case horizontalDown
+}
+
 class CameraViewController: UIViewController {
     
     enum CurrentMode {
@@ -25,6 +36,9 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var btnChangePosition: UIButton!
     @IBOutlet weak var btnPhotoLibrary: UIButton!
     @IBOutlet weak var btnShutter: UIButton!
+    
+    @IBOutlet weak var viewOverlay: UIView!
+    @IBOutlet weak var tempSegDirection: UISegmentedControl!
     
     // MARK: - Vars
     var previewLayer: AVCaptureVideoPreviewLayer!
@@ -60,6 +74,8 @@ class CameraViewController: UIViewController {
         }
     }
     
+    var originalOverlayFrame: CGRect!
+    
     var photoData: Data?
     var pickerViewController: PHPickerViewController!
     private var pinchGesture: UIPinchGestureRecognizer!
@@ -81,6 +97,13 @@ class CameraViewController: UIViewController {
         // for i in 0...(allPhotos.count - 1) {
         //     print(allPhotos.object(at: i))
         // }
+        
+        DispatchQueue.main.async { [unowned self] in
+            viewOverlay.layoutIfNeeded()
+            originalOverlayFrame = viewOverlay.frame
+            
+            shrinkOverlayByAxis(.verticalLeft)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -93,13 +116,13 @@ class CameraViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func btnActShutter(_ sender: UIButton) {
-        guard !UIDevice.current.isSimulator else {
-            print("시뮬레이터에서는 작동하지 않습니다.")
-            return
-        }
-        
         switch currentMode {
         case .camera:
+            guard !UIDevice.current.isSimulator else {
+                print("시뮬레이터에서는 작동하지 않습니다.")
+                return
+            }
+            
             photoOutput.capturePhoto(with: photoSettings, delegate: self)
         case .retouch:
             guard let data = imgViewGuideOverlay.image?.jpegData(compressionQuality: 1) else {
@@ -156,6 +179,21 @@ class CameraViewController: UIViewController {
         //         print(newlySelectedAssetIdentifier)
         //     }
         // }
+    }
+    
+    @IBAction func tempSegActChangeGuideAxis(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            shrinkOverlayByAxis(.verticalLeft)
+        case 1:
+            shrinkOverlayByAxis(.verticalRight)
+        case 2:
+            shrinkOverlayByAxis(.horizontalUp)
+        case 3:
+            shrinkOverlayByAxis(.horizontalDown)
+        default:
+            break
+        }
     }
     
     // MARK: - Navigations
@@ -338,6 +376,32 @@ class CameraViewController: UIViewController {
         configuration.filter = .images
         pickerViewController = PHPickerViewController(configuration: configuration)
         pickerViewController.delegate = self
+    }
+    
+    /// 검은색 오버레이 뷰를 방향에 맞춰 분할
+    func shrinkOverlayByAxis(_ direction: ImageDivisionAxis) {
+        switch direction {
+        case .verticalLeft:
+            viewOverlay.frame = CGRect(x: originalOverlayFrame.minX,
+                                       y: originalOverlayFrame.minY,
+                                       width: originalOverlayFrame.width / 2,
+                                       height: originalOverlayFrame.height)
+        case .verticalRight:
+            viewOverlay.frame = CGRect(x: originalOverlayFrame.maxX - (originalOverlayFrame.width / 2),
+                                       y: originalOverlayFrame.minY,
+                                       width: originalOverlayFrame.size.width / 2,
+                                       height: originalOverlayFrame.size.height)
+        case .horizontalUp:
+            viewOverlay.frame = CGRect(x: originalOverlayFrame.minX,
+                                       y: originalOverlayFrame.minY,
+                                       width: originalOverlayFrame.size.width,
+                                       height: originalOverlayFrame.size.height / 2)
+        case .horizontalDown:
+            viewOverlay.frame = CGRect(x: originalOverlayFrame.minX,
+                                       y: originalOverlayFrame.minY + (originalOverlayFrame.height / 2),
+                                       width: originalOverlayFrame.size.width,
+                                       height: originalOverlayFrame.size.height / 2)
+        }
     }
     
     // MARK: - Permissions
