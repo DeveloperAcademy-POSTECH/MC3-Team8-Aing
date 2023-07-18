@@ -7,7 +7,7 @@
 
 import UIKit
 
-func transformImageBasedOnContainerView(imageView: UIImageView, containerView: UIView, width: CGFloat? = nil) -> UIImage? {
+func transformImageBasedOnContainerView(imageView: UIImageView, containerView: UIView) -> UIImage? {
     // https://stackoverflow.com/a/11177322
     
     guard let image = imageView.image else {

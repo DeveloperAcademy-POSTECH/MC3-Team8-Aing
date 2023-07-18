@@ -19,6 +19,30 @@ enum ImageDivisionAxis {
     case horizontalUp
     /// 가로선 아래에 검은칠
     case horizontalDown
+    
+    func rect(squareSideLength length: CGFloat) -> CGRect {
+        var startPoint: CGPoint {
+            switch self {
+            case .verticalLeft, .horizontalUp:
+                return .zero
+            case .verticalRight:
+                return .init(x: length / 2, y: 0)
+            case .horizontalDown:
+                return .init(x: 0, y: length / 2)
+            }
+        }
+        
+        var size: CGSize {
+            switch self{
+            case .verticalLeft, .verticalRight:
+                return .init(width: length / 2, height: length)
+            case .horizontalUp, .horizontalDown:
+                return .init(width: length, height: length / 2)
+            }
+        }
+        
+        return .init(origin: startPoint, size: size)
+    }
 }
 
 class CameraViewController: UIViewController {
@@ -87,6 +111,12 @@ class CameraViewController: UIViewController {
     private var rotationGesture: UIRotationGestureRecognizer!
     private var panGesture: UIPanGestureRecognizer!
     
+    private var currentAxis: ImageDivisionAxis = .verticalLeft {
+        didSet {
+            shrinkOverlayByAxis(currentAxis)
+        }
+    }
+    
     // MARK: - Lifecycles
     
     override func viewDidLoad() {
@@ -138,14 +168,20 @@ class CameraViewController: UIViewController {
             //
             // savePhotoToLibrary(data: data)
             
-            guard let transformedImage = transformImageBasedOnContainerView(imageView: imgViewGuideOverlay, containerView: scrollViewImageContainer, width: 2048),
-                  let data = transformedImage.resize(width: RESIZE_WIDTH, height: RESIZE_WIDTH).jpegData(compressionQuality: JPEG_COMPRESSION_QUALITY)
-            else {
+            guard let transformedImage = transformImageBasedOnContainerView(
+                imageView: imgViewGuideOverlay,
+                containerView: scrollViewImageContainer) else {
                 return
             }
-            // TODO: - 가이드라인에 따라 사진 자르기
             
-            savePhotoToLibrary(data: data) {_, _ in
+            let resizedImage = transformedImage.resize(width: RESIZE_WIDTH, height: RESIZE_WIDTH)
+            
+            // 가이드라인에 따라 사진 자르기
+            let cropRect: CGRect = currentAxis.rect(squareSideLength: RESIZE_WIDTH)
+            let croppedImage: CGImage? = resizedImage.cgImage!.cropping(to: cropRect)
+            let data = UIImage(cgImage: croppedImage!, scale: 1, orientation: transformedImage.imageOrientation).jpegData(compressionQuality: JPEG_COMPRESSION_QUALITY)
+            
+            savePhotoToLibrary(data: data!) {_, _ in
                 DispatchQueue.main.async {
                     self.dismiss(animated: true)
                 }
@@ -198,13 +234,13 @@ class CameraViewController: UIViewController {
     @IBAction func tempSegActChangeGuideAxis(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            shrinkOverlayByAxis(.verticalLeft)
+            currentAxis = .verticalLeft
         case 1:
-            shrinkOverlayByAxis(.verticalRight)
+            currentAxis = .verticalRight
         case 2:
-            shrinkOverlayByAxis(.horizontalUp)
+            currentAxis = .horizontalUp
         case 3:
-            shrinkOverlayByAxis(.horizontalDown)
+            currentAxis = .horizontalDown
         default:
             break
         }
@@ -385,23 +421,23 @@ class CameraViewController: UIViewController {
     func shrinkOverlayByAxis(_ direction: ImageDivisionAxis) {
         switch direction {
         case .verticalLeft:
-            viewOverlay.frame = CGRect(x: originalOverlayFrame.minX,
-                                       y: originalOverlayFrame.minY,
-                                       width: originalOverlayFrame.width / 2,
-                                       height: originalOverlayFrame.height)
-        case .verticalRight:
             viewOverlay.frame = CGRect(x: originalOverlayFrame.maxX - (originalOverlayFrame.width / 2),
                                        y: originalOverlayFrame.minY,
                                        width: originalOverlayFrame.size.width / 2,
                                        height: originalOverlayFrame.size.height)
-        case .horizontalUp:
+        case .verticalRight:
             viewOverlay.frame = CGRect(x: originalOverlayFrame.minX,
                                        y: originalOverlayFrame.minY,
+                                       width: originalOverlayFrame.width / 2,
+                                       height: originalOverlayFrame.height)
+        case .horizontalUp:
+            viewOverlay.frame = CGRect(x: originalOverlayFrame.minX,
+                                       y: originalOverlayFrame.minY + (originalOverlayFrame.height / 2),
                                        width: originalOverlayFrame.size.width,
                                        height: originalOverlayFrame.size.height / 2)
         case .horizontalDown:
             viewOverlay.frame = CGRect(x: originalOverlayFrame.minX,
-                                       y: originalOverlayFrame.minY + (originalOverlayFrame.height / 2),
+                                       y: originalOverlayFrame.minY,
                                        width: originalOverlayFrame.size.width,
                                        height: originalOverlayFrame.size.height / 2)
         }
@@ -557,7 +593,6 @@ extension CameraViewController: PHPickerViewControllerDelegate, PHPhotoLibraryCh
                 }
             }
         }
-        
     }
     
     func photoLibraryDidChange(_ changeInstance: PHChange) {}

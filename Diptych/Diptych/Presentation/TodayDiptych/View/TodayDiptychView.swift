@@ -17,7 +17,7 @@ struct TodayDiptychView: View {
             Button {
                isShowCamera = true
             } label: {
-                Text("카메라 열기 (임시)")
+                Label("[임시] 카메라 열기", systemImage: "camera.fill")
             }
         }.fullScreenCover(isPresented: $isShowCamera) {
             CameraRepresentableView()
