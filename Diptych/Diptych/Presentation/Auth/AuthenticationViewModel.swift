@@ -21,7 +21,7 @@ class AuthenticationViewModel: ObservableObject {
     //    @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: DiptychUser?
     @Published var flow: AuthenticationFlow = .isInitialized
-    @Published var isEmailVerified: Bool = false
+//    @Published var isEmailVerified: Bool = false
     
     init() {
         //        self.userSession = Auth.auth().currentUser //currentUser가 없으면 nil이 할당
@@ -75,18 +75,21 @@ class AuthenticationViewModel: ObservableObject {
     
     func checkEmailVerification() async throws {
         do {
-            repeat {
-                await wait()
-                try await Auth.auth().currentUser?.reload()
-                if let isEmailVerified = Auth.auth().currentUser?.isEmailVerified {
-                    self.isEmailVerified = isEmailVerified
+            Task {
+                repeat {
+                    await wait()
+                    try await Auth.auth().currentUser?.reload()
+                    if let isEmailVerified = Auth.auth().currentUser?.isEmailVerified {
+                        if isEmailVerified{
+                            self.flow = .isEmailVerified
+                        }
+                    }
+                } while self.flow != .isEmailVerified
+                if var currentUser = self.currentUser {
+                    currentUser.flow = self.flow.rawValue
+                    let encodedUser = try Firestore.Encoder().encode(currentUser)
+                    try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedUser, merge: true)
                 }
-            } while !self.isEmailVerified
-            await fetchUser()
-            self.currentUser?.flow = AuthenticationFlow.isEmailVerified.rawValue
-            if let currentUser = self.currentUser {
-                let encodedUser = try Firestore.Encoder().encode(currentUser)
-                try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedUser, merge: true)
             }
         }
         catch {

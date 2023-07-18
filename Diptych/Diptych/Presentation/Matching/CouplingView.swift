@@ -10,7 +10,7 @@ import SwiftUI
 struct CouplingView: View {
     @EnvironmentObject var authViewModel: AuthenticationViewModel
     var body: some View {
-        
+        Text("abc")
     }
 }
 
