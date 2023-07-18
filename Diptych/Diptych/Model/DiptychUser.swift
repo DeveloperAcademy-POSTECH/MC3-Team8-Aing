@@ -9,10 +9,14 @@ import Foundation
 
 struct DiptychUser: Identifiable, Codable {
     let id: String
-    let name: String
-    let nickname: String
     let email: String
-    let phoneNumber: String
-    let couplingCode: Int
-    let loverId: String
+    let name: String
+    
+    var flow: String
+    var sharedAlbumId: String?
+    var nickname: String?
+    var phoneNumber: String?
+    var couplingCode: String?
+    var loverId: String?
+    var startDay: Date?
 }

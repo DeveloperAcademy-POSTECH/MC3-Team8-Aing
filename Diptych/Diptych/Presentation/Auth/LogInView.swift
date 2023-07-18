@@ -24,7 +24,7 @@ struct LogInView: View {
                 //                        .frame(height: 138)
                 VStack(spacing: 37) {
                     VStack(alignment: .leading) {
-                        TextField("이메일", text: $authViewModel.email)
+                        TextField("이메일", text: $email)
                             .font(.pretendard(.light, size: 18))
                             .foregroundColor(.darkGray)
                             .keyboardType(.emailAddress)
@@ -44,7 +44,7 @@ struct LogInView: View {
                     .frame(height: 33)
                 HStack {
                     Button{
-                        print("입력: 아이디 찾기")
+                        print("pass: 아이디 찾기")
                     } label: {
                         Text("아이디 찾기")
                             .font(.pretendard(.thin, size: 15))
@@ -54,7 +54,7 @@ struct LogInView: View {
                         .font(.pretendard(.thin, size: 15))
                         .foregroundColor(.darkGray)
                     Button{
-                        print("입력: 비밀번호 찾기")
+                        print("pass: 비밀번호 찾기")
                     } label: {
                         Text("비밀번호 찾기")
                             .font(.pretendard(.thin, size: 15))
@@ -62,7 +62,7 @@ struct LogInView: View {
                     }
                 }
                 Spacer()
-                NavigationLink(destination: EmailVerificationView().environmentObject(authViewModel)) {
+                NavigationLink(destination: EmailVerificationView()) {
                     Text("로그인")
                         .frame(width: UIScreen.main.bounds.width-30, height:  60)
                         .background(Color.offBlack)
@@ -71,7 +71,7 @@ struct LogInView: View {
 //                            print("Tap!!!")
 //                        }
                 }
-                .disabled(true)
+//                .disabled(true)
                 //                Button {
                 //                    print("로그인 시도")
                 //                } label: {

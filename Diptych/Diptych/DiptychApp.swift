@@ -9,11 +9,11 @@ import SwiftUI
 import FirebaseCore
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(_ application: UIApplication,
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
-    return true
-  }
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        return true
+    }
 }
 
 @main
@@ -24,9 +24,21 @@ struct DiptychApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            DiptychTabView()
-            OnBoardingView()
-                .environmentObject(authViewModel)
+            //            DiptychTabView()
+            
+            switch authViewModel.flow {
+            case .isInitialized :
+                OnBoardingView()
+                    .environmentObject(authViewModel)
+            case .isSignedUp :
+                EmailVerificationView()
+                    .environmentObject(authViewModel)
+            case .isEmailVerified:
+                CouplingView()
+                    .environmentObject(authViewModel)
+            default:
+                DiptychTabView()
+            }
         }
     }
 }
