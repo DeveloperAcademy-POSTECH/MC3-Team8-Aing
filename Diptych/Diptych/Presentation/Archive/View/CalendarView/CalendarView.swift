@@ -108,7 +108,7 @@ private struct CellView: View {
     var body: some View {
         
             NavigationLink {
-               //DetailView()
+               ImageDetailView()
             } label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 18)

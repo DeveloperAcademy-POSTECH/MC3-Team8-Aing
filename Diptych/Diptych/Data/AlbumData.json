@@ -1,0 +1,20 @@
+[
+  {
+    "AlbumID": "230716",
+    "ContentID": "0",
+    "isCompleted" : false
+  },
+  
+  {
+    "AlbumID": "230717",
+    "ContentID": "1",
+    "isCompleted" : false
+  },
+  
+  {
+    "AlbumID": "230718",
+    "ContentID": "2",
+    "isCompleted" : false
+  }
+  
+]
