@@ -50,12 +50,8 @@ class AuthenticationViewModel: ObservableObject {
     func signUpWithEmailPassword(email: String, password: String, name: String) async throws {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
-            //            self.userSession = result.user
             let user = DiptychUser(id: result.user.uid, email: email, name: name, flow: "isSignedUp")
-            //            print(user.id)
-            //            print(user.email)
             let encodedUser = try Firestore.Encoder().encode(user)
-            //            print(encodedUser)
             try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
             await fetchUser()
         }
@@ -91,9 +87,6 @@ class AuthenticationViewModel: ObservableObject {
                     try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedUser, merge: true)
                 }
             }
-        }
-        catch {
-            print(error.localizedDescription)
         }
     }
     
