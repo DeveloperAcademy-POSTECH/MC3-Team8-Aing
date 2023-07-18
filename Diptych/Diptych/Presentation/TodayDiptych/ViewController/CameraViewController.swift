@@ -132,11 +132,16 @@ class CameraViewController: UIViewController {
             
             savePhotoToLibrary(data: data)
             
-            guard let transfomredImage = transformImageBasedOnContainerView(imageView: imgViewGuideOverlay, containerView: scrollViewImageContainer),
-                  let transformedData = transfomredImage.jpegData(compressionQuality: 1) else {
+            guard let transformedImage = transformImageBasedOnContainerView(imageView: imgViewGuideOverlay, containerView: scrollViewImageContainer) else {
                 return
             }
-            savePhotoToLibrary(data: transformedData)
+            let resizedImage = transformedImage.resize(width: 2048, height: 2048)
+            // print("resizedImage:", resizedImage.size)
+            guard let resizedData = resizedImage.jpegData(compressionQuality: 1) else {
+                return
+            }
+            
+            savePhotoToLibrary(data: resizedData)
         }
     }
     

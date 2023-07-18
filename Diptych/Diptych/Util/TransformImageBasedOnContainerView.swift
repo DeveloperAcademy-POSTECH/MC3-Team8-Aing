@@ -32,6 +32,7 @@ func transformImageBasedOnContainerView(imageView: UIImageView, containerView: U
     // CGContextScaleCTM(context, 1 / effectiveScale, 1 / effectiveScale)
     context.scaleBy(x: 1 / effectiveScale, y: 1 / effectiveScale)
     containerView.layer.render(in: context)
+    
     let outputImage = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
     

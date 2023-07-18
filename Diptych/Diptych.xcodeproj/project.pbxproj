@@ -12,6 +12,7 @@
 		445A47B82A60125B005573DC /* CameraRepresentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A47B72A60125B005573DC /* CameraRepresentableView.swift */; };
 		44629CBC2A65726500DE14D4 /* TransformImageBasedOnContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44629CBB2A65726500DE14D4 /* TransformImageBasedOnContainerView.swift */; };
 		44629CBE2A65759200DE14D4 /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44629CBD2A65759200DE14D4 /* UIDevice+.swift */; };
+		44629CC02A667F7E00DE14D4 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44629CBF2A667F7E00DE14D4 /* UIImage+.swift */; };
 		AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */; };
 		AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */; };
 		AB2A9EA82A5EC46200D70C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */; };
@@ -83,6 +84,7 @@
 		445A47B72A60125B005573DC /* CameraRepresentableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRepresentableView.swift; sourceTree = "<group>"; };
 		44629CBB2A65726500DE14D4 /* TransformImageBasedOnContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformImageBasedOnContainerView.swift; sourceTree = "<group>"; };
 		44629CBD2A65759200DE14D4 /* UIDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
+		44629CBF2A667F7E00DE14D4 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		AB2A9EA02A5EC46100D70C33 /* Diptych.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diptych.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychApp.swift; sourceTree = "<group>"; };
 		AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychTabView.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				AB2AC1F42A5F15A100B162E1 /* Color+.swift */,
 				AB2AC2272A5F922F00B162E1 /* Font+.swift */,
 				44629CBD2A65759200DE14D4 /* UIDevice+.swift */,
+				44629CBF2A667F7E00DE14D4 /* UIImage+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 				AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */,
 				44629CBE2A65759200DE14D4 /* UIDevice+.swift in Sources */,
 				AB2AC1ED2A5F093B00B162E1 /* TodayDiptychView.swift in Sources */,
+				44629CC02A667F7E00DE14D4 /* UIImage+.swift in Sources */,
 				445A47B82A60125B005573DC /* CameraRepresentableView.swift in Sources */,
 				AB2AC1F52A5F15A100B162E1 /* Color+.swift in Sources */,
 				445A47B62A601231005573DC /* CameraViewController.swift in Sources */,
