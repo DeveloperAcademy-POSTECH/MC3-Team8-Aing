@@ -64,14 +64,20 @@ struct CalendarView: View {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7),
                       spacing: 0) {
                 ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
-                    //1일 이전
+                    // #빈칸 표시
                     if index < firstWeekday {
                         Color.clear
                     }
+                    // #날짜 표시
                     else {
                         let day = index - firstWeekday + 1
                         let currentDate = Calendar.current.component(.day, from: Date())
-                        CellView(day: day, cellColor: index - firstWeekday + 1 == currentDate ? Color.systemSalmon : Color.gray.opacity(0.2))
+                        /// 오늘 날짜 표시 
+                        if index - firstWeekday + 1 == currentDate && changeMonthInt == 0 {
+                            CellView(day: day, cellColor: Color.systemSalmon)
+                        } else {
+                            CellView(day: day, cellColor:Color.gray.opacity(0.2))
+                        }
                     }
 
                     
