@@ -45,7 +45,7 @@ struct CalendarView: View {
                     .font(.title2)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                    .padding(.trailing)
+                    .padding(.trailing,15)
             }//】 HStack
             .padding(.bottom,30)
         
@@ -58,34 +58,31 @@ struct CalendarView: View {
                 }//: Loop
             }//】 HStack
             .padding(.bottom, 10)
-            .padding(.horizontal,9)
+            .padding(.horizontal,13)
         
             /// [3]날짜
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7),
                       spacing: 0) {
                 ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
-                    let day = index - firstWeekday + 1
                     //1일 이전
                     if index < firstWeekday {
                         Color.clear
                     }
-                    //1일 이후 부터 날짜 표시
                     else {
-                        CellView(day: day, cellColor: .gray.opacity(0.3))
+                        let day = index - firstWeekday + 1
+                        let currentDate = Calendar.current.component(.day, from: Date())
+                        CellView(day: day, cellColor: index - firstWeekday + 1 == currentDate ? Color.systemSalmon : Color.gray.opacity(0.2))
                     }
-//                  else {
-//                      CellView(day: day,
-//                              cellColor: index - firstWeekday == Data().day ? Color.gray : Color.orange
-//                      )
-//                  }
+
+                    
                 }//: Loop
             }//: LazyGrid
-            .padding(.horizontal,10)
+            .padding(.horizontal,15)
            
         
         }//】 VStack
-        
         .padding(.top,51)
+        
         
     }//: oneMonthCalendarView
 
@@ -101,9 +98,6 @@ private struct CellView: View {
     var day: Int
     var cellColor : Color
   
-//    init(day: Int) {
-//        self.day = day
-//    }
   
     var body: some View {
         
@@ -130,17 +124,6 @@ private struct CellView: View {
 
 // MARK: - 내부 메서드
 private extension CalendarView {
-    
-    /// 특정 해당 날짜
-//    private func getDate(for data: Int) -> Date {
-//        return Calendar.current.date(byAdding: .day, value: data, to: startOfMonth())!
-//    }
-  
-    /// 이번달 시작일
-//    func startOfMonth() -> Date {
-//        let components = Calendar.current.dateComponents([.year, .month], from: month)
-//        return Calendar.current.date(from: components)!
-//    }
   
     /// 이번달 날짜 수
     func numberOfDays(in data: Date) -> Int {

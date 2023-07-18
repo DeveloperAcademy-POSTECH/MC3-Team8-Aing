@@ -31,10 +31,14 @@ struct ArchiveTabView: View {
                     .buttonStyle(.plain)
                 }//】 Loop
             }//】 HStack
+            .frame(maxWidth: .infinity)
             .padding(.horizontal,30)
+            .background(Color.gray.opacity(0.1))
+//            .ignoresSafeArea()
             
             Divider()
-                .frame(width: 363, height: 1)
+                .foregroundColor(.lightGray)
+                .frame(height: 1)
             
             
             /// 각 뷰로 이동

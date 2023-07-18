@@ -36,8 +36,9 @@ struct DiptychTabView: View {
                     Text("프로필")
                 }
                 .tag(2)
-        }
+        }// TabView
         .tint(.black)
+        .background(Color.white)
         .onAppear {
             UITabBar.appearance().unselectedItemTintColor = .darkGray
         }

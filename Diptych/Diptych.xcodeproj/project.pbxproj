@@ -27,7 +27,6 @@
 		AB2A9EBF2A5EC46300D70C33 /* DiptychUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EBE2A5EC46300D70C33 /* DiptychUITests.swift */; };
 		AB2A9EC12A5EC46300D70C33 /* DiptychUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EC02A5EC46300D70C33 /* DiptychUITestsLaunchTests.swift */; };
 		AB2AC1ED2A5F093B00B162E1 /* TodayDiptychView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC1EC2A5F093B00B162E1 /* TodayDiptychView.swift */; };
-		AB2AC1F02A5F094F00B162E1 /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC1EF2A5F094F00B162E1 /* ArchiveView.swift */; };
 		AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC1F22A5F097400B162E1 /* ProfileView.swift */; };
 		AB2AC1F52A5F15A100B162E1 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC1F42A5F15A100B162E1 /* Color+.swift */; };
 		AB2AC2002A5F280000B162E1 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = AB2AC1F72A5F27FF00B162E1 /* Pretendard-ExtraBold.otf */; };
@@ -107,7 +106,6 @@
 		AB2A9EBE2A5EC46300D70C33 /* DiptychUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychUITests.swift; sourceTree = "<group>"; };
 		AB2A9EC02A5EC46300D70C33 /* DiptychUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		AB2AC1EC2A5F093B00B162E1 /* TodayDiptychView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDiptychView.swift; sourceTree = "<group>"; };
-		AB2AC1EF2A5F094F00B162E1 /* ArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
 		AB2AC1F22A5F097400B162E1 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		AB2AC1F42A5F15A100B162E1 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		AB2AC1F72A5F27FF00B162E1 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
@@ -240,7 +238,6 @@
 		AB2AC1EE2A5F094600B162E1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				AB2AC1EF2A5F094F00B162E1 /* ArchiveView.swift */,
 				F3263A922A6543F700B4581C /* ArchiveTabView.swift */,
 				F3263A942A65441B00B4581C /* CalendarView */,
 				F3263A952A65442700B4581C /* AlbumView */,
@@ -608,7 +605,6 @@
 				F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */,
 				445A47B12A5FE3DE005573DC /* AlbumNavigationView.swift in Sources */,
 				445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */,
-				AB2AC1F02A5F094F00B162E1 /* ArchiveView.swift in Sources */,
 				AB2AC2232A5F8E8700B162E1 /* PretendardType.swift in Sources */,
 				989DFFE52A5FDC4B00EBBC12 /* OnBoardingView.swift in Sources */,
 				987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */,
@@ -779,7 +775,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
-				DEVELOPMENT_TEAM = 6S2SA26VAN;
+				DEVELOPMENT_TEAM = ADXSYH5NDX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diptych/Info.plist;
@@ -809,7 +805,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
-				DEVELOPMENT_TEAM = 6S2SA26VAN;
+				DEVELOPMENT_TEAM = ADXSYH5NDX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diptych/Info.plist;
