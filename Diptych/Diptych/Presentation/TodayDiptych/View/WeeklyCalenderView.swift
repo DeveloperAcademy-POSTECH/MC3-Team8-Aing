@@ -22,7 +22,7 @@ enum WeeklytDiptych {
 struct WeeklyCalenderView: View {
     @State var day: String
     @State var isToday: Bool
-    var todayDiptych = TodayDiptych.incomplete
+    var todayDiptych = TodayDiptych.half
     var weeklyDiptych = WeeklytDiptych.future
 
     var body: some View {

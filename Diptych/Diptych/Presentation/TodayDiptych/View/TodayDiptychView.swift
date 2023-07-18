@@ -42,6 +42,12 @@ struct TodayDiptychView: View {
                 HStack(spacing: 0) {
                     Rectangle()
                         .fill(Color.lightGray)
+                        .overlay {
+                            Image("imgDiptychCamera")
+                                .onTapGesture {
+                                    print("카메라뷰")
+                                }
+                        }
                     Rectangle()
                         .fill(Color.offBlack)
                 }
