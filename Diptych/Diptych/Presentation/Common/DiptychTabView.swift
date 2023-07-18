@@ -33,7 +33,7 @@ struct DiptychTabView: View {
                 }
                 .tag(2)
         }
-        .tint(.black)
+        .tint(.offBlack)
         .onAppear {
             UITabBar.appearance().unselectedItemTintColor = .darkGray
         }
