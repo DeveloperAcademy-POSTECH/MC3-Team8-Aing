@@ -17,6 +17,7 @@ extension UIImage {
         let img = UIGraphicsGetImageFromCurrentImageContext()
         let imageData = img?.pngData()
         UIGraphicsEndImageContext()
+        
         return UIImage(data: imageData!) ?? UIImage()
     }
 }

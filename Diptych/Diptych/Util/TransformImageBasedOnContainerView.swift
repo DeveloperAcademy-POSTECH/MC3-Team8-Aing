@@ -7,7 +7,7 @@
 
 import UIKit
 
-func transformImageBasedOnContainerView(imageView: UIImageView, containerView: UIView) -> UIImage? {
+func transformImageBasedOnContainerView(imageView: UIImageView, containerView: UIView, width: CGFloat? = nil) -> UIImage? {
     // https://stackoverflow.com/a/11177322
     
     guard let image = imageView.image else {
@@ -31,6 +31,7 @@ func transformImageBasedOnContainerView(imageView: UIImageView, containerView: U
     
     // CGContextScaleCTM(context, 1 / effectiveScale, 1 / effectiveScale)
     context.scaleBy(x: 1 / effectiveScale, y: 1 / effectiveScale)
+    
     containerView.layer.render(in: context)
     
     let outputImage = UIGraphicsGetImageFromCurrentImageContext()

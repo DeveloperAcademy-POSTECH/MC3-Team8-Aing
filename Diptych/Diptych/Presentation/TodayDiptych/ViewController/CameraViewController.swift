@@ -40,6 +40,10 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var viewOverlay: UIView!
     @IBOutlet weak var tempSegDirection: UISegmentedControl!
     
+    // MARK: - Constants
+    let RESIZE_WIDTH: CGFloat = 2048
+    let JPEG_COMPRESSION_QUALITY: CGFloat = 1.0
+    
     // MARK: - Vars
     var previewLayer: AVCaptureVideoPreviewLayer!
     var captureSession: AVCaptureSession!
@@ -125,23 +129,26 @@ class CameraViewController: UIViewController {
             
             photoOutput.capturePhoto(with: photoSettings, delegate: self)
         case .retouch:
-            guard let data = imgViewGuideOverlay.image?.jpegData(compressionQuality: 1) else {
-                debugPrint("\(#function): Image data is nil")
+            // guard let data = imgViewGuideOverlay.image?.jpegData(compressionQuality: 1) else {
+            //     debugPrint("\(#function): Image data is nil")
+            //     return
+            // }
+            //
+            // savePhotoToLibrary(data: data)
+            
+            guard let transformedImage = transformImageBasedOnContainerView(imageView: imgViewGuideOverlay, containerView: scrollViewImageContainer, width: 2048),
+                  let data = transformedImage.resize(width: RESIZE_WIDTH, height: RESIZE_WIDTH).jpegData(compressionQuality: JPEG_COMPRESSION_QUALITY)
+            else {
                 return
             }
+            // TODO: - 가이드라인에 따라 사진 자르기
             
-            savePhotoToLibrary(data: data)
-            
-            guard let transformedImage = transformImageBasedOnContainerView(imageView: imgViewGuideOverlay, containerView: scrollViewImageContainer) else {
-                return
+            savePhotoToLibrary(data: data) {_, _ in
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true)
+                }
+                
             }
-            let resizedImage = transformedImage.resize(width: 2048, height: 2048)
-            // print("resizedImage:", resizedImage.size)
-            guard let resizedData = resizedImage.jpegData(compressionQuality: 1) else {
-                return
-            }
-            
-            savePhotoToLibrary(data: resizedData)
         }
     }
     
@@ -287,7 +294,7 @@ class CameraViewController: UIViewController {
         previewLayer.videoGravity = .resizeAspectFill   // 프레임 크기에 맞춰 리사이즈(비율 깨지지 않음)
     }
     
-    func savePhotoToLibrary(data: Data) {
+    func savePhotoToLibrary(data: Data, completionHandler: ((Bool, Error?) -> Void)? = nil) {
         // 권한 요청
         PHPhotoLibrary.requestAuthorization { status in
             guard status == .authorized else {
@@ -298,7 +305,7 @@ class CameraViewController: UIViewController {
             PHPhotoLibrary.shared().performChanges({
                 let creationRequest = PHAssetCreationRequest.forAsset()
                 creationRequest.addResource(with: .photo, data: data, options: nil)
-            }, completionHandler: nil)
+            }, completionHandler: completionHandler)
         }
     }
     

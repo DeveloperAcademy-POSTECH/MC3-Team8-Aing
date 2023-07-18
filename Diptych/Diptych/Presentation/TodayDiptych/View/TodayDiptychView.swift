@@ -13,6 +13,7 @@ struct TodayDiptychView: View {
     var body: some View {
         VStack {
             Text("TodayDiptychView")
+            Divider()
             Button {
                isShowCamera = true
             } label: {
