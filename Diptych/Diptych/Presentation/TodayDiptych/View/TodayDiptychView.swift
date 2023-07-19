@@ -31,6 +31,7 @@ struct TodayDiptychView: View {
                 .padding(.top, 79)
 
                 HStack {
+                    // TODO: - 유저가 가입한 날짜와 연관하여 작업하기
                     Text("\"\(viewModel.question)\"")
                         .lineSpacing(6)
                         .font(.pretendard(.light, size: 28))
@@ -58,27 +59,29 @@ struct TodayDiptychView: View {
                 .padding(.bottom, 23)
 
                 HStack(spacing: 9) {
-//                    ForEach(0..<7) { index in
-//                        WeeklyCalenderView(day: days[index])
-//                    }
-                    WeeklyCalenderView(day: days[0], isToday: false)
-                    WeeklyCalenderView(day: days[1], isToday: false)
-                    WeeklyCalenderView(day: days[2], isToday: true)
-                    WeeklyCalenderView(day: days[3], isToday: false)
-                    WeeklyCalenderView(day: days[4], isToday: false)
-                    WeeklyCalenderView(day: days[5], isToday: false)
-                    WeeklyCalenderView(day: days[6], isToday: false)
+                    if viewModel.isLoading {
+                        Text("로딩 중..")
+                    } else {
+                        ForEach(0..<viewModel.weeklyData.count, id: \.self) { index in
+                            if index == viewModel.weeklyData.count - 1 {
+                                WeeklyCalenderView(day: days[index], isToday: true, diptychState: viewModel.weeklyData[index])
+                            } else {
+                                WeeklyCalenderView(day: days[index], isToday: false, diptychState: viewModel.weeklyData[index])
+                            }
+                         }
+                        ForEach(viewModel.weeklyData.count..<7, id: \.self) { index in
+                            WeeklyCalenderView(day: days[index], isToday: false, diptychState: .incomplete)
+                        }
+                    }
                 }
             }
             .padding(.bottom, 23)
         }
         .ignoresSafeArea(edges: .top)
         .onAppear {
-//            Task {
-//                await viewModel.fetchTodayQuestion()
-//            }
-//            viewModel.fetchWeeklyCalender()
-//            viewModel.fetchAll()
+            Task {
+                await viewModel.fetchWeeklyCalender()
+            }
         }
     }
 }

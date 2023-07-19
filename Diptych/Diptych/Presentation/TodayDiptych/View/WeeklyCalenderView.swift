@@ -7,23 +7,16 @@
 
 import SwiftUI
 
-enum TodayDiptych {
-    case complete
+enum DiptychState {
+    case incomplete
     case half
-    case incomplete
-}
-
-enum WeeklytDiptych {
     case complete
-    case incomplete
-    case future
 }
 
 struct WeeklyCalenderView: View {
     @State var day: String
     @State var isToday: Bool
-    var todayDiptych = TodayDiptych.half
-    var weeklyDiptych = WeeklytDiptych.future
+    var diptychState = DiptychState.incomplete
 
     var body: some View {
         VStack(spacing: 9) {
@@ -34,34 +27,29 @@ struct WeeklyCalenderView: View {
                 RoundedRectangle(cornerRadius: 18)
                     .stroke(Color.systemSalmon, lineWidth: isToday ? 2 : 0)
                     .frame(width: 44, height: 50)
-                    .overlay(
-                        Group {
-                            if isToday {
-                                switch todayDiptych {
-                                case .complete:
-                                    RoundedRectangle(cornerRadius: 18)
-                                        .fill(Color.systemSalmon)
-                                case .half:
-                                    RoundedRectangle(cornerRadius: 18)
-                                        .trim(from: 0.25, to: 0.75)
-                                        .fill(Color.systemSalmon)
-                                case .incomplete:
-                                    EmptyView()
-                                }
-                            } else {
-                                switch weeklyDiptych {
-                                case .complete:
-                                    RoundedRectangle(cornerRadius: 18)
-                                        .fill(Color.systemSalmon)
-                                case .incomplete:
-                                    RoundedRectangle(cornerRadius: 18)
-                                        .fill(Color.lightGray)
-                                case .future:
-                                    EmptyView()
-                                }
+                    .overlay {
+                        if isToday {
+                            switch diptychState {
+                            case .incomplete:
+                                EmptyView()
+                            case .half:
+                                RoundedRectangle(cornerRadius: 18)
+                                    .trim(from: 0.25, to: 0.75)
+                                    .fill(Color.systemSalmon)
+                            case .complete:
+                                RoundedRectangle(cornerRadius: 18)
+                                    .fill(Color.systemSalmon)
+                            }
+                        } else {
+                            switch diptychState {
+                            case .complete:
+                                RoundedRectangle(cornerRadius: 18)
+                                    .fill(Color.green)
+                            default:
+                                EmptyView()
                             }
                         }
-                    )
+                    }
                 Text("07")
                     .font(.pretendard(.bold, size: 16))
                     .foregroundColor(.offBlack)
