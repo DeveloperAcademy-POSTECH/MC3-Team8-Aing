@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct TodayDiptychView: View {
+
+    @StateObject private var viewModel = TodayDiptychViewModel()
     let days = ["월", "화", "수", "목", "금", "토", "일"]
 
     var body: some View {
         ZStack {
             Color.offWhite
-
             VStack(spacing: 0) {
                 HStack {
                     Text("오늘의 주제")
@@ -30,7 +31,8 @@ struct TodayDiptychView: View {
                 .padding(.top, 79)
 
                 HStack {
-                    Text("\"상대방의 표정 중 당신이\n가장 좋아하는 표정은?\"")
+                    Text("\"\(viewModel.question)\"")
+                        .lineSpacing(6)
                         .font(.pretendard(.light, size: 28))
                         .foregroundColor(.offBlack)
                         .padding(.top, 12)
@@ -71,6 +73,13 @@ struct TodayDiptychView: View {
             .padding(.bottom, 23)
         }
         .ignoresSafeArea(edges: .top)
+        .onAppear {
+//            Task {
+//                await viewModel.fetchTodayQuestion()
+//            }
+//            viewModel.fetchWeeklyCalender()
+//            viewModel.fetchAll()
+        }
     }
 }
 
