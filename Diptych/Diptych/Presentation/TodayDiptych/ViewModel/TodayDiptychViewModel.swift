@@ -49,9 +49,6 @@ class TodayDiptychViewModel: ObservableObject {
          seconds로만 검색할 수 없나 -> 이번주 월요일의 날짜를 구해서 넣기
          일단은 월요일(7/17)로 해서 넣음 ^_^
          */
-//        await MainActor.run {
-//            isLoading = true
-//        }
 
         isLoading = true
 
@@ -86,5 +83,27 @@ class TodayDiptychViewModel: ObservableObject {
         }
 
         isLoading = false
+    }
+
+    func fetchThisMonday() -> Timestamp {
+        let currentDate = Date()
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
+
+        let currentWeekday = calendar.component(.weekday, from: currentDate)
+        let daysUntilMonday = (2 - currentWeekday + 7) % 7
+
+        guard let thisMonday = calendar.date(byAdding: .day, value: daysUntilMonday, to: currentDate) else { return Timestamp() }
+        guard let previousMonday = calendar.date(byAdding: .day, value: -7, to: thisMonday) else { return Timestamp() }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd 00:00:00"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+
+        let previousMondayString = dateFormatter.string(from: previousMonday)
+        print(previousMondayString)
+        let timestamp = Timestamp(date: previousMonday)
+
+        return timestamp
     }
 }

@@ -15,6 +15,7 @@ enum DiptychState {
 
 struct WeeklyCalenderView: View {
     @State var day: String
+    @State var date: String
     @State var isToday: Bool
     var diptychState = DiptychState.incomplete
 
@@ -50,7 +51,7 @@ struct WeeklyCalenderView: View {
                             }
                         }
                     }
-                Text("07")
+                Text(date)
                     .font(.pretendard(.bold, size: 16))
                     .foregroundColor(.offBlack)
                     .padding(.top, 7)
@@ -62,8 +63,8 @@ struct WeeklyCalenderView: View {
 struct WeeklyCalenderView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            WeeklyCalenderView(day: "월", isToday: true)
-            WeeklyCalenderView(day: "월", isToday: false)
+            WeeklyCalenderView(day: "월", date: "07", isToday: true)
+            WeeklyCalenderView(day: "월", date: "08", isToday: false)
         }
         .previewLayout(.sizeThatFits)
     }

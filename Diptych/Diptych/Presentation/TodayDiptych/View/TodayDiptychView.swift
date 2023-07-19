@@ -11,6 +11,7 @@ struct TodayDiptychView: View {
 
     @StateObject private var viewModel = TodayDiptychViewModel()
     let days = ["월", "화", "수", "목", "금", "토", "일"]
+    let dates = ["17", "18", "19", "20", "21", "22", "23"] // 일단 날짜 박아두기
 
     var body: some View {
         ZStack {
@@ -64,13 +65,13 @@ struct TodayDiptychView: View {
                     } else {
                         ForEach(0..<viewModel.weeklyData.count, id: \.self) { index in
                             if index == viewModel.weeklyData.count - 1 {
-                                WeeklyCalenderView(day: days[index], isToday: true, diptychState: viewModel.weeklyData[index])
+                                WeeklyCalenderView(day: days[index], date: dates[index], isToday: true, diptychState: viewModel.weeklyData[index])
                             } else {
-                                WeeklyCalenderView(day: days[index], isToday: false, diptychState: viewModel.weeklyData[index])
+                                WeeklyCalenderView(day: days[index], date: dates[index], isToday: false, diptychState: viewModel.weeklyData[index])
                             }
                          }
                         ForEach(viewModel.weeklyData.count..<7, id: \.self) { index in
-                            WeeklyCalenderView(day: days[index], isToday: false, diptychState: .incomplete)
+                            WeeklyCalenderView(day: days[index], date: dates[index], isToday: false, diptychState: .incomplete)
                         }
                     }
                 }
