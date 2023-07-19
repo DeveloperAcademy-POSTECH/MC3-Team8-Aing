@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct TodayDiptychView: View {
-    @State var isShowCamera = false
-    
     let days = ["월", "화", "수", "목", "금", "토", "일"]
 
     var body: some View {
@@ -48,7 +46,6 @@ struct TodayDiptychView: View {
                             Image("imgDiptychCamera")
                                 .onTapGesture {
                                     print("카메라뷰")
-                                    isShowCamera = true
                                 }
                         }
                     Rectangle()
@@ -74,10 +71,6 @@ struct TodayDiptychView: View {
             .padding(.bottom, 23)
         }
         .ignoresSafeArea(edges: .top)
-        .fullScreenCover(isPresented: $isShowCamera) {
-            CameraRepresentableView()
-                .toolbar(.hidden, for: .tabBar)
-        }
     }
 }
 

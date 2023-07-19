@@ -14,6 +14,7 @@
 		44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */; };
 		44DE9B952A67DCA000E6615B /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B942A67DCA000E6615B /* CameraViewController.swift */; };
 		44DE9B972A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */; };
+		44DE9B992A67E8C000E6615B /* CameraStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44DE9B982A67E8C000E6615B /* CameraStoryBoard.storyboard */; };
 		987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E425B2A5FE17F00C682D9 /* LogInView.swift */; };
 		989B44922A65605800D99439 /* EmailVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44912A65605800D99439 /* EmailVerificationView.swift */; };
 		989B44942A65752100D99439 /* CouplingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44932A65752100D99439 /* CouplingView.swift */; };
@@ -111,6 +112,7 @@
 		44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRepresentableView.swift; sourceTree = "<group>"; };
 		44DE9B942A67DCA000E6615B /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformImageBasedOnContainerView.swift; sourceTree = "<group>"; };
+		44DE9B982A67E8C000E6615B /* CameraStoryBoard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CameraStoryBoard.storyboard; sourceTree = "<group>"; };
 		987E425B2A5FE17F00C682D9 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		987E425F2A627A2B00C682D9 /* Diptych.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Diptych.entitlements; sourceTree = "<group>"; };
 		989B44912A65605800D99439 /* EmailVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationView.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				44DE9B942A67DCA000E6615B /* CameraViewController.swift */,
+				44DE9B982A67E8C000E6615B /* CameraStoryBoard.storyboard */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -634,6 +637,7 @@
 				AB2A9EAB2A5EC46200D70C33 /* Preview Assets.xcassets in Resources */,
 				AB2AC2152A5F280000B162E1 /* Pretendard-Medium.otf in Resources */,
 				ABFA53B62A5F95FE00298F3B /* Colors.xcassets in Resources */,
+				44DE9B992A67E8C000E6615B /* CameraStoryBoard.storyboard in Resources */,
 				AB2AC20F2A5F280000B162E1 /* Pretendard-Light.otf in Resources */,
 				AB2A9EA82A5EC46200D70C33 /* Assets.xcassets in Resources */,
 				AB2AC20C2A5F280000B162E1 /* Pretendard-Bold.otf in Resources */,
