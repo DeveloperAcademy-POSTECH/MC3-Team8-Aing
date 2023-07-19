@@ -12,7 +12,8 @@ import SwiftUI
 struct CalendarView: View {
     
     //property
-    @State var month: Date
+    @StateObject var VM: AlbumViewModel = AlbumViewModel()
+    @State var date: Date
     let changeMonthInt : Int
     
     var body: some View {
@@ -30,18 +31,18 @@ struct CalendarView: View {
     
   // MARK: - 월별 캘린더 뷰
     private var oneMonthCalendarView: some View {
-        let daysInMonth: Int = numberOfDays(in: month)
-        let firstWeekday: Int = firstWeekdayOfMonth(in: month) - 1
+        let daysInMonth: Int = numberOfDays(in: date)
+        let firstWeekday: Int = firstWeekdayOfMonth(in: date) - 1
 
         return VStack(spacing: 0) {
         
             /// [1]월
             HStack(spacing: 0) {
-                Text(month, formatter: Self.dateFormatter)
+                Text(date, formatter: Self.monthFormatter)
                     .font(.system(size:36, weight: .light))
                     .padding(.leading,15)
                 Spacer()
-                Text(month, formatter: Self.dateFormatter2)
+                Text(date, formatter: Self.yearFormatter)
                     .font(.title2)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
@@ -64,18 +65,21 @@ struct CalendarView: View {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7),
                       spacing: 0) {
                 ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
-                    // #빈칸 표시
+                    /// 빈칸 표시
                     if index < firstWeekday {
                         Color.clear
                     }
-                    // #날짜 표시
+                    /// 날짜 표시
                     else {
                         let day = index - firstWeekday + 1
                         let currentDate = Calendar.current.component(.day, from: Date())
+                        
                         /// 오늘 날짜 표시 
                         if index - firstWeekday + 1 == currentDate && changeMonthInt == 0 {
                             CellView(day: day, cellColor: Color.systemSalmon)
-                        } else {
+                        }
+                        /// 평소 날짜 표시
+                        else {
                             CellView(day: day, cellColor:Color.gray.opacity(0.2))
                         }
                     }
@@ -103,17 +107,23 @@ private struct CellView: View {
     //property
     var day: Int
     var cellColor : Color
-  
-  
+    
     var body: some View {
         
+//        if {
             NavigationLink {
-               ImageDetailView()
+                ImageDetailView()
             } label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 18)
                         .frame(width: 44, height: 50)
                         .foregroundColor(cellColor)
+                    
+                    //                Image("DummyThumbnail_5")
+                    //                    .resizable()
+                    //                    .scaledToFill()
+                    //                    .frame(width: 44, height: 50)
+                    //                    .clipShape(RoundedRectangle(cornerRadius: 18))
                     
                     Text(String(day))
                         .font(.system(size:16, weight: .bold))
@@ -122,7 +132,17 @@ private struct CellView: View {
                 }//】 ZStack
                 .padding(.bottom, 19)
             }//】 NavigationLink
-        
+//        } else {
+//            ZStack{
+//                RoundedRectangle(cornerRadius: 18)
+//                    .frame(width: 44, height: 50)
+//                    .foregroundColor(Color.clear)
+//
+//                Text(String(day))
+//                    .font(.system(size:16, weight: .bold))
+//                    .foregroundColor(.black)
+//                    .offset(y:-13)
+//        }
         
     }//】 Body
 }// CellView
@@ -146,8 +166,8 @@ private extension CalendarView {
   
     /// 월 변경
     func changeMonth(by data: Int) {
-        if let newMonth = Calendar.current.date(byAdding: .month, value: data, to: month) {
-            self.month = newMonth
+        if let newMonth = Calendar.current.date(byAdding: .month, value: data, to: date) {
+            self.date = newMonth
         }
     }
     
@@ -157,13 +177,13 @@ private extension CalendarView {
 // MARK: - Static Property
 extension CalendarView {
     
-    static let dateFormatter: DateFormatter = {
+    static let monthFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "M월"
         return formatter
     }()
     
-    static let dateFormatter2: DateFormatter = {
+    static let yearFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "YYYY년"
         return formatter
@@ -175,6 +195,6 @@ extension CalendarView {
 // MARK: - Previews
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        CalendarView(month: Date(), changeMonthInt: 0)
+        CalendarView(date: Date(), changeMonthInt: 0)
     }
 }

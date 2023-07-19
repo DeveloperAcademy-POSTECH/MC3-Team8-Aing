@@ -19,7 +19,7 @@ struct CalendarScrollView: View {
                 ScrollView(.vertical) {
                     VStack(spacing: 0) {
                         ForEach(0...11, id:\.self) { index in
-                            CalendarView(month: Date.now, changeMonthInt: index-11)
+                            CalendarView(date: Date.now, changeMonthInt: index-11)
                         }
                     }
                     .background(Color.gray.opacity(0.1))
@@ -31,10 +31,6 @@ struct CalendarScrollView: View {
         }//】 Navigation
     }//】 Body
 }
-
-
-
-
 
 
 

@@ -1,18 +1,15 @@
 [
-  {
-    "AlbumID": "230716",
+  {"id": "230716",
     "ContentID": "0",
     "isCompleted" : false
   },
   
-  {
-    "AlbumID": "230717",
+  {"id": "230717",
     "ContentID": "1",
     "isCompleted" : false
   },
   
-  {
-    "AlbumID": "230718",
+  { "id": "230718",
     "ContentID": "2",
     "isCompleted" : false
   }

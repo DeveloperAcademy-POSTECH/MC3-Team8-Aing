@@ -12,13 +12,13 @@ struct ArchiveTabView: View {
     ///Property
     @State var currentTab : Int = 0
     @Namespace var namespace
-    var tabBarOptions: [String] = ["캘린더", "앨범", "질문함"]
+    var tabBarOptions: [String] = ["캘린더", "앨범"] //"질문함"(보류)
     
     var body: some View {
         VStack(spacing: 0){
             
             /// 상단 탭바
-            HStack(spacing: 40) {
+            HStack(spacing: 90) {
                 ForEach(tabBarOptions.indices, id: \.self) { index in
                     let title = tabBarOptions[index]
                     Button {
@@ -46,9 +46,10 @@ struct ArchiveTabView: View {
                 CalendarScrollView()
             } else if currentTab == 1 {
                 AlbumNavigationView()
-            } else if currentTab == 2 {
-               QuestionListView()
             }
+//            else if currentTab == 2 {
+//               QuestionListView()
+//            } // 질문함
                
         }//】 VStack
     }//】 Body
