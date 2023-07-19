@@ -69,6 +69,7 @@
 		AB2AC22A2A5F922F00B162E1 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC2272A5F922F00B162E1 /* Font+.swift */; };
 		ABFA53B42A5F95E700298F3B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABFA53B32A5F95E700298F3B /* Images.xcassets */; };
 		ABFA53B62A5F95FE00298F3B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABFA53B52A5F95FE00298F3B /* Colors.xcassets */; };
+		ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */; };
 		F3263A932A6543F700B4581C /* ArchiveTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A922A6543F700B4581C /* ArchiveTabView.swift */; };
 		F3263A972A65448400B4581C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A962A65448400B4581C /* CalendarView.swift */; };
 		F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A982A6544AA00B4581C /* CalendarScrollView.swift */; };
@@ -78,7 +79,6 @@
 		F3263AA82A667D8300B4581C /* AlbumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AA72A667D8300B4581C /* AlbumViewModel.swift */; };
 		F3263AAA2A667FDD00B4581C /* AlbumData.json in Resources */ = {isa = PBXBuildFile; fileRef = F3263AA92A667FDD00B4581C /* AlbumData.json */; };
 		F3263AAC2A66839800B4581C /* JsonDecodeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AAB2A66839800B4581C /* JsonDecodeExtension.swift */; };
-		ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,10 +110,6 @@
 		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		989DFFE12A5FDA3400EBBC12 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
-		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
-		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		AB2A9EA02A5EC46100D70C33 /* Diptych.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diptych.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychApp.swift; sourceTree = "<group>"; };
@@ -381,6 +377,7 @@
 		ABFD3E822A5EDA35008678D0 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				C143C0192A685C8F001A0D0D /* PhotoDetail */,
 				989DFFE32A5FDC3A00EBBC12 /* OnBoarding */,
 				ABFD3E832A5EDA4E008678D0 /* Common */,
 				ABFD3E842A5EDA55008678D0 /* Auth */,
@@ -452,6 +449,13 @@
 				F3263AA92A667FDD00B4581C /* AlbumData.json */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		C143C0192A685C8F001A0D0D /* PhotoDetail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PhotoDetail;
 			sourceTree = "<group>";
 		};
 		F3263A942A65441B00B4581C /* CalendarView */ = {
