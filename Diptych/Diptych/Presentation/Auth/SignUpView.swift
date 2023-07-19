@@ -81,6 +81,7 @@ struct SignUpView: View {
                     if checkEmail(input: email) && checkPassword(input: password) && confirmPassword(password: password, passwordConfirm: passwordConfirm){
                         isNavigationLinkActive.toggle()
                         Task {
+//                            await authViewModel.checkEmailVerification2()
                             try await authViewModel.signUpWithEmailPassword(email: email, password: password, name: name)
                             try await authViewModel.sendEmailVerification()
                             try await authViewModel.checkEmailVerification()

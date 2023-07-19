@@ -16,12 +16,17 @@ class CouplingViewModel: ObservableObject {
     @Published var currentUser: DiptychUser?
     @Published var lover: DiptychUser?
     @Published var isCompleted: Bool = false
+    var listener: ListenerRegistration?
     
     init() {
-        Task {
-            await fetchUser()
+        listener = Firestore.firestore().collection("users").addSnapshotListener() { snapshot, error in
+            Task{
+                await self.fetchUser()
+            }
         }
     }
+    
+    
     
     func generatedCouplingCode() async throws {
         do {
@@ -55,13 +60,13 @@ class CouplingViewModel: ObservableObject {
     func setCoupleData(code: String) async throws {
         do {
             try await getLoverDataWithCode(code: code)
-            print("DEBUG setCoupleData : \(String(describing: self.currentUser))\n \(String(describing: self.lover))")
+//            print("DEBUG setCoupleData : \(String(describing: self.currentUser))\n \(String(describing: self.lover))")
             if var currentUser = self.currentUser, var lover = self.lover {
-                print("1: \(currentUser.email) \(lover.email)")
+//                print("1: \(currentUser.email) \(lover.email)")
                 currentUser.loverId = self.lover?.id
                 lover.loverId = self.currentUser?.id
-                print("2: \(currentUser.id) /// \(lover.id)")
-                print("3: \(String(describing: currentUser.loverId)) /// \(String(describing: lover.loverId))")
+//                print("2: \(currentUser.id) /// \(lover.id)")
+//                print("3: \(String(describing: currentUser.loverId)) /// \(String(describing: lover.loverId))")
                 currentUser.flow = "completed"
                 lover.flow = "completed"
                 let encodedCurrentUser = try Firestore.Encoder().encode(currentUser)
