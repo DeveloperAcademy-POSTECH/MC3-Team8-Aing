@@ -10,6 +10,11 @@
 		445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A47AE2A5FD6B6005573DC /* AlbumListView.swift */; };
 		445A47B12A5FE3DE005573DC /* AlbumNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A47B02A5FE3DE005573DC /* AlbumNavigationView.swift */; };
 		987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E425B2A5FE17F00C682D9 /* LogInView.swift */; };
+		989B44922A65605800D99439 /* EmailVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44912A65605800D99439 /* EmailVerificationView.swift */; };
+		989B44942A65752100D99439 /* CouplingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44932A65752100D99439 /* CouplingView.swift */; };
+		989B44972A65977200D99439 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 989B44962A65977200D99439 /* FirebaseFirestoreSwift */; };
+		989B449A2A65BB9200D99439 /* DiptychUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44992A65BB9200D99439 /* DiptychUser.swift */; };
+		989B449C2A66845400D99439 /* CouplingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B449B2A66845400D99439 /* CouplingViewModel.swift */; };
 		989DFFD42A5FD1AD00EBBC12 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 989DFFD32A5FD1AD00EBBC12 /* FirebaseAnalytics */; };
 		989DFFD62A5FD1AD00EBBC12 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 989DFFD52A5FD1AD00EBBC12 /* FirebaseAuth */; };
 		989DFFD82A5FD1AD00EBBC12 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 989DFFD72A5FD1AD00EBBC12 /* FirebaseDatabase */; };
@@ -17,7 +22,7 @@
 		989DFFDC2A5FD1AD00EBBC12 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 989DFFDB2A5FD1AD00EBBC12 /* FirebaseStorage */; };
 		989DFFDE2A5FD65F00EBBC12 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */; };
 		989DFFE02A5FD75A00EBBC12 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */; };
-		989DFFE22A5FDA3400EBBC12 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFE12A5FDA3400EBBC12 /* AuthViewModel.swift */; };
+		989DFFE22A5FDA3400EBBC12 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFE12A5FDA3400EBBC12 /* AuthenticationViewModel.swift */; };
 		989DFFE52A5FDC4B00EBBC12 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */; };
 		AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */; };
 		AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */; };
@@ -73,6 +78,7 @@
 		F3263AA82A667D8300B4581C /* AlbumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AA72A667D8300B4581C /* AlbumViewModel.swift */; };
 		F3263AAA2A667FDD00B4581C /* AlbumData.json in Resources */ = {isa = PBXBuildFile; fileRef = F3263AA92A667FDD00B4581C /* AlbumData.json */; };
 		F3263AAC2A66839800B4581C /* JsonDecodeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AAB2A66839800B4581C /* JsonDecodeExtension.swift */; };
+		ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,9 +102,18 @@
 		445A47AE2A5FD6B6005573DC /* AlbumListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListView.swift; sourceTree = "<group>"; };
 		445A47B02A5FE3DE005573DC /* AlbumNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumNavigationView.swift; sourceTree = "<group>"; };
 		987E425B2A5FE17F00C682D9 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
+		987E425F2A627A2B00C682D9 /* Diptych.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Diptych.entitlements; sourceTree = "<group>"; };
+		989B44912A65605800D99439 /* EmailVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationView.swift; sourceTree = "<group>"; };
+		989B44932A65752100D99439 /* CouplingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplingView.swift; sourceTree = "<group>"; };
+		989B44992A65BB9200D99439 /* DiptychUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychUser.swift; sourceTree = "<group>"; };
+		989B449B2A66845400D99439 /* CouplingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplingViewModel.swift; sourceTree = "<group>"; };
 		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
-		989DFFE12A5FDA3400EBBC12 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		989DFFE12A5FDA3400EBBC12 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
+		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		AB2A9EA02A5EC46100D70C33 /* Diptych.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diptych.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychApp.swift; sourceTree = "<group>"; };
@@ -127,6 +142,7 @@
 		AB2AC2272A5F922F00B162E1 /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
 		ABFA53B32A5F95E700298F3B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		ABFA53B52A5F95FE00298F3B /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalenderView.swift; sourceTree = "<group>"; };
 		F3263A922A6543F700B4581C /* ArchiveTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveTabView.swift; sourceTree = "<group>"; };
 		F3263A962A65448400B4581C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		F3263A982A6544AA00B4581C /* CalendarScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScrollView.swift; sourceTree = "<group>"; };
@@ -148,6 +164,7 @@
 				989DFFD42A5FD1AD00EBBC12 /* FirebaseAnalytics in Frameworks */,
 				989DFFDC2A5FD1AD00EBBC12 /* FirebaseStorage in Frameworks */,
 				989DFFD62A5FD1AD00EBBC12 /* FirebaseAuth in Frameworks */,
+				989B44972A65977200D99439 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +185,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		989B44952A65977200D99439 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		989B44982A659F1A00D99439 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				989B44992A65BB9200D99439 /* DiptychUser.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		989DFFE32A5FDC3A00EBBC12 /* OnBoarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +216,7 @@
 				AB2A9EB32A5EC46300D70C33 /* DiptychTests */,
 				AB2A9EBD2A5EC46300D70C33 /* DiptychUITests */,
 				AB2A9EA12A5EC46100D70C33 /* Products */,
+				989B44952A65977200D99439 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -200,6 +233,8 @@
 		AB2A9EA22A5EC46100D70C33 /* Diptych */ = {
 			isa = PBXGroup;
 			children = (
+				989B44982A659F1A00D99439 /* Model */,
+				987E425F2A627A2B00C682D9 /* Diptych.entitlements */,
 				ABFD3E7C2A5ED26E008678D0 /* Global */,
 				ABFD3E8A2A5EDADB008678D0 /* Data */,
 				ABFD3E7F2A5ED280008678D0 /* Resources */,
@@ -241,6 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				AB2AC1EC2A5F093B00B162E1 /* TodayDiptychView.swift */,
+				ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -368,8 +404,9 @@
 			isa = PBXGroup;
 			children = (
 				989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */,
-				989DFFE12A5FDA3400EBBC12 /* AuthViewModel.swift */,
+				989DFFE12A5FDA3400EBBC12 /* AuthenticationViewModel.swift */,
 				987E425B2A5FE17F00C682D9 /* LogInView.swift */,
+				989B44912A65605800D99439 /* EmailVerificationView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -377,6 +414,8 @@
 		ABFD3E852A5EDA73008678D0 /* Matching */ = {
 			isa = PBXGroup;
 			children = (
+				989B44932A65752100D99439 /* CouplingView.swift */,
+				989B449B2A66845400D99439 /* CouplingViewModel.swift */,
 			);
 			path = Matching;
 			sourceTree = "<group>";
@@ -479,6 +518,7 @@
 				989DFFD72A5FD1AD00EBBC12 /* FirebaseDatabase */,
 				989DFFD92A5FD1AD00EBBC12 /* FirebaseFirestore */,
 				989DFFDB2A5FD1AD00EBBC12 /* FirebaseStorage */,
+				989B44962A65977200D99439 /* FirebaseFirestoreSwift */,
 			);
 			productName = Diptych;
 			productReference = AB2A9EA02A5EC46100D70C33 /* Diptych.app */;
@@ -628,8 +668,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				989DFFE22A5FDA3400EBBC12 /* AuthViewModel.swift in Sources */,
+				989DFFE22A5FDA3400EBBC12 /* AuthenticationViewModel.swift in Sources */,
 				AB2AC2282A5F922F00B162E1 /* Font+.swift in Sources */,
+				989B44922A65605800D99439 /* EmailVerificationView.swift in Sources */,
 				F3263A972A65448400B4581C /* CalendarView.swift in Sources */,
 				F3263A932A6543F700B4581C /* ArchiveTabView.swift in Sources */,
 				F3263A9E2A65B6AE00B4581C /* QuestionListView.swift in Sources */,
@@ -642,12 +683,16 @@
 				AB2AC2232A5F8E8700B162E1 /* PretendardType.swift in Sources */,
 				F3263AAC2A66839800B4581C /* JsonDecodeExtension.swift in Sources */,
 				989DFFE52A5FDC4B00EBBC12 /* OnBoardingView.swift in Sources */,
+				989B44942A65752100D99439 /* CouplingView.swift in Sources */,
 				987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */,
 				AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */,
 				AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */,
+				989B449C2A66845400D99439 /* CouplingViewModel.swift in Sources */,
 				AB2AC1ED2A5F093B00B162E1 /* TodayDiptychView.swift in Sources */,
 				989DFFE02A5FD75A00EBBC12 /* SignUpView.swift in Sources */,
+				ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */,
 				AB2AC1F52A5F15A100B162E1 /* Color+.swift in Sources */,
+				989B449A2A65BB9200D99439 /* DiptychUser.swift in Sources */,
 				F3263AA22A667AA200B4581C /* ImageDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -739,7 +784,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -793,7 +838,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -808,6 +853,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Diptych/Diptych.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
@@ -838,6 +884,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Diptych/Diptych.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
@@ -992,6 +1039,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		989B44962A65977200D99439 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 989DFFD22A5FD1AD00EBBC12 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
 		989DFFD32A5FD1AD00EBBC12 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 989DFFD22A5FD1AD00EBBC12 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
