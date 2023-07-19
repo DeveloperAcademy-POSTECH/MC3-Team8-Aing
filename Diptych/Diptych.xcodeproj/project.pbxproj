@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A47AE2A5FD6B6005573DC /* AlbumListView.swift */; };
 		445A47B12A5FE3DE005573DC /* AlbumNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A47B02A5FE3DE005573DC /* AlbumNavigationView.swift */; };
+		44DE9B8E2A67DC2100E6615B /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B8D2A67DC2100E6615B /* UIDevice+.swift */; };
+		44DE9B902A67DC3B00E6615B /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B8F2A67DC3B00E6615B /* UIImage+.swift */; };
+		44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */; };
+		44DE9B952A67DCA000E6615B /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B942A67DCA000E6615B /* CameraViewController.swift */; };
+		44DE9B972A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */; };
 		987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E425B2A5FE17F00C682D9 /* LogInView.swift */; };
 		989B44922A65605800D99439 /* EmailVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44912A65605800D99439 /* EmailVerificationView.swift */; };
 		989B44942A65752100D99439 /* CouplingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44932A65752100D99439 /* CouplingView.swift */; };
@@ -93,6 +98,11 @@
 /* Begin PBXFileReference section */
 		445A47AE2A5FD6B6005573DC /* AlbumListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListView.swift; sourceTree = "<group>"; };
 		445A47B02A5FE3DE005573DC /* AlbumNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumNavigationView.swift; sourceTree = "<group>"; };
+		44DE9B8D2A67DC2100E6615B /* UIDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
+		44DE9B8F2A67DC3B00E6615B /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
+		44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRepresentableView.swift; sourceTree = "<group>"; };
+		44DE9B942A67DCA000E6615B /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformImageBasedOnContainerView.swift; sourceTree = "<group>"; };
 		987E425B2A5FE17F00C682D9 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		987E425F2A627A2B00C682D9 /* Diptych.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Diptych.entitlements; sourceTree = "<group>"; };
 		989B44912A65605800D99439 /* EmailVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationView.swift; sourceTree = "<group>"; };
@@ -102,10 +112,6 @@
 		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		989DFFE12A5FDA3400EBBC12 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
-		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
-		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		AB2A9EA02A5EC46100D70C33 /* Diptych.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diptych.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychApp.swift; sourceTree = "<group>"; };
@@ -169,6 +175,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		44DE9B932A67DC8100E6615B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				44DE9B942A67DCA000E6615B /* CameraViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		989B44952A65977200D99439 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -261,6 +275,7 @@
 			children = (
 				AB2AC1EC2A5F093B00B162E1 /* TodayDiptychView.swift */,
 				ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */,
+				44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -303,6 +318,7 @@
 			isa = PBXGroup;
 			children = (
 				AB2AC21D2A5F28E900B162E1 /* NameSpace */,
+				44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -348,6 +364,8 @@
 			children = (
 				AB2AC1F42A5F15A100B162E1 /* Color+.swift */,
 				AB2AC2272A5F922F00B162E1 /* Font+.swift */,
+				44DE9B8D2A67DC2100E6615B /* UIDevice+.swift */,
+				44DE9B8F2A67DC3B00E6615B /* UIImage+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -404,6 +422,7 @@
 		ABFD3E862A5EDA79008678D0 /* TodayDiptych */ = {
 			isa = PBXGroup;
 			children = (
+				44DE9B932A67DC8100E6615B /* ViewController */,
 				AB2AC1E92A5F091700B162E1 /* View */,
 			);
 			path = TodayDiptych;
@@ -606,6 +625,8 @@
 				989DFFE22A5FDA3400EBBC12 /* AuthenticationViewModel.swift in Sources */,
 				AB2AC2282A5F922F00B162E1 /* Font+.swift in Sources */,
 				989B44922A65605800D99439 /* EmailVerificationView.swift in Sources */,
+				44DE9B952A67DCA000E6615B /* CameraViewController.swift in Sources */,
+				44DE9B972A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift in Sources */,
 				AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */,
 				445A47B12A5FE3DE005573DC /* AlbumNavigationView.swift in Sources */,
 				445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */,
@@ -614,9 +635,12 @@
 				989DFFE52A5FDC4B00EBBC12 /* OnBoardingView.swift in Sources */,
 				989B44942A65752100D99439 /* CouplingView.swift in Sources */,
 				987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */,
+				44DE9B8E2A67DC2100E6615B /* UIDevice+.swift in Sources */,
+				44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */,
 				AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */,
 				AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */,
 				989B449C2A66845400D99439 /* CouplingViewModel.swift in Sources */,
+				44DE9B902A67DC3B00E6615B /* UIImage+.swift in Sources */,
 				AB2AC1ED2A5F093B00B162E1 /* TodayDiptychView.swift in Sources */,
 				989DFFE02A5FD75A00EBBC12 /* SignUpView.swift in Sources */,
 				ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */,
