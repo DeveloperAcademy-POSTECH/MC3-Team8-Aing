@@ -18,7 +18,7 @@ struct WeeklyCalenderView: View {
     @State var date: String
     @State var isToday: Bool
     @State var thumbnail: String?
-    var diptychState = DiptychState.incomplete
+    var diptychState = DiptychState.complete
 
     var body: some View {
         VStack(spacing: 9) {
@@ -45,8 +45,11 @@ struct WeeklyCalenderView: View {
                         } else {
                             switch diptychState {
                             case .complete:
-                                RoundedRectangle(cornerRadius: 18)
-                                    .fill(Color.green)
+//                                RoundedRectangle(cornerRadius: 18)
+//                                    .fill(Color.green)
+                                Image("diptych_sample1")
+                                    .resizable()
+                                    .clipShape(RoundedRectangle(cornerRadius: 18))
                             default:
                                 EmptyView()
                             }
@@ -54,7 +57,8 @@ struct WeeklyCalenderView: View {
                     }
                 Text(date)
                     .font(.pretendard(.bold, size: 16))
-                    .foregroundColor(.offBlack)
+//                    .foregroundColor(.offBlack)
+                    .foregroundColor(!isToday && diptychState == .complete ? .offWhite : .offBlack)
                     .padding(.top, 7)
             }
         }
