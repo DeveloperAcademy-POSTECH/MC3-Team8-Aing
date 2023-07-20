@@ -39,7 +39,7 @@ struct OnBoardingView: View {
                                 .foregroundColor(.offWhite)
                                 .border(Color.offBlack)
                         }
-                        NavigationLink(destination: SignUpView()) {
+                        NavigationLink(destination: SignUpFlowView()) {
                             Text("회원가입")
                                 .frame(width: UIScreen.main.bounds.width-30, height:  60)
                                 .background(Color.offWhite)

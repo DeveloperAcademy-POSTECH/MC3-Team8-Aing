@@ -57,7 +57,12 @@ struct CouplingView: View {
                     }
                 }
                 Spacer()
-                NavigationLink(destination: ProfileSettingView()) {
+                Button {
+                    Task {
+                        try await userViewModel.setCouplingCode()
+                        try await userViewModel.setCoupleData(code: loverCode)
+                    }
+                } label: {
                     Text("연결하기")
                         .frame(width: UIScreen.main.bounds.width-30, height:  60)
                         .background(Color.offBlack)
@@ -69,9 +74,6 @@ struct CouplingView: View {
             .padding([.leading, .trailing], 15)
         }
         .ignoresSafeArea()
-        .onDisappear {
-            userViewModel.isSignUpLinkActive.toggle()
-        }
     }
 }
 

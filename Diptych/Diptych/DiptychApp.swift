@@ -26,23 +26,30 @@ struct DiptychApp: App {
     var body: some Scene {
         WindowGroup {
             //            DiptychTabView()
-//            TestView()
-            switch authViewModel.flow {
-            case .isInitialized :
-                OnBoardingView()
-                    .environmentObject(authViewModel)
-                    .environmentObject(userViewModel)
-            case .isSignedUp :
-                EmailVerificationView()
-                    .environmentObject(authViewModel)
-                    .environmentObject(userViewModel)
-            case .isEmailVerified:
-                CouplingView()
-                    .environmentObject(authViewModel)
-                    .environmentObject(userViewModel)
-            default:
+            
+            if userViewModel.flow == .completed {
                 DiptychTabView()
+            } else {
+                OnBoardingView()
+                    .environmentObject(userViewModel)
             }
+            
+//            switch userViewModel.flow {
+//            case .initialized :
+//                OnBoardingView()
+////                    .environmentObject(authViewModel)
+//                    .environmentObject(userViewModel)
+//            case .emailVerified :
+//                SignUpView()
+////                    .environmentObject(authViewModel)
+//                    .environmentObject(userViewModel)
+//            case .emailVerified:
+//                CouplingView()
+////                    .environmentObject(authViewModel)
+//                    .environmentObject(userViewModel)
+//            default:
+//                DiptychTabView()
+//            }
         }
     }
 }

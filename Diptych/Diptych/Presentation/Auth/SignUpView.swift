@@ -9,7 +9,22 @@ import SwiftUI
 import Firebase
 import FirebaseAuth
 
+//struct SignUpView: View {
+//    @State var isSignInfoViewShown: Bool = true
+//
+//    @EnvironmentObject var userViewModel: UserViewModel
+//
+//    var body: some View {
+//        if isSignInfoViewShown {
+//            SignInfoView(isSignInfoViewShown: $isSignInfoViewShown)
+//        } else {
+//            LoadingVerificationView()
+//        }
+//    }
+//}
+
 struct SignUpView: View {
+    
     @State var name: String = ""
     @State var email: String = ""
     @State var password: String = ""
@@ -17,12 +32,11 @@ struct SignUpView: View {
     @State var emailWarning: String = ""
     @State var passwordWarning: String = ""
     @State var passwordConfirmWarning: String = ""
-//    @State var isShowingAlert: Bool = false
-//    @State var isShowingSheet: Bool = false
-    @State var isEmailVerificationLinkActive: Bool = false
+    
+//    @Binding var isSignInfoViewShown: Bool
     
     @EnvironmentObject var userViewModel: UserViewModel
-    @EnvironmentObject var authViewModel: AuthenticationViewModel
+    
     var body: some View {
         ZStack {
             Color.offWhite
@@ -78,96 +92,49 @@ struct SignUpView: View {
                 }
                 .padding([.leading, .trailing], 15)
                 Spacer()
-//                Button {
-//                    if checkEmail(input: email) && checkPassword(input: password) && confirmPassword(password: password, passwordConfirm: passwordConfirm){
-//                        userViewModel.isEmailVerificationLinkActive.toggle()
-//                        Task {
-////                            await authViewModel.checkEmailVerification2()
-//                            try await authViewModel.signUpWithEmailPassword(email: email, password: password, name: name)
-//                            try await authViewModel.sendEmailVerification()
-//                            try await authViewModel.checkEmailVerification()
-//                        }
-//                    } else {
-//                        if checkEmail(input: email) {
-//                            emailWarning = ""
-//                        } else if email.isEmpty {
-//                            emailWarning = "이메일 주소를 입력해주세요."
-//                        } else {
-//                            emailWarning = "이메일 주소가 유효하지 않습니다."
-//                        }
-//                        if checkPassword(input: password) {
-//                            passwordWarning = ""
-//                        } else if password.isEmpty {
-//                            passwordWarning = "비밀번호를 입력해주세요."
-//                        } else {
-//                            passwordWarning = "영문 대소문자, 숫자, 특수문자를 포함한 8개 이상이어야 합니다."
-//                        }
-//                        if confirmPassword(password: password, passwordConfirm: passwordConfirm) {
-//                            passwordConfirmWarning = ""
-//                        } else if passwordConfirm.isEmpty {
-//                            passwordConfirmWarning = "비밀번호를 한번 더 입력해주세요."
-//                        } else {
-//                            passwordConfirmWarning = "비밀번호가 일치하지 않습니다."
-//                        }
-//                    }
-//                } label: {
-//                    Text("로그인")
-//                        .frame(width: UIScreen.main.bounds.width-30, height:  60)
-//                        .background(Color.offBlack)
-//                        .foregroundColor(.offWhite)
-//                }
-                NavigationLink(destination: EmailVerificationView()) {
-                    Text("회원가입")
+                Button {
+                    if checkEmail(input: email) && checkPassword(input: password) && confirmPassword(password: password, passwordConfirm: passwordConfirm){
+//                        isSignInfoViewShown.toggle()
+                        Task {
+//                            await authViewModel.checkEmailVerification2()
+                            try await userViewModel.signUpWithEmailPassword(email: email, password: password, name: name)
+                            try await userViewModel.sendEmailVerification()
+//                            try await userViewModel.checkEmailVerification3()
+                        }
+                    } else {
+                        if checkEmail(input: email) {
+                            emailWarning = ""
+                        } else if email.isEmpty {
+                            emailWarning = "이메일 주소를 입력해주세요."
+                        } else {
+                            emailWarning = "이메일 주소가 유효하지 않습니다."
+                        }
+                        if checkPassword(input: password) {
+                            passwordWarning = ""
+                        } else if password.isEmpty {
+                            passwordWarning = "비밀번호를 입력해주세요."
+                        } else {
+                            passwordWarning = "영문 대소문자, 숫자, 특수문자를 포함한 8개 이상이어야 합니다."
+                        }
+                        if confirmPassword(password: password, passwordConfirm: passwordConfirm) {
+                            passwordConfirmWarning = ""
+                        } else if passwordConfirm.isEmpty {
+                            passwordConfirmWarning = "비밀번호를 한번 더 입력해주세요."
+                        } else {
+                            passwordConfirmWarning = "비밀번호가 일치하지 않습니다."
+                        }
+                    }
+                } label: {
+                    Text("로그인")
                         .frame(width: UIScreen.main.bounds.width-30, height:  60)
                         .background(Color.offBlack)
                         .foregroundColor(.offWhite)
-                        .onTapGesture {
-                            if checkEmail(input: email) && checkPassword(input: password) && confirmPassword(password: password, passwordConfirm: passwordConfirm){
-                                userViewModel.isEmailVerificationLinkActive.toggle()
-                                Task {
-        //                            await authViewModel.checkEmailVerification2()
-                                    try await authViewModel.signUpWithEmailPassword(email: email, password: password, name: name)
-                                    try await authViewModel.sendEmailVerification()
-                                    try await authViewModel.checkEmailVerification()
-                                }
-                            } else {
-                                if checkEmail(input: email) {
-                                    emailWarning = ""
-                                } else if email.isEmpty {
-                                    emailWarning = "이메일 주소를 입력해주세요."
-                                } else {
-                                    emailWarning = "이메일 주소가 유효하지 않습니다."
-                                }
-                                if checkPassword(input: password) {
-                                    passwordWarning = ""
-                                } else if password.isEmpty {
-                                    passwordWarning = "비밀번호를 입력해주세요."
-                                } else {
-                                    passwordWarning = "영문 대소문자, 숫자, 특수문자를 포함한 8개 이상이어야 합니다."
-                                }
-                                if confirmPassword(password: password, passwordConfirm: passwordConfirm) {
-                                    passwordConfirmWarning = ""
-                                } else if passwordConfirm.isEmpty {
-                                    passwordConfirmWarning = "비밀번호를 한번 더 입력해주세요."
-                                } else {
-                                    passwordConfirmWarning = "비밀번호가 일치하지 않습니다."
-                                }
-                            }
-                        }
                 }
                 Spacer()
                     .frame(height: 55)
             }
         }
         .ignoresSafeArea()
-//        .onDisappear {
-//            userViewModel.isSignUpLinkActive.toggle()
-//        }
-//        .onAppear {
-//            print("user: \(authViewModel.user)")
-//            print("user: \(authViewModel.user?.isEmailVerified)")
-//            print("state: \(authViewModel.authenticationState)")
-//        }
     }
     
     func checkEmail(input: String) -> Bool {
@@ -184,6 +151,28 @@ struct SignUpView: View {
         return !password.isEmpty && password == passwordConfirm
     }
 }
+
+//struct LoadingVerificationView : View {
+//    @EnvironmentObject var userViewModel: UserViewModel
+//
+//    var body: some View {
+//        VStack {
+//            Text("입력하신 이메일로 인증 링크를 보냈습니다.")
+//                .font(.pretendard(.light, size: 18))
+//                .foregroundColor(.offBlack)
+//            Text("인증 완료 후 아래 버튼을 눌러주세요.")
+//                .font(.pretendard(.light, size: 18))
+//                .foregroundColor(.offBlack)
+//            Button {
+//                Task {
+//                    await userViewModel.checkEmailVerification3()
+//                }
+//            } label: {
+//                Text("인증 완료")
+//            }
+//        }
+//    }
+//}
 
 prefix func ! (value: Binding<Bool>) -> Binding<Bool> {
     Binding<Bool>(

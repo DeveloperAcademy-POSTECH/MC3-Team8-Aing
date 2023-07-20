@@ -11,7 +11,6 @@ struct DiptychUser: Identifiable, Codable {
     let id: String
     let email: String
     let name: String
-    
     var flow: String
     var sharedAlbumId: String?
     var nickname: String?
