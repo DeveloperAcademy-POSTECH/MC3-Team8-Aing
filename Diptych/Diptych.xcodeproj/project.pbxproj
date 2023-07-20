@@ -85,6 +85,7 @@
 		F3263AA82A667D8300B4581C /* AlbumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AA72A667D8300B4581C /* AlbumViewModel.swift */; };
 		F3263AAA2A667FDD00B4581C /* AlbumData.json in Resources */ = {isa = PBXBuildFile; fileRef = F3263AA92A667FDD00B4581C /* AlbumData.json */; };
 		F3263AAC2A66839800B4581C /* JsonDecodeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AAB2A66839800B4581C /* JsonDecodeExtension.swift */; };
+		F3263AB62A691C4400B4581C /* DiptychTabView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AB52A691C4400B4581C /* DiptychTabView2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +161,7 @@
 		F3263AA72A667D8300B4581C /* AlbumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewModel.swift; sourceTree = "<group>"; };
 		F3263AA92A667FDD00B4581C /* AlbumData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AlbumData.json; sourceTree = "<group>"; };
 		F3263AAB2A66839800B4581C /* JsonDecodeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDecodeExtension.swift; sourceTree = "<group>"; };
+		F3263AB52A691C4400B4581C /* DiptychTabView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychTabView2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,6 +419,7 @@
 			isa = PBXGroup;
 			children = (
 				AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */,
+				F3263AB52A691C4400B4581C /* DiptychTabView2.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -700,6 +703,7 @@
 				44DE9B952A67DCA000E6615B /* CameraViewController.swift in Sources */,
 				44DE9B972A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift in Sources */,
 				AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */,
+				F3263AB62A691C4400B4581C /* DiptychTabView2.swift in Sources */,
 				F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */,
 				445A47B12A5FE3DE005573DC /* AlbumNavigationView.swift in Sources */,
 				F3263AA82A667D8300B4581C /* AlbumViewModel.swift in Sources */,
