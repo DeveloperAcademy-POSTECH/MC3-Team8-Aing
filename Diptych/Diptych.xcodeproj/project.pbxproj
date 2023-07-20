@@ -9,7 +9,18 @@
 /* Begin PBXBuildFile section */
 		445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A47AE2A5FD6B6005573DC /* AlbumListView.swift */; };
 		445A47B12A5FE3DE005573DC /* AlbumNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A47B02A5FE3DE005573DC /* AlbumNavigationView.swift */; };
+		44DE9B8E2A67DC2100E6615B /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B8D2A67DC2100E6615B /* UIDevice+.swift */; };
+		44DE9B902A67DC3B00E6615B /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B8F2A67DC3B00E6615B /* UIImage+.swift */; };
+		44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */; };
+		44DE9B952A67DCA000E6615B /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B942A67DCA000E6615B /* CameraViewController.swift */; };
+		44DE9B972A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */; };
+		44DE9B9A2A67EBD700E6615B /* CameraStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44DE9B982A67E8C000E6615B /* CameraStoryboard.storyboard */; };
 		987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E425B2A5FE17F00C682D9 /* LogInView.swift */; };
+		989B44922A65605800D99439 /* EmailVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44912A65605800D99439 /* EmailVerificationView.swift */; };
+		989B44942A65752100D99439 /* CouplingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44932A65752100D99439 /* CouplingView.swift */; };
+		989B44972A65977200D99439 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 989B44962A65977200D99439 /* FirebaseFirestoreSwift */; };
+		989B449A2A65BB9200D99439 /* DiptychUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44992A65BB9200D99439 /* DiptychUser.swift */; };
+		989B449C2A66845400D99439 /* CouplingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B449B2A66845400D99439 /* CouplingViewModel.swift */; };
 		989DFFD42A5FD1AD00EBBC12 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 989DFFD32A5FD1AD00EBBC12 /* FirebaseAnalytics */; };
 		989DFFD62A5FD1AD00EBBC12 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 989DFFD52A5FD1AD00EBBC12 /* FirebaseAuth */; };
 		989DFFD82A5FD1AD00EBBC12 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 989DFFD72A5FD1AD00EBBC12 /* FirebaseDatabase */; };
@@ -17,7 +28,7 @@
 		989DFFDC2A5FD1AD00EBBC12 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 989DFFDB2A5FD1AD00EBBC12 /* FirebaseStorage */; };
 		989DFFDE2A5FD65F00EBBC12 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */; };
 		989DFFE02A5FD75A00EBBC12 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */; };
-		989DFFE22A5FDA3400EBBC12 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFE12A5FDA3400EBBC12 /* AuthViewModel.swift */; };
+		989DFFE22A5FDA3400EBBC12 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFE12A5FDA3400EBBC12 /* AuthenticationViewModel.swift */; };
 		989DFFE52A5FDC4B00EBBC12 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */; };
 		AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */; };
 		AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */; };
@@ -27,7 +38,6 @@
 		AB2A9EBF2A5EC46300D70C33 /* DiptychUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EBE2A5EC46300D70C33 /* DiptychUITests.swift */; };
 		AB2A9EC12A5EC46300D70C33 /* DiptychUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EC02A5EC46300D70C33 /* DiptychUITestsLaunchTests.swift */; };
 		AB2AC1ED2A5F093B00B162E1 /* TodayDiptychView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC1EC2A5F093B00B162E1 /* TodayDiptychView.swift */; };
-		AB2AC1F02A5F094F00B162E1 /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC1EF2A5F094F00B162E1 /* ArchiveView.swift */; };
 		AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC1F22A5F097400B162E1 /* ProfileView.swift */; };
 		AB2AC1F52A5F15A100B162E1 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC1F42A5F15A100B162E1 /* Color+.swift */; };
 		AB2AC2002A5F280000B162E1 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = AB2AC1F72A5F27FF00B162E1 /* Pretendard-ExtraBold.otf */; };
@@ -67,6 +77,15 @@
 		ABFA53B42A5F95E700298F3B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABFA53B32A5F95E700298F3B /* Images.xcassets */; };
 		ABFA53B62A5F95FE00298F3B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABFA53B52A5F95FE00298F3B /* Colors.xcassets */; };
 		ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */; };
+		F3263A932A6543F700B4581C /* ArchiveTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A922A6543F700B4581C /* ArchiveTabView.swift */; };
+		F3263A972A65448400B4581C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A962A65448400B4581C /* CalendarView.swift */; };
+		F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A982A6544AA00B4581C /* CalendarScrollView.swift */; };
+		F3263A9E2A65B6AE00B4581C /* QuestionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A9D2A65B6AE00B4581C /* QuestionListView.swift */; };
+		F3263AA22A667AA200B4581C /* ImageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AA12A667AA200B4581C /* ImageDetailView.swift */; };
+		F3263AA62A667D7700B4581C /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AA52A667D7700B4581C /* AlbumModel.swift */; };
+		F3263AA82A667D8300B4581C /* AlbumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AA72A667D8300B4581C /* AlbumViewModel.swift */; };
+		F3263AAA2A667FDD00B4581C /* AlbumData.json in Resources */ = {isa = PBXBuildFile; fileRef = F3263AA92A667FDD00B4581C /* AlbumData.json */; };
+		F3263AAC2A66839800B4581C /* JsonDecodeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AAB2A66839800B4581C /* JsonDecodeExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,10 +108,21 @@
 /* Begin PBXFileReference section */
 		445A47AE2A5FD6B6005573DC /* AlbumListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListView.swift; sourceTree = "<group>"; };
 		445A47B02A5FE3DE005573DC /* AlbumNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumNavigationView.swift; sourceTree = "<group>"; };
+		44DE9B8D2A67DC2100E6615B /* UIDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
+		44DE9B8F2A67DC3B00E6615B /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
+		44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRepresentableView.swift; sourceTree = "<group>"; };
+		44DE9B942A67DCA000E6615B /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformImageBasedOnContainerView.swift; sourceTree = "<group>"; };
+		44DE9B982A67E8C000E6615B /* CameraStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CameraStoryboard.storyboard; sourceTree = "<group>"; };
 		987E425B2A5FE17F00C682D9 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
+		987E425F2A627A2B00C682D9 /* Diptych.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Diptych.entitlements; sourceTree = "<group>"; };
+		989B44912A65605800D99439 /* EmailVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationView.swift; sourceTree = "<group>"; };
+		989B44932A65752100D99439 /* CouplingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplingView.swift; sourceTree = "<group>"; };
+		989B44992A65BB9200D99439 /* DiptychUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychUser.swift; sourceTree = "<group>"; };
+		989B449B2A66845400D99439 /* CouplingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplingViewModel.swift; sourceTree = "<group>"; };
 		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
-		989DFFE12A5FDA3400EBBC12 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		989DFFE12A5FDA3400EBBC12 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		AB2A9EA02A5EC46100D70C33 /* Diptych.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diptych.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychApp.swift; sourceTree = "<group>"; };
@@ -105,7 +135,6 @@
 		AB2A9EBE2A5EC46300D70C33 /* DiptychUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychUITests.swift; sourceTree = "<group>"; };
 		AB2A9EC02A5EC46300D70C33 /* DiptychUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		AB2AC1EC2A5F093B00B162E1 /* TodayDiptychView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDiptychView.swift; sourceTree = "<group>"; };
-		AB2AC1EF2A5F094F00B162E1 /* ArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
 		AB2AC1F22A5F097400B162E1 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		AB2AC1F42A5F15A100B162E1 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		AB2AC1F72A5F27FF00B162E1 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
@@ -124,6 +153,15 @@
 		ABFA53B32A5F95E700298F3B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		ABFA53B52A5F95FE00298F3B /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalenderView.swift; sourceTree = "<group>"; };
+		F3263A922A6543F700B4581C /* ArchiveTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveTabView.swift; sourceTree = "<group>"; };
+		F3263A962A65448400B4581C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		F3263A982A6544AA00B4581C /* CalendarScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScrollView.swift; sourceTree = "<group>"; };
+		F3263A9D2A65B6AE00B4581C /* QuestionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionListView.swift; sourceTree = "<group>"; };
+		F3263AA12A667AA200B4581C /* ImageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailView.swift; sourceTree = "<group>"; };
+		F3263AA52A667D7700B4581C /* AlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
+		F3263AA72A667D8300B4581C /* AlbumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewModel.swift; sourceTree = "<group>"; };
+		F3263AA92A667FDD00B4581C /* AlbumData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AlbumData.json; sourceTree = "<group>"; };
+		F3263AAB2A66839800B4581C /* JsonDecodeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDecodeExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +174,7 @@
 				989DFFD42A5FD1AD00EBBC12 /* FirebaseAnalytics in Frameworks */,
 				989DFFDC2A5FD1AD00EBBC12 /* FirebaseStorage in Frameworks */,
 				989DFFD62A5FD1AD00EBBC12 /* FirebaseAuth in Frameworks */,
+				989B44972A65977200D99439 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +195,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		44DE9B932A67DC8100E6615B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				44DE9B942A67DCA000E6615B /* CameraViewController.swift */,
+				44DE9B982A67E8C000E6615B /* CameraStoryboard.storyboard */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		989B44952A65977200D99439 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		989B44982A659F1A00D99439 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				989B44992A65BB9200D99439 /* DiptychUser.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		989DFFE32A5FDC3A00EBBC12 /* OnBoarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +235,7 @@
 				AB2A9EB32A5EC46300D70C33 /* DiptychTests */,
 				AB2A9EBD2A5EC46300D70C33 /* DiptychUITests */,
 				AB2A9EA12A5EC46100D70C33 /* Products */,
+				989B44952A65977200D99439 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -188,6 +252,8 @@
 		AB2A9EA22A5EC46100D70C33 /* Diptych */ = {
 			isa = PBXGroup;
 			children = (
+				989B44982A659F1A00D99439 /* Model */,
+				987E425F2A627A2B00C682D9 /* Diptych.entitlements */,
 				ABFD3E7C2A5ED26E008678D0 /* Global */,
 				ABFD3E8A2A5EDADB008678D0 /* Data */,
 				ABFD3E7F2A5ED280008678D0 /* Resources */,
@@ -230,6 +296,7 @@
 			children = (
 				AB2AC1EC2A5F093B00B162E1 /* TodayDiptychView.swift */,
 				ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */,
+				44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -237,9 +304,11 @@
 		AB2AC1EE2A5F094600B162E1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				AB2AC1EF2A5F094F00B162E1 /* ArchiveView.swift */,
-				445A47AE2A5FD6B6005573DC /* AlbumListView.swift */,
-				445A47B02A5FE3DE005573DC /* AlbumNavigationView.swift */,
+				F3263A922A6543F700B4581C /* ArchiveTabView.swift */,
+				F3263AA12A667AA200B4581C /* ImageDetailView.swift */,
+				F3263A942A65441B00B4581C /* CalendarView */,
+				F3263A952A65442700B4581C /* AlbumView */,
+				F3263A9C2A65B66F00B4581C /* QuestionListView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -272,6 +341,7 @@
 			isa = PBXGroup;
 			children = (
 				AB2AC21D2A5F28E900B162E1 /* NameSpace */,
+				44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -325,6 +395,9 @@
 			children = (
 				AB2AC1F42A5F15A100B162E1 /* Color+.swift */,
 				AB2AC2272A5F922F00B162E1 /* Font+.swift */,
+				F3263AAB2A66839800B4581C /* JsonDecodeExtension.swift */,
+				44DE9B8D2A67DC2100E6615B /* UIDevice+.swift */,
+				44DE9B8F2A67DC3B00E6615B /* UIImage+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -362,8 +435,9 @@
 			isa = PBXGroup;
 			children = (
 				989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */,
-				989DFFE12A5FDA3400EBBC12 /* AuthViewModel.swift */,
+				989DFFE12A5FDA3400EBBC12 /* AuthenticationViewModel.swift */,
 				987E425B2A5FE17F00C682D9 /* LogInView.swift */,
+				989B44912A65605800D99439 /* EmailVerificationView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -371,6 +445,8 @@
 		ABFD3E852A5EDA73008678D0 /* Matching */ = {
 			isa = PBXGroup;
 			children = (
+				989B44932A65752100D99439 /* CouplingView.swift */,
+				989B449B2A66845400D99439 /* CouplingViewModel.swift */,
 			);
 			path = Matching;
 			sourceTree = "<group>";
@@ -378,6 +454,7 @@
 		ABFD3E862A5EDA79008678D0 /* TodayDiptych */ = {
 			isa = PBXGroup;
 			children = (
+				44DE9B932A67DC8100E6615B /* ViewController */,
 				AB2AC1E92A5F091700B162E1 /* View */,
 				AB96A0A92A66E4C8004C01FF /* ViewModel */,
 			);
@@ -387,6 +464,8 @@
 		ABFD3E882A5EDAA4008678D0 /* Archive */ = {
 			isa = PBXGroup;
 			children = (
+				F3263AA42A667D5D00B4581C /* Model */,
+				F3263AA32A667D4F00B4581C /* ViewModel */,
 				AB2AC1EE2A5F094600B162E1 /* View */,
 			);
 			path = Archive;
@@ -403,8 +482,51 @@
 		ABFD3E8A2A5EDADB008678D0 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				F3263AA92A667FDD00B4581C /* AlbumData.json */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		F3263A942A65441B00B4581C /* CalendarView */ = {
+			isa = PBXGroup;
+			children = (
+				F3263A962A65448400B4581C /* CalendarView.swift */,
+				F3263A982A6544AA00B4581C /* CalendarScrollView.swift */,
+			);
+			path = CalendarView;
+			sourceTree = "<group>";
+		};
+		F3263A952A65442700B4581C /* AlbumView */ = {
+			isa = PBXGroup;
+			children = (
+				445A47AE2A5FD6B6005573DC /* AlbumListView.swift */,
+				445A47B02A5FE3DE005573DC /* AlbumNavigationView.swift */,
+			);
+			path = AlbumView;
+			sourceTree = "<group>";
+		};
+		F3263A9C2A65B66F00B4581C /* QuestionListView */ = {
+			isa = PBXGroup;
+			children = (
+				F3263A9D2A65B6AE00B4581C /* QuestionListView.swift */,
+			);
+			path = QuestionListView;
+			sourceTree = "<group>";
+		};
+		F3263AA32A667D4F00B4581C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				F3263AA72A667D8300B4581C /* AlbumViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		F3263AA42A667D5D00B4581C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F3263AA52A667D7700B4581C /* AlbumModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -429,6 +551,7 @@
 				989DFFD72A5FD1AD00EBBC12 /* FirebaseDatabase */,
 				989DFFD92A5FD1AD00EBBC12 /* FirebaseFirestore */,
 				989DFFDB2A5FD1AD00EBBC12 /* FirebaseStorage */,
+				989B44962A65977200D99439 /* FirebaseFirestoreSwift */,
 			);
 			productName = Diptych;
 			productReference = AB2A9EA02A5EC46100D70C33 /* Diptych.app */;
@@ -521,6 +644,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44DE9B9A2A67EBD700E6615B /* CameraStoryboard.storyboard in Resources */,
+				F3263AAA2A667FDD00B4581C /* AlbumData.json in Resources */,
 				AB2A9EAB2A5EC46200D70C33 /* Preview Assets.xcassets in Resources */,
 				AB2AC2152A5F280000B162E1 /* Pretendard-Medium.otf in Resources */,
 				ABFA53B62A5F95FE00298F3B /* Colors.xcassets in Resources */,
@@ -577,22 +702,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				989DFFE22A5FDA3400EBBC12 /* AuthViewModel.swift in Sources */,
+				989DFFE22A5FDA3400EBBC12 /* AuthenticationViewModel.swift in Sources */,
 				AB2AC2282A5F922F00B162E1 /* Font+.swift in Sources */,
+				989B44922A65605800D99439 /* EmailVerificationView.swift in Sources */,
+				F3263A972A65448400B4581C /* CalendarView.swift in Sources */,
+				F3263A932A6543F700B4581C /* ArchiveTabView.swift in Sources */,
+				F3263A9E2A65B6AE00B4581C /* QuestionListView.swift in Sources */,
+				44DE9B952A67DCA000E6615B /* CameraViewController.swift in Sources */,
+				44DE9B972A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift in Sources */,
 				AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */,
+				F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */,
 				445A47B12A5FE3DE005573DC /* AlbumNavigationView.swift in Sources */,
+				F3263AA82A667D8300B4581C /* AlbumViewModel.swift in Sources */,
 				445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */,
-				AB2AC1F02A5F094F00B162E1 /* ArchiveView.swift in Sources */,
+				F3263AA62A667D7700B4581C /* AlbumModel.swift in Sources */,
 				AB2AC2232A5F8E8700B162E1 /* PretendardType.swift in Sources */,
+				F3263AAC2A66839800B4581C /* JsonDecodeExtension.swift in Sources */,
 				989DFFE52A5FDC4B00EBBC12 /* OnBoardingView.swift in Sources */,
 				AB96A0AB2A66E4DF004C01FF /* TodayDiptychViewModel.swift in Sources */,
+				989B44942A65752100D99439 /* CouplingView.swift in Sources */,
 				987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */,
+				44DE9B8E2A67DC2100E6615B /* UIDevice+.swift in Sources */,
+				44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */,
 				AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */,
 				AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */,
+				989B449C2A66845400D99439 /* CouplingViewModel.swift in Sources */,
+				44DE9B902A67DC3B00E6615B /* UIImage+.swift in Sources */,
 				AB2AC1ED2A5F093B00B162E1 /* TodayDiptychView.swift in Sources */,
 				989DFFE02A5FD75A00EBBC12 /* SignUpView.swift in Sources */,
 				ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */,
 				AB2AC1F52A5F15A100B162E1 /* Color+.swift in Sources */,
+				989B449A2A65BB9200D99439 /* DiptychUser.swift in Sources */,
+				F3263AA22A667AA200B4581C /* ImageDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -752,13 +893,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Diptych/Diptych.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
-				DEVELOPMENT_TEAM = N3H5YNSQ64;
+				DEVELOPMENT_TEAM = ADXSYH5NDX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diptych/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -771,6 +915,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -782,13 +927,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Diptych/Diptych.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
-				DEVELOPMENT_TEAM = N3H5YNSQ64;
+				DEVELOPMENT_TEAM = ADXSYH5NDX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diptych/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -801,6 +949,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -936,6 +1085,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		989B44962A65977200D99439 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 989DFFD22A5FD1AD00EBBC12 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
 		989DFFD32A5FD1AD00EBBC12 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 989DFFD22A5FD1AD00EBBC12 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
