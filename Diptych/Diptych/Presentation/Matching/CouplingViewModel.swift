@@ -18,15 +18,19 @@ class CouplingViewModel: ObservableObject {
     @Published var isCompleted: Bool = false
     var listener: ListenerRegistration?
     
+//    init() {
+//        listener = Firestore.firestore().collection("users").addSnapshotListener() { snapshot, error in
+//            Task{
+//                await self.fetchUser()
+//            }
+//        }
+//    }
+    
     init() {
-        listener = Firestore.firestore().collection("users").addSnapshotListener() { snapshot, error in
-            Task{
-                await self.fetchUser()
-            }
+        Task {
+            try await generatedCouplingCode()
         }
     }
-    
-    
     
     func generatedCouplingCode() async throws {
         do {

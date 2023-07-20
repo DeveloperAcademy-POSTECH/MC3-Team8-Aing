@@ -19,4 +19,5 @@ struct DiptychUser: Identifiable, Codable {
     var couplingCode: String?
     var loverId: String?
     var startDay: Date?
+    var isFirst: Bool?
 }

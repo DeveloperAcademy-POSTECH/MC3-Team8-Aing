@@ -19,12 +19,13 @@ struct SignUpView: View {
     @State var passwordConfirmWarning: String = ""
 //    @State var isShowingAlert: Bool = false
 //    @State var isShowingSheet: Bool = false
-    @State var isNavigationLinkActive: Bool = false
+    @State var isEmailVerificationLinkActive: Bool = false
+    
+    @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var authViewModel: AuthenticationViewModel
     var body: some View {
         ZStack {
             Color.offWhite
-                .ignoresSafeArea()
             VStack {
                 Spacer()
                     .frame(height: 124)
@@ -77,52 +78,91 @@ struct SignUpView: View {
                 }
                 .padding([.leading, .trailing], 15)
                 Spacer()
-                Button {
-                    if checkEmail(input: email) && checkPassword(input: password) && confirmPassword(password: password, passwordConfirm: passwordConfirm){
-                        isNavigationLinkActive.toggle()
-                        Task {
-//                            await authViewModel.checkEmailVerification2()
-                            try await authViewModel.signUpWithEmailPassword(email: email, password: password, name: name)
-                            try await authViewModel.sendEmailVerification()
-                            try await authViewModel.checkEmailVerification()
-                        }
-                    } else {
-                        if checkEmail(input: email) {
-                            emailWarning = ""
-                        } else if email.isEmpty {
-                            emailWarning = "이메일 주소를 입력해주세요."
-                        } else {
-                            emailWarning = "이메일 주소가 유효하지 않습니다."
-                        }
-                        if checkPassword(input: password) {
-                            passwordWarning = ""
-                        } else if password.isEmpty {
-                            passwordWarning = "비밀번호를 입력해주세요."
-                        } else {
-                            passwordWarning = "영문 대소문자, 숫자, 특수문자를 포함한 8개 이상이어야 합니다."
-                        }
-                        if confirmPassword(password: password, passwordConfirm: passwordConfirm) {
-                            passwordConfirmWarning = ""
-                        } else if passwordConfirm.isEmpty {
-                            passwordConfirmWarning = "비밀번호를 한번 더 입력해주세요."
-                        } else {
-                            passwordConfirmWarning = "비밀번호가 일치하지 않습니다."
-                        }
-                    }
-                } label: {
+//                Button {
+//                    if checkEmail(input: email) && checkPassword(input: password) && confirmPassword(password: password, passwordConfirm: passwordConfirm){
+//                        userViewModel.isEmailVerificationLinkActive.toggle()
+//                        Task {
+////                            await authViewModel.checkEmailVerification2()
+//                            try await authViewModel.signUpWithEmailPassword(email: email, password: password, name: name)
+//                            try await authViewModel.sendEmailVerification()
+//                            try await authViewModel.checkEmailVerification()
+//                        }
+//                    } else {
+//                        if checkEmail(input: email) {
+//                            emailWarning = ""
+//                        } else if email.isEmpty {
+//                            emailWarning = "이메일 주소를 입력해주세요."
+//                        } else {
+//                            emailWarning = "이메일 주소가 유효하지 않습니다."
+//                        }
+//                        if checkPassword(input: password) {
+//                            passwordWarning = ""
+//                        } else if password.isEmpty {
+//                            passwordWarning = "비밀번호를 입력해주세요."
+//                        } else {
+//                            passwordWarning = "영문 대소문자, 숫자, 특수문자를 포함한 8개 이상이어야 합니다."
+//                        }
+//                        if confirmPassword(password: password, passwordConfirm: passwordConfirm) {
+//                            passwordConfirmWarning = ""
+//                        } else if passwordConfirm.isEmpty {
+//                            passwordConfirmWarning = "비밀번호를 한번 더 입력해주세요."
+//                        } else {
+//                            passwordConfirmWarning = "비밀번호가 일치하지 않습니다."
+//                        }
+//                    }
+//                } label: {
+//                    Text("로그인")
+//                        .frame(width: UIScreen.main.bounds.width-30, height:  60)
+//                        .background(Color.offBlack)
+//                        .foregroundColor(.offWhite)
+//                }
+                NavigationLink(destination: EmailVerificationView()) {
                     Text("회원가입")
                         .frame(width: UIScreen.main.bounds.width-30, height:  60)
                         .background(Color.offBlack)
                         .foregroundColor(.offWhite)
-                }
-                NavigationLink(destination: EmailVerificationView(), isActive: $isNavigationLinkActive) {
-                    EmptyView()
+                        .onTapGesture {
+                            if checkEmail(input: email) && checkPassword(input: password) && confirmPassword(password: password, passwordConfirm: passwordConfirm){
+                                userViewModel.isEmailVerificationLinkActive.toggle()
+                                Task {
+        //                            await authViewModel.checkEmailVerification2()
+                                    try await authViewModel.signUpWithEmailPassword(email: email, password: password, name: name)
+                                    try await authViewModel.sendEmailVerification()
+                                    try await authViewModel.checkEmailVerification()
+                                }
+                            } else {
+                                if checkEmail(input: email) {
+                                    emailWarning = ""
+                                } else if email.isEmpty {
+                                    emailWarning = "이메일 주소를 입력해주세요."
+                                } else {
+                                    emailWarning = "이메일 주소가 유효하지 않습니다."
+                                }
+                                if checkPassword(input: password) {
+                                    passwordWarning = ""
+                                } else if password.isEmpty {
+                                    passwordWarning = "비밀번호를 입력해주세요."
+                                } else {
+                                    passwordWarning = "영문 대소문자, 숫자, 특수문자를 포함한 8개 이상이어야 합니다."
+                                }
+                                if confirmPassword(password: password, passwordConfirm: passwordConfirm) {
+                                    passwordConfirmWarning = ""
+                                } else if passwordConfirm.isEmpty {
+                                    passwordConfirmWarning = "비밀번호를 한번 더 입력해주세요."
+                                } else {
+                                    passwordConfirmWarning = "비밀번호가 일치하지 않습니다."
+                                }
+                            }
+                        }
                 }
                 Spacer()
                     .frame(height: 55)
             }
-            .ignoresSafeArea()
         }
+        .ignoresSafeArea()
+//        .onDisappear {
+//            userViewModel.isSignUpLinkActive.toggle()
+//        }
 //        .onAppear {
 //            print("user: \(authViewModel.user)")
 //            print("user: \(authViewModel.user?.isEmailVerified)")

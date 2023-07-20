@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct OnBoardingView: View {
+    @State var isLogInLinkActive = false
+    @State var isSignUpLinkActive = false
+    @EnvironmentObject var userViewModel: UserViewModel
 //    @EnvironmentObject var authViewModel: AuthenticationViewModel
     var body: some View {
         NavigationView {
@@ -43,7 +46,6 @@ struct OnBoardingView: View {
                                 .foregroundColor(.offBlack)
                                 .border(Color.offBlack)
                         }
-                        
                     }// (E) LogIn, SignUp
                     Spacer()
                         .frame(height: 55)
@@ -56,6 +58,10 @@ struct OnBoardingView: View {
 //                print("state: \(authViewModel.authenticationState)")
 //            }
         }
+        .navigationViewStyle(.stack)
+//        .onDisappear {
+//            isSignUpLinkActive.toggle()
+//        }
     }
 }
 

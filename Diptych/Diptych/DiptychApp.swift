@@ -21,24 +21,28 @@ struct DiptychApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var authViewModel: AuthenticationViewModel = AuthenticationViewModel()
+    @StateObject var userViewModel: UserViewModel = UserViewModel()
     
     var body: some Scene {
         WindowGroup {
             //            DiptychTabView()
-            TestView()
-//            switch authViewModel.flow {
-//            case .isInitialized :
-//                OnBoardingView()
-//                    .environmentObject(authViewModel)
-//            case .isSignedUp :
-//                EmailVerificationView()
-//                    .environmentObject(authViewModel)
-//            case .isEmailVerified:
-//                CouplingView()
-//                    .environmentObject(authViewModel)
-//            default:
-//                DiptychTabView()
-//            }
+//            TestView()
+            switch authViewModel.flow {
+            case .isInitialized :
+                OnBoardingView()
+                    .environmentObject(authViewModel)
+                    .environmentObject(userViewModel)
+            case .isSignedUp :
+                EmailVerificationView()
+                    .environmentObject(authViewModel)
+                    .environmentObject(userViewModel)
+            case .isEmailVerified:
+                CouplingView()
+                    .environmentObject(authViewModel)
+                    .environmentObject(userViewModel)
+            default:
+                DiptychTabView()
+            }
         }
     }
 }
