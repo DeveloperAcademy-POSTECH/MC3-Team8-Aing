@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct OnBoardingView: View {
-    //    @EnvironmentObject var authViewModel: AuthenticationViewModel
+//    @EnvironmentObject var authViewModel: AuthenticationViewModel
+    /// 카메라 표시 여부
+    @State var isShowCamera = false
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -27,6 +30,10 @@ struct OnBoardingView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 393, height: 393)
+                        // 임시로 누르면 카메라 뜨도록 했고 나중에 다 지우겠습니다 (Cliff)
+                        .onTapGesture {
+                            isShowCamera = true
+                        }
                     Spacer()
                     VStack(spacing: 10) { // (S) LogIn, SignUp
                         NavigationLink(destination: LogInView()) {
@@ -55,6 +62,10 @@ struct OnBoardingView: View {
             //                print("user: \(authViewModel.user?.isEmailVerified)")
             //                print("state: \(authViewModel.authenticationState)")
             //            }
+        }
+        .fullScreenCover(isPresented: $isShowCamera) {
+            CameraRepresentableView()
+                 .toolbar(.hidden, for: .tabBar)
         }
     }
 }
