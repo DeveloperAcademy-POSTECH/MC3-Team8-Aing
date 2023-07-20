@@ -47,9 +47,8 @@ extension PhotoDetailView: View {
                 }
 
                 // photoA와 photoB가 각각 따로 띄워져야 함, 저장할 때 합쳐져서 저장됨
-                // 여백 없이 사진 붙이는 법?
                 // 일단 인터넷에서 url 이미지 임시로 넣어둔 상태
-                HStack {
+                HStack(spacing: 0) {
                     AsyncImage(
                         url: URL(string: imageUrl),
                         content: { image in
