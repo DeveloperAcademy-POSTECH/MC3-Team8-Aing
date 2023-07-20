@@ -9,12 +9,18 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
+struct WeeklyData {
+    let diptychState: DiptychState
+    let thumbnail: String?
+}
+
 @MainActor
 class TodayDiptychViewModel: ObservableObject {
 
     @Published var question = "상대방의 표정 중 당신이\n가장 좋아하는 표정은?"
-    @Published var weeklyData = [DiptychState]()
+    @Published var weeklyData = [WeeklyData]()
     @Published var isLoading = false
+
     let db = Firestore.firestore()
 
     func fetchTodayQuestion() async {
@@ -55,7 +61,8 @@ class TodayDiptychViewModel: ObservableObject {
         let timeStamp = Timestamp(seconds: 1689519600, nanoseconds: 0)
 
         do {
-            let querySnapshot = try await db.collection("photos")            .whereField("albumId", isEqualTo: "O6ulZBskeb10JC7DMhXk")
+            let querySnapshot = try await db.collection("photos")
+                .whereField("albumId", isEqualTo: "O6ulZBskeb10JC7DMhXk")
                 .whereField("date", isGreaterThanOrEqualTo: timeStamp)
                 .getDocuments()
 
@@ -63,18 +70,27 @@ class TodayDiptychViewModel: ObservableObject {
                 let data = document.data()
                 guard let photoFirst = data["photoFirst"] as? String else { return }
                 guard let photoSecond = data["photoSecond"] as? String else { return }
+                guard let thumbnail = data["thumbnail"] as? String else { return }
 
                 if photoFirst != "" && photoSecond != "" {
                     await MainActor.run {
-                        weeklyData.append(DiptychState.complete)
+//                        weeklyData.append(DiptychState.complete)
+                        weeklyData.append(WeeklyData(diptychState: .complete, thumbnail: thumbnail))
                     }
-                } else if photoFirst != "" || photoSecond != "" {
+                } else if photoFirst != "" {
                     await MainActor.run {
-                        weeklyData.append(DiptychState.half)
+//                        weeklyData.append(DiptychState.half)
+                        weeklyData.append(WeeklyData(diptychState: .half, thumbnail: nil))
+                    }
+                } else if photoSecond != " "{
+                    await MainActor.run {
+//                        weeklyData.append(DiptychState.half)
+                        weeklyData.append(WeeklyData(diptychState: .half, thumbnail: nil))
                     }
                 } else {
                     await MainActor.run {
-                        weeklyData.append(DiptychState.incomplete)
+//                        weeklyData.append(DiptychState.incomplete)
+                        weeklyData.append(WeeklyData(diptychState: .incomplete, thumbnail: nil))
                     }
                 }
             }

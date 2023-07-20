@@ -17,6 +17,7 @@ struct WeeklyCalenderView: View {
     @State var day: String
     @State var date: String
     @State var isToday: Bool
+    @State var thumbnail: String?
     var diptychState = DiptychState.incomplete
 
     var body: some View {

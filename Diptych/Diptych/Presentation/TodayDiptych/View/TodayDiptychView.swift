@@ -64,14 +64,17 @@ struct TodayDiptychView: View {
                         Text("로딩 중..")
                     } else {
                         ForEach(0..<viewModel.weeklyData.count, id: \.self) { index in
-                            if index == viewModel.weeklyData.count - 1 {
-                                WeeklyCalenderView(day: days[index], date: dates[index], isToday: true, diptychState: viewModel.weeklyData[index])
-                            } else {
-                                WeeklyCalenderView(day: days[index], date: dates[index], isToday: false, diptychState: viewModel.weeklyData[index])
-                            }
-                         }
+                            WeeklyCalenderView(day: days[index],
+                                               date: dates[index],
+                                               isToday: index == viewModel.weeklyData.count - 1 ? true : false,
+                                               thumbnail: viewModel.weeklyData[index].thumbnail,
+                                               diptychState: viewModel.weeklyData[index].diptychState)
+                        }
                         ForEach(viewModel.weeklyData.count..<7, id: \.self) { index in
-                            WeeklyCalenderView(day: days[index], date: dates[index], isToday: false, diptychState: .incomplete)
+                            WeeklyCalenderView(day: days[index],
+                                               date: dates[index],
+                                               isToday: false,
+                                               diptychState: .incomplete)
                         }
                     }
                 }
