@@ -112,7 +112,12 @@ private struct CellView: View {
         
 //        if {
             NavigationLink {
-                ImageDetailView()
+                PhotoDetailView(
+                    date: "2023년 7월 30일",
+                    questionNum: 20,
+                    question: "\"상대방의 표정 중 당신이\n 가장 좋아하는 표정은?\"",
+                    imageUrl: "https://www.alleycat.org/wp-content/uploads/2019/03/FELV-cat.jpg"
+                    )
             } label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 18)

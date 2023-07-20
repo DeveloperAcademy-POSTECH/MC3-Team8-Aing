@@ -57,11 +57,11 @@ struct OnBoardingView: View {
                 }
                 .ignoresSafeArea()
             }
-//            .onAppear {
-//                print("user: \(authViewModel.user)")
-//                print("user: \(authViewModel.user?.isEmailVerified)")
-//                print("state: \(authViewModel.authenticationState)")
-//            }
+            //            .onAppear {
+            //                print("user: \(authViewModel.user)")
+            //                print("user: \(authViewModel.user?.isEmailVerified)")
+            //                print("state: \(authViewModel.authenticationState)")
+            //            }
         }
         .fullScreenCover(isPresented: $isShowCamera) {
             CameraRepresentableView()
