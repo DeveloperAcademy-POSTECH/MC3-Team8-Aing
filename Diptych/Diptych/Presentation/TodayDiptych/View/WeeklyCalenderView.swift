@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseStorage
 
 enum DiptychState {
     case incomplete
@@ -14,6 +15,7 @@ enum DiptychState {
 }
 
 struct WeeklyCalenderView: View {
+
     @State var day: String
     @State var date: String
     @State var isToday: Bool
@@ -45,8 +47,6 @@ struct WeeklyCalenderView: View {
                         } else {
                             switch diptychState {
                             case .complete:
-//                                RoundedRectangle(cornerRadius: 18)
-//                                    .fill(Color.green)
                                 Image("diptych_sample1")
                                     .resizable()
                                     .clipShape(RoundedRectangle(cornerRadius: 18))
@@ -57,7 +57,6 @@ struct WeeklyCalenderView: View {
                     }
                 Text(date)
                     .font(.pretendard(.bold, size: 16))
-//                    .foregroundColor(.offBlack)
                     .foregroundColor(!isToday && diptychState == .complete ? .offWhite : .offBlack)
                     .padding(.top, 7)
             }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseStorage
 
 struct TodayDiptychView: View {
     @State var isShowCamera = false
