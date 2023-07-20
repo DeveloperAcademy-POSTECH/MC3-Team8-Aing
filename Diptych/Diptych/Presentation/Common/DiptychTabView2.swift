@@ -30,8 +30,8 @@ struct DiptychTabView2: View {
                     else if currentTab == 2 {
                         ProfileView()
                     }
-                }
-                .frame(maxWidth: .infinity)
+                }//】 VStack
+//                .frame(maxWidth: .infinity)
                 Spacer()
                 
                 /// 하단 탭바
@@ -50,7 +50,7 @@ struct DiptychTabView2: View {
                         .buttonStyle(.plain)
                     }//】 Loop
                 }//】 HStack
-                .frame(maxWidth: .infinity)
+//                .frame(maxWidth: .infinity)
                 .frame(height: 100)
 //                .padding(.horizontal,30)
                 .background(Color.white)

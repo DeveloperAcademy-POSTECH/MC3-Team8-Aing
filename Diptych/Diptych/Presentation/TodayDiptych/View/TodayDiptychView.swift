@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct TodayDiptychView: View {
+    @State var isShowCamera = false
+    @StateObject private var viewModel = TodayDiptychViewModel()
     let days = ["월", "화", "수", "목", "금", "토", "일"]
+    let dates = ["17", "18", "19", "20", "21", "22", "23"] // 일단 날짜 박아두기
 
     var body: some View {
         ZStack {
             Color.offWhite
-
             VStack(spacing: 0) {
-                HStack {
+                HStack(spacing: 0) {
                     Text("오늘의 주제")
                         .font(.pretendard(.medium, size: 16))
                         .foregroundColor(.offBlack)
@@ -29,8 +31,10 @@ struct TodayDiptychView: View {
                 .padding(.horizontal, 15)
                 .padding(.top, 79)
 
-                HStack {
-                    Text("\"상대방의 표정 중 당신이\n가장 좋아하는 표정은?\"")
+                HStack(spacing: 0) {
+                    // TODO: - 유저가 가입한 날짜와 연관하여 작업하기
+                    Text("\"\(viewModel.question)\"")
+                        .lineSpacing(6)
                         .font(.pretendard(.light, size: 28))
                         .foregroundColor(.offBlack)
                         .padding(.top, 12)
@@ -45,7 +49,8 @@ struct TodayDiptychView: View {
                         .overlay {
                             Image("imgDiptychCamera")
                                 .onTapGesture {
-                                    print("카메라뷰")
+                                    // print("카메라뷰")
+                                    isShowCamera = true
                                 }
                         }
                     Rectangle()
@@ -56,21 +61,37 @@ struct TodayDiptychView: View {
                 .padding(.bottom, 23)
 
                 HStack(spacing: 9) {
-//                    ForEach(0..<7) { index in
-//                        WeeklyCalenderView(day: days[index])
-//                    }
-                    WeeklyCalenderView(day: days[0], isToday: false)
-                    WeeklyCalenderView(day: days[1], isToday: false)
-                    WeeklyCalenderView(day: days[2], isToday: true)
-                    WeeklyCalenderView(day: days[3], isToday: false)
-                    WeeklyCalenderView(day: days[4], isToday: false)
-                    WeeklyCalenderView(day: days[5], isToday: false)
-                    WeeklyCalenderView(day: days[6], isToday: false)
+                    if viewModel.isLoading {
+                        Text("로딩 중..")
+                    } else {
+                        ForEach(0..<viewModel.weeklyData.count, id: \.self) { index in
+                            WeeklyCalenderView(day: days[index],
+                                               date: dates[index],
+                                               isToday: index == viewModel.weeklyData.count - 1 ? true : false,
+                                               thumbnail: viewModel.weeklyData[index].thumbnail,
+                                               diptychState: viewModel.weeklyData[index].diptychState)
+                        }
+                        ForEach(viewModel.weeklyData.count..<7, id: \.self) { index in
+                            WeeklyCalenderView(day: days[index],
+                                               date: dates[index],
+                                               isToday: false,
+                                               diptychState: .incomplete)
+                        }
+                    }
                 }
             }
             .padding(.bottom, 23)
         }
         .ignoresSafeArea(edges: .top)
+        .onAppear {
+            Task {
+                await viewModel.fetchWeeklyCalender()
+            }
+        }
+        .fullScreenCover(isPresented: $isShowCamera) {
+            CameraRepresentableView()
+                 .toolbar(.hidden, for: .tabBar)
+        }
     }
 }
 
