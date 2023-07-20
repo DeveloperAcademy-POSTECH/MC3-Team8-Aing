@@ -74,22 +74,18 @@ class TodayDiptychViewModel: ObservableObject {
 
                 if photoFirst != "" && photoSecond != "" {
                     await MainActor.run {
-//                        weeklyData.append(DiptychState.complete)
                         weeklyData.append(WeeklyData(diptychState: .complete, thumbnail: thumbnail))
                     }
                 } else if photoFirst != "" {
                     await MainActor.run {
-//                        weeklyData.append(DiptychState.half)
                         weeklyData.append(WeeklyData(diptychState: .half, thumbnail: nil))
                     }
-                } else if photoSecond != " "{
+                } else if photoSecond != "" {
                     await MainActor.run {
-//                        weeklyData.append(DiptychState.half)
                         weeklyData.append(WeeklyData(diptychState: .half, thumbnail: nil))
                     }
                 } else {
                     await MainActor.run {
-//                        weeklyData.append(DiptychState.incomplete)
                         weeklyData.append(WeeklyData(diptychState: .incomplete, thumbnail: nil))
                     }
                 }
