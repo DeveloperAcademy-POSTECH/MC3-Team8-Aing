@@ -13,7 +13,7 @@ struct CalendarScrollView: View {
     
     var body: some View {
         
-        NavigationView{
+//        NavigationView{
             ScrollViewReader { scrollViewProxy in
                 
                 ScrollView(.vertical) {
@@ -28,7 +28,7 @@ struct CalendarScrollView: View {
                     scrollViewProxy.scrollTo(scrollToID, anchor: .bottom)
                 }
             }//】 ScrollViewReader
-        }//】 Navigation
+//        }//】 Navigation
     }//】 Body
 }
 

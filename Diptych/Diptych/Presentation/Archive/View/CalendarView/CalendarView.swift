@@ -88,9 +88,11 @@ struct CalendarView: View {
                 }//: Loop
             }//: LazyGrid
             .padding(.horizontal,15)
+            .padding(.bottom, 51)
            
         }//】 VStack
-        .padding(.top,51)
+        .padding(.top,10)
+        
         
         
     }//: oneMonthCalendarView

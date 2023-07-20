@@ -15,48 +15,48 @@ struct ArchiveTabView: View {
     var tabBarOptions: [String] = ["캘린더", "앨범"] //"질문함"(보류)
     
     var body: some View {
+        NavigationView{
         VStack(spacing: 0){
-            
-            /// 상단 탭바
-            HStack(spacing: 90) {
-                ForEach(tabBarOptions.indices, id: \.self) { index in
-                    let title = tabBarOptions[index]
-                    Button {
-                        currentTab = index
-                    } label: {
-                        TabBarItem(isSelected: currentTab == index,
-                                   namespace: namespace,
-                                   title: title)
-                    }//】 Button
-                    .buttonStyle(.plain)
-                }//】 Loop
-            }//】 HStack
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal,30)
-            .background(Color.gray.opacity(0.1))
-//            .ignoresSafeArea()
-            
-            Divider()
-                .foregroundColor(.lightGray)
-                .frame(height: 1)
-            
-            
-            /// 각 뷰로 이동
-            if currentTab == 0 {
-                CalendarScrollView()
-            } else if currentTab == 1 {
-                AlbumNavigationView()
-            }
-//            else if currentTab == 2 {
-//               QuestionListView()
-//            } // 질문함
-               
+                /// 상단 탭바
+                HStack(spacing: 90) {
+                    ForEach(tabBarOptions.indices, id: \.self) { index in
+                        let title = tabBarOptions[index]
+                        Button {
+                            currentTab = index
+                        } label: {
+                            ArchiveTabBarItem(isSelected: currentTab == index,
+                                       namespace: namespace,
+                                       title: title)
+                        }//】 Button
+                        .buttonStyle(.plain)
+                    }//】 Loop
+                }//】 HStack
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal,30)
+                .background(Color.gray.opacity(0.1))
+                //            .ignoresSafeArea()
+                
+                Divider()
+                    .foregroundColor(.lightGray)
+                    .frame(height: 1)
+                
+                
+                /// 각 뷰로 이동
+                if currentTab == 0 {
+                    CalendarScrollView()
+                } else if currentTab == 1 {
+                    AlbumNavigationView()
+                }
+                //            else if currentTab == 2 {
+                //               QuestionListView()
+                //            } // 질문함
         }//】 VStack
+        }//】 Navigation
     }//】 Body
 }
 
 
-struct TabBarItem: View {
+struct ArchiveTabBarItem: View {
     
     ///Property
     var isSelected: Bool
