@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TodayDiptychView: View {
-
+    @State var isShowCamera = false
     @StateObject private var viewModel = TodayDiptychViewModel()
     let days = ["월", "화", "수", "목", "금", "토", "일"]
     let dates = ["17", "18", "19", "20", "21", "22", "23"] // 일단 날짜 박아두기
@@ -49,7 +49,8 @@ struct TodayDiptychView: View {
                         .overlay {
                             Image("imgDiptychCamera")
                                 .onTapGesture {
-                                    print("카메라뷰")
+                                    // print("카메라뷰")
+                                    isShowCamera = true
                                 }
                         }
                     Rectangle()
@@ -86,6 +87,10 @@ struct TodayDiptychView: View {
             Task {
                 await viewModel.fetchWeeklyCalender()
             }
+        }
+        .fullScreenCover(isPresented: $isShowCamera) {
+            CameraRepresentableView()
+                 .toolbar(.hidden, for: .tabBar)
         }
     }
 }
