@@ -64,18 +64,18 @@ struct CalendarView: View {
             /// [3]날짜
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7),
                       spacing: 0) {
-                ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
+                ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { dayNum in
                     /// 빈칸 표시
-                    if index < firstWeekday {
+                    if dayNum < firstWeekday {
                         Color.clear
                     }
                     /// 날짜 표시
                     else {
-                        let day = index - firstWeekday + 1
+                        let day = dayNum - firstWeekday + 1
                         let currentDate = Calendar.current.component(.day, from: Date())
                         
                         /// 오늘 날짜 표시 
-                        if index - firstWeekday + 1 == currentDate && changeMonthInt == 0 {
+                        if dayNum - firstWeekday + 1 == currentDate && changeMonthInt == 0 {
                             CellView(day: day, cellColor: Color.systemSalmon)
                         }
                         /// 평소 날짜 표시
@@ -89,7 +89,6 @@ struct CalendarView: View {
             }//: LazyGrid
             .padding(.horizontal,15)
            
-        
         }//】 VStack
         .padding(.top,51)
         
