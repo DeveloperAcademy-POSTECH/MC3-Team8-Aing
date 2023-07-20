@@ -25,7 +25,7 @@ struct DiptychTabView2: View {
                         TodayDiptychView()
                     }
                     else if currentTab == 1 {
-                        ArchiveTabView(currentTab: currentTab)
+                        ArchiveTabView(currentTab: 0)
                     }
                     else if currentTab == 2 {
                         ProfileView()
