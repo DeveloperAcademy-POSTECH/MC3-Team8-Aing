@@ -17,6 +17,7 @@ struct TodayDiptychView: View {
         ZStack {
             Color.offWhite
             VStack(spacing: 0) {
+                /// [1]해더
                 HStack(spacing: 0) {
                     Text("오늘의 주제")
                         .font(.pretendard(.medium, size: 16))
@@ -27,10 +28,12 @@ struct TodayDiptychView: View {
                         .background(Color.lightGray)
                     Spacer()
                     Image("imgNotification")
-                }
+                }//】 HStack
                 .padding(.horizontal, 15)
-                .padding(.top, 79)
-
+                .padding(.top, 50)
+                
+                
+                /// [2] 질문
                 HStack(spacing: 0) {
                     // TODO: - 유저가 가입한 날짜와 연관하여 작업하기
                     Text("\"\(viewModel.question)\"")
@@ -41,8 +44,10 @@ struct TodayDiptychView: View {
                         .padding(.leading, 15)
                         .padding(.bottom, 34)
                     Spacer()
-                }
-
+                }//】 HStack
+                
+                
+                /// [3] 사진 프레임
                 HStack(spacing: 0) {
                     Rectangle()
                         .fill(Color.lightGray)
@@ -55,11 +60,13 @@ struct TodayDiptychView: View {
                         }
                     Rectangle()
                         .fill(Color.offBlack)
-                }
+                }//】 HStack
                 .frame(maxWidth: .infinity)
                 .aspectRatio(1.0, contentMode: .fit)
                 .padding(.bottom, 23)
-
+                
+                
+                /// 요일 캘린더
                 HStack(spacing: 9) {
                     if viewModel.isLoading {
                         Text("로딩 중..")
@@ -78,9 +85,10 @@ struct TodayDiptychView: View {
                                                diptychState: .incomplete)
                         }
                     }
-                }
-            }
-            .padding(.bottom, 23)
+                }//】 HStack
+                
+            }//】 VStack
+            .padding(.bottom, 85)
         }
         .ignoresSafeArea(edges: .top)
         .onAppear {

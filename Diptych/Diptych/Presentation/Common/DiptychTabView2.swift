@@ -17,7 +17,7 @@ struct DiptychTabView2: View {
     
     var body: some View {
         NavigationView{
-            VStack(spacing: 0){
+            ZStack{
                 
                 /// 각 뷰로 이동
                 VStack(spacing: 0){
@@ -31,31 +31,33 @@ struct DiptychTabView2: View {
                         ProfileView()
                     }
                 }//】 VStack
-//                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity)
                 Spacer()
                 
                 /// 하단 탭바
-                HStack(spacing: 90) {
-                    ForEach(tabBarTitle.indices, id: \.self) { index in
-                        let title = tabBarTitle[index]
-                        let icon1 = selectedIcons[index]
-                        let icon2 = UnselectedIcons[index]
-                        
-                        Button {
-                            currentTab = index
-                        } label: {
-                            DiptychTabBarItem(isSelected: currentTab == index, title: title,
-                                              selectedIcon: icon1, UnselectedIcon: icon2)
-                        }//】 Button
-                        .buttonStyle(.plain)
-                    }//】 Loop
-                }//】 HStack
-//                .frame(maxWidth: .infinity)
-                .frame(height: 100)
-//                .padding(.horizontal,30)
-                .background(Color.white)
+                VStack{
+                    Spacer()
+                    HStack(spacing: 90) {
+                        ForEach(tabBarTitle.indices, id: \.self) { index in
+                            let title = tabBarTitle[index]
+                            let icon1 = selectedIcons[index]
+                            let icon2 = UnselectedIcons[index]
+                            
+                            Button {
+                                currentTab = index
+                            } label: {
+                                DiptychTabBarItem(isSelected: currentTab == index, title: title,
+                                                  selectedIcon: icon1, UnselectedIcon: icon2)
+                            }//】 Button
+                            .buttonStyle(.plain)
+                        }//】 Loop
+                    }//】 HStack
+                    .frame(height: 100)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.white)
+                }//】 VStack
                 
-            }//】 VStack
+            }//】 ZStack
             .ignoresSafeArea()
         }//】 Navigation
     }//】 Body

@@ -45,7 +45,7 @@ struct ArchiveTabView: View {
                 if currentTab == 0 {
                     CalendarScrollView()
                 } else if currentTab == 1 {
-                    AlbumNavigationView()
+                    AlbumListView()
                 }
                 //            else if currentTab == 2 {
                 //               QuestionListView()
