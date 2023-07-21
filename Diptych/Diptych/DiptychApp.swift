@@ -24,7 +24,7 @@ struct DiptychApp: App {
     
     var body: some Scene {
         WindowGroup {
-            DiptychTabView()
+            DiptychTabView2()
             
 //            switch authViewModel.flow {
 //            case .isInitialized :
