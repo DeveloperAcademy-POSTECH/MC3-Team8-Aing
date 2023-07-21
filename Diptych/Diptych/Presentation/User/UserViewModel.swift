@@ -73,7 +73,7 @@ class UserViewModel: ObservableObject {
         do {
             print("DEBUG: signUpWithEmailPassword")
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
-            let user = DiptychUser(id: result.user.uid, email: email, name: name, flow: "signedUp")
+            let user = DiptychUser(id: result.user.uid, email: email, flow: "signedUp", name: name)
             let encodedUser = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
         }
@@ -176,6 +176,16 @@ class UserViewModel: ObservableObject {
         
     }
     
+    func fetchLoverData() async {
+        print("DEBUG : fetchLoverData self.lover : \(self.lover)")
+        guard let uid = self.currentUser?.loverId else { return }
+        guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else { return }
+        if let lover = try? snapshot.data(as: DiptychUser.self) {
+            self.lover = lover
+            print("DEBUG: fetchLoverData Done")
+        }
+    }
+    
     func setUserData() async {
         do {
             if var currentUser = self.currentUser {
@@ -239,6 +249,40 @@ extension UserViewModel {
                 try await Firestore.firestore().collection("users").document(lover.id).setData(encodedLover, merge: true)
                 self.isCompleted = true
             }
+        }
+    }
+    
+    func checkStartDate(startDate: Date) async throws -> Bool {
+        do {
+            print("DEBUG : checkStartDate -> startDate : \(startDate)")
+            await fetchLoverData()
+            if let lover = self.lover {
+                if lover.startDate == nil {
+                    print("DEBUG : lover startDate is nil")
+                    return true
+                } else {
+                    print((lover.startDate?.get(.day) == startDate.get(.day)) && (lover.startDate?.get(.month) == startDate.get(.month)) && (lover.startDate?.get(.year) == startDate.get(.year)))
+                    return (lover.startDate?.get(.day) == startDate.get(.day)) && (lover.startDate?.get(.month) == startDate.get(.month)) && (lover.startDate?.get(.year) == startDate.get(.year))
+//                    return lover.startDate == startDate
+                }
+            }
+        }
+        return false
+    }
+    
+    func setProfileData(name: String, startDate: Date) async throws {
+        do {
+            print("[DEBUG] setProfileDate -> name: \(name), startDate: \(startDate)")
+            if var currentUser = self.currentUser {
+                currentUser.name = name
+                currentUser.startDate = startDate
+                currentUser.flow = "completed"
+                let encodedCurrentUser = try Firestore.Encoder().encode(currentUser)
+                try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedCurrentUser, merge: true)
+            }
+        }
+        catch {
+            print(error.localizedDescription)
         }
     }
     

@@ -51,7 +51,7 @@ class AuthenticationViewModel: ObservableObject {
     func signUpWithEmailPassword(email: String, password: String, name: String) async throws {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
-            let user = DiptychUser(id: result.user.uid, email: email, name: name, flow: "isSignedUp")
+            let user = DiptychUser(id: result.user.uid, email: email, flow: "isSignedUp", name: name)
             let encodedUser = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
             await fetchUser()

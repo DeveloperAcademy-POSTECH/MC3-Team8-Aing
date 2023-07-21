@@ -47,17 +47,17 @@ struct SignUpView: View {
                     .font(.pretendard(.light, size: 28))
                 Spacer()
                 VStack(spacing: 37) {
-                    VStack(alignment: .leading) {
-                        TextField("이름", text: $name)
-                            .font(.pretendard(.light, size: 18))
-                            .foregroundColor(.darkGray)
-                            .disableAutocorrection(true)
-//                        Divider()
-//                        Text(emailWarning)
-//                            .font(.pretendard(.light, size: 12))
-//                            .foregroundColor(.offBlack)
-                    
-                    }
+//                    VStack(alignment: .leading) {
+//                        TextField("이름", text: $name)
+//                            .font(.pretendard(.light, size: 18))
+//                            .foregroundColor(.darkGray)
+//                            .disableAutocorrection(true)
+////                        Divider()
+////                        Text(emailWarning)
+////                            .font(.pretendard(.light, size: 12))
+////                            .foregroundColor(.offBlack)
+//                    
+//                    }
                     VStack(alignment: .leading) {
                         TextField("이메일", text: $email)
                             .font(.pretendard(.light, size: 18))

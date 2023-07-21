@@ -12,6 +12,7 @@ struct ProfileSettingView: View {
     @State var selectedDate: Date = Date()
     @State var formattedDateString: String = "기념일"
     @State var isDatePickerShown: Bool = false
+    @State var selectedDateWarning: String = ""
     
     @EnvironmentObject var userViewModel: UserViewModel
     
@@ -46,11 +47,20 @@ struct ProfileSettingView: View {
                             
                         }
                         Divider()
+                        Text(selectedDateWarning)
                     }
                 }
                 Spacer()
                 Button {
-                    
+                    Task {
+                        print("selectedDate: \(selectedDate)")
+                        if try await userViewModel.checkStartDate(startDate: selectedDate) {
+                            selectedDateWarning = ""
+                            try await userViewModel.setProfileData(name: name, startDate: selectedDate)
+                        } else {
+                            selectedDateWarning = "상대가 설정한 시작일과 다릅니다."
+                        }
+                    }
                 } label: {
                     Text("딥틱 시작하기")
                         .frame(width: UIScreen.main.bounds.width-30, height:  60)
