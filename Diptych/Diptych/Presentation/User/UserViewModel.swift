@@ -152,6 +152,7 @@ class UserViewModel: ObservableObject {
     
     func signOut() {
         do {
+            print("[DEBUG] signOut is called")
             try Auth.auth().signOut()
             //            self.userSession = nil
             self.currentUser = nil
@@ -163,7 +164,28 @@ class UserViewModel: ObservableObject {
     }
     
     func deleteAccount() {
-        print("pass: DELETE")
+        print("[DEBUG] deleteAccount is called")
+        
+        if let currentUser = self.currentUser {
+            Firestore.firestore().collection("users").document(currentUser.id).delete() { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    print("[DEBUG] deleteAccount is processing. Delete in DB")
+                }
+            }
+        }
+        
+        let user = Auth.auth().currentUser
+        user?.delete { error in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                print("DEBUG : delete done")
+            }
+        }
+        self.currentUser = nil
+        self.flow = .initialized
     }
     
     func fetchUserData() async {

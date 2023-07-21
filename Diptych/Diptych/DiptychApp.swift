@@ -28,7 +28,7 @@ struct DiptychApp: App {
 
 //            DiptychTabView()
 
-            DiptychTabView2()
+//            DiptychTabView2()
 
             
             if userViewModel.flow == .initialized {
@@ -45,6 +45,7 @@ struct DiptychApp: App {
                     .environmentObject(userViewModel)
             } else {
                 DiptychTabView()
+                    .environmentObject(userViewModel)
             }
             
             
