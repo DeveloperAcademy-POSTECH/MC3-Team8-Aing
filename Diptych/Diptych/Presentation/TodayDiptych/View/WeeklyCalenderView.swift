@@ -47,9 +47,13 @@ struct WeeklyCalenderView: View {
                         } else {
                             switch diptychState {
                             case .complete:
-                                Image("diptych_sample1")
-                                    .resizable()
-                                    .clipShape(RoundedRectangle(cornerRadius: 18))
+                                ZStack {
+                                    Image("diptych_sample1")
+                                        .resizable()
+                                        .clipShape(RoundedRectangle(cornerRadius: 18))
+                                    Color.offBlack.opacity(0.4)
+                                        .clipShape(RoundedRectangle(cornerRadius: 18))
+                                }
                             default:
                                 EmptyView()
                             }
