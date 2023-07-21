@@ -281,15 +281,23 @@ extension UserViewModel {
             if let lover = self.lover {
                 if lover.startDate == nil {
                     print("DEBUG : lover startDate is nil")
+                    setFirstSecond(isFirst: true)
                     return true
                 } else {
                     print((lover.startDate?.get(.day) == startDate.get(.day)) && (lover.startDate?.get(.month) == startDate.get(.month)) && (lover.startDate?.get(.year) == startDate.get(.year)))
+                    setFirstSecond(isFirst: false)
                     return (lover.startDate?.get(.day) == startDate.get(.day)) && (lover.startDate?.get(.month) == startDate.get(.month)) && (lover.startDate?.get(.year) == startDate.get(.year))
 //                    return lover.startDate == startDate
                 }
             }
         }
         return false
+    }
+    
+    func setFirstSecond(isFirst: Bool)  {
+        if self.currentUser != nil {
+            self.currentUser?.isFirst = isFirst
+        }
     }
     
     func setProfileData(name: String, startDate: Date) async throws {
