@@ -46,6 +46,17 @@ class TodayDiptychViewModel: ObservableObject {
         }
     }
 
+    func fetchAll() {
+        db
+            .collection("photos")
+            .whereField("albumId", isEqualTo: "O6ulZBskeb10JC7DMhXk")
+            .getDocuments { querySnapshot, error in
+                for doucment in querySnapshot!.documents {
+                    print(doucment.data())
+                }
+            }
+    }
+
 
     func fetchWeeklyCalender() async {
         // 이번 주 월요일(17) 이후의 데이터
@@ -111,7 +122,6 @@ class TodayDiptychViewModel: ObservableObject {
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd 00:00:00"
-//        dateFormatter.timeZone = TimeZone(identifier: "UTC")
 
         let timestamp = Timestamp(date: previousMonday)
 
