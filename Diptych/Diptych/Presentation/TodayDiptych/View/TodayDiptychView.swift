@@ -62,7 +62,7 @@ struct TodayDiptychView: View {
 
                 HStack(spacing: 9) {
                     if viewModel.isLoading {
-                        Text("로딩 중..")
+                        ProgressView()
                     } else {
                         ForEach(0..<viewModel.weeklyData.count, id: \.self) { index in
                             WeeklyCalenderView(day: days[index],
@@ -88,6 +88,9 @@ struct TodayDiptychView: View {
                 await viewModel.fetchWeeklyCalender()
             }
             mondayDate = calculateThisWeekMondayDate()
+        }
+        .onDisappear {
+            viewModel.weeklyData.removeAll()
         }
         .fullScreenCover(isPresented: $isShowCamera) {
             CameraRepresentableView()
