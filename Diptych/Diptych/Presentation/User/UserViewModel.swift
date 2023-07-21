@@ -43,9 +43,10 @@ class UserViewModel: ObservableObject {
         //        self.userSession = Auth.auth().currentUser //currentUser가 없으면 nil이 할당
         Task {
             await fetchUserData()
-            if let currentUser = self.currentUser {
-                self.flow = UserFlow(rawValue: currentUser.flow) ?? .initialized
-            }
+//            if let currentUser = self.currentUser {
+//                self.flow = UserFlow(rawValue: currentUser.flow) ?? .initialized
+//            }
+            print("[DEBUG] currentUser : \(self.currentUser) /// flow : \(self.flow)")
             listenerAboutUserData = Firestore.firestore().collection("users").addSnapshotListener() { snapshot, error in
                 Task{
                     await self.fetchUserData()
@@ -58,12 +59,10 @@ class UserViewModel: ObservableObject {
     // MARK : Singing, Authentication
     func signInWithEmailPassword(email: String, password: String) async throws {
         do {
-            let _ = try await Auth.auth().signIn(withEmail: email, password: password)
-            //            self.userSession = result.user
+            print("[DEBUG] signInWithEmailPassword -> email: \(email), password: \(password)")
+            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            print("[DEBUG] signInWithEmailPassword -> result:  \(result)")
             await fetchUserData()
-            if let currentUser = self.currentUser {
-                self.flow = UserFlow(rawValue: currentUser.flow) ?? .initialized
-            }
         }
         catch {
             print(error.localizedDescription)
