@@ -111,10 +111,8 @@ class TodayDiptychViewModel: ObservableObject {
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd 00:00:00"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+//        dateFormatter.timeZone = TimeZone(identifier: "UTC")
 
-        let previousMondayString = dateFormatter.string(from: previousMonday)
-        print(previousMondayString)
         let timestamp = Timestamp(date: previousMonday)
 
         return timestamp

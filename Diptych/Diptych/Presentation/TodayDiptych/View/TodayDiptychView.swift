@@ -50,7 +50,6 @@ struct TodayDiptychView: View {
                         .overlay {
                             Image("imgDiptychCamera")
                                 .onTapGesture {
-                                    // print("카메라뷰")
                                     isShowCamera = true
                                 }
                         }
@@ -88,11 +87,33 @@ struct TodayDiptychView: View {
             Task {
                 await viewModel.fetchWeeklyCalender()
             }
+            fetchThisMonday()
         }
         .fullScreenCover(isPresented: $isShowCamera) {
             CameraRepresentableView()
                  .toolbar(.hidden, for: .tabBar)
         }
+    }
+
+    func fetchThisMonday() {
+        let currentDate = Date()
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd 00:00:00"
+        formatter.timeZone = TimeZone(identifier: "Asia/Seoul") // 시간대 설정
+
+        let todayDateString = formatter.string(from: currentDate)
+
+        formatter.timeZone = TimeZone(identifier: "UTC") // 시간대 설정
+        let todayDate = formatter.date(from: todayDateString)!
+
+        let currentWeekday = calendar.component(.weekday, from: todayDate)
+        let daysAfterMonday = (currentWeekday + 5) % 7
+
+        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return }
+        print(thisMonday)
     }
 }
 
