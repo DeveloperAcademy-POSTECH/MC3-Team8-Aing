@@ -46,36 +46,25 @@ class TodayDiptychViewModel: ObservableObject {
         }
     }
 
-    func fetchAll() {
-        db
-            .collection("photos")
-            .whereField("albumId", isEqualTo: "O6ulZBskeb10JC7DMhXk")
-            .getDocuments { querySnapshot, error in
-                for doucment in querySnapshot!.documents {
-                    print(doucment.data())
-                }
-            }
-    }
-
+//    func fetchAll() {
+//        db
+//            .collection("photos")
+//            .whereField("albumId", isEqualTo: "O6ulZBskeb10JC7DMhXk")
+//            .whereField("date", isGreaterThanOrEqualTo: fetchThisMonday())
+//            .getDocuments { querySnapshot, error in
+//                for doucment in querySnapshot!.documents {
+//                    print(doucment.data())
+//                }
+//            }
+//    }
 
     func fetchWeeklyCalender() async {
-        // 이번 주 월요일(17) 이후의 데이터
-        // <FIRTimestamp: seconds=1689552000 nanoseconds=0>
-//        firebase의 7/17 timestamp: <FIRTimestamp: seconds=1689519600 nanoseconds=863000000>
-        /*
-         월요일을 주고 월요일 이상의 데이터를 받아오도록 함
-         seconds로만 검색할 수 없나 -> 이번주 월요일의 날짜를 구해서 넣기
-         일단은 월요일(7/17)로 해서 넣음 ^_^
-         */
-
         isLoading = true
-
-        let timeStamp = Timestamp(seconds: 1689519600, nanoseconds: 0)
 
         do {
             let querySnapshot = try await db.collection("photos")
-                .whereField("albumId", isEqualTo: "O6ulZBskeb10JC7DMhXk")
-                .whereField("date", isGreaterThanOrEqualTo: timeStamp)
+                .whereField("albumId", isEqualTo: "O6ulZBskeb10JC7DMhXk") // TODO: - 유저의 앨범과 연결
+                .whereField("date", isGreaterThanOrEqualTo: calcuateThisMondayTimestamp())
                 .getDocuments()
 
             for document in querySnapshot.documents {
@@ -109,22 +98,25 @@ class TodayDiptychViewModel: ObservableObject {
         isLoading = false
     }
 
-    func fetchThisMonday() -> Timestamp {
+    func calcuateThisMondayTimestamp() -> Timestamp {
         let currentDate = Date()
         var calendar = Calendar.current
         calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
 
-        let currentWeekday = calendar.component(.weekday, from: currentDate)
-        let daysUntilMonday = (2 - currentWeekday + 7) % 7
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd 00:00:00"
+        formatter.timeZone = TimeZone(identifier: "Asia/Seoul") // 시간대 설정
 
-        guard let thisMonday = calendar.date(byAdding: .day, value: daysUntilMonday, to: currentDate) else { return Timestamp() }
-        guard let previousMonday = calendar.date(byAdding: .day, value: -7, to: thisMonday) else { return Timestamp() }
+        let todayDateString = formatter.string(from: currentDate)
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd 00:00:00"
+        let todayDate = formatter.date(from: todayDateString)!
 
-        let timestamp = Timestamp(date: previousMonday)
+        let currentWeekday = calendar.component(.weekday, from: todayDate)
+        let daysAfterMonday = (currentWeekday + 5) % 7
 
+        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return Timestamp() }
+
+        let timestamp = Timestamp(date: thisMonday)
         return timestamp
     }
 }
