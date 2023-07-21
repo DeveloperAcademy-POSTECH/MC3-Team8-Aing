@@ -11,8 +11,8 @@ import SwiftUI
 
 struct CalendarView: View {
     
-    //property
-    @StateObject var VM: AlbumViewModel = AlbumViewModel()
+    ///Property
+    @StateObject private var VM = AlbumViewModel()
     @State var date: Date
     let changeMonthInt : Int
     
@@ -36,7 +36,7 @@ struct CalendarView: View {
 
         return VStack(spacing: 0) {
         
-            /// [1]월
+            /// [1] Month
             HStack(spacing: 0) {
                 Text(date, formatter: Self.monthFormatter)
                     .font(.system(size:36, weight: .light))
@@ -50,7 +50,8 @@ struct CalendarView: View {
             }//】 HStack
             .padding(.bottom,30)
         
-            /// [2]요일
+            
+            /// [2] Week
             HStack(spacing: 0) {
                 ForEach(Self.weekdaySymbols, id: \.self) { symbol in
                     Text(symbol)
@@ -61,37 +62,41 @@ struct CalendarView: View {
             .padding(.bottom, 10)
             .padding(.horizontal,13)
         
-            /// [3]날짜
+            
+            
+            /// [3] Day
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7),
                       spacing: 0) {
-                ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { dayNum in
+                ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
+                    
+//                    /// 로딩중
+//                    if VM.isLoading {
+//                        Text("로딩 중..")
+//                    }
                     /// 빈칸 표시
-                    if dayNum < firstWeekday {
+                    if index < firstWeekday {
                         Color.clear
                     }
                     /// 날짜 표시
                     else {
-                        let day = dayNum - firstWeekday + 1
-                        let currentDate = Calendar.current.component(.day, from: Date())
-                        
-                        /// 오늘 날짜 표시 
-                        if dayNum - firstWeekday + 1 == currentDate && changeMonthInt == 0 {
-                            CellView(day: day, cellColor: Color.systemSalmon)
-                        }
-                        /// 평소 날짜 표시
-                        else {
-                            CellView(day: day, cellColor:Color.gray.opacity(0.2))
-                        }
+                        CellView(day: index - firstWeekday + 1,
+                                 isToday: index - firstWeekday + 1
+                                    == Calendar.current.component(.day, from: Date())
+                                    && changeMonthInt == 0
+//                                 diptychState: VM.diptychData[index - firstWeekday + 1].diptychState
+                        )
                     }
-
                     
                 }//: Loop
+                    
+                
             }//: LazyGrid
             .padding(.horizontal,15)
             .padding(.bottom, 51)
            
         }//】 VStack
         .padding(.top,10)
+        
         
         
         
@@ -106,12 +111,14 @@ struct CalendarView: View {
 private struct CellView: View {
     
     //property
-    var day: Int
-    var cellColor : Color
+    @State var day: Int
+    @State var isToday: Bool
+//    @State var thumbnail: String?
+    var diptychState = DiptychState.complete
     
     var body: some View {
         
-//        if {
+
             NavigationLink {
                 PhotoDetailView(
                     date: "2023년 7월 30일",
@@ -123,33 +130,40 @@ private struct CellView: View {
             } label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 18)
+                        .stroke(Color.systemSalmon, lineWidth: isToday ? 2 : 0)
                         .frame(width: 44, height: 50)
-                        .foregroundColor(cellColor)
-                    
-                    //                Image("DummyThumbnail_5")
-                    //                    .resizable()
-                    //                    .scaledToFill()
-                    //                    .frame(width: 44, height: 50)
-                    //                    .clipShape(RoundedRectangle(cornerRadius: 18))
-                    
-                    Text(String(day))
-                        .font(.system(size:16, weight: .bold))
-                        .foregroundColor(.black)
-                        .offset(y:-13)
+                        .overlay {
+                            
+                            /// [1] 오늘 일 때
+                            if isToday {
+                                switch diptychState {
+                                    case .incomplete: //미완성
+                                        EmptyView()
+                                    case .half: // 반만 완성
+                                        RoundedRectangle(cornerRadius: 18)
+                                            .trim(from: 0.25, to: 0.75)
+                                            .fill(Color.systemSalmon)
+                                    case .complete: // 완성
+                                        RoundedRectangle(cornerRadius: 18)
+                                            .fill(Color.systemSalmon)
+                                }
+                            /// [2] 오늘이 아닐 때
+                            } else {
+                                switch diptychState {
+                                    case .complete: //완성
+                                        RoundedRectangle(cornerRadius: 18)
+                                            .fill(Color.lightGray)
+                                    default: // 미완성
+                                        EmptyView()
+                                }
+                            }
+                        }
+                    Text("\(day)")
+                        .font(.pretendard(.bold, size: 16))
+                        .foregroundColor(.offBlack)
                 }//】 ZStack
                 .padding(.bottom, 19)
             }//】 NavigationLink
-//        } else {
-//            ZStack{
-//                RoundedRectangle(cornerRadius: 18)
-//                    .frame(width: 44, height: 50)
-//                    .foregroundColor(Color.clear)
-//
-//                Text(String(day))
-//                    .font(.system(size:16, weight: .bold))
-//                    .foregroundColor(.black)
-//                    .offset(y:-13)
-//        }
         
     }//】 Body
 }// CellView

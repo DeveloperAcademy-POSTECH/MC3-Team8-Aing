@@ -30,6 +30,7 @@ struct WeeklyCalenderView: View {
                     .stroke(Color.systemSalmon, lineWidth: isToday ? 2 : 0)
                     .frame(width: 44, height: 50)
                     .overlay {
+                        /// [1] 오늘 일 때
                         if isToday {
                             switch diptychState {
                             case .incomplete:
@@ -42,11 +43,12 @@ struct WeeklyCalenderView: View {
                                 RoundedRectangle(cornerRadius: 18)
                                     .fill(Color.systemSalmon)
                             }
+                        /// [2] 오늘이 아닐 때
                         } else {
                             switch diptychState {
                             case .complete:
                                 RoundedRectangle(cornerRadius: 18)
-                                    .fill(Color.green)
+                                    .fill(Color.lightGray)
                             default:
                                 EmptyView()
                             }

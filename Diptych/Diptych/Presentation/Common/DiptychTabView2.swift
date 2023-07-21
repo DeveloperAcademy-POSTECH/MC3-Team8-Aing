@@ -37,7 +37,7 @@ struct DiptychTabView2: View {
                 /// 하단 탭바
                 VStack{
                     Spacer()
-                    HStack(spacing: 90) {
+                    HStack(spacing: 15) {
                         ForEach(tabBarTitle.indices, id: \.self) { index in
                             let title = tabBarTitle[index]
                             let icon1 = selectedIcons[index]
@@ -76,8 +76,8 @@ struct DiptychTabBarItem: View {
         
             VStack(spacing: 0) {
                
+                /// 탭바 아이콘
                 VStack(spacing: 0) {
-                    /// 탭바 아이콘
                     if isSelected{
                         Image(selectedIcon)
                     } else {
@@ -87,8 +87,8 @@ struct DiptychTabBarItem: View {
                 }//】 VStack
                 .padding(.bottom,5)
                 
+                /// 탭바 텍스트
                 VStack(spacing: 0){
-                    /// 탭바 텍스트
                     if isSelected{
                         Text(title)
                             .font(.system(size:12, weight: .medium))
@@ -102,6 +102,7 @@ struct DiptychTabBarItem: View {
                
                 
             }//】 VStack
+            .frame(width: 100)
             .offset(y:-7)
             .animation(.spring(), value: isSelected) // 애니메이션 타입
     }//】 Body

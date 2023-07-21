@@ -4,10 +4,10 @@
 //
 //  Created by 김민 on 2023/07/19.
 //
-
 import Foundation
 import Firebase
 import FirebaseFirestore
+import FirebaseStorage
 
 struct WeeklyData {
     let diptychState: DiptychState
@@ -74,22 +74,18 @@ class TodayDiptychViewModel: ObservableObject {
 
                 if photoFirst != "" && photoSecond != "" {
                     await MainActor.run {
-//                        weeklyData.append(DiptychState.complete)
                         weeklyData.append(WeeklyData(diptychState: .complete, thumbnail: thumbnail))
                     }
                 } else if photoFirst != "" {
                     await MainActor.run {
-//                        weeklyData.append(DiptychState.half)
                         weeklyData.append(WeeklyData(diptychState: .half, thumbnail: nil))
                     }
-                } else if photoSecond != " "{
+                } else if photoSecond != "" {
                     await MainActor.run {
-//                        weeklyData.append(DiptychState.half)
                         weeklyData.append(WeeklyData(diptychState: .half, thumbnail: nil))
                     }
                 } else {
                     await MainActor.run {
-//                        weeklyData.append(DiptychState.incomplete)
                         weeklyData.append(WeeklyData(diptychState: .incomplete, thumbnail: nil))
                     }
                 }
@@ -114,10 +110,8 @@ class TodayDiptychViewModel: ObservableObject {
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd 00:00:00"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+//        dateFormatter.timeZone = TimeZone(identifier: "UTC")
 
-        let previousMondayString = dateFormatter.string(from: previousMonday)
-        print(previousMondayString)
         let timestamp = Timestamp(date: previousMonday)
 
         return timestamp
