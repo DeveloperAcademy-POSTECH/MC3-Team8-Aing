@@ -56,7 +56,7 @@ struct SignUpView: View {
 ////                        Text(emailWarning)
 ////                            .font(.pretendard(.light, size: 12))
 ////                            .foregroundColor(.offBlack)
-//                    
+//
 //                    }
                     VStack(alignment: .leading) {
                         TextField("이메일", text: $email)
@@ -68,7 +68,7 @@ struct SignUpView: View {
                         Divider()
                         Text(emailWarning)
                             .font(.pretendard(.light, size: 12))
-                            .foregroundColor(.offBlack)
+                            .foregroundColor(.systemRed)
                     
                     }
                     VStack(alignment: .leading) {
@@ -78,7 +78,7 @@ struct SignUpView: View {
                         Divider()
                         Text(passwordWarning)
                             .font(.pretendard(.light, size: 12))
-                            .foregroundColor(.offBlack)
+                            .foregroundColor(.systemRed)
                     }
                     VStack(alignment: .leading) {
                         SecureField("비밀번호 확인", text: $passwordConfirm)
@@ -87,7 +87,7 @@ struct SignUpView: View {
                         Divider()
                         Text(passwordConfirmWarning)
                             .font(.pretendard(.light, size: 12))
-                            .foregroundColor(.offBlack)
+                            .foregroundColor(.systemRed)
                     }
                 }
                 .padding([.leading, .trailing], 15)

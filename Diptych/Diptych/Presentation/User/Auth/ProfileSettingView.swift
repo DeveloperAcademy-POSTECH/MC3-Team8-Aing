@@ -12,6 +12,7 @@ struct ProfileSettingView: View {
     @State var selectedDate: Date = Date()
     @State var formattedDateString: String = "기념일"
     @State var isDatePickerShown: Bool = false
+    @State var nameWarning: String = ""
     @State var selectedDateWarning: String = ""
     
     @EnvironmentObject var userViewModel: UserViewModel
@@ -32,6 +33,9 @@ struct ProfileSettingView: View {
                             .font(.pretendard(.light, size: 18))
                             .foregroundColor(.darkGray)
                         Divider()
+                        Text(nameWarning)
+                            .font(.pretendard(.light, size: 12))
+                            .foregroundColor(.systemRed)
                     }
                     VStack(alignment: .leading) {
                         HStack {
@@ -48,18 +52,24 @@ struct ProfileSettingView: View {
                         }
                         Divider()
                         Text(selectedDateWarning)
+                            .font(.pretendard(.light, size: 12))
+                            .foregroundColor(.systemRed)
                     }
                 }
                 Spacer()
                 Button {
-                    Task {
-                        print("selectedDate: \(selectedDate)")
-                        if try await userViewModel.checkStartDate(startDate: selectedDate) {
-                            selectedDateWarning = ""
-                            try await userViewModel.setProfileData(name: name, startDate: selectedDate)
-                        } else {
-                            selectedDateWarning = "상대가 설정한 시작일과 다릅니다."
+                    if checkName(input: name){
+                        Task {
+                            print("selectedDate: \(selectedDate)")
+                            if try await userViewModel.checkStartDate(startDate: selectedDate) {
+                                selectedDateWarning = ""
+                                try await userViewModel.setProfileData(name: name, startDate: selectedDate)
+                            } else {
+                                selectedDateWarning = "상대가 설정한 시작일과 다릅니다."
+                            }
                         }
+                    } else {
+                        nameWarning = "닉네임은 8글자 이내의 한글, 영어, 숫자로 조합해주세요."
                     }
                 } label: {
                     Text("딥틱 시작하기")
@@ -88,6 +98,11 @@ struct ProfileSettingView: View {
         let formatter = DateFormatter()
         formatter.dateFormat = format
         return formatter.string(from: date)
+    }
+    
+    private func checkName(input: String) -> Bool {
+        let nameRegEx: String = "^[가-힣ㄱ-ㅎㅏ-ㅣA-Za-z0-9]{1,8}$"
+        return NSPredicate(format: "SELF MATCHES %@", nameRegEx).evaluate(with: input)
     }
 }
 
