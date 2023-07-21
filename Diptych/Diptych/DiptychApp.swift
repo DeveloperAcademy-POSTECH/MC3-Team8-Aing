@@ -25,7 +25,11 @@ struct DiptychApp: App {
     
     var body: some Scene {
         WindowGroup {
+
 //            DiptychTabView()
+
+            DiptychTabView2()
+
             
             if userViewModel.flow == .initialized {
                 OnBoardingView()

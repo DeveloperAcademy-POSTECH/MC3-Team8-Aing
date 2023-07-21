@@ -94,6 +94,7 @@
 		F3263AA82A667D8300B4581C /* AlbumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AA72A667D8300B4581C /* AlbumViewModel.swift */; };
 		F3263AAA2A667FDD00B4581C /* AlbumData.json in Resources */ = {isa = PBXBuildFile; fileRef = F3263AA92A667FDD00B4581C /* AlbumData.json */; };
 		F3263AAC2A66839800B4581C /* JsonDecodeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AAB2A66839800B4581C /* JsonDecodeExtension.swift */; };
+		F3263AB62A691C4400B4581C /* DiptychTabView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AB52A691C4400B4581C /* DiptychTabView2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,6 +179,7 @@
 		F3263AA72A667D8300B4581C /* AlbumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewModel.swift; sourceTree = "<group>"; };
 		F3263AA92A667FDD00B4581C /* AlbumData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AlbumData.json; sourceTree = "<group>"; };
 		F3263AAB2A66839800B4581C /* JsonDecodeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDecodeExtension.swift; sourceTree = "<group>"; };
+		F3263AB52A691C4400B4581C /* DiptychTabView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychTabView2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -453,6 +455,7 @@
 			isa = PBXGroup;
 			children = (
 				AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */,
+				F3263AB52A691C4400B4581C /* DiptychTabView2.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -744,6 +747,7 @@
 				98D4A0842A6A625200EB8C94 /* Date+.swift in Sources */,
 				44DE9B972A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift in Sources */,
 				AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */,
+				F3263AB62A691C4400B4581C /* DiptychTabView2.swift in Sources */,
 				F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */,
 				445A47B12A5FE3DE005573DC /* AlbumNavigationView.swift in Sources */,
 				F3263AA82A667D8300B4581C /* AlbumViewModel.swift in Sources */,
@@ -938,10 +942,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
-				DEVELOPMENT_TEAM = ADXSYH5NDX;
+				DEVELOPMENT_TEAM = 578Q9VP5B4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diptych/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "사진을 찍으려면 카메라 권한 허용이 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진을 저장하고 불러오려면 라이브러리 권한 접근 허용이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -953,7 +959,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych;
+				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -972,10 +978,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
-				DEVELOPMENT_TEAM = ADXSYH5NDX;
+				DEVELOPMENT_TEAM = 578Q9VP5B4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diptych/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "사진을 찍으려면 카메라 권한 허용이 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진을 저장하고 불러오려면 라이브러리 권한 접근 허용이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -987,7 +995,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych;
+				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
