@@ -87,7 +87,6 @@ struct TodayDiptychView: View {
             Task {
                 await viewModel.fetchWeeklyCalender()
             }
-            fetchThisMonday()
         }
         .fullScreenCover(isPresented: $isShowCamera) {
             CameraRepresentableView()

@@ -51,7 +51,7 @@ struct WeeklyCalenderView: View {
                                     Image("diptych_sample1")
                                         .resizable()
                                         .clipShape(RoundedRectangle(cornerRadius: 18))
-                                    Color.offBlack.opacity(0.4)
+                                    Color.offBlack.opacity(0.5)
                                         .clipShape(RoundedRectangle(cornerRadius: 18))
                                 }
                             default:
