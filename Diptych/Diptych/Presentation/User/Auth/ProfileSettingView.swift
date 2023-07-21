@@ -58,19 +58,20 @@ struct ProfileSettingView: View {
                 }
                 Spacer()
                 Button {
-                    if checkName(input: name){
                         Task {
                             print("selectedDate: \(selectedDate)")
-                            if try await userViewModel.checkStartDate(startDate: selectedDate) {
+                            if try await userViewModel.checkStartDate(startDate: selectedDate) && checkName(input: name) {
                                 selectedDateWarning = ""
+                                nameWarning = ""
                                 try await userViewModel.setProfileData(name: name, startDate: selectedDate)
-                            } else {
+                            }
+                            if try await userViewModel.checkStartDate(startDate: selectedDate) == false {
                                 selectedDateWarning = "상대가 설정한 시작일과 다릅니다."
                             }
+                            if checkName(input: name) == false {
+                                nameWarning = "닉네임은 최대 8글자의 한글, 영어, 숫자 조합으로 만들어주세요."
+                            }
                         }
-                    } else {
-                        nameWarning = "닉네임은 8글자 이내의 한글, 영어, 숫자로 조합해주세요."
-                    }
                 } label: {
                     Text("딥틱 시작하기")
                         .frame(width: UIScreen.main.bounds.width-30, height:  60)
