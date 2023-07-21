@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct OnBoardingView: View {
+    @State var isLogInLinkActive = false
+    @State var isSignUpLinkActive = false
+    @EnvironmentObject var userViewModel: UserViewModel
 //    @EnvironmentObject var authViewModel: AuthenticationViewModel
     /// 카메라 표시 여부
     @State var isShowCamera = false
@@ -50,7 +53,6 @@ struct OnBoardingView: View {
                                 .foregroundColor(.offBlack)
                                 .border(Color.offBlack)
                         }
-                        
                     }// (E) LogIn, SignUp
                     Spacer()
                         .frame(height: 55)
@@ -67,6 +69,10 @@ struct OnBoardingView: View {
             CameraRepresentableView()
                  .toolbar(.hidden, for: .tabBar)
         }
+        .navigationViewStyle(.stack)
+//        .onDisappear {
+//            isSignUpLinkActive.toggle()
+//        }
     }
 }
 

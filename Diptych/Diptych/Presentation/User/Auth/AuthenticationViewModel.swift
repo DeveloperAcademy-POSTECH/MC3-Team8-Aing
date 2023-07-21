@@ -21,7 +21,8 @@ class AuthenticationViewModel: ObservableObject {
     //    @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: DiptychUser?
     @Published var flow: AuthenticationFlow = .isInitialized
-//    @Published var isEmailVerified: Bool = false
+    var listener: AuthStateDidChangeListenerHandle?
+    //    @Published var isEmailVerified: Bool = false
     
     init() {
         //        self.userSession = Auth.auth().currentUser //currentUser가 없으면 nil이 할당
@@ -35,7 +36,7 @@ class AuthenticationViewModel: ObservableObject {
     
     func signInWithEmailPassword(email: String, password: String) async throws {
         do {
-            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            let _ = try await Auth.auth().signIn(withEmail: email, password: password)
             //            self.userSession = result.user
             await fetchUser()
             if let currentUser = self.currentUser {
@@ -50,12 +51,8 @@ class AuthenticationViewModel: ObservableObject {
     func signUpWithEmailPassword(email: String, password: String, name: String) async throws {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
-            //            self.userSession = result.user
-            let user = DiptychUser(id: result.user.uid, email: email, name: name, flow: "isSignedUp")
-            //            print(user.id)
-            //            print(user.email)
+            let user = DiptychUser(id: result.user.uid, email: email, flow: "isSignedUp", name: name)
             let encodedUser = try Firestore.Encoder().encode(user)
-            //            print(encodedUser)
             try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
             await fetchUser()
         }
@@ -75,27 +72,47 @@ class AuthenticationViewModel: ObservableObject {
     
     func checkEmailVerification() async throws {
         do {
-            Task {
-                repeat {
-                    await wait()
-                    try await Auth.auth().currentUser?.reload()
+            repeat {
+                await wait()
+                try await Auth.auth().currentUser?.reload()
+                if let isEmailVerified = Auth.auth().currentUser?.isEmailVerified {
+                    if isEmailVerified{
+                        self.flow = .isEmailVerified
+                    }
+                }
+            } while self.flow != .isEmailVerified
+            if var currentUser = self.currentUser {
+                currentUser.flow = self.flow.rawValue
+                let encodedUser = try Firestore.Encoder().encode(currentUser)
+                try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedUser, merge: true)
+            }
+        }
+    }
+    
+    func checkEmailVerification2() async {
+        do {
+            self.listener = Auth.auth().addStateDidChangeListener{ auth, user in
+                Task {
                     if let isEmailVerified = Auth.auth().currentUser?.isEmailVerified {
-                        if isEmailVerified{
+                        if isEmailVerified {
+                            print(Auth.auth().currentUser)
                             self.flow = .isEmailVerified
+                            if var currentUser = self.currentUser {
+                                currentUser.flow = self.flow.rawValue
+                                let encodedUser = try Firestore.Encoder().encode(currentUser)
+                                try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedUser, merge: true)
+                            }
                         }
                     }
-                } while self.flow != .isEmailVerified
-                if var currentUser = self.currentUser {
-                    currentUser.flow = self.flow.rawValue
-                    let encodedUser = try Firestore.Encoder().encode(currentUser)
-                    try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedUser, merge: true)
                 }
             }
         }
-        catch {
-            print(error.localizedDescription)
-        }
     }
+    
+//    func addEmailVerificationListener() {
+//        self.listener = Auth.auth().addStateDidChangeListener{ auth, user in
+//            if let
+//    }
     
     func signOut() {
         do {
@@ -122,7 +139,7 @@ class AuthenticationViewModel: ObservableObject {
     private func wait() async {
         do {
             print("Wait")
-            try await Task.sleep(nanoseconds: 1_000_000_000)
+            try await Task.sleep(nanoseconds: 5_000_000_000)
             print("Done")
         }
         catch {
