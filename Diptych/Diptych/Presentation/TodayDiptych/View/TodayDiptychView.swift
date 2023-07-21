@@ -11,8 +11,8 @@ import FirebaseStorage
 struct TodayDiptychView: View {
     @State var isShowCamera = false
     @StateObject private var viewModel = TodayDiptychViewModel()
+    @State private var mondayDate: Int = 0
     let days = ["월", "화", "수", "목", "금", "토", "일"]
-    let dates = ["17", "18", "19", "20", "21", "22", "23"] // 일단 날짜 박아두기
 
     var body: some View {
         ZStack {
@@ -66,14 +66,14 @@ struct TodayDiptychView: View {
                     } else {
                         ForEach(0..<viewModel.weeklyData.count, id: \.self) { index in
                             WeeklyCalenderView(day: days[index],
-                                               date: dates[index],
+                                               date: "\(mondayDate + index)",
                                                isToday: index == viewModel.weeklyData.count - 1 ? true : false,
                                                thumbnail: viewModel.weeklyData[index].thumbnail,
                                                diptychState: viewModel.weeklyData[index].diptychState)
                         }
                         ForEach(viewModel.weeklyData.count..<7, id: \.self) { index in
                             WeeklyCalenderView(day: days[index],
-                                               date: dates[index],
+                                               date: "\(mondayDate + index)",
                                                isToday: false,
                                                diptychState: .incomplete)
                         }
@@ -87,6 +87,7 @@ struct TodayDiptychView: View {
             Task {
                 await viewModel.fetchWeeklyCalender()
             }
+            mondayDate = calculateThisWeekMondayDate()
         }
         .fullScreenCover(isPresented: $isShowCamera) {
             CameraRepresentableView()
@@ -94,7 +95,7 @@ struct TodayDiptychView: View {
         }
     }
 
-    func fetchThisMonday() {
+    func calculateThisWeekMondayDate() -> Int {
         let currentDate = Date()
         var calendar = Calendar.current
         calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
@@ -111,8 +112,10 @@ struct TodayDiptychView: View {
         let currentWeekday = calendar.component(.weekday, from: todayDate)
         let daysAfterMonday = (currentWeekday + 5) % 7
 
-        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return }
-        print(thisMonday)
+        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return 0 }
+
+        let day = calendar.component(.day, from: thisMonday)
+        return day
     }
 }
 
