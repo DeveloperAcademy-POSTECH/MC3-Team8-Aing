@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DiptychTabView: View {
     @State private var selection = 0
+    @EnvironmentObject var userViewModel: UserViewModel
 
     var body: some View {
         TabView(selection: $selection) {
@@ -44,6 +45,8 @@ struct DiptychTabView: View {
         }
     }
 }
+
+
 
 struct DiptychTabView_Previews: PreviewProvider {
     static var previews: some View {

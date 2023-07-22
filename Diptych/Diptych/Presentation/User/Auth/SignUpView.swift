@@ -9,7 +9,22 @@ import SwiftUI
 import Firebase
 import FirebaseAuth
 
+//struct SignUpView: View {
+//    @State var isSignInfoViewShown: Bool = true
+//
+//    @EnvironmentObject var userViewModel: UserViewModel
+//
+//    var body: some View {
+//        if isSignInfoViewShown {
+//            SignInfoView(isSignInfoViewShown: $isSignInfoViewShown)
+//        } else {
+//            LoadingVerificationView()
+//        }
+//    }
+//}
+
 struct SignUpView: View {
+    
     @State var name: String = ""
     @State var email: String = ""
     @State var password: String = ""
@@ -17,14 +32,14 @@ struct SignUpView: View {
     @State var emailWarning: String = ""
     @State var passwordWarning: String = ""
     @State var passwordConfirmWarning: String = ""
-//    @State var isShowingAlert: Bool = false
-//    @State var isShowingSheet: Bool = false
-    @State var isNavigationLinkActive: Bool = false
-    @EnvironmentObject var authViewModel: AuthenticationViewModel
+    
+//    @Binding var isSignInfoViewShown: Bool
+    
+    @EnvironmentObject var userViewModel: UserViewModel
+    
     var body: some View {
         ZStack {
             Color.offWhite
-                .ignoresSafeArea()
             VStack {
                 Spacer()
                     .frame(height: 124)
@@ -32,17 +47,17 @@ struct SignUpView: View {
                     .font(.pretendard(.light, size: 28))
                 Spacer()
                 VStack(spacing: 37) {
-                    VStack(alignment: .leading) {
-                        TextField("이름", text: $name)
-                            .font(.pretendard(.light, size: 18))
-                            .foregroundColor(.darkGray)
-                            .disableAutocorrection(true)
-//                        Divider()
-//                        Text(emailWarning)
-//                            .font(.pretendard(.light, size: 12))
-//                            .foregroundColor(.offBlack)
-                    
-                    }
+//                    VStack(alignment: .leading) {
+//                        TextField("이름", text: $name)
+//                            .font(.pretendard(.light, size: 18))
+//                            .foregroundColor(.darkGray)
+//                            .disableAutocorrection(true)
+////                        Divider()
+////                        Text(emailWarning)
+////                            .font(.pretendard(.light, size: 12))
+////                            .foregroundColor(.offBlack)
+//
+//                    }
                     VStack(alignment: .leading) {
                         TextField("이메일", text: $email)
                             .font(.pretendard(.light, size: 18))
@@ -53,7 +68,7 @@ struct SignUpView: View {
                         Divider()
                         Text(emailWarning)
                             .font(.pretendard(.light, size: 12))
-                            .foregroundColor(.offBlack)
+                            .foregroundColor(.systemRed)
                     
                     }
                     VStack(alignment: .leading) {
@@ -63,7 +78,7 @@ struct SignUpView: View {
                         Divider()
                         Text(passwordWarning)
                             .font(.pretendard(.light, size: 12))
-                            .foregroundColor(.offBlack)
+                            .foregroundColor(.systemRed)
                     }
                     VStack(alignment: .leading) {
                         SecureField("비밀번호 확인", text: $passwordConfirm)
@@ -72,18 +87,19 @@ struct SignUpView: View {
                         Divider()
                         Text(passwordConfirmWarning)
                             .font(.pretendard(.light, size: 12))
-                            .foregroundColor(.offBlack)
+                            .foregroundColor(.systemRed)
                     }
                 }
                 .padding([.leading, .trailing], 15)
                 Spacer()
                 Button {
                     if checkEmail(input: email) && checkPassword(input: password) && confirmPassword(password: password, passwordConfirm: passwordConfirm){
-                        isNavigationLinkActive.toggle()
+//                        isSignInfoViewShown.toggle()
                         Task {
-                            try await authViewModel.signUpWithEmailPassword(email: email, password: password, name: name)
-                            try await authViewModel.sendEmailVerification()
-                            try await authViewModel.checkEmailVerification()
+//                            await authViewModel.checkEmailVerification2()
+                            try await userViewModel.signUpWithEmailPassword(email: email, password: password, name: name)
+                            try await userViewModel.sendEmailVerification()
+//                            try await userViewModel.checkEmailVerification3()
                         }
                     } else {
                         if checkEmail(input: email) {
@@ -109,24 +125,16 @@ struct SignUpView: View {
                         }
                     }
                 } label: {
-                    Text("회원가입")
+                    Text("로그인")
                         .frame(width: UIScreen.main.bounds.width-30, height:  60)
                         .background(Color.offBlack)
                         .foregroundColor(.offWhite)
                 }
-                NavigationLink(destination: EmailVerificationView(), isActive: $isNavigationLinkActive) {
-                    EmptyView()
-                }
                 Spacer()
                     .frame(height: 55)
             }
-            .ignoresSafeArea()
         }
-//        .onAppear {
-//            print("user: \(authViewModel.user)")
-//            print("user: \(authViewModel.user?.isEmailVerified)")
-//            print("state: \(authViewModel.authenticationState)")
-//        }
+        .ignoresSafeArea()
     }
     
     func checkEmail(input: String) -> Bool {
@@ -143,6 +151,28 @@ struct SignUpView: View {
         return !password.isEmpty && password == passwordConfirm
     }
 }
+
+//struct LoadingVerificationView : View {
+//    @EnvironmentObject var userViewModel: UserViewModel
+//
+//    var body: some View {
+//        VStack {
+//            Text("입력하신 이메일로 인증 링크를 보냈습니다.")
+//                .font(.pretendard(.light, size: 18))
+//                .foregroundColor(.offBlack)
+//            Text("인증 완료 후 아래 버튼을 눌러주세요.")
+//                .font(.pretendard(.light, size: 18))
+//                .foregroundColor(.offBlack)
+//            Button {
+//                Task {
+//                    await userViewModel.checkEmailVerification3()
+//                }
+//            } label: {
+//                Text("인증 완료")
+//            }
+//        }
+//    }
+//}
 
 prefix func ! (value: Binding<Bool>) -> Binding<Bool> {
     Binding<Bool>(

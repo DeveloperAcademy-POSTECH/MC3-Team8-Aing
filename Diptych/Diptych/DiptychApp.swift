@@ -20,12 +20,56 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct DiptychApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject var authViewModel: AuthenticationViewModel = AuthenticationViewModel()
+//    @StateObject var authViewModel: AuthenticationViewModel = AuthenticationViewModel()
+    @StateObject var userViewModel: UserViewModel = UserViewModel()
     
     var body: some Scene {
         WindowGroup {
-            DiptychTabView()
+
+//            DiptychTabView()
+
+//            DiptychTabView2()
+
             
+            if userViewModel.flow == .initialized {
+                OnBoardingView()
+                    .environmentObject(userViewModel)
+            } else if userViewModel.flow == .signedUp {
+                LoadingVerificationView()
+                    .environmentObject(userViewModel)
+            } else if userViewModel.flow == .emailVerified {
+                CouplingView()
+                    .environmentObject(userViewModel)
+            } else if userViewModel.flow == .coupled {
+                ProfileSettingView()
+                    .environmentObject(userViewModel)
+            } else {
+                DiptychTabView()
+                    .environmentObject(userViewModel)
+            }
+            
+            
+//            if userViewModel.flow == .completed {
+//                DiptychTabView()
+//            } else {
+//                OnBoardingView()
+//                    .environmentObject(userViewModel)
+//            }
+            
+//            switch userViewModel.flow {
+//            case .initialized :
+//                OnBoardingView()
+////                    .environmentObject(authViewModel)
+//                    .environmentObject(userViewModel)
+//            case .emailVerified :
+//                SignUpView()
+////                    .environmentObject(authViewModel)
+//                    .environmentObject(userViewModel)
+//            case .emailVerified:
+//                CouplingView()
+////                    .environmentObject(authViewModel)
+//                    .environmentObject(userViewModel)
+
 //            switch authViewModel.flow {
 //            case .isInitialized :
 //                OnBoardingView()
@@ -36,6 +80,7 @@ struct DiptychApp: App {
 //            case .isEmailVerified:
 //                CouplingView()
 //                    .environmentObject(authViewModel)
+
 //            default:
 //                DiptychTabView()
 //            }
