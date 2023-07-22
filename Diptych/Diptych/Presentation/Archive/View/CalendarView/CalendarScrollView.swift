@@ -9,26 +9,26 @@ import SwiftUI
 
 struct CalendarScrollView: View {
     
-    let scrollToID = 5 // 스크롤뷰 시작 위치 지정
+    let scrollToID = 2 // 스크롤뷰 시작 위치 지정
     
     var body: some View {
         
-//        NavigationView{
             ScrollViewReader { scrollViewProxy in
                 
                 ScrollView(.vertical) {
                     VStack(spacing: 0) {
-                        ForEach(0...5, id:\.self) { index in
-                            CalendarView(date: Date.now, changeMonthInt: index-5)
+                        ForEach(0...2, id:\.self) { index in
+                            CalendarView(date: Date.now, changeMonthInt: index-2)
                         }
                     }
+                    .padding(.bottom,20)
                     .background(Color.gray.opacity(0.1))
                 }//】 Scroll
                 .onAppear{
                     scrollViewProxy.scrollTo(scrollToID, anchor: .bottom)
                 }
             }//】 ScrollViewReader
-//        }//】 Navigation
+
     }//】 Body
 }
 

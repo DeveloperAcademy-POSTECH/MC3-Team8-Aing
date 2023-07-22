@@ -37,7 +37,7 @@ struct DiptychTabView2: View {
                 /// 하단 탭바
                 VStack{
                     Spacer()
-                    HStack(spacing: 15) {
+                    HStack(spacing: 20) {
                         ForEach(tabBarTitle.indices, id: \.self) { index in
                             let title = tabBarTitle[index]
                             let icon1 = selectedIcons[index]
