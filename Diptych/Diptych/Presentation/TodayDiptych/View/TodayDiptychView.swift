@@ -8,11 +8,18 @@
 import SwiftUI
 import FirebaseStorage
 
+enum CameraLocation {
+    case left
+    case right
+}
+
 struct TodayDiptychView: View {
+
     @State var isShowCamera = false
     @StateObject private var viewModel = TodayDiptychViewModel()
     @State private var mondayDate: Int = 0
     let days = ["월", "화", "수", "목", "금", "토", "일"]
+    var cameraLcoation = CameraLocation.left
 
     var body: some View {
         ZStack {
@@ -45,16 +52,30 @@ struct TodayDiptychView: View {
                 }
 
                 HStack(spacing: 0) {
-                    Rectangle()
-                        .fill(Color.lightGray)
-                        .overlay {
-                            Image("imgDiptychCamera")
-                                .onTapGesture {
-                                    isShowCamera = true
-                                }
-                        }
-                    Rectangle()
-                        .fill(Color.offBlack)
+                    switch cameraLcoation {
+                    case .left:
+                        Rectangle()
+                            .fill(Color.lightGray)
+                            .overlay {
+                                Image("imgDiptychCamera")
+                                    .onTapGesture {
+                                        isShowCamera = true
+                                    }
+                            }
+                        Rectangle()
+                            .fill(Color.offBlack)
+                    case .right:
+                        Rectangle()
+                            .fill(Color.offBlack)
+                        Rectangle()
+                            .fill(Color.lightGray)
+                            .overlay {
+                                Image("imgDiptychCamera")
+                                    .onTapGesture {
+                                        isShowCamera = true
+                                    }
+                            }
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 .aspectRatio(1.0, contentMode: .fit)
