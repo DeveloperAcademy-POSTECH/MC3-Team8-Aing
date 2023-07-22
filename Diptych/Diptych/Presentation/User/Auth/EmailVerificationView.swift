@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct EmailVerificationView: View {
-    @EnvironmentObject var authViewModel: AuthenticationViewModel
+    @EnvironmentObject var userViewModel: UserViewModel
+//    @EnvironmentObject var authViewModel: AuthenticationViewModel
     var body: some View {
-        if authViewModel.flow == .isEmailVerified {
+        if userViewModel.flow == .emailVerified {
             CouplingView()
         } else {
             VStack {

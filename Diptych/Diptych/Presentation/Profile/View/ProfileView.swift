@@ -20,6 +20,8 @@ import SwiftUI
 // MARK: - View
 
 struct ProfileView: View {
+    @EnvironmentObject var userViewModel: UserViewModel
+    
     var body: some View {
         ZStack {
             Color.offWhite.edgesIgnoringSafeArea(.top)
@@ -56,9 +58,27 @@ struct ProfileView: View {
                 Text("개인정보처리방침")
                     .font(.pretendard(.light, size: 18))
                     .foregroundColor(.darkGray)
-                
+                // == 충돌 부분 시작 ==
+                HStack {
+                    Button{
+                        userViewModel.signOut()
+                    } label: {
+                        Text("로그아웃")
+                            .padding()
+                            .background(Color.offBlack)
+                            .foregroundColor(.offWhite)
+                    }
+                    Button{
+                        userViewModel.deleteAccount()
+                    } label: {
+                        Text("회원탈퇴")
+                            .padding()
+                            .background(Color.offBlack)
+                            .foregroundColor(.offWhite)
+                    }
+                }
+                // == 충돌 부분 끝 ==
             } // VStack
-            
         } // ZStack
     }
 }

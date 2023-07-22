@@ -10,7 +10,8 @@ import SwiftUI
 struct LogInView: View {
     @State var email: String = ""
     @State var password: String = ""
-    @EnvironmentObject var authViewModel: AuthenticationViewModel
+//    @EnvironmentObject var authViewModel: AuthenticationViewModel
+    @EnvironmentObject var userViewModel: UserViewModel
     var body: some View {
         ZStack {
             Color.offWhite
@@ -62,24 +63,22 @@ struct LogInView: View {
                     }
                 }
                 Spacer()
-                NavigationLink(destination: EmailVerificationView()) {
+                Button {
+                    Task {
+                        try await userViewModel.signInWithEmailPassword(email: email, password: password)
+                    }
+                } label: {
                     Text("로그인")
                         .frame(width: UIScreen.main.bounds.width-30, height:  60)
                         .background(Color.offBlack)
                         .foregroundColor(.offWhite)
-//                        .onTapGesture {
-//                            print("Tap!!!")
-//                        }
                 }
-//                .disabled(true)
-                //                Button {
-                //                    print("로그인 시도")
-                //                } label: {
-                //                    Text("로그인하기")
-                //                        .frame(width: UIScreen.main.bounds.width-30, height:  60)
-                //                        .background(Color.offBlack)
-                //                        .foregroundColor(.offWhite)
-                //                }
+//                NavigationLink(destination: EmailVerificationView()) {
+//                    Text("로그인")
+//                        .frame(width: UIScreen.main.bounds.width-30, height:  60)
+//                        .background(Color.offBlack)
+//                        .foregroundColor(.offWhite)
+//                }
                 Spacer()
                     .frame(height: 55)
             }
