@@ -185,7 +185,12 @@ class CameraViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.dismiss(animated: true)
                 }
-                
+            }
+            
+            Task {
+                print("파일 업로드 시작....")
+                let url = try await FirebaseFileManager.shared.upload(data: data!, withName: "test_\(Date())")
+                print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
             }
         }
     }
