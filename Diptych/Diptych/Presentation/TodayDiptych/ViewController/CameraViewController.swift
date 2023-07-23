@@ -69,6 +69,8 @@ class CameraViewController: UIViewController {
     let JPEG_COMPRESSION_QUALITY: CGFloat = 1.0
     
     // MARK: - Vars
+    var viewModel: TodayDiptychViewModel?
+    
     var previewLayer: AVCaptureVideoPreviewLayer!
     var captureSession: AVCaptureSession!
     var backCameraInput: AVCaptureDeviceInput!
@@ -149,6 +151,24 @@ class CameraViewController: UIViewController {
         setupPhotoCamera()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // 뷰모델 정보 가져오기 - 별도 함수로 분리
+        guard let viewModel else {
+            return
+        }
+        
+        lblTopic.text = viewModel.question
+        DispatchQueue.main.async { [unowned self] in
+            print("isFirst?", viewModel.isFirst)
+            currentAxis = viewModel.isFirst ? .verticalLeft : .verticalRight
+            
+            print(viewModel.currentUser?.id,
+                  viewModel.todayPhoto)
+        }
+    }
+    
     // MARK: - IBActions
     
     @IBAction func btnActShutter(_ sender: UIButton) {
@@ -181,16 +201,62 @@ class CameraViewController: UIViewController {
             let croppedImage: CGImage? = resizedImage.cgImage!.cropping(to: cropRect)
             let data = UIImage(cgImage: croppedImage!, scale: 1, orientation: transformedImage.imageOrientation).jpegData(compressionQuality: JPEG_COMPRESSION_QUALITY)
             
-            savePhotoToLibrary(data: data!) {_, _ in
-                DispatchQueue.main.async {
-                    self.dismiss(animated: true)
-                }
-            }
+            // savePhotoToLibrary(data: data!) {_, _ in
+            //     DispatchQueue.main.async {
+            //         self.dismiss(animated: true)
+            //     }
+            // }
+            /*
+             1. 앨범 아이디로 photos를 찾음
+             .collection("photos")
+             .where("albumId", "==", "3ZtcHka4I3loqa7Xopc4")
+             
+             2. 오늘 날짜 or Content ID를 찾음
+             .collection("photos")
+             .where("contentId", "==", "bDKIjB5XdlVc8anNbp7Q")
+             
+                2-1. contentId 비어있으면 하나 생성??
+                2-2. contentId 있다면 3번으로
+             
+             3. 앨범 아이디와 Content ID가 일치하는 곳 또는 새 컨텐츠에 정보 업데이트
+              -
+             */
             
             Task {
+                guard let isFirst = viewModel?.currentUser?.isFirst else {
+                    return
+                }
+                
                 print("파일 업로드 시작....")
-                let url = try await FirebaseFileManager.shared.upload(data: data!, withName: "test_\(Date())")
+                let url = try await FirebaseManager.shared.upload(data: data!, withName: "test_\(Date())")
                 print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
+                
+                guard let url else {
+                    print("url이 존재하지 않습니다.")
+                    return
+                }
+                
+                var dictionary: [String: Any]!
+                if let todayPhoto = viewModel?.todayPhoto {
+                    print("todayPhoto!:", todayPhoto.photoFirst, todayPhoto.photoSecond, isFirst, todayPhoto.photoSecond.isEmpty,  todayPhoto.photoFirst.isEmpty)
+                    dictionary = [
+                        "date": Date(),
+                        "thumbnail": "\(Date())",
+                        "\(UUID().uuidString)": url.absoluteString,
+                        "isCompleted": isFirst ? !todayPhoto.photoSecond.isEmpty : !todayPhoto.photoFirst.isEmpty
+                    ]
+                } else {
+                    print("TodayPhoto is nil")
+                    // TODO: - todayPhoto가 nil인 경우 어떻게 해야 되는지?
+                    
+                    self.dismiss(animated: true)
+                    return
+                }
+                
+                print("정보 업로드 시작....")
+                try await FirebaseManager.shared.updateValue(collectionPath: "photos", documentId: "aaa", dictionary: dictionary)
+                print("정보 업로드 끝")
+                self.dismiss(animated: true)
             }
         }
     }

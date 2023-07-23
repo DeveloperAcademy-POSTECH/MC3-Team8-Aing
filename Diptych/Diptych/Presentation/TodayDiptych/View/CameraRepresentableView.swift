@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct CameraRepresentableView: UIViewControllerRepresentable {
+    @StateObject var viewModel: TodayDiptychViewModel
+    
     func makeUIViewController(context: Context) -> CameraViewController {
         let cameraStoryboard = UIStoryboard(name: "CameraStoryboard", bundle: nil)
-        return cameraStoryboard.instantiateViewController(withIdentifier: "CameraViewController") as! CameraViewController
+        let viewController =  cameraStoryboard.instantiateViewController(withIdentifier: "CameraViewController") as! CameraViewController
+        viewController.viewModel = viewModel
+        
+        return viewController
     }
     
     func updateUIViewController(_ uiViewController: CameraViewController, context: Context) {}
@@ -20,11 +25,12 @@ struct CameraRepresentableView: UIViewControllerRepresentable {
 }
 
 struct CameraRepresentableView_Previews: PreviewProvider {
+    static var viewModel = TodayDiptychViewModel()
     static var previews: some View {
-        CameraRepresentableView()
+        CameraRepresentableView(viewModel: viewModel)
             .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
             .previewDisplayName("iPhone 14")
-        CameraRepresentableView()
+        CameraRepresentableView(viewModel: viewModel)
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max"))
             .previewDisplayName("iPhone 14 Pro Max")
     }

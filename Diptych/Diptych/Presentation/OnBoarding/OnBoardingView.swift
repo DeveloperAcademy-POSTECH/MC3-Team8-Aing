@@ -65,10 +65,6 @@ struct OnBoardingView: View {
             //                print("state: \(authViewModel.authenticationState)")
             //            }
         }
-        .fullScreenCover(isPresented: $isShowCamera) {
-            CameraRepresentableView()
-                 .toolbar(.hidden, for: .tabBar)
-        }
         .navigationViewStyle(.stack)
 //        .onDisappear {
 //            isSignUpLinkActive.toggle()
