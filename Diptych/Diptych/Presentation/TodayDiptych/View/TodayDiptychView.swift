@@ -13,9 +13,43 @@ struct TodayDiptychView: View {
     @State var isShowCamera = false
     @StateObject private var viewModel = TodayDiptychViewModel()
     @State private var mondayDate = 0
+    @State private var isAllTasksCompleted = false
     let days = ["월", "화", "수", "목", "금", "토", "일"]
 
     var body: some View {
+        ZStack {
+            if isAllTasksCompleted {
+                MainDiptychView()
+            } else {
+                ProgressView()
+            }
+        }
+        .ignoresSafeArea(edges: .top)
+        .onAppear {
+            mondayDate = calculateThisWeekMondayDate()
+
+            Task {
+                await viewModel.fetchUser()
+                await viewModel.setUserCameraLoactionState()
+                await viewModel.fetchTodayImage()
+                await viewModel.fetchWeeklyCalender()
+                await viewModel.fetchContents()
+
+                DispatchQueue.main.async {
+                    isAllTasksCompleted = true
+                }
+            }
+        }
+        .onDisappear {
+            viewModel.weeklyData.removeAll()
+        }
+        .fullScreenCover(isPresented: $isShowCamera) {
+            CameraRepresentableView()
+                 .toolbar(.hidden, for: .tabBar)
+        }
+    }
+
+    private func MainDiptychView() -> some View {
         ZStack {
             Color.offWhite
             VStack(spacing: 0) {
@@ -133,28 +167,9 @@ struct TodayDiptychView: View {
                 }
             }
         }
-        .ignoresSafeArea(edges: .top)
-        .onAppear {
-            mondayDate = calculateThisWeekMondayDate()
-
-            Task {
-                await viewModel.fetchUser()
-                await viewModel.setUserCameraLoactionState()
-                await viewModel.fetchTodayImage()
-                await viewModel.fetchWeeklyCalender()
-                await viewModel.fetchContents()
-            }
-        }
-        .onDisappear {
-            viewModel.weeklyData.removeAll()
-        }
-        .fullScreenCover(isPresented: $isShowCamera) {
-            CameraRepresentableView()
-                 .toolbar(.hidden, for: .tabBar)
-        }
     }
 
-    func calculateThisWeekMondayDate() -> Int {
+    private func calculateThisWeekMondayDate() -> Int {
         let currentDate = Date()
         var calendar = Calendar.current
         calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!

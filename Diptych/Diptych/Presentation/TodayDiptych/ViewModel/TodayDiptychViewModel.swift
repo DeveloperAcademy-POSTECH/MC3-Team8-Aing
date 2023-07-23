@@ -10,31 +10,6 @@ import Firebase
 import FirebaseFirestore
 import FirebaseStorage
 
-struct WeeklyData {
-    let diptychState: DiptychState
-    let thumbnail: String?
-}
-
-struct Content: Identifiable, Codable {
-    let id: String
-    let question: String
-    let order: Int
-    let guideline: String
-    let toolTip: String
-    let toolTipImage: String
-}
-
-struct Photo: Identifiable, Codable {
-    let id: String
-    let photoFirst: String
-    let photoSecond: String
-    let thumbnail: String
-    let date: Timestamp
-    let contentId: String
-    let albumId: String
-    let isCompleted: Bool
-}
-
 @MainActor
 class TodayDiptychViewModel: ObservableObject {
 
@@ -52,35 +27,11 @@ class TodayDiptychViewModel: ObservableObject {
 
     let db = Firestore.firestore()
 
-    func fetchTodayQuestion() async {
-        // TODO: nanoseconds 값까지 어떻게 고려하지?
-        let timestamp = Timestamp(seconds: 1689692400, nanoseconds: 870000000)
-
-        do {
-            let querySnapshot = try await db.collection("contents")
-                .whereField("date", isEqualTo: timestamp)
-                .getDocuments()
-
-            for document in querySnapshot.documents {
-                let data = document.data()
-                if let question = data["question"] as? String {
-                    await MainActor.run {
-                        self.question = question
-                    }
-                }
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-
     func fetchWeeklyCalender() async {
-        isLoading = true
-
         do {
             let querySnapshot = try await db.collection("photos")
                 .whereField("albumId", isEqualTo: "3ZtcHka4I3loqa7Xopc4") // TODO: - 유저의 앨범과 연결
-                .whereField("date", isGreaterThanOrEqualTo: calcuateThisMondayTimestamp())
+                .whereField("date", isGreaterThanOrEqualTo: calculateThisMondayTimestamp())
                 .getDocuments()
 
             for document in querySnapshot.documents {
@@ -110,11 +61,9 @@ class TodayDiptychViewModel: ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
-
-        isLoading = false
     }
 
-    func calcuateThisMondayTimestamp() -> Timestamp {
+    func calculateThisMondayTimestamp() -> Timestamp {
         let currentDate = Date()
         var calendar = Calendar.current
         calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
