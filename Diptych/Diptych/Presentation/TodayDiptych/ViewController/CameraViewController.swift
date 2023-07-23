@@ -200,6 +200,7 @@ class CameraViewController: UIViewController {
             let cropRect: CGRect = currentAxis.rect(squareSideLength: RESIZE_WIDTH)
             let croppedImage: CGImage? = resizedImage.cgImage!.cropping(to: cropRect)
             let data = UIImage(cgImage: croppedImage!, scale: 1, orientation: transformedImage.imageOrientation).jpegData(compressionQuality: JPEG_COMPRESSION_QUALITY)
+            let thumbData = UIImage(cgImage: croppedImage!, scale: 0.4, orientation: transformedImage.imageOrientation).jpegData(compressionQuality: 0.9)
             
             // savePhotoToLibrary(data: data!) {_, _ in
             //     DispatchQueue.main.async {
@@ -231,7 +232,11 @@ class CameraViewController: UIViewController {
                 let url = try await FirebaseManager.shared.upload(data: data!, withName: "test_\(Date())")
                 print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
                 
-                guard let url else {
+                print("섬네일 업로드 시작....")
+                let thumbURL = try await FirebaseManager.shared.upload(data: thumbData!, withName: "test_thumbnail_\(Date())")
+                print("섬네일 업로드 끝:", thumbURL?.absoluteString ?? "unknown URL")
+                
+                guard let url, let thumbURL else {
                     print("url이 존재하지 않습니다.")
                     return
                 }
@@ -239,12 +244,21 @@ class CameraViewController: UIViewController {
                 var dictionary: [String: Any]!
                 if let todayPhoto = viewModel?.todayPhoto {
                     print("todayPhoto!:", todayPhoto.photoFirst, todayPhoto.photoSecond, isFirst, todayPhoto.photoSecond.isEmpty,  todayPhoto.photoFirst.isEmpty)
+                    
+                    // TODO: - thumbnail은 isComplete가 true될 경우에만
                     dictionary = [
-                        "date": Date(),
-                        "thumbnail": "\(Date())",
-                        "\(UUID().uuidString)": url.absoluteString,
-                        "isCompleted": isFirst ? !todayPhoto.photoSecond.isEmpty : !todayPhoto.photoFirst.isEmpty
+                        "thumbnail": thumbURL.absoluteString,
+                        "isCompleted": isFirst ? !todayPhoto.photoSecond.isEmpty : !todayPhoto.photoFirst.isEmpty,
                     ]
+                    
+                    let photoKey = isFirst ? "photoFirst" : "photoSecond"
+                    dictionary[photoKey] = url.absoluteString
+                    
+                    print("정보 업로드 시작....")
+                    try await FirebaseManager.shared.updateValue(collectionPath: "photos", documentId: todayPhoto.id, dictionary: dictionary)
+                    print("정보 업로드 끝")
+                    
+                    self.dismiss(animated: true)
                 } else {
                     print("TodayPhoto is nil")
                     // TODO: - todayPhoto가 nil인 경우 어떻게 해야 되는지?
@@ -252,11 +266,6 @@ class CameraViewController: UIViewController {
                     self.dismiss(animated: true)
                     return
                 }
-                
-                print("정보 업로드 시작....")
-                try await FirebaseManager.shared.updateValue(collectionPath: "photos", documentId: "aaa", dictionary: dictionary)
-                print("정보 업로드 끝")
-                self.dismiss(animated: true)
             }
         }
     }
