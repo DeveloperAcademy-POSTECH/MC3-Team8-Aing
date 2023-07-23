@@ -66,12 +66,7 @@ final class TodayDiptychViewModel: ObservableObject {
     }
 
     func fetchTodayImage() async {
-        let currentDate = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd 00:00:00"
-        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-        let todayDateString = formatter.string(from: currentDate)
-        let todayDate = formatter.date(from: todayDateString)!
+        let (todayDate, _, _) = setTodayDate()
         let timestamp = Timestamp(date: todayDate)
 
         do {

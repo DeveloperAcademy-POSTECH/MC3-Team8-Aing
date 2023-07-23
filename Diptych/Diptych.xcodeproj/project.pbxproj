@@ -388,6 +388,13 @@
 			path = NameSpace;
 			sourceTree = "<group>";
 		};
+		AB6C7B7B2A6DCAFE00CD5D68 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		AB96A0A92A66E4C8004C01FF /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -534,6 +541,7 @@
 		ABFD3E8A2A5EDADB008678D0 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				AB6C7B7B2A6DCAFE00CD5D68 /* Manager */,
 				F3263AA92A667FDD00B4581C /* AlbumData.json */,
 			);
 			path = Data;
