@@ -25,7 +25,7 @@ final class TodayDiptychViewModel: ObservableObject {
     @Published var photoFirstURL = ""
     @Published var photoSecondURL = ""
     @Published var isCompleted = false
-    private  let db = Firestore.firestore()
+    private let db = Firestore.firestore()
 
     // MARK: - Network
 
