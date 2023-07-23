@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseStorage
 
 enum DiptychState {
     case incomplete
@@ -14,11 +15,13 @@ enum DiptychState {
 }
 
 struct WeeklyCalenderView: View {
+
     @State var day: String
     @State var date: String
     @State var isToday: Bool
     @State var thumbnail: String?
-    var diptychState = DiptychState.incomplete
+    @State var thumbnailURL: URL?
+    var diptychState = DiptychState.complete
 
     var body: some View {
         VStack(spacing: 9) {
@@ -47,8 +50,18 @@ struct WeeklyCalenderView: View {
                         } else {
                             switch diptychState {
                             case .complete:
-                                RoundedRectangle(cornerRadius: 18)
-                                    .fill(Color.lightGray)
+                                ZStack {
+                                    AsyncImage(url: thumbnailURL) { image in
+                                        image
+                                            .resizable()
+                                            .clipShape(RoundedRectangle(cornerRadius: 18))
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+
+                                    Color.offBlack.opacity(0.5)
+                                        .clipShape(RoundedRectangle(cornerRadius: 18))
+                                }
                             default:
                                 EmptyView()
                             }
@@ -56,8 +69,24 @@ struct WeeklyCalenderView: View {
                     }
                 Text(date)
                     .font(.pretendard(.bold, size: 16))
-                    .foregroundColor(.offBlack)
+                    .foregroundColor(!isToday && diptychState == .complete ? .offWhite : .offBlack)
                     .padding(.top, 7)
+            }
+        }
+        .onAppear {
+            Task {
+                await downloadImage()
+            }
+        }
+    }
+
+    func downloadImage() async {
+        if let thumbnail = thumbnail {
+            do {
+                let url = try await Storage.storage().reference(forURL: thumbnail).downloadURL()
+                   thumbnailURL = url
+            } catch {
+                print(error.localizedDescription)
             }
         }
     }
