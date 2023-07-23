@@ -26,7 +26,7 @@ struct TodayDiptychView: View {
         }
         .ignoresSafeArea(edges: .top)
         .onAppear {
-            mondayDate = calculateThisWeekMondayDate()
+            mondayDate = viewModel.calculateThisWeekMondayDate()
 
             Task {
                 await viewModel.fetchUser()
@@ -168,29 +168,6 @@ struct TodayDiptychView: View {
                 }
             }
         }
-    }
-
-    private func calculateThisWeekMondayDate() -> Int {
-        let currentDate = Date()
-        var calendar = Calendar.current
-        calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
-
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd 00:00:00"
-        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-
-        let todayDateString = formatter.string(from: currentDate)
-
-        formatter.timeZone = TimeZone(identifier: "UTC") // 시간대 설정
-        let todayDate = formatter.date(from: todayDateString)!
-
-        let currentWeekday = calendar.component(.weekday, from: todayDate)
-        let daysAfterMonday = (currentWeekday + 5) % 7
-
-        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return 0 }
-
-        let day = calendar.component(.day, from: thisMonday)
-        return day
     }
 }
 

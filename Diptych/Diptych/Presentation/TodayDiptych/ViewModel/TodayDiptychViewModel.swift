@@ -10,8 +10,9 @@ import Firebase
 import FirebaseFirestore
 import FirebaseStorage
 
-@MainActor
-class TodayDiptychViewModel: ObservableObject {
+final class TodayDiptychViewModel: ObservableObject {
+
+    // MARK: - Properties
 
     @Published var question = ""
     @Published var currentUser: DiptychUser?
@@ -24,8 +25,9 @@ class TodayDiptychViewModel: ObservableObject {
     @Published var photoFirstURL = ""
     @Published var photoSecondURL = ""
     @Published var isCompleted = false
+    private  let db = Firestore.firestore()
 
-    let db = Firestore.firestore()
+    // MARK: - Network
 
     func fetchWeeklyCalender() async {
         do {
@@ -61,28 +63,6 @@ class TodayDiptychViewModel: ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
-    }
-
-    func calculateThisMondayTimestamp() -> Timestamp {
-        let currentDate = Date()
-        var calendar = Calendar.current
-        calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
-
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd 00:00:00"
-        formatter.timeZone = TimeZone(identifier: "Asia/Seoul") // 시간대 설정
-
-        let todayDateString = formatter.string(from: currentDate)
-
-        let todayDate = formatter.date(from: todayDateString)!
-
-        let currentWeekday = calendar.component(.weekday, from: todayDate)
-        let daysAfterMonday = (currentWeekday + 5) % 7
-
-        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return Timestamp() }
-
-        let timestamp = Timestamp(date: thisMonday)
-        return timestamp
     }
 
     func fetchTodayImage() async {
@@ -180,12 +160,7 @@ class TodayDiptychViewModel: ObservableObject {
     }
 
     func setTodayPhoto() async {
-        let currentDate = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd 00:00:00"
-        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-        let todayDateString = formatter.string(from: currentDate)
-        let todayDate = formatter.date(from: todayDateString)!
+        let (todayDate, _, _) = setTodayDate()
         let timestamp = Timestamp(date: todayDate)
 
         // TODO: - 유저의 albumId와 연결하기 (현재 test albumId: 4WX8aANlqOCHS9hmET6X)
@@ -212,5 +187,38 @@ class TodayDiptychViewModel: ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
+    }
+
+    // MARK: - Custom Methods
+
+    func calculateThisWeekMondayDate() -> Int {
+        let (todayDate, calendar, daysAfterMonday) = setTodayDate()
+        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return 0 }
+        let day = calendar.component(.day, from: thisMonday)
+        return day
+    }
+
+    func calculateThisMondayTimestamp() -> Timestamp {
+        let (todayDate, calendar, daysAfterMonday) = setTodayDate()
+        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return Timestamp() }
+        let timestamp = Timestamp(date: thisMonday)
+        return timestamp
+    }
+
+    func setTodayDate() -> (Date, Calendar, Int) {
+        let currentDate = Date()
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd 00:00:00"
+        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+
+        let todayDateString = formatter.string(from: currentDate)
+        let todayDate = formatter.date(from: todayDateString)!
+        let currentWeekday = calendar.component(.weekday, from: todayDate)
+        let daysAfterMonday = (currentWeekday + 5) % 7
+
+        return (todayDate, calendar, daysAfterMonday)
     }
 }
