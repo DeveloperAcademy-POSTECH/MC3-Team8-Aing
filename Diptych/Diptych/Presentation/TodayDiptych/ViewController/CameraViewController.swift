@@ -199,8 +199,9 @@ class CameraViewController: UIViewController {
             // 가이드라인에 따라 사진 자르기
             let cropRect: CGRect = currentAxis.rect(squareSideLength: RESIZE_WIDTH)
             let croppedImage: CGImage? = resizedImage.cgImage!.cropping(to: cropRect)
-            let data = UIImage(cgImage: croppedImage!, scale: 1, orientation: transformedImage.imageOrientation).jpegData(compressionQuality: JPEG_COMPRESSION_QUALITY)
-            let thumbData = UIImage(cgImage: croppedImage!, scale: 0.4, orientation: transformedImage.imageOrientation).jpegData(compressionQuality: 0.9)
+            let uiImage = UIImage(cgImage: croppedImage!, scale: 1, orientation: transformedImage.imageOrientation)
+            let data = uiImage.jpegData(compressionQuality: JPEG_COMPRESSION_QUALITY)
+            let thumbData = uiImage.resize(width: 400, height: 400).jpegData(compressionQuality: 0.8)
             
             // savePhotoToLibrary(data: data!) {_, _ in
             //     DispatchQueue.main.async {
