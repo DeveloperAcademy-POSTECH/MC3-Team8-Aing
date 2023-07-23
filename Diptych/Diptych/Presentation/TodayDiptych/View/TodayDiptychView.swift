@@ -8,18 +8,12 @@
 import SwiftUI
 import FirebaseStorage
 
-enum CameraLocation {
-    case left
-    case right
-}
-
 struct TodayDiptychView: View {
 
     @State var isShowCamera = false
     @StateObject private var viewModel = TodayDiptychViewModel()
-    @State private var mondayDate: Int = 0
+    @State private var mondayDate = 0
     let days = ["월", "화", "수", "목", "금", "토", "일"]
-    var cameraLcoation = CameraLocation.left
 
     var body: some View {
         ZStack {
@@ -40,7 +34,6 @@ struct TodayDiptychView: View {
                 .padding(.top, 35)
 
                 HStack(spacing: 0) {
-                    // TODO: - 유저가 가입한 날짜와 연관하여 작업하기
                     Text("\"\(viewModel.question)\"")
                         .lineSpacing(6)
                         .font(.pretendard(.light, size: 28))
@@ -52,29 +45,17 @@ struct TodayDiptychView: View {
                 }
 
                 HStack(spacing: 0) {
-                    switch cameraLcoation {
-                    case .left:
-                        Rectangle()
-                            .fill(Color.lightGray)
-                            .overlay {
-                                Image("imgDiptychCamera")
-                                    .onTapGesture {
-                                        isShowCamera = true
-                                    }
-                            }
-                        Rectangle()
-                            .fill(Color.offBlack)
-                    case .right:
+                    switch viewModel.isFirst {
+                    case true:
                         Rectangle()
                             .fill(Color.offBlack)
                         Rectangle()
-                            .fill(Color.lightGray)
-                            .overlay {
-                                Image("imgDiptychCamera")
-                                    .onTapGesture {
-                                        isShowCamera = true
-                                    }
-                            }
+                            .fill(Color.offWhite)
+                    case false:
+                        Rectangle()
+                            .fill(Color.offBlack)
+                        Rectangle()
+                            .fill(Color.offWhite)
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -104,10 +85,15 @@ struct TodayDiptychView: View {
         }
         .ignoresSafeArea(edges: .top)
         .onAppear {
-            Task {
-                await viewModel.fetchWeeklyCalender()
-            }
             mondayDate = calculateThisWeekMondayDate()
+
+            Task {
+                await viewModel.fetchUser()
+                await viewModel.setUserCameraLoactionState()
+                await viewModel.fetchTodayImage()
+                await viewModel.fetchWeeklyCalender()
+                await viewModel.fetchContents()
+            }
         }
         .onDisappear {
             viewModel.weeklyData.removeAll()
