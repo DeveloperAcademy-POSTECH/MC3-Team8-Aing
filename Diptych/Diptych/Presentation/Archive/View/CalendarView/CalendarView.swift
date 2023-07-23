@@ -66,8 +66,7 @@ struct CalendarView: View {
             
             
             /// [3] Day
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7),
-                      spacing: 0) {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7),spacing: 0) {
                 ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
                     
 //                    /// 로딩중
@@ -80,11 +79,12 @@ struct CalendarView: View {
                     }
                     /// 날짜 표시
                     else {
-                        CellView(day: index - firstWeekday + 1,
+                        CellView(date: index - firstWeekday + 1,
                                  isToday: index - firstWeekday + 1
                                     == Calendar.current.component(.day, from: Date())
                                  && changeMonthInt == 0,
-                                 diptychComplete: VM.diptychData
+                                 day: $VM.day, month: $VM.month,
+                                 diptychComplete: VM.diptychData[index].diptychComplete
                         )
                     }
                     

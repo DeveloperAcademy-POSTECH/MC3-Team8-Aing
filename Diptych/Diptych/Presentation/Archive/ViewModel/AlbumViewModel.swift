@@ -10,11 +10,6 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
-//enum DiptychComplete {
-//    case incomplete
-//    case complete
-//}
-
 struct DiptychData {
     let diptychComplete: DiptychComplete
     let thumbnail: String?
@@ -27,17 +22,17 @@ class AlbumViewModel: ObservableObject {
     @Published var question = "상대방의 표정 중 당신이\n가장 좋아하는 표정은?"
     @Published var diptychData = [DiptychData]()
     @Published var isLoading = false
-    @Published var diptychTimeStamp: Int = 0
+    @Published var diptychTimeStamp: Int = Int(Date().timeIntervalSince1970)
     @Published var day : Int = 0
     @Published var month : Int = 0
     let db = Firestore.firestore()
 
         
     // Firebase Timestamp를 Int로 변환하는 함수
-     private func convertTimestampToInt(date: Date) -> Int {
-         let timestamp = Int(date.timeIntervalSince1970)
-         return timestamp
-     }
+//     private func convertTimestampToInt(date: Date) -> Int {
+//         let timestamp = Int(date.timeIntervalSince1970)
+//         return timestamp
+//     }
      
      // 날짜의 '일' 정보를 Int로 변환하는 함수
      private func extractDayFromDate(date: Date) -> Int {
