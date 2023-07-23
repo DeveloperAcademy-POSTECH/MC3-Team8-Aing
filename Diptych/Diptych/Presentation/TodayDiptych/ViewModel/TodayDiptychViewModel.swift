@@ -46,8 +46,9 @@ class TodayDiptychViewModel: ObservableObject {
     @Published var contentDay = 0
     @Published var content: Content?
     @Published var todayPhoto: Photo?
-    @Published var photoFirstURL: String = ""
-    @Published var photoSecondURL: String = ""
+    @Published var photoFirstURL = ""
+    @Published var photoSecondURL = ""
+    @Published var isCompleted = false
 
     let db = Firestore.firestore()
 
@@ -153,11 +154,16 @@ class TodayDiptychViewModel: ObservableObject {
             for document in querySnapshot.documents {
                 self.todayPhoto = try document.data(as: Photo.self)
             }
-
             await downloadImage()
+            await fetchCompleteState()
         } catch {
             print(error.localizedDescription)
         }
+    }
+
+    func fetchCompleteState() async {
+        guard let todayPhoto = todayPhoto else { return }
+        isCompleted = todayPhoto.isCompleted
     }
 
     func downloadImage() async {
@@ -179,8 +185,6 @@ class TodayDiptychViewModel: ObservableObject {
                 print(error.localizedDescription)
             }
         }
-
-        print(photoFirstURL, photoSecondURL)
     }
 
     func fetchUser() async {

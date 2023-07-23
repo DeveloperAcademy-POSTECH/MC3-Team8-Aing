@@ -45,17 +45,67 @@ struct TodayDiptychView: View {
                 }
 
                 HStack(spacing: 0) {
-                    switch viewModel.isFirst {
-                    case true:
-                        Rectangle()
-                            .fill(Color.offBlack)
-                        Rectangle()
-                            .fill(Color.offWhite)
-                    case false:
-                        Rectangle()
-                            .fill(Color.offBlack)
-                        Rectangle()
-                            .fill(Color.offWhite)
+                    AsyncImage(url: URL(string: viewModel.photoFirstURL)) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .overlay {
+                                    if viewModel.isFirst && !viewModel.isCompleted {
+                                        Image("imgRetry")
+                                            .onTapGesture {
+                                                isShowCamera = true
+                                            }
+                                    }
+                                }
+                        case .failure:
+                            Rectangle()
+                                .fill(Color.offWhite)
+                        case .empty:
+                            Rectangle()
+                                .fill(Color.offBlack)
+                                .overlay {
+                                    if viewModel.isFirst {
+                                        Image("imgDiptychCamera")
+                                            .onTapGesture {
+                                                isShowCamera = true
+                                            }
+                                    }
+                                }
+                        @unknown default:
+                            ProgressView()
+                        }
+                    }
+                    AsyncImage(url: URL(string: viewModel.photoSecondURL)) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .overlay {
+                                    if !viewModel.isFirst && !viewModel.isCompleted {
+                                        Image("imgRetry")
+                                            .onTapGesture {
+                                                isShowCamera = true
+                                            }
+                                    }
+                                }
+                        case .failure:
+                            Rectangle()
+                                .fill(Color.offBlack)
+                        case .empty:
+                            Rectangle()
+                                .fill(Color.lightGray)
+                                .overlay {
+                                    if !viewModel.isFirst {
+                                        Image("imgDiptychCamera")
+                                            .onTapGesture {
+                                                isShowCamera = true
+                                            }
+                                    }
+                                }
+                        @unknown default:
+                            ProgressView()
+                        }
                     }
                 }
                 .frame(maxWidth: .infinity)
