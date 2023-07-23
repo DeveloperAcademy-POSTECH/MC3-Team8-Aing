@@ -17,4 +17,17 @@ struct Photo: Identifiable, Codable {
     let contentId: String
     let albumId: String
     let isCompleted: Bool
+
+    func convertToDictionary() -> [String: Any] {
+        return [
+            "id": id,
+            "photoFirst": photoFirst,
+            "photoSecond": photoSecond,
+            "thumbnail": thumbnail,
+            "date": date,
+            "contentId": contentId,
+            "albumId": albumId,
+            "isCompleted": isCompleted
+        ]
+    }
 }

@@ -34,7 +34,8 @@ struct TodayDiptychView: View {
                 await viewModel.fetchTodayImage()
                 await viewModel.fetchWeeklyCalender()
                 await viewModel.fetchContents()
-
+                await viewModel.setTodayPhoto()
+                
                 DispatchQueue.main.async {
                     isAllTasksCompleted = true
                 }
