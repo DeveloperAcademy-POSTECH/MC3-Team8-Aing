@@ -151,23 +151,37 @@ struct TodayDiptychView: View {
                     if viewModel.isLoading {
                         ProgressView()
                     } else {
-                        ForEach(0..<viewModel.weeklyData.count, id: \.self) { index in
+                        ForEach(0..<7) { index in
+                            let date = setCalendarDate(mondayDate, index: index)
+                            let data = viewModel.weeklyData.filter { $0.date == date }
+                            let formattedDate = String(format: "%02d", date)
+                            let isToday = date == viewModel.setTodayDate()
                             WeeklyCalenderView(day: days[index],
-                                               date: "\(mondayDate + index)",
-                                               isToday: index == viewModel.weeklyData.count - 1 ? true : false,
-                                               thumbnail: viewModel.weeklyData[index].thumbnail,
-                                               diptychState: viewModel.weeklyData[index].diptychState)
-                        }
-                        ForEach(viewModel.weeklyData.count..<7, id: \.self) { index in
-                            WeeklyCalenderView(day: days[index],
-                                               date: "\(mondayDate + index)",
-                                               isToday: false,
-                                               diptychState: .incomplete)
+                                               date: formattedDate,
+                                               isToday: isToday,
+                                               thumbnail: data.isEmpty ? "" : data[0].thumbnail,
+                                               diptychState: data.isEmpty ? .incomplete : data[0].diptychState)
                         }
                     }
                 }
             }
         }
+    }
+}
+
+extension TodayDiptychView {
+
+    func setCalendarDate(_ mondayDate: Int, index: Int) -> Int {
+        var date: Int
+        switch mondayDate {
+        case 30:
+            date = index > 0 ? mondayDate + index - 30 : mondayDate + index
+        case 31:
+            date = index > 0 ? mondayDate + index - 31 : mondayDate + index
+        default:
+            date = mondayDate + index
+        }
+        return date
     }
 }
 
