@@ -10,33 +10,9 @@ import Firebase
 import FirebaseFirestore
 import FirebaseStorage
 
-struct WeeklyData {
-    let diptychState: DiptychState
-    let thumbnail: String?
-}
+final class TodayDiptychViewModel: ObservableObject {
 
-struct Content: Identifiable, Codable {
-    let id: String
-    let question: String
-    let order: Int
-    let guideline: String
-    let toolTip: String
-    let toolTipImage: String
-}
-
-struct Photo: Identifiable, Codable {
-    let id: String
-    let photoFirst: String
-    let photoSecond: String
-    let thumbnail: String
-    let date: Timestamp
-    let contentId: String
-    let albumId: String
-    let isCompleted: Bool
-}
-
-@MainActor
-class TodayDiptychViewModel: ObservableObject {
+    // MARK: - Properties
 
     @Published var question = ""
     @Published var currentUser: DiptychUser?
@@ -46,47 +22,25 @@ class TodayDiptychViewModel: ObservableObject {
     @Published var contentDay = 0
     @Published var content: Content?
     @Published var todayPhoto: Photo?
-    @Published var photoFirstURL: String = ""
-    @Published var photoSecondURL: String = ""
+    @Published var photoFirstURL = ""
+    @Published var photoSecondURL = ""
+    @Published var isCompleted = false
+    private let db = Firestore.firestore()
 
-    let db = Firestore.firestore()
-
-    func fetchTodayQuestion() async {
-        // TODO: nanoseconds 값까지 어떻게 고려하지?
-        let timestamp = Timestamp(seconds: 1689692400, nanoseconds: 870000000)
-
-        do {
-            let querySnapshot = try await db.collection("contents")
-                .whereField("date", isEqualTo: timestamp)
-                .getDocuments()
-
-            for document in querySnapshot.documents {
-                let data = document.data()
-                if let question = data["question"] as? String {
-                    await MainActor.run {
-                        self.question = question
-                    }
-                }
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
+    // MARK: - Network
 
     func fetchWeeklyCalender() async {
-        isLoading = true
-
         do {
             let querySnapshot = try await db.collection("photos")
                 .whereField("albumId", isEqualTo: "3ZtcHka4I3loqa7Xopc4") // TODO: - 유저의 앨범과 연결
-                .whereField("date", isGreaterThanOrEqualTo: calcuateThisMondayTimestamp())
+                .whereField("date", isGreaterThanOrEqualTo: calculateThisMondayTimestamp())
                 .getDocuments()
 
             for document in querySnapshot.documents {
-                let data = document.data()
-                guard let photoFirst = data["photoFirst"] as? String else { return }
-                guard let photoSecond = data["photoSecond"] as? String else { return }
-                guard let thumbnail = data["thumbnail"] as? String else { return }
+                let photo = try document.data(as: Photo.self)
+                let photoFirst = photo.photoFirst
+                let photoSecond = photo.photoSecond
+                let thumbnail = photo.thumbnail
 
                 if photoFirst != "" && photoSecond != "" {
                     await MainActor.run {
@@ -109,39 +63,10 @@ class TodayDiptychViewModel: ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
-
-        isLoading = false
-    }
-
-    func calcuateThisMondayTimestamp() -> Timestamp {
-        let currentDate = Date()
-        var calendar = Calendar.current
-        calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
-
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd 00:00:00"
-        formatter.timeZone = TimeZone(identifier: "Asia/Seoul") // 시간대 설정
-
-        let todayDateString = formatter.string(from: currentDate)
-
-        let todayDate = formatter.date(from: todayDateString)!
-
-        let currentWeekday = calendar.component(.weekday, from: todayDate)
-        let daysAfterMonday = (currentWeekday + 5) % 7
-
-        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return Timestamp() }
-
-        let timestamp = Timestamp(date: thisMonday)
-        return timestamp
     }
 
     func fetchTodayImage() async {
-        let currentDate = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd 00:00:00"
-        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-        let todayDateString = formatter.string(from: currentDate)
-        let todayDate = formatter.date(from: todayDateString)!
+        let (todayDate, _, _) = setTodayDate()
         let timestamp = Timestamp(date: todayDate)
 
         do {
@@ -153,11 +78,16 @@ class TodayDiptychViewModel: ObservableObject {
             for document in querySnapshot.documents {
                 self.todayPhoto = try document.data(as: Photo.self)
             }
-
             await downloadImage()
+            await fetchCompleteState()
         } catch {
             print(error.localizedDescription)
         }
+    }
+
+    func fetchCompleteState() async {
+        guard let todayPhoto = todayPhoto else { return }
+        isCompleted = todayPhoto.isCompleted
     }
 
     func downloadImage() async {
@@ -179,8 +109,6 @@ class TodayDiptychViewModel: ObservableObject {
                 print(error.localizedDescription)
             }
         }
-
-        print(photoFirstURL, photoSecondURL)
     }
 
     func fetchUser() async {
@@ -204,25 +132,82 @@ class TodayDiptychViewModel: ObservableObject {
                 .whereField("id", isEqualTo: "3ZtcHka4I3loqa7Xopc4") // TODO: - 유저의 앨범과 연결
                 .getDocuments()
 
-            for document in daySnapshot.documents {
-                let data = document.data()
-
-                guard let contentDay = data["contentDay"] as? Int else { return }
-                self.contentDay = contentDay
-            }
+            let data = daySnapshot.documents[0].data()
+            guard let contentDay = data["contentDay"] as? Int else { return }
+            self.contentDay = contentDay
 
             let contentSnapshot = try await db.collection("contents")
                 .whereField("order", isEqualTo: contentDay) // TODO: - 유저의 앨범과 연결
                 .getDocuments()
 
-            for document in contentSnapshot.documents {
-                self.content = try document.data(as: Content.self)
-            }
-
+            self.content = try contentSnapshot.documents[0].data(as: Content.self)
             guard let question = content?.question else { return }
             self.question = question.replacingOccurrences(of: "\\n", with: "\n")
         } catch {
             print(error.localizedDescription)
         }
+    }
+
+    func setTodayPhoto() async {
+        let (todayDate, _, _) = setTodayDate()
+        let timestamp = Timestamp(date: todayDate)
+
+        // TODO: - 유저의 albumId와 연결하기 (현재 test albumId: 4WX8aANlqOCHS9hmET6X)
+        do {
+            let querySnapshot = try await db.collection("photos")
+                .whereField("albumId", isEqualTo: "4WX8aANlqOCHS9hmET6X")
+                .whereField("date", isEqualTo: timestamp)
+                .getDocuments()
+
+            if querySnapshot.documents.isEmpty {
+                let autoGeneratedId = self.db.collection("photos").document().documentID
+                try await db.collection("photos").document(autoGeneratedId).setData(
+                    Photo(id: autoGeneratedId,
+                          photoFirst: "",
+                          photoSecond: "",
+                          thumbnail: "",
+                          date: timestamp,
+                          contentId: "",
+                          albumId: "4WX8aANlqOCHS9hmET6X",
+                          isCompleted: false)
+                    .convertToDictionary()
+                )
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    // MARK: - Custom Methods
+
+    func calculateThisWeekMondayDate() -> Int {
+        let (todayDate, calendar, daysAfterMonday) = setTodayDate()
+        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return 0 }
+        let day = calendar.component(.day, from: thisMonday)
+        return day
+    }
+
+    func calculateThisMondayTimestamp() -> Timestamp {
+        let (todayDate, calendar, daysAfterMonday) = setTodayDate()
+        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return Timestamp() }
+        let timestamp = Timestamp(date: thisMonday)
+        return timestamp
+    }
+
+    func setTodayDate() -> (Date, Calendar, Int) {
+        let currentDate = Date()
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd 00:00:00"
+        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+
+        let todayDateString = formatter.string(from: currentDate)
+        let todayDate = formatter.date(from: todayDateString)!
+        let currentWeekday = calendar.component(.weekday, from: todayDate)
+        let daysAfterMonday = (currentWeekday + 5) % 7
+
+        return (todayDate, calendar, daysAfterMonday)
     }
 }
