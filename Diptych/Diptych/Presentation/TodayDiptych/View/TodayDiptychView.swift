@@ -10,7 +10,13 @@ import FirebaseStorage
 
 struct TodayDiptychView: View {
 
+    // TODO: - 섬네일 사이즈 ? (일단 200 * 200), 가로세로 여부도 고려..
+    let thumbSize: CGSize = .init(width: 2 / THUMB_SIZE, height: THUMB_SIZE)
     @State var isShowCamera = false
+    @State private var firstUIImage: UIImage?
+    @State private var secondUIImage: UIImage?
+    @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
+    
     @StateObject private var viewModel = TodayDiptychViewModel()
     @State private var mondayDate = 0
     @State private var isAllTasksCompleted = false
@@ -27,7 +33,7 @@ struct TodayDiptychView: View {
         .ignoresSafeArea(edges: .top)
         .onAppear {
             mondayDate = viewModel.calculateThisWeekMondayDate()
-
+            
             Task {
                 await viewModel.fetchUser()
                 await viewModel.setUserCameraLoactionState()
@@ -45,8 +51,12 @@ struct TodayDiptychView: View {
             viewModel.weeklyData.removeAll()
         }
         .fullScreenCover(isPresented: $isShowCamera) {
-            CameraRepresentableView(viewModel: viewModel)
+            CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
                  .toolbar(.hidden, for: .tabBar)
+                 .onAppear {
+                     print("fullScreenCover")
+                 }
+            
         }
     }
 
@@ -92,6 +102,9 @@ struct TodayDiptychView: View {
                                                 isShowCamera = true
                                             }
                                     }
+                                }.onAppear {
+                                    
+                                    imageCacheViewModel.firstImage = image.getUIImage(newSize: thumbSize)
                                 }
                         case .failure:
                             Rectangle()
@@ -123,6 +136,9 @@ struct TodayDiptychView: View {
                                                 isShowCamera = true
                                             }
                                     }
+                                }
+                                .onAppear {
+                                    imageCacheViewModel.secondImage = image.getUIImage(newSize: thumbSize)
                                 }
                         case .failure:
                             Rectangle()

@@ -66,10 +66,10 @@ class CameraViewController: UIViewController {
     
     // MARK: - Constants
     let RESIZE_WIDTH: CGFloat = 2048
-    let JPEG_COMPRESSION_QUALITY: CGFloat = 1.0
     
     // MARK: - Vars
     var viewModel: TodayDiptychViewModel?
+    var imageCacheViewModel: ImageCacheViewModel?
     
     var previewLayer: AVCaptureVideoPreviewLayer!
     var captureSession: AVCaptureSession!
@@ -163,9 +163,10 @@ class CameraViewController: UIViewController {
         DispatchQueue.main.async { [unowned self] in
             print("isFirst?", viewModel.isFirst)
             currentAxis = viewModel.isFirst ? .verticalLeft : .verticalRight
-            
-            print(viewModel.currentUser?.id,
-                  viewModel.todayPhoto)
+        }
+        
+        guard let imageCacheViewModel else {
+            return
         }
     }
     
@@ -207,9 +208,10 @@ class CameraViewController: UIViewController {
             //     }
             // }
             
-            taskUpload(image: uiImage) {
+            Task {
+                try await taskUpload(image: uiImage)
                 self.dismiss(animated: true)
-            }
+            }   
         }
     }
     
@@ -468,7 +470,7 @@ class CameraViewController: UIViewController {
     
     // MARK: - Network Task
     
-    func taskUpload(image uiImage: UIImage, completion completionHandler: (() -> Void)? = nil) {
+    func taskUpload(image uiImage: UIImage) async throws {
         /*
          1. 앨범 아이디로 photos를 찾음
          .collection("photos")
@@ -485,52 +487,62 @@ class CameraViewController: UIViewController {
           -
          */
         
+        // 반으로 된 사진 데이터
         let data = uiImage.jpegData(compressionQuality: JPEG_COMPRESSION_QUALITY)
-        let thumbData = uiImage.resize(width: 400, height: 400).jpegData(compressionQuality: 0.8)
+        // TODO: - 가로 가이드라인일때는?
+        let thumbnail = uiImage.resize(width: THUMB_SIZE / 2, height: THUMB_SIZE)
         
-        Task {
-            guard let isFirst = viewModel?.currentUser?.isFirst else {
-                return
-            }
-            
-            // TODO: - print는 로딩 인디케이터 또는 작업상황 구분점임
-            print("파일 업로드 시작....")
-            let url = try await FirebaseManager.shared.upload(data: data!, withName: "test_\(UUID().uuidString)")
-            print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
-            
-            print("섬네일 업로드 시작....")
-            let thumbURL = try await FirebaseManager.shared.upload(data: thumbData!, withName: "test_thumbnail_\(Date())")
-            print("섬네일 업로드 끝:", thumbURL?.absoluteString ?? "unknown URL")
-            
-            guard let url, let thumbURL else {
-                print("url이 존재하지 않습니다.")
-                return
-            }
-            
-            var dictionary: [String: Any]!
-            guard let todayPhoto = viewModel?.todayPhoto else {
-                print("todayPhoto is nil.")
-                return
-            }
-            
-            print("todayPhoto!:", todayPhoto.photoFirst, todayPhoto.photoSecond, isFirst, todayPhoto.photoSecond.isEmpty,  todayPhoto.photoFirst.isEmpty)
-            
-            // TODO: - thumbnail은 isComplete가 true될 경우에만
-            dictionary = [
-                "thumbnail": thumbURL.absoluteString,
-                "isCompleted": isFirst ? !todayPhoto.photoSecond.isEmpty : !todayPhoto.photoFirst.isEmpty,
-            ]
-            
-            let photoKey = isFirst ? "photoFirst" : "photoSecond"
-            dictionary[photoKey] = url.absoluteString
-            
-            print("정보 업로드 시작....")
-            try await FirebaseManager.shared.updateValue(collectionPath: "photos", documentId: todayPhoto.id, dictionary: dictionary)
-            print("정보 업로드 끝")
-            
-            // self.dismiss(animated: true)
-            completionHandler?()
+        guard let isFirst = viewModel?.currentUser?.isFirst else {
+            return
         }
+        
+        // TODO: - print는 로딩 인디케이터 또는 작업상황 구분점임
+        print("파일 업로드 시작....")
+        let url = try await FirebaseManager.shared.upload(data: data!, withName: "test_\(UUID().uuidString)")
+        print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
+        
+        // print("섬네일 업로드 시작....")
+        // let thumbURL = try await FirebaseManager.shared.upload(data: thumbData!, withName: "test_thumbnail_\(Date())")
+        // print("섬네일 업로드 끝:", thumbURL?.absoluteString ?? "unknown URL")
+        
+        guard let url else {
+            print("url이 존재하지 않습니다.")
+            return
+        }
+        
+        
+        guard let todayPhoto = viewModel?.todayPhoto else {
+            print("todayPhoto is nil.")
+            return
+        }
+        
+        print("todayPhoto!:", todayPhoto.photoFirst, todayPhoto.photoSecond, isFirst, todayPhoto.photoSecond.isEmpty,  todayPhoto.photoFirst.isEmpty)
+        
+        // TODO: - thumbnail은 isComplete가 true될 경우에만
+        let isCompleted = isFirst ? !todayPhoto.photoSecond.isEmpty : !todayPhoto.photoFirst.isEmpty
+        var dictionary: [String: Any] = [
+            "isCompleted": isCompleted,
+        ]
+        
+        if isCompleted {
+            if let halfAnotherThumb = imageCacheViewModel?.firstImage ?? imageCacheViewModel?.secondImage,
+               let mergedThumb = thumbnail.merge(with: halfAnotherThumb, division: currentAxis),
+               let uploadThumb = mergedThumb.jpegData(compressionQuality: THUMB_COMPRESSION_QUALITY) {
+                print("섬네일 업로드 시작....")
+                let thumbURL = try await FirebaseManager.shared.upload(data: uploadThumb, withName: "test_thumbnail_\(Date())")
+                dictionary["thumbnail"] = thumbURL?.absoluteString
+                print("섬네일 업로드 끝")
+            } else {
+                print("섬네일 생성 실패:")
+            }
+        }
+        
+        let photoKey = isFirst ? "photoFirst" : "photoSecond"
+        dictionary[photoKey] = url.absoluteString
+        
+        print("정보 업로드 시작....")
+        try await FirebaseManager.shared.updateValue(collectionPath: "photos", documentId: todayPhoto.id, dictionary: dictionary)
+        print("정보 업로드 끝")
     }
     
     // MARK: - OBJC Methods
