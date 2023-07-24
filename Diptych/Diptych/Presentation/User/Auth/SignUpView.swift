@@ -131,7 +131,7 @@ struct SignUpView: View {
                         .foregroundColor(.offWhite)
                 }
                 Spacer()
-                    .frame(height: 55)
+                    .frame(height: 47)
             }
         }
         .ignoresSafeArea()

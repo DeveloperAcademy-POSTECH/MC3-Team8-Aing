@@ -55,7 +55,7 @@ struct OnBoardingView: View {
                         }
                     }// (E) LogIn, SignUp
                     Spacer()
-                        .frame(height: 55)
+                        .frame(height: 47)
                 }
                 .ignoresSafeArea()
             }
