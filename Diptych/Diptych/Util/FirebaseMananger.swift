@@ -28,7 +28,7 @@ class FirebaseManager {
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
         _ = try await kFirFileStorageRef.child(fileName).putDataAsync(data, metadata: metadata)
-        return try await kFirFileStorageRef.downloadURL()
+        return try await kFirFileStorageRef.child(fileName).downloadURL()
     }
     
     func setValue(collectionPath: String, dictionary: [String: Any]) async throws {
