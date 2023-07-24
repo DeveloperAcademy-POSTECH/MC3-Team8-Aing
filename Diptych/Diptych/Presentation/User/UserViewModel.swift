@@ -34,10 +34,12 @@ class UserViewModel: ObservableObject {
     init() {
         Task {
             await fetchUserData()
+            await fetchLoverData() // 이걸 안 불러주니까 프로필뷰에 상대방 닉네임이 안 떠서 수정했습니다!
             print("[DEBUG] currentUser : \(self.currentUser) /// flow : \(self.flow)")
             listenerAboutUserData = Firestore.firestore().collection("users").addSnapshotListener() { snapshot, error in
-                Task{
+                Task {
                     await self.fetchUserData()
+                    await self.fetchLoverData()
                 }
             }
             try await generatedCouplingCode()

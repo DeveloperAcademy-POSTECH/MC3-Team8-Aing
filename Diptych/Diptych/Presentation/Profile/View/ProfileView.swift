@@ -29,10 +29,10 @@ struct ProfileView: View {
             VStack {
                 LazyVGrid(columns: columns) {
                     ForEach(0 ..< 1) { _ in
-                        userNameLabel(text: "Reene")
+                        userNameLabel(text: userViewModel.currentUser?.name ?? "...") // 로딩중일때 "..."로 표현
                             .padding(.leading, 20)
                         Image("heart")
-                        userNameLabel(text: "Nyla")
+                        userNameLabel(text: userViewModel.lover?.name ?? "...")
                             .padding(.trailing, 20)
                     }
                 }
@@ -100,5 +100,6 @@ extension ProfileView {
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileView()
+            .environmentObject(UserViewModel())
     }
 }
