@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct DiptychTabView: View {
+    
     @State private var selection = 0
+    @EnvironmentObject var userViewModel: UserViewModel
 
     var body: some View {
         TabView(selection: $selection) {
@@ -19,7 +21,7 @@ struct DiptychTabView: View {
                 }
                 .tag(0)
 
-            ArchiveView()
+            ArchiveTabView(currentTab: selection)
                 .tabItem {
                     selection == 1 ? Image("imgArchiveTabSelected") : Image("imgArchiveTab")
                     Text("보관함")
@@ -33,12 +35,15 @@ struct DiptychTabView: View {
                 }
                 .tag(2)
         }
-        .tint(.offBlack)
+        .tint(.black)
+        .background(Color.white)
         .onAppear {
             UITabBar.appearance().unselectedItemTintColor = .darkGray
         }
     }
 }
+
+
 
 struct DiptychTabView_Previews: PreviewProvider {
     static var previews: some View {
