@@ -12,7 +12,9 @@ struct CameraRepresentableView: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> CameraViewController {
         let cameraStoryboard = UIStoryboard(name: "CameraStoryboard", bundle: nil)
-        let viewController =  cameraStoryboard.instantiateViewController(withIdentifier: "CameraViewController") as! CameraViewController
+        guard let viewController = cameraStoryboard.instantiateViewController(withIdentifier: "CameraViewController") as? CameraViewController else {
+            return CameraViewController()
+        }
         viewController.viewModel = viewModel
         
         return viewController

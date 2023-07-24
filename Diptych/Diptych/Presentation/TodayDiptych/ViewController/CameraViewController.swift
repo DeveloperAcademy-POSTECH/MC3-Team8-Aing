@@ -207,9 +207,10 @@ class CameraViewController: UIViewController {
             //     }
             // }
             
-            taskUpload(image: uiImage) {
+            Task {
+                try await taskUpload(image: uiImage)
                 self.dismiss(animated: true)
-            }
+            }   
         }
     }
     
@@ -468,7 +469,7 @@ class CameraViewController: UIViewController {
     
     // MARK: - Network Task
     
-    func taskUpload(image uiImage: UIImage, completion completionHandler: (() -> Void)? = nil) {
+    func taskUpload(image uiImage: UIImage) async throws {
         /*
          1. 앨범 아이디로 photos를 찾음
          .collection("photos")
@@ -488,49 +489,44 @@ class CameraViewController: UIViewController {
         let data = uiImage.jpegData(compressionQuality: JPEG_COMPRESSION_QUALITY)
         let thumbData = uiImage.resize(width: 400, height: 400).jpegData(compressionQuality: 0.8)
         
-        Task {
-            guard let isFirst = viewModel?.currentUser?.isFirst else {
-                return
-            }
-            
-            // TODO: - print는 로딩 인디케이터 또는 작업상황 구분점임
-            print("파일 업로드 시작....")
-            let url = try await FirebaseManager.shared.upload(data: data!, withName: "test_\(UUID().uuidString)")
-            print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
-            
-            print("섬네일 업로드 시작....")
-            let thumbURL = try await FirebaseManager.shared.upload(data: thumbData!, withName: "test_thumbnail_\(Date())")
-            print("섬네일 업로드 끝:", thumbURL?.absoluteString ?? "unknown URL")
-            
-            guard let url, let thumbURL else {
-                print("url이 존재하지 않습니다.")
-                return
-            }
-            
-            var dictionary: [String: Any]!
-            guard let todayPhoto = viewModel?.todayPhoto else {
-                print("todayPhoto is nil.")
-                return
-            }
-            
-            print("todayPhoto!:", todayPhoto.photoFirst, todayPhoto.photoSecond, isFirst, todayPhoto.photoSecond.isEmpty,  todayPhoto.photoFirst.isEmpty)
-            
-            // TODO: - thumbnail은 isComplete가 true될 경우에만
-            dictionary = [
-                "thumbnail": thumbURL.absoluteString,
-                "isCompleted": isFirst ? !todayPhoto.photoSecond.isEmpty : !todayPhoto.photoFirst.isEmpty,
-            ]
-            
-            let photoKey = isFirst ? "photoFirst" : "photoSecond"
-            dictionary[photoKey] = url.absoluteString
-            
-            print("정보 업로드 시작....")
-            try await FirebaseManager.shared.updateValue(collectionPath: "photos", documentId: todayPhoto.id, dictionary: dictionary)
-            print("정보 업로드 끝")
-            
-            // self.dismiss(animated: true)
-            completionHandler?()
+        guard let isFirst = viewModel?.currentUser?.isFirst else {
+            return
         }
+        
+        // TODO: - print는 로딩 인디케이터 또는 작업상황 구분점임
+        print("파일 업로드 시작....")
+        let url = try await FirebaseManager.shared.upload(data: data!, withName: "test_\(UUID().uuidString)")
+        print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
+        
+        print("섬네일 업로드 시작....")
+        let thumbURL = try await FirebaseManager.shared.upload(data: thumbData!, withName: "test_thumbnail_\(Date())")
+        print("섬네일 업로드 끝:", thumbURL?.absoluteString ?? "unknown URL")
+        
+        guard let url, let thumbURL else {
+            print("url이 존재하지 않습니다.")
+            return
+        }
+        
+        var dictionary: [String: Any]!
+        guard let todayPhoto = viewModel?.todayPhoto else {
+            print("todayPhoto is nil.")
+            return
+        }
+        
+        print("todayPhoto!:", todayPhoto.photoFirst, todayPhoto.photoSecond, isFirst, todayPhoto.photoSecond.isEmpty,  todayPhoto.photoFirst.isEmpty)
+        
+        // TODO: - thumbnail은 isComplete가 true될 경우에만
+        dictionary = [
+            "thumbnail": thumbURL.absoluteString,
+            "isCompleted": isFirst ? !todayPhoto.photoSecond.isEmpty : !todayPhoto.photoFirst.isEmpty,
+        ]
+        
+        let photoKey = isFirst ? "photoFirst" : "photoSecond"
+        dictionary[photoKey] = url.absoluteString
+        
+        print("정보 업로드 시작....")
+        try await FirebaseManager.shared.updateValue(collectionPath: "photos", documentId: todayPhoto.id, dictionary: dictionary)
+        print("정보 업로드 끝")
     }
     
     // MARK: - OBJC Methods

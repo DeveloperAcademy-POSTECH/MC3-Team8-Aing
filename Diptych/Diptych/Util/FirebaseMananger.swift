@@ -31,6 +31,7 @@ class FirebaseManager {
         return try await kFirFileStorageRef.child(fileName).downloadURL()
     }
     
+    /// 새로운 값 세팅에 사용. 모든 키값에 적용되므로 업데이트는 지양
     func setValue(collectionPath: String, dictionary: [String: Any]) async throws {
         let collectionReference = firestore.collection(collectionPath)
         let document = collectionReference.document()
