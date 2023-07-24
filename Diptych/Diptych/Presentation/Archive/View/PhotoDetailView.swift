@@ -89,16 +89,18 @@ extension PhotoDetailView: View {
                 
                 /// [4]버튼
                 HStack {
-                    
-                    Image("download")
+                    Image("upload")
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
-                        .padding(.leading, 118)
-                        .padding(.trailing, 97)
-                    Image("send")
+                        .padding(.leading, 70)
+                    Image("whiteHeart")
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
-                        .padding(.trailing, 118)
+                        .padding(.horizontal, 80)
+                    Image("comment")
+                        .foregroundColor(.offBlack)
+                        .frame(width: 30, height: 30)
+                        .padding(.trailing, 70)
                 }
                 .padding(.bottom,48)
                 
