@@ -11,7 +11,7 @@ import FirebaseStorage
 struct TodayDiptychView: View {
 
     // TODO: - 섬네일 사이즈 ? (일단 200 * 200), 가로세로 여부도 고려..
-    let thumbSize: CGSize = .init(width: 2 / THUMB_SIZE, height: THUMB_SIZE)
+    let thumbSize: CGSize = .init(width: THUMB_SIZE / 2.0, height: THUMB_SIZE)
     @State var isShowCamera = false
     @State private var firstUIImage: UIImage?
     @State private var secondUIImage: UIImage?
