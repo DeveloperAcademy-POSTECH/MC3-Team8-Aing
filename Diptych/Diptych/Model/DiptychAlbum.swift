@@ -9,4 +9,6 @@ import Foundation
 
 struct DiptychAlbum: Identifiable, Codable {
     var id: String
+    
+    var startDate: Date?
 }
