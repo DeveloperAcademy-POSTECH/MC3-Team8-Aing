@@ -181,6 +181,11 @@ struct TodayDiptychView: View {
                             let formattedDate = String(format: "%02d", date)
                             let isToday = date == viewModel.setTodayDate()
                             let diptychState = data.isEmpty ? .incomplete : data[0].diptychState
+                            let weeklyCalenderView = WeeklyCalenderView(day: days[index],
+                                                                        date: formattedDate,
+                                                                        isToday: isToday,
+                                                                        thumbnail: data.isEmpty ? "" : data[0].thumbnail,
+                                                                        diptychState: data.isEmpty ? .incomplete : data[0].diptychState)
 
                             switch diptychState {
                             case .complete:
@@ -191,19 +196,10 @@ struct TodayDiptychView: View {
                                                     imageUrl1: "",
                                                     imageUrl2: "")
                                 } label: {
-                                    WeeklyCalenderView(day: days[index],
-                                                       date: formattedDate,
-                                                       isToday: isToday,
-                                                       thumbnail: data.isEmpty ? "" : data[0].thumbnail,
-                                                       diptychState: data.isEmpty ? .incomplete : data[0].diptychState)
+                                        weeklyCalenderView
                                 }
-
                             default:
-                                WeeklyCalenderView(day: days[index],
-                                                   date: formattedDate,
-                                                   isToday: isToday,
-                                                   thumbnail: data.isEmpty ? "" : data[0].thumbnail,
-                                                   diptychState: data.isEmpty ? .incomplete : data[0].diptychState)
+                                weeklyCalenderView
                             }
                         }
                     }
