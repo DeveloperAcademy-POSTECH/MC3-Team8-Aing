@@ -15,7 +15,7 @@ struct DiptychUser: Identifiable, Codable {
     var couplingCode: String?
     var loverId: String?
     var isFirst: Bool?
-    var sharedAlbumId: String?
+    var coupleAlbumId: String?
     var name: String?
     var startDate: Date?
     var phoneNumber: String?
