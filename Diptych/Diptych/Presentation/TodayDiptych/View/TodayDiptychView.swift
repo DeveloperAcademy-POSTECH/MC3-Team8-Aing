@@ -16,44 +16,53 @@ struct TodayDiptychView: View {
     @State private var firstUIImage: UIImage?
     @State private var secondUIImage: UIImage?
     @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
-    
     @StateObject private var viewModel = TodayDiptychViewModel()
     @State private var isAllTasksCompleted = false
+    @State private var isShowingPhotoDetail = false
     let days = ["월", "화", "수", "목", "금", "토", "일"]
 
     var body: some View {
-        ZStack {
-            if isAllTasksCompleted {
-                MainDiptychView()
-            } else {
-                ProgressView()
-            }
-        }
-        .ignoresSafeArea(edges: .top)
-        .onAppear {
-            Task {
-                await viewModel.fetchUser()
-                await viewModel.setUserCameraLoactionState()
-                await viewModel.fetchTodayImage()
-                await viewModel.fetchWeeklyCalender()
-                await viewModel.fetchContents()
-                await viewModel.setTodayPhoto()
-                
-                DispatchQueue.main.async {
-                    isAllTasksCompleted = true
+        NavigationStack {
+            ZStack {
+                if isAllTasksCompleted {
+                    MainDiptychView()
+                } else {
+                    ProgressView()
                 }
             }
+            .ignoresSafeArea(edges: .top)
+            .onAppear {
+                Task {
+                    await viewModel.fetchUser()
+                    await viewModel.setUserCameraLoactionState()
+                    await viewModel.fetchTodayImage()
+                    await viewModel.fetchWeeklyCalender()
+                    await viewModel.fetchContents()
+                    await viewModel.setTodayPhoto()
+
+                    DispatchQueue.main.async {
+                        isAllTasksCompleted = true
+                    }
+                }
+            }
+            .onDisappear {
+                viewModel.weeklyData.removeAll()
+            }
+            .fullScreenCover(isPresented: $isShowCamera) {
+                CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
+                     .toolbar(.hidden, for: .tabBar)
+                     .onAppear {
+                         print("fullScreenCover")
+                     }
+
+            }
         }
-        .onDisappear {
-            viewModel.weeklyData.removeAll()
-        }
-        .fullScreenCover(isPresented: $isShowCamera) {
-            CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
-                 .toolbar(.hidden, for: .tabBar)
-                 .onAppear {
-                     print("fullScreenCover")
-                 }
-            
+        .navigationDestination(isPresented: $isShowingPhotoDetail) {
+            PhotoDetailView(date: "",
+                            questionNum: 3,
+                            question: "",
+                            imageUrl1: "",
+                            imageUrl2: "")
         }
     }
 
@@ -171,11 +180,31 @@ struct TodayDiptychView: View {
                             let data = viewModel.weeklyData.filter { $0.date == date }
                             let formattedDate = String(format: "%02d", date)
                             let isToday = date == viewModel.setTodayDate()
-                            WeeklyCalenderView(day: days[index],
-                                               date: formattedDate,
-                                               isToday: isToday,
-                                               thumbnail: data.isEmpty ? "" : data[0].thumbnail,
-                                               diptychState: data.isEmpty ? .incomplete : data[0].diptychState)
+                            let diptychState = data.isEmpty ? .incomplete : data[0].diptychState
+
+                            switch diptychState {
+                            case .complete:
+                                NavigationLink {
+                                    PhotoDetailView(date: "더미더미더미",
+                                                    questionNum: 3,
+                                                    question: "더미더미더미더미더미더미",
+                                                    imageUrl1: "",
+                                                    imageUrl2: "")
+                                } label: {
+                                    WeeklyCalenderView(day: days[index],
+                                                       date: formattedDate,
+                                                       isToday: isToday,
+                                                       thumbnail: data.isEmpty ? "" : data[0].thumbnail,
+                                                       diptychState: data.isEmpty ? .incomplete : data[0].diptychState)
+                                }
+
+                            default:
+                                WeeklyCalenderView(day: days[index],
+                                                   date: formattedDate,
+                                                   isToday: isToday,
+                                                   thumbnail: data.isEmpty ? "" : data[0].thumbnail,
+                                                   diptychState: data.isEmpty ? .incomplete : data[0].diptychState)
+                            }
                         }
                     }
                 }
