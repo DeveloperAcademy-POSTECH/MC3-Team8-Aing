@@ -495,6 +495,7 @@ class CameraViewController: UIViewController {
         guard let isFirst = viewModel?.currentUser?.isFirst else {
             return
         }
+        print("isFirst?", isFirst)
         
         // TODO: - print는 로딩 인디케이터 또는 작업상황 구분점임
         print("파일 업로드 시작....")
@@ -526,9 +527,9 @@ class CameraViewController: UIViewController {
         
         if isCompleted {
             if let halfAnotherThumb = imageCacheViewModel?.firstImage ?? imageCacheViewModel?.secondImage,
-               let mergedThumb = thumbnail.merge(with: halfAnotherThumb, division: currentAxis),
+               let mergedThumb = thumbnail.merge(with: halfAnotherThumb, division: isFirst ? .verticalLeft : .verticalRight),
                let uploadThumb = mergedThumb.jpegData(compressionQuality: THUMB_COMPRESSION_QUALITY) {
-                print("섬네일 업로드 시작....")
+                print("섬네일 업로드 시작....", halfAnotherThumb.size)
                 let thumbURL = try await FirebaseManager.shared.upload(data: uploadThumb, withName: "test_thumbnail_\(Date())")
                 dictionary["thumbnail"] = thumbURL?.absoluteString
                 print("섬네일 업로드 끝")
