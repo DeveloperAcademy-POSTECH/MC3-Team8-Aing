@@ -79,7 +79,7 @@ struct ProfileSettingView: View {
                         .foregroundColor(.offWhite)
                 }
                 Spacer()
-                    .frame(height: 55)
+                    .frame(height: 47)
             }
             .padding([.leading, .trailing], 15)
         }
@@ -110,5 +110,6 @@ struct ProfileSettingView: View {
 struct ProfileSettingView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileSettingView()
+            .environmentObject(UserViewModel())
     }
 }

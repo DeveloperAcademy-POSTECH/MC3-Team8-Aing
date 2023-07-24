@@ -11,10 +11,8 @@ struct CouplingView: View {
     @State var sample: String = ""
     @State var loverCode: String = ""
     @State var isProfileSettingLinkActive = false
-    @StateObject var couplingViewModel: CouplingViewModel = CouplingViewModel()
     
     @EnvironmentObject var userViewModel: UserViewModel
-    @EnvironmentObject var authViewModel: AuthenticationViewModel
     
     var body: some View {
         ZStack {
@@ -30,11 +28,11 @@ struct CouplingView: View {
                         Text("내 초대코드")
                             .font(.pretendard(.light, size: 16))
                         HStack {
-                            Text(couplingViewModel.couplingCode ?? "")
+                            Text(userViewModel.couplingCode ?? "")
                                 .font(.pretendard(.bold, size: 24))
                             Spacer()
                             Button {
-                                UIPasteboard.general.string = couplingViewModel.couplingCode ?? "error"
+                                UIPasteboard.general.string = userViewModel.couplingCode ?? "error"
                             } label: {
                                 Text("복사하기")
                                     .font(.pretendard(size: 16))
@@ -69,7 +67,7 @@ struct CouplingView: View {
                         .foregroundColor(.offWhite)
                 }
                 Spacer()
-                    .frame(height: 55)
+                    .frame(height: 47)
             }
             .padding([.leading, .trailing], 15)
         }
@@ -80,6 +78,6 @@ struct CouplingView: View {
 struct CouplingView_Previews: PreviewProvider {
     static var previews: some View {
         CouplingView()
-            .environmentObject(AuthenticationViewModel())
+            .environmentObject(UserViewModel())
     }
 }

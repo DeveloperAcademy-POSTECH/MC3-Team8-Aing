@@ -17,17 +17,18 @@
 		44DE9B952A67DCA000E6615B /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B942A67DCA000E6615B /* CameraViewController.swift */; };
 		44DE9B972A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */; };
 		44DE9B9A2A67EBD700E6615B /* CameraStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44DE9B982A67E8C000E6615B /* CameraStoryboard.storyboard */; };
+		44EE2BF72A6E6311003B5C1F /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EE2BF62A6E6311003B5C1F /* View+.swift */; };
+		44EE2BF92A6E6436003B5C1F /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EE2BF82A6E6436003B5C1F /* UIView+.swift */; };
+		44EE2BFB2A6E6EF5003B5C1F /* Image+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EE2BFA2A6E6EF5003B5C1F /* Image+.swift */; };
+		44EE2BFD2A6E8AAB003B5C1F /* ImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EE2BFC2A6E8AAB003B5C1F /* ImageSize.swift */; };
 		984614472A67A72E0043EAE9 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984614462A67A72E0043EAE9 /* TestView.swift */; };
 		984614492A67B7D60043EAE9 /* TestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984614482A67B7D60043EAE9 /* TestViewModel.swift */; };
 		9846144B2A69075E0043EAE9 /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */; };
 		985DBC1E2A699DAA006C64FC /* LoadingVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */; };
-		985DBC202A6A40AD006C64FC /* LogInFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DBC1F2A6A40AD006C64FC /* LogInFlowView.swift */; };
 		987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E425B2A5FE17F00C682D9 /* LogInView.swift */; };
-		989B44922A65605800D99439 /* EmailVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44912A65605800D99439 /* EmailVerificationView.swift */; };
 		989B44942A65752100D99439 /* CouplingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44932A65752100D99439 /* CouplingView.swift */; };
 		989B44972A65977200D99439 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 989B44962A65977200D99439 /* FirebaseFirestoreSwift */; };
 		989B449A2A65BB9200D99439 /* DiptychUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44992A65BB9200D99439 /* DiptychUser.swift */; };
-		989B449C2A66845400D99439 /* CouplingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B449B2A66845400D99439 /* CouplingViewModel.swift */; };
 		989DFFD42A5FD1AD00EBBC12 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 989DFFD32A5FD1AD00EBBC12 /* FirebaseAnalytics */; };
 		989DFFD62A5FD1AD00EBBC12 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 989DFFD52A5FD1AD00EBBC12 /* FirebaseAuth */; };
 		989DFFD82A5FD1AD00EBBC12 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 989DFFD72A5FD1AD00EBBC12 /* FirebaseDatabase */; };
@@ -35,12 +36,13 @@
 		989DFFDC2A5FD1AD00EBBC12 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 989DFFDB2A5FD1AD00EBBC12 /* FirebaseStorage */; };
 		989DFFDE2A5FD65F00EBBC12 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */; };
 		989DFFE02A5FD75A00EBBC12 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */; };
-		989DFFE22A5FDA3400EBBC12 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFE12A5FDA3400EBBC12 /* AuthenticationViewModel.swift */; };
 		989DFFE52A5FDC4B00EBBC12 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */; };
 		98A8E82B2A691938005DF658 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A8E82A2A691938005DF658 /* UserViewModel.swift */; };
-		98A8E82D2A69906B005DF658 /* SignUpFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A8E82C2A69906B005DF658 /* SignUpFlowView.swift */; };
 		98D4A0842A6A625200EB8C94 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4A0832A6A625200EB8C94 /* Date+.swift */; };
 		98D4A0862A6E3E7D00EB8C94 /* DiptychAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */; };
+		98D4A0892A6E6AAB00EB8C94 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 98D4A0882A6E6AAB00EB8C94 /* Lottie */; };
+		98D4A08B2A6E6E1E00EB8C94 /* DiptychSplashLogo.json in Resources */ = {isa = PBXBuildFile; fileRef = 98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */; };
+		98D4A08D2A6E6EF100EB8C94 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */; };
 		AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */; };
 		AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */; };
 		AB2A9EA82A5EC46200D70C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */; };
@@ -132,25 +134,26 @@
 		44DE9B942A67DCA000E6615B /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformImageBasedOnContainerView.swift; sourceTree = "<group>"; };
 		44DE9B982A67E8C000E6615B /* CameraStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CameraStoryboard.storyboard; sourceTree = "<group>"; };
+		44EE2BF62A6E6311003B5C1F /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
+		44EE2BF82A6E6436003B5C1F /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		44EE2BFA2A6E6EF5003B5C1F /* Image+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+.swift"; sourceTree = "<group>"; };
+		44EE2BFC2A6E8AAB003B5C1F /* ImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSize.swift; sourceTree = "<group>"; };
 		984614462A67A72E0043EAE9 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		984614482A67B7D60043EAE9 /* TestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewModel.swift; sourceTree = "<group>"; };
 		9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
 		985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingVerificationView.swift; sourceTree = "<group>"; };
-		985DBC1F2A6A40AD006C64FC /* LogInFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInFlowView.swift; sourceTree = "<group>"; };
 		987E425B2A5FE17F00C682D9 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		987E425F2A627A2B00C682D9 /* Diptych.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Diptych.entitlements; sourceTree = "<group>"; };
-		989B44912A65605800D99439 /* EmailVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationView.swift; sourceTree = "<group>"; };
 		989B44932A65752100D99439 /* CouplingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplingView.swift; sourceTree = "<group>"; };
 		989B44992A65BB9200D99439 /* DiptychUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychUser.swift; sourceTree = "<group>"; };
-		989B449B2A66845400D99439 /* CouplingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplingViewModel.swift; sourceTree = "<group>"; };
 		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
-		989DFFE12A5FDA3400EBBC12 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		98A8E82A2A691938005DF658 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
-		98A8E82C2A69906B005DF658 /* SignUpFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFlowView.swift; sourceTree = "<group>"; };
 		98D4A0832A6A625200EB8C94 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychAlbum.swift; sourceTree = "<group>"; };
+		98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DiptychSplashLogo.json; sourceTree = "<group>"; };
+		98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		AB2A9EA02A5EC46100D70C33 /* Diptych.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diptych.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychApp.swift; sourceTree = "<group>"; };
 		AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychTabView.swift; sourceTree = "<group>"; };
@@ -202,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				989DFFD82A5FD1AD00EBBC12 /* FirebaseDatabase in Frameworks */,
+				98D4A0892A6E6AAB00EB8C94 /* Lottie in Frameworks */,
 				989DFFDA2A5FD1AD00EBBC12 /* FirebaseFirestore in Frameworks */,
 				989DFFD42A5FD1AD00EBBC12 /* FirebaseAnalytics in Frameworks */,
 				989DFFDC2A5FD1AD00EBBC12 /* FirebaseStorage in Frameworks */,
@@ -295,6 +299,7 @@
 		AB2A9EA22A5EC46100D70C33 /* Diptych */ = {
 			isa = PBXGroup;
 			children = (
+				98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */,
 				989B44982A659F1A00D99439 /* Model */,
 				987E425F2A627A2B00C682D9 /* Diptych.entitlements */,
 				ABFD3E7C2A5ED26E008678D0 /* Global */,
@@ -303,6 +308,7 @@
 				ABFD3E822A5EDA35008678D0 /* Presentation */,
 				AB2AC21C2A5F28DB00B162E1 /* Util */,
 				AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */,
+				98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */,
 				AB2A9EA92A5EC46200D70C33 /* Preview Content */,
 				AB2AC21B2A5F282A00B162E1 /* Info.plist */,
 			);
@@ -462,6 +468,9 @@
 				44DE9B8D2A67DC2100E6615B /* UIDevice+.swift */,
 				44DE9B8F2A67DC3B00E6615B /* UIImage+.swift */,
 				98D4A0832A6A625200EB8C94 /* Date+.swift */,
+				44EE2BF62A6E6311003B5C1F /* View+.swift */,
+				44EE2BF82A6E6436003B5C1F /* UIView+.swift */,
+				44EE2BFA2A6E6EF5003B5C1F /* Image+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -469,6 +478,7 @@
 		ABFD3E812A5ED981008678D0 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
+				44EE2BFC2A6E8AAB003B5C1F /* ImageSize.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -499,13 +509,8 @@
 			isa = PBXGroup;
 			children = (
 				989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */,
-				989DFFE12A5FDA3400EBBC12 /* AuthenticationViewModel.swift */,
 				987E425B2A5FE17F00C682D9 /* LogInView.swift */,
-				989B44912A65605800D99439 /* EmailVerificationView.swift */,
-				9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */,
-				98A8E82C2A69906B005DF658 /* SignUpFlowView.swift */,
 				985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */,
-				985DBC1F2A6A40AD006C64FC /* LogInFlowView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -514,9 +519,7 @@
 			isa = PBXGroup;
 			children = (
 				989B44932A65752100D99439 /* CouplingView.swift */,
-				989B449B2A66845400D99439 /* CouplingViewModel.swift */,
-				984614462A67A72E0043EAE9 /* TestView.swift */,
-				984614482A67B7D60043EAE9 /* TestViewModel.swift */,
+				9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */,
 			);
 			path = Matching;
 			sourceTree = "<group>";
@@ -624,6 +627,7 @@
 				989DFFD92A5FD1AD00EBBC12 /* FirebaseFirestore */,
 				989DFFDB2A5FD1AD00EBBC12 /* FirebaseStorage */,
 				989B44962A65977200D99439 /* FirebaseFirestoreSwift */,
+				98D4A0882A6E6AAB00EB8C94 /* Lottie */,
 			);
 			productName = Diptych;
 			productReference = AB2A9EA02A5EC46100D70C33 /* Diptych.app */;
@@ -699,6 +703,7 @@
 			mainGroup = AB2A9E972A5EC46100D70C33;
 			packageReferences = (
 				989DFFD22A5FD1AD00EBBC12 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				98D4A0872A6E6AAB00EB8C94 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = AB2A9EA12A5EC46100D70C33 /* Products */;
 			projectDirPath = "";
@@ -731,6 +736,7 @@
 				AB2AC2002A5F280000B162E1 /* Pretendard-ExtraBold.otf in Resources */,
 				ABFA53B42A5F95E700298F3B /* Images.xcassets in Resources */,
 				AB2AC2182A5F280000B162E1 /* Pretendard-ExtraLight.otf in Resources */,
+				98D4A08B2A6E6E1E00EB8C94 /* DiptychSplashLogo.json in Resources */,
 				989DFFDE2A5FD65F00EBBC12 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -774,10 +780,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				989DFFE22A5FDA3400EBBC12 /* AuthenticationViewModel.swift in Sources */,
 				AB2AC2282A5F922F00B162E1 /* Font+.swift in Sources */,
-				989B44922A65605800D99439 /* EmailVerificationView.swift in Sources */,
 				F3263A972A65448400B4581C /* CalendarView.swift in Sources */,
+				44EE2BF72A6E6311003B5C1F /* View+.swift in Sources */,
 				F3263A932A6543F700B4581C /* ArchiveTabView.swift in Sources */,
 				F3263A9E2A65B6AE00B4581C /* QuestionListView.swift in Sources */,
 				44DE9B952A67DCA000E6615B /* CameraViewController.swift in Sources */,
@@ -797,24 +802,23 @@
 				AB96A0AB2A66E4DF004C01FF /* TodayDiptychViewModel.swift in Sources */,
 				989B44942A65752100D99439 /* CouplingView.swift in Sources */,
 				98A8E82B2A691938005DF658 /* UserViewModel.swift in Sources */,
+				44EE2BF92A6E6436003B5C1F /* UIView+.swift in Sources */,
 				987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */,
 				ABCB300B2A6D366A007724DC /* Content.swift in Sources */,
 				44DE9B8E2A67DC2100E6615B /* UIDevice+.swift in Sources */,
+				44EE2BFB2A6E6EF5003B5C1F /* Image+.swift in Sources */,
 				ABCB300D2A6D367F007724DC /* Photo.swift in Sources */,
 				44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */,
 				AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */,
 				4498B2362A6D37E00069F54A /* CameraViewModel.swift in Sources */,
-				984614492A67B7D60043EAE9 /* TestViewModel.swift in Sources */,
 				9846144B2A69075E0043EAE9 /* ProfileSettingView.swift in Sources */,
 				AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */,
-				98A8E82D2A69906B005DF658 /* SignUpFlowView.swift in Sources */,
-				989B449C2A66845400D99439 /* CouplingViewModel.swift in Sources */,
 				44DE9B902A67DC3B00E6615B /* UIImage+.swift in Sources */,
 				AB2AC1ED2A5F093B00B162E1 /* TodayDiptychView.swift in Sources */,
+				44EE2BFD2A6E8AAB003B5C1F /* ImageSize.swift in Sources */,
 				985DBC202A6A40AD006C64FC /* LogInFlowView.swift in Sources */,
 				989DFFE02A5FD75A00EBBC12 /* SignUpView.swift in Sources */,
 				44671A212A6BE3D000C9C99A /* FirebaseMananger.swift in Sources */,
-				984614472A67A72E0043EAE9 /* TestView.swift in Sources */,
 				ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */,
 				AB6C7B7D2A6DD56600CD5D68 /* CalendarManager.swift in Sources */,
 				AB2AC1F52A5F15A100B162E1 /* Color+.swift in Sources */,
@@ -822,6 +826,7 @@
 				989B449A2A65BB9200D99439 /* DiptychUser.swift in Sources */,
 				ABCB300F2A6D368D007724DC /* WeeklyData.swift in Sources */,
 				F3263AA22A667AA200B4581C /* PhotoDetailView.swift in Sources */,
+				98D4A08D2A6E6EF100EB8C94 /* LottieView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1174,6 +1179,14 @@
 				kind = branch;
 			};
 		};
+		98D4A0872A6E6AAB00EB8C94 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1206,6 +1219,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 989DFFD22A5FD1AD00EBBC12 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		98D4A0882A6E6AAB00EB8C94 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98D4A0872A6E6AAB00EB8C94 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
