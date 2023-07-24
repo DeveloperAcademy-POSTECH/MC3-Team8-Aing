@@ -57,13 +57,6 @@ struct TodayDiptychView: View {
 
             }
         }
-        .navigationDestination(isPresented: $isShowingPhotoDetail) {
-            PhotoDetailView(date: "",
-                            questionNum: 3,
-                            question: "",
-                            imageUrl1: "",
-                            imageUrl2: "")
-        }
     }
 
     private func MainDiptychView() -> some View {
@@ -86,11 +79,12 @@ struct TodayDiptychView: View {
 
                 HStack(spacing: 0) {
                     Text("\"\(viewModel.question)\"")
+                        .frame(height: 78, alignment: .topLeading)
                         .lineSpacing(6)
                         .font(.pretendard(.light, size: 28))
                         .foregroundColor(.offBlack)
                         .padding(.top, 12)
-                        .padding(.leading, 15)
+                        .padding(.horizontal, 15)
                         .padding(.bottom, 35)
                     Spacer()
                 }
