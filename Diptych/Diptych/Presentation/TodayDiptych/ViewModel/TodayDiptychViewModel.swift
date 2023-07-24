@@ -37,10 +37,10 @@ final class TodayDiptychViewModel: ObservableObject {
                 .getDocuments()
 
             for document in querySnapshot.documents {
-                let data = document.data()
-                guard let photoFirst = data["photoFirst"] as? String else { return }
-                guard let photoSecond = data["photoSecond"] as? String else { return }
-                guard let thumbnail = data["thumbnail"] as? String else { return }
+                let photo = try document.data(as: Photo.self)
+                let photoFirst = photo.photoFirst
+                let photoSecond = photo.photoSecond
+                let thumbnail = photo.thumbnail
 
                 if photoFirst != "" && photoSecond != "" {
                     await MainActor.run {
@@ -132,21 +132,15 @@ final class TodayDiptychViewModel: ObservableObject {
                 .whereField("id", isEqualTo: "3ZtcHka4I3loqa7Xopc4") // TODO: - 유저의 앨범과 연결
                 .getDocuments()
 
-            for document in daySnapshot.documents {
-                let data = document.data()
-
-                guard let contentDay = data["contentDay"] as? Int else { return }
-                self.contentDay = contentDay
-            }
+            let data = daySnapshot.documents[0].data()
+            guard let contentDay = data["contentDay"] as? Int else { return }
+            self.contentDay = contentDay
 
             let contentSnapshot = try await db.collection("contents")
                 .whereField("order", isEqualTo: contentDay) // TODO: - 유저의 앨범과 연결
                 .getDocuments()
 
-            for document in contentSnapshot.documents {
-                self.content = try document.data(as: Content.self)
-            }
-
+            self.content = try contentSnapshot.documents[0].data(as: Content.self)
             guard let question = content?.question else { return }
             self.question = question.replacingOccurrences(of: "\\n", with: "\n")
         } catch {
