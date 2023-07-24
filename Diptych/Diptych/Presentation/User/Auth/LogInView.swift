@@ -10,7 +10,6 @@ import SwiftUI
 struct LogInView: View {
     @State var email: String = ""
     @State var password: String = ""
-//    @EnvironmentObject var authViewModel: AuthenticationViewModel
     @EnvironmentObject var userViewModel: UserViewModel
     var body: some View {
         ZStack {
@@ -80,7 +79,7 @@ struct LogInView: View {
 //                        .foregroundColor(.offWhite)
 //                }
                 Spacer()
-                    .frame(height: 55)
+                    .frame(height: 47)
             }
             .ignoresSafeArea()
         }
@@ -90,6 +89,6 @@ struct LogInView: View {
 struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
         LogInView()
-            .environmentObject(AuthenticationViewModel())
+            .environmentObject(UserViewModel())
     }
 }
