@@ -77,7 +77,11 @@
 		AB2AC2282A5F922F00B162E1 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC2272A5F922F00B162E1 /* Font+.swift */; };
 		AB2AC2292A5F922F00B162E1 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC2272A5F922F00B162E1 /* Font+.swift */; };
 		AB2AC22A2A5F922F00B162E1 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC2272A5F922F00B162E1 /* Font+.swift */; };
+		AB6C7B7D2A6DD56600CD5D68 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C7B7C2A6DD56600CD5D68 /* CalendarManager.swift */; };
 		AB96A0AB2A66E4DF004C01FF /* TodayDiptychViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */; };
+		ABCB300B2A6D366A007724DC /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB300A2A6D366A007724DC /* Content.swift */; };
+		ABCB300D2A6D367F007724DC /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB300C2A6D367F007724DC /* Photo.swift */; };
+		ABCB300F2A6D368D007724DC /* WeeklyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB300E2A6D368D007724DC /* WeeklyData.swift */; };
 		ABFA53B42A5F95E700298F3B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABFA53B32A5F95E700298F3B /* Images.xcassets */; };
 		ABFA53B62A5F95FE00298F3B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABFA53B52A5F95FE00298F3B /* Colors.xcassets */; };
 		ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */; };
@@ -158,7 +162,11 @@
 		AB2AC21B2A5F282A00B162E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AB2AC2222A5F8E8700B162E1 /* PretendardType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PretendardType.swift; sourceTree = "<group>"; };
 		AB2AC2272A5F922F00B162E1 /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
+		AB6C7B7C2A6DD56600CD5D68 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
 		AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDiptychViewModel.swift; sourceTree = "<group>"; };
+		ABCB300A2A6D366A007724DC /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
+		ABCB300C2A6D367F007724DC /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		ABCB300E2A6D368D007724DC /* WeeklyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyData.swift; sourceTree = "<group>"; };
 		ABFA53B32A5F95E700298F3B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		ABFA53B52A5F95FE00298F3B /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalenderView.swift; sourceTree = "<group>"; };
@@ -376,6 +384,14 @@
 			path = NameSpace;
 			sourceTree = "<group>";
 		};
+		AB6C7B7B2A6DCAFE00CD5D68 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				AB6C7B7C2A6DD56600CD5D68 /* CalendarManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		AB96A0A92A66E4C8004C01FF /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -383,6 +399,16 @@
 				4498B2352A6D37E00069F54A /* CameraViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		ABCB30092A6D3661007724DC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				ABCB300A2A6D366A007724DC /* Content.swift */,
+				ABCB300C2A6D367F007724DC /* Photo.swift */,
+				ABCB300E2A6D368D007724DC /* WeeklyData.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		ABFA53B22A5F95BB00298F3B /* AssetCatalog */ = {
@@ -477,6 +503,7 @@
 		ABFD3E862A5EDA79008678D0 /* TodayDiptych */ = {
 			isa = PBXGroup;
 			children = (
+				ABCB30092A6D3661007724DC /* Model */,
 				44DE9B932A67DC8100E6615B /* ViewController */,
 				AB2AC1E92A5F091700B162E1 /* View */,
 				AB96A0A92A66E4C8004C01FF /* ViewModel */,
@@ -505,6 +532,7 @@
 		ABFD3E8A2A5EDADB008678D0 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				AB6C7B7B2A6DCAFE00CD5D68 /* Manager */,
 				F3263AA92A667FDD00B4581C /* AlbumData.json */,
 			);
 			path = Data;
@@ -747,7 +775,9 @@
 				989B44942A65752100D99439 /* CouplingView.swift in Sources */,
 				98A8E82B2A691938005DF658 /* UserViewModel.swift in Sources */,
 				987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */,
+				ABCB300B2A6D366A007724DC /* Content.swift in Sources */,
 				44DE9B8E2A67DC2100E6615B /* UIDevice+.swift in Sources */,
+				ABCB300D2A6D367F007724DC /* Photo.swift in Sources */,
 				44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */,
 				AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */,
 				4498B2362A6D37E00069F54A /* CameraViewModel.swift in Sources */,
@@ -758,9 +788,11 @@
 				989DFFE02A5FD75A00EBBC12 /* SignUpView.swift in Sources */,
 				44671A212A6BE3D000C9C99A /* FirebaseMananger.swift in Sources */,
 				ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */,
+				AB6C7B7D2A6DD56600CD5D68 /* CalendarManager.swift in Sources */,
 				AB2AC1F52A5F15A100B162E1 /* Color+.swift in Sources */,
 				985DBC1E2A699DAA006C64FC /* LoadingVerificationView.swift in Sources */,
 				989B449A2A65BB9200D99439 /* DiptychUser.swift in Sources */,
+				ABCB300F2A6D368D007724DC /* WeeklyData.swift in Sources */,
 				F3263AA22A667AA200B4581C /* PhotoDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
