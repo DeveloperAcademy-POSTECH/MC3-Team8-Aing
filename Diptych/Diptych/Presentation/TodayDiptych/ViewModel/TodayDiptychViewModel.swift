@@ -30,6 +30,7 @@ final class TodayDiptychViewModel: ObservableObject {
     // MARK: - Network
 
     func fetchWeeklyCalender() async {
+
         do {
             let querySnapshot = try await db.collection("photos")
                 .whereField("albumId", isEqualTo: "3ZtcHka4I3loqa7Xopc4") // TODO: - 유저의 앨범과 연결
@@ -38,25 +39,28 @@ final class TodayDiptychViewModel: ObservableObject {
 
             for document in querySnapshot.documents {
                 let photo = try document.data(as: Photo.self)
+
                 let photoFirst = photo.photoFirst
                 let photoSecond = photo.photoSecond
                 let thumbnail = photo.thumbnail
+                let date = Date(timeIntervalSince1970: TimeInterval(photo.date.seconds))
+                guard let day = Calendar.current.dateComponents([.day], from: date).day else { return }
 
                 if photoFirst != "" && photoSecond != "" {
                     await MainActor.run {
-                        weeklyData.append(WeeklyData(diptychState: .complete, thumbnail: thumbnail))
+                        weeklyData.append(WeeklyData(date: day, diptychState: .complete, thumbnail: thumbnail))
                     }
                 } else if photoFirst != "" {
                     await MainActor.run {
-                        weeklyData.append(WeeklyData(diptychState: .half, thumbnail: nil))
+                        weeklyData.append(WeeklyData(date: day, diptychState: .half, thumbnail: nil))
                     }
                 } else if photoSecond != "" {
                     await MainActor.run {
-                        weeklyData.append(WeeklyData(diptychState: .half, thumbnail: nil))
+                        weeklyData.append(WeeklyData(date: day, diptychState: .half, thumbnail: nil))
                     }
                 } else {
                     await MainActor.run {
-                        weeklyData.append(WeeklyData(diptychState: .incomplete, thumbnail: nil))
+                        weeklyData.append(WeeklyData(date: day, diptychState: .incomplete, thumbnail: nil))
                     }
                 }
             }
@@ -66,7 +70,7 @@ final class TodayDiptychViewModel: ObservableObject {
     }
 
     func fetchTodayImage() async {
-        let (todayDate, _, _) = setTodayDate()
+        let (todayDate, _, _) = setTodayCalendar()
         let timestamp = Timestamp(date: todayDate)
 
         do {
@@ -149,13 +153,13 @@ final class TodayDiptychViewModel: ObservableObject {
     }
 
     func setTodayPhoto() async {
-        let (todayDate, _, _) = setTodayDate()
+        let (todayDate, _, _) = setTodayCalendar()
         let timestamp = Timestamp(date: todayDate)
 
         // TODO: - 유저의 albumId와 연결하기 (현재 test albumId: 4WX8aANlqOCHS9hmET6X)
         do {
             let querySnapshot = try await db.collection("photos")
-                .whereField("albumId", isEqualTo: "4WX8aANlqOCHS9hmET6X")
+                .whereField("albumId", isEqualTo: "3ZtcHka4I3loqa7Xopc4") // TODO: - 유저의 앨범과 연결
                 .whereField("date", isEqualTo: timestamp)
                 .getDocuments()
 
@@ -180,21 +184,26 @@ final class TodayDiptychViewModel: ObservableObject {
 
     // MARK: - Custom Methods
 
-    func calculateThisWeekMondayDate() -> Int {
-        let (todayDate, calendar, daysAfterMonday) = setTodayDate()
-        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return 0 }
-        let day = calendar.component(.day, from: thisMonday)
-        return day
+    func calculateThisMondayDate() -> Date {
+        let (todayDate, calendar, daysAfterMonday) = setTodayCalendar()
+        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return Date() }
+        return thisMonday
     }
 
     func calculateThisMondayTimestamp() -> Timestamp {
-        let (todayDate, calendar, daysAfterMonday) = setTodayDate()
+        let (todayDate, calendar, daysAfterMonday) = setTodayCalendar()
         guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return Timestamp() }
         let timestamp = Timestamp(date: thisMonday)
         return timestamp
     }
 
-    func setTodayDate() -> (Date, Calendar, Int) {
+    func setTodayDate() -> Int {
+        let (todayDate, calendar, _) = setTodayCalendar()
+        guard let day = calendar.dateComponents([.day], from: todayDate).day else { return 0 }
+        return day
+    }
+
+    func setTodayCalendar() -> (Date, Calendar, Int) {
         let currentDate = Date()
         var calendar = Calendar.current
         calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
@@ -209,5 +218,16 @@ final class TodayDiptychViewModel: ObservableObject {
         let daysAfterMonday = (currentWeekday + 5) % 7
 
         return (todayDate, calendar, daysAfterMonday)
+    }
+
+    func setWeeklyDates() -> [Int] {
+        let calendar = Calendar.current
+        let weekday = calendar.component(.weekday, from: calculateThisMondayDate())
+        let daysToAdd = (2...8).map { $0 - weekday }
+        let weeklyDates = daysToAdd.map { calendar.date(byAdding: .day,
+                                                        value: $0,
+                                                        to: calculateThisMondayDate())! }
+                                    .map { calendar.component(.day, from: $0) }
+        return weeklyDates
     }
 }

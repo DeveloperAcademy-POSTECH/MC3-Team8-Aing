@@ -18,7 +18,6 @@ struct TodayDiptychView: View {
     @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
     
     @StateObject private var viewModel = TodayDiptychViewModel()
-    @State private var mondayDate = 0
     @State private var isAllTasksCompleted = false
     let days = ["월", "화", "수", "목", "금", "토", "일"]
 
@@ -32,8 +31,6 @@ struct TodayDiptychView: View {
         }
         .ignoresSafeArea(edges: .top)
         .onAppear {
-            mondayDate = viewModel.calculateThisWeekMondayDate()
-            
             Task {
                 await viewModel.fetchUser()
                 await viewModel.setUserCameraLoactionState()
@@ -167,18 +164,18 @@ struct TodayDiptychView: View {
                     if viewModel.isLoading {
                         ProgressView()
                     } else {
-                        ForEach(0..<viewModel.weeklyData.count, id: \.self) { index in
+                        let weeklyDates = viewModel.setWeeklyDates()
+                        
+                        ForEach(0..<7) { index in
+                            let date = weeklyDates[index]
+                            let data = viewModel.weeklyData.filter { $0.date == date }
+                            let formattedDate = String(format: "%02d", date)
+                            let isToday = date == viewModel.setTodayDate()
                             WeeklyCalenderView(day: days[index],
-                                               date: "\(mondayDate + index)",
-                                               isToday: index == viewModel.weeklyData.count - 1 ? true : false,
-                                               thumbnail: viewModel.weeklyData[index].thumbnail,
-                                               diptychState: viewModel.weeklyData[index].diptychState)
-                        }
-                        ForEach(viewModel.weeklyData.count..<7, id: \.self) { index in
-                            WeeklyCalenderView(day: days[index],
-                                               date: "\(mondayDate + index)",
-                                               isToday: false,
-                                               diptychState: .incomplete)
+                                               date: formattedDate,
+                                               isToday: isToday,
+                                               thumbnail: data.isEmpty ? "" : data[0].thumbnail,
+                                               diptychState: data.isEmpty ? .incomplete : data[0].diptychState)
                         }
                     }
                 }
