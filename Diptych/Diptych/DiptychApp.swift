@@ -25,30 +25,30 @@ struct DiptychApp: App {
     
     var body: some Scene {
         WindowGroup {
-
-//            DiptychTabView()
-
-//            DiptychTabView2()
-
             
-            if userViewModel.flow == .initialized {
-                OnBoardingView()
-                    .environmentObject(userViewModel)
-            } else if userViewModel.flow == .signedUp {
-                LoadingVerificationView()
-                    .environmentObject(userViewModel)
-            } else if userViewModel.flow == .emailVerified {
-                CouplingView()
-                    .environmentObject(userViewModel)
-            } else if userViewModel.flow == .coupled {
-                ProfileSettingView()
-                    .environmentObject(userViewModel)
-            } else {
-                DiptychTabView()
-                    .environmentObject(userViewModel)
-            }
+            CellView(VM: AlbumViewModel(), day: 24, isToday: true)
+
+            /// 잠시 주석 처리
+//            if userViewModel.flow == .initialized {
+//                OnBoardingView()
+//                    .environmentObject(userViewModel)
+//            } else if userViewModel.flow == .signedUp {
+//                LoadingVerificationView()
+//                    .environmentObject(userViewModel)
+//            } else if userViewModel.flow == .emailVerified {
+//                CouplingView()
+//                    .environmentObject(userViewModel)
+//            } else if userViewModel.flow == .coupled {
+//                ProfileSettingView()
+//                    .environmentObject(userViewModel)
+//            } else {
+//                DiptychTabView2()
+//                    .environmentObject(userViewModel)
+//            }
             
             
+            
+            /// 원래 주석이었던것
 //            if userViewModel.flow == .completed {
 //                DiptychTabView()
 //            } else {

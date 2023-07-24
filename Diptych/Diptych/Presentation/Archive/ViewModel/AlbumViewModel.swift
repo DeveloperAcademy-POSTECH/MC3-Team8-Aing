@@ -10,80 +10,87 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
-struct DiptychData {
-    let diptychComplete: DiptychComplete
-    let thumbnail: String?
+
+struct Photo2: Identifiable, Codable {
+    let id: String
+    let albumId: String
+    let isCompleted: Bool
+    let thumbnail: String
+    let date: Date
+    let day: Int
+    let month: Int
 }
 
+struct StartDay: Identifiable, Codable {
+    let id: String
+    let date: Date
+    let day: Int
+}
 
 @MainActor
 class AlbumViewModel: ObservableObject {
-
-    @Published var question = "상대방의 표정 중 당신이\n가장 좋아하는 표정은?"
-    @Published var diptychData = [DiptychData]()
-    @Published var isLoading = false
-    @Published var diptychTimeStamp: Int = Int(Date().timeIntervalSince1970)
-    @Published var day : Int = 0
-    @Published var month : Int = 0
-    let db = Firestore.firestore()
-
-        
-    // Firebase Timestamp를 Int로 변환하는 함수
-//     private func convertTimestampToInt(date: Date) -> Int {
-//         let timestamp = Int(date.timeIntervalSince1970)
-//         return timestamp
-//     }
-     
-     // 날짜의 '일' 정보를 Int로 변환하는 함수
-     private func extractDayFromDate(date: Date) -> Int {
-         let calendar = Calendar(identifier: .gregorian)
-         let day = calendar.component(.day, from: date)
-         return day
-     }
-     
-     // 날짜의 '달' 정보를 Int로 변환하는 함수
-     private func extractMonthFromDate(date: Date) -> Int {
-         let calendar = Calendar(identifier: .gregorian)
-         let month = calendar.component(.month, from: date)
-         return month
-     }
     
+    @Published var photos : [Photo2] = []
+    @Published var startDay : [StartDay] = []
     
-    func fetchDiptychCalender() async {
-
-        isLoading = true
-
-        day = extractDayFromDate(date: Date(timeIntervalSince1970: TimeInterval(diptychTimeStamp)))
-        month = extractMonthFromDate(date: Date(timeIntervalSince1970: TimeInterval(diptychTimeStamp)))
-
-        do {
-            let querySnapshot = try await db.collection("photos")
-                .whereField("albumId", isEqualTo: "O6ulZBskeb10JC7DMhXk")
-                .whereField("date", isEqualTo: diptychTimeStamp)
-                .getDocuments()
-
-            for document in querySnapshot.documents {
-                let data = document.data()
-                guard let photoFirst = data["photoFirst"] as? String else { return }
-                guard let photoSecond = data["photoSecond"] as? String else { return }
-                guard let thumbnail = data["thumbnail"] as? String else { return }
-
-                if photoFirst != "" && photoSecond != "" {
-                    await MainActor.run {
-                        diptychData.append(DiptychData(diptychComplete: .complete, thumbnail: thumbnail))
-                    }
-                } else {
-                    await MainActor.run {
-                        diptychData.append(DiptychData(diptychComplete: .incomplete, thumbnail: nil))
-                    }
-                }
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-
-        isLoading = false
+    init(){ 
+        fetchDiptychCalender()
+        fetchStartDate()
     }
     
-   
+    /// 포토 컬렉션 필드 데이터 가져오기
+    func fetchDiptychCalender() {
+        let firestore = Firestore.firestore()
+        
+        firestore.collection("photos")
+            .whereField("albumId", isEqualTo: "albumTest")
+            .getDocuments { querySnapshot, error in
+                guard let documents = querySnapshot?.documents else {
+                    print("Error fetching photos: \(error?.localizedDescription ?? "Unknown error")")
+                    return
+                }
+                
+                self.photos = documents.compactMap { document in
+                    guard let thumbnail = document.data()["thumbnail"] as? String,
+                          let isCompleted = document.data()["isCompleted"] as? Bool,
+                          let timestamp = document.data()["date"] as? Timestamp else {
+                            return nil
+                          }
+                    
+                    let day = timestamp.dateValue().get(.day)
+                    let month = timestamp.dateValue().get(.month)
+                    
+                    return Photo2(id: document.documentID, albumId: "3ZtcHka4I3loqa7Xopc4",
+                                  isCompleted: isCompleted, thumbnail: thumbnail,
+                                  date: timestamp.dateValue(), day: day, month: month)
+                }
+            }//: getDocuments
+    }//: fetchDiptychCalender
+    
+    
+    /// 앨범 생성된 날짜 가져오기
+    func fetchStartDate() {
+        let firestore = Firestore.firestore()
+        
+        firestore.collection("albums")
+            .whereField("id", isEqualTo: "albumTest")
+            .getDocuments { querySnapshot, error in
+                guard let documents = querySnapshot?.documents else {
+                    print("Error fetching photos: \(error?.localizedDescription ?? "Unknown error")")
+                    return
+                }
+                
+                self.startDay = documents.compactMap { document in
+                    guard let timestamp = document.data()["date"] as? Timestamp else {
+                        return nil
+                    }
+                    let day = timestamp.dateValue().get(.day)
+                    
+                    return StartDay(id: document.documentID, date: timestamp.dateValue(), day: day)
+                }
+            }//: getDocument
+    }//: fetchStartDate
+    
+    
+    
 }

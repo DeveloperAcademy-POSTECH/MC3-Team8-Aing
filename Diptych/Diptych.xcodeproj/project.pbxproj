@@ -85,6 +85,9 @@
 		ABFA53B42A5F95E700298F3B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABFA53B32A5F95E700298F3B /* Images.xcassets */; };
 		ABFA53B62A5F95FE00298F3B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABFA53B52A5F95FE00298F3B /* Colors.xcassets */; };
 		ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */; };
+		F316E8C82A6DBA5C003CBD4D /* PhotoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316E8C72A6DBA5C003CBD4D /* PhotoListView.swift */; };
+		F316E8CA2A6DBA98003CBD4D /* PhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316E8C92A6DBA98003CBD4D /* PhotoViewModel.swift */; };
+		F316E8CC2A6DBAD5003CBD4D /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316E8CB2A6DBAD5003CBD4D /* ImageLoader.swift */; };
 		F3263A932A6543F700B4581C /* ArchiveTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A922A6543F700B4581C /* ArchiveTabView.swift */; };
 		F3263A972A65448400B4581C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A962A65448400B4581C /* CalendarView.swift */; };
 		F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A982A6544AA00B4581C /* CalendarScrollView.swift */; };
@@ -92,9 +95,8 @@
 		F3263AA22A667AA200B4581C /* PhotoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AA12A667AA200B4581C /* PhotoDetailView.swift */; };
 		F3263AA62A667D7700B4581C /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AA52A667D7700B4581C /* AlbumModel.swift */; };
 		F3263AA82A667D8300B4581C /* AlbumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AA72A667D8300B4581C /* AlbumViewModel.swift */; };
-		F3263AAC2A66839800B4581C /* JsonDecodeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AAB2A66839800B4581C /* JsonDecodeExtension.swift */; };
 		F3263AB62A691C4400B4581C /* DiptychTabView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AB52A691C4400B4581C /* DiptychTabView2.swift */; };
-		F34057B12A6AECA7009F1CE8 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34057B02A6AECA7009F1CE8 /* CellView.swift */; };
+		F35ADA542A6DA53C00A510E7 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35ADA532A6DA53C00A510E7 /* CellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,6 +172,9 @@
 		ABFA53B32A5F95E700298F3B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		ABFA53B52A5F95FE00298F3B /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalenderView.swift; sourceTree = "<group>"; };
+		F316E8C72A6DBA5C003CBD4D /* PhotoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListView.swift; sourceTree = "<group>"; };
+		F316E8C92A6DBA98003CBD4D /* PhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewModel.swift; sourceTree = "<group>"; };
+		F316E8CB2A6DBAD5003CBD4D /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		F3263A922A6543F700B4581C /* ArchiveTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveTabView.swift; sourceTree = "<group>"; };
 		F3263A962A65448400B4581C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		F3263A982A6544AA00B4581C /* CalendarScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScrollView.swift; sourceTree = "<group>"; };
@@ -177,9 +182,8 @@
 		F3263AA12A667AA200B4581C /* PhotoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailView.swift; sourceTree = "<group>"; };
 		F3263AA52A667D7700B4581C /* AlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
 		F3263AA72A667D8300B4581C /* AlbumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewModel.swift; sourceTree = "<group>"; };
-		F3263AAB2A66839800B4581C /* JsonDecodeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDecodeExtension.swift; sourceTree = "<group>"; };
 		F3263AB52A691C4400B4581C /* DiptychTabView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychTabView2.swift; sourceTree = "<group>"; };
-		F34057B02A6AECA7009F1CE8 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
+		F35ADA532A6DA53C00A510E7 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -423,7 +427,6 @@
 			children = (
 				AB2AC1F42A5F15A100B162E1 /* Color+.swift */,
 				AB2AC2272A5F922F00B162E1 /* Font+.swift */,
-				F3263AAB2A66839800B4581C /* JsonDecodeExtension.swift */,
 				44DE9B8D2A67DC2100E6615B /* UIDevice+.swift */,
 				44DE9B8F2A67DC3B00E6615B /* UIImage+.swift */,
 				98D4A0832A6A625200EB8C94 /* Date+.swift */,
@@ -521,10 +524,21 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		F316E8C62A6DBA41003CBD4D /* AlbumTest */ = {
+			isa = PBXGroup;
+			children = (
+				F316E8C72A6DBA5C003CBD4D /* PhotoListView.swift */,
+				F316E8C92A6DBA98003CBD4D /* PhotoViewModel.swift */,
+				F316E8CB2A6DBAD5003CBD4D /* ImageLoader.swift */,
+			);
+			path = AlbumTest;
+			sourceTree = "<group>";
+		};
 		F3263A942A65441B00B4581C /* CalendarView */ = {
 			isa = PBXGroup;
 			children = (
-				F34057B02A6AECA7009F1CE8 /* CellView.swift */,
+				F316E8C62A6DBA41003CBD4D /* AlbumTest */,
+				F35ADA532A6DA53C00A510E7 /* CellView.swift */,
 				F3263A962A65448400B4581C /* CalendarView.swift */,
 				F3263A982A6544AA00B4581C /* CalendarScrollView.swift */,
 			);
@@ -753,9 +767,10 @@
 				445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */,
 				F3263AA62A667D7700B4581C /* AlbumModel.swift in Sources */,
 				AB2AC2232A5F8E8700B162E1 /* PretendardType.swift in Sources */,
-				F3263AAC2A66839800B4581C /* JsonDecodeExtension.swift in Sources */,
+				F316E8C82A6DBA5C003CBD4D /* PhotoListView.swift in Sources */,
 				989DFFE52A5FDC4B00EBBC12 /* OnBoardingView.swift in Sources */,
 				AB96A0AB2A66E4DF004C01FF /* TodayDiptychViewModel.swift in Sources */,
+				F35ADA542A6DA53C00A510E7 /* CellView.swift in Sources */,
 				989B44942A65752100D99439 /* CouplingView.swift in Sources */,
 				98A8E82B2A691938005DF658 /* UserViewModel.swift in Sources */,
 				987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */,
@@ -769,9 +784,11 @@
 				989B449C2A66845400D99439 /* CouplingViewModel.swift in Sources */,
 				44DE9B902A67DC3B00E6615B /* UIImage+.swift in Sources */,
 				AB2AC1ED2A5F093B00B162E1 /* TodayDiptychView.swift in Sources */,
+				F316E8CA2A6DBA98003CBD4D /* PhotoViewModel.swift in Sources */,
 				985DBC202A6A40AD006C64FC /* LogInFlowView.swift in Sources */,
 				989DFFE02A5FD75A00EBBC12 /* SignUpView.swift in Sources */,
 				984614472A67A72E0043EAE9 /* TestView.swift in Sources */,
+				F316E8CC2A6DBAD5003CBD4D /* ImageLoader.swift in Sources */,
 				ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */,
 				AB2AC1F52A5F15A100B162E1 /* Color+.swift in Sources */,
 				985DBC1E2A699DAA006C64FC /* LoadingVerificationView.swift in Sources */,

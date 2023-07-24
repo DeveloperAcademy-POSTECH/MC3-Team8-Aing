@@ -12,7 +12,7 @@ import SwiftUI
 struct CalendarView: View {
     
     ///Property
-    @StateObject private var VM = AlbumViewModel()
+//    @StateObject var VM = AlbumViewModel()
     @State var date: Date
     let changeMonthInt : Int
     
@@ -68,39 +68,26 @@ struct CalendarView: View {
             /// [3] Day
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7),spacing: 0) {
                 ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
-                    
-//                    /// 로딩중
-//                    if VM.isLoading {
-//                        Text("로딩 중..")
-//                    }
+
                     /// 빈칸 표시
                     if index < firstWeekday {
                         Color.clear
                     }
                     /// 날짜 표시
                     else {
-                        CellView(date: index - firstWeekday + 1,
+                        CellView(day: index - firstWeekday + 1,
                                  isToday: index - firstWeekday + 1
                                     == Calendar.current.component(.day, from: Date())
-                                 && changeMonthInt == 0,
-                                 day: $VM.day, month: $VM.month,
-                                 diptychComplete: VM.diptychData[index].diptychComplete
+                                 && changeMonthInt == 0
                         )
                     }
-                    
                 }//: Loop
-                    
-                
             }//: LazyGrid
             .padding(.horizontal,15)
             .padding(.bottom, 51)
            
         }//】 VStack
         .padding(.top,10)
-        
-        
-        
-        
     }//: oneMonthCalendarView
 
 }
