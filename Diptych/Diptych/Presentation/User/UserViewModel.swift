@@ -295,7 +295,7 @@ extension UserViewModel {
         }
     }
     
-    func addCoupleAlbumData() async throws {
+    func addCoupleAlbumData(startDate: Date) async throws {
         do {
             print("[DEBUG] addCoupleAlbumData start!!!")
             // Add a new document with a generated id.
@@ -324,6 +324,7 @@ extension UserViewModel {
             var encodedData = try Firestore.Encoder().encode(data)
             ref = try await Firestore.firestore().collection("albums").addDocument(data: encodedData)
             data.id = ref!.documentID
+            data.startDate = startDate
             encodedData = try Firestore.Encoder().encode(data)
             try await ref?.setData(encodedData, merge: true)
             self.coupleAlbum = data
@@ -340,7 +341,7 @@ extension UserViewModel {
             if var currentUser = self.currentUser, var lover = self.lover {
                 currentUser.name = name
                 currentUser.startDate = startDate
-                try await addCoupleAlbumData()
+                try await addCoupleAlbumData(startDate: startDate)
                 let coupleAlbumId = self.coupleAlbum?.id
                 print("[DEBUG] check!!!! coupleAlbumId: \(coupleAlbumId)")
                 currentUser.coupleAlbumId = coupleAlbumId
@@ -360,7 +361,7 @@ extension UserViewModel {
     private func wait() async {
         do {
             print("Wait")
-            try await Task.sleep(nanoseconds: 2_000_000_000)
+            try await Task.sleep(nanoseconds: 1_000_000_000)
             print("Done")
         }
         catch {
