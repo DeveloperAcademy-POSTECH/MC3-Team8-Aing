@@ -32,6 +32,7 @@ class UserViewModel: ObservableObject {
     
     @Published var couplingCode: String?
     @Published var lover: DiptychUser?
+    @Published var coupleAlbum: DiptychAlbum?
     @Published var isCompleted: Bool = false
     
     var listenerAboutAuth: AuthStateDidChangeListenerHandle?
@@ -300,15 +301,61 @@ extension UserViewModel {
         }
     }
     
+    func addCoupleAlbumData() async throws {
+        do {
+            print("[DEBUG] addCoupleAlbumData start!!!")
+            // Add a new document with a generated id.
+            var data = DiptychAlbum(id: "")
+            var ref: DocumentReference? = nil
+//            ref = try Firestore.firestore().collection("albums").addDocument(from: data) { err in
+//                if let err = err {
+//                    print("Error adding document: \(err)")
+//                } else {
+//                    data.id = ref!.documentID
+//                    // 업데이트된 데이터를 Firestore에 다시 저장
+////                    let encodedCoupleAlbum = try Firestore.Encoder().encode(data)
+////                    try await Firestore.firestore().collection("albums").document(data.id).setData(encodedCoupleAlbum, merge: true)
+//                    try? ref!.setData(from: data) { error in
+//                        if let error = error {
+//                            print(error.localizedDescription)
+//                        } else {
+//                            self.coupleAlbum = data
+//                            if let coupleAlbum = self.coupleAlbum {
+//                                print("Document added with ID: \(coupleAlbum.id)")
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+            var encodedData = try Firestore.Encoder().encode(data)
+            ref = try await Firestore.firestore().collection("albums").addDocument(data: encodedData)
+            data.id = ref!.documentID
+            encodedData = try Firestore.Encoder().encode(data)
+            try await ref?.setData(encodedData, merge: true)
+            self.coupleAlbum = data
+            if let coupleAlbum = self.coupleAlbum {
+                print("Document added with ID: \(coupleAlbum.id)")
+            }
+//            print(data.id)
+        }
+    }
+    
     func setProfileData(name: String, startDate: Date) async throws {
         do {
             print("[DEBUG] setProfileDate -> name: \(name), startDate: \(startDate)")
-            if var currentUser = self.currentUser {
+            if var currentUser = self.currentUser, var lover = self.lover {
                 currentUser.name = name
                 currentUser.startDate = startDate
+                try await addCoupleAlbumData()
+                let coupleAlbumId = self.coupleAlbum?.id
+                print("[DEBUG] check!!!! coupleAlbumId: \(coupleAlbumId)")
+                currentUser.coupleAlbumId = coupleAlbumId
+                lover.coupleAlbumId = coupleAlbumId
                 currentUser.flow = "completed"
                 let encodedCurrentUser = try Firestore.Encoder().encode(currentUser)
+                let encodedLover = try Firestore.Encoder().encode(lover)
                 try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedCurrentUser, merge: true)
+                try await Firestore.firestore().collection("users").document(lover.id).setData(encodedLover, merge: true)
             }
         }
         catch {

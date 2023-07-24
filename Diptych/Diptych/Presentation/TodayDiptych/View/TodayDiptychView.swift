@@ -51,11 +51,26 @@ struct TodayDiptychView: View {
                             .fill(Color.offBlack)
                         Rectangle()
                             .fill(Color.offWhite)
+                            .overlay {
+                                Image("imgDiptychCamera")
+                                    .onTapGesture {
+                                        // print("카메라뷰")
+                                        isShowCamera = true
+                                    }
+                            }
                     case false:
                         Rectangle()
                             .fill(Color.offBlack)
                         Rectangle()
                             .fill(Color.offWhite)
+                            .overlay {
+                                Image("imgDiptychCamera")
+                                    .onTapGesture {
+                                        // print("카메라뷰")
+                                        isShowCamera = true
+                                    }
+                            }
+
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -99,7 +114,7 @@ struct TodayDiptychView: View {
             viewModel.weeklyData.removeAll()
         }
         .fullScreenCover(isPresented: $isShowCamera) {
-            CameraRepresentableView()
+            CameraRepresentableView(viewModel: viewModel)
                  .toolbar(.hidden, for: .tabBar)
         }
     }
