@@ -67,9 +67,11 @@ class CameraViewController: UIViewController {
     // MARK: - Constants
     let RESIZE_WIDTH: CGFloat = 2048
     let JPEG_COMPRESSION_QUALITY: CGFloat = 1.0
+    let THUMB_COMPRESSION_QUALITY: CGFloat = 0.9
     
     // MARK: - Vars
     var viewModel: TodayDiptychViewModel?
+    var imageCacheViewModel: ImageCacheViewModel?
     
     var previewLayer: AVCaptureVideoPreviewLayer!
     var captureSession: AVCaptureSession!
@@ -167,6 +169,12 @@ class CameraViewController: UIViewController {
             print(viewModel.currentUser?.id,
                   viewModel.todayPhoto)
         }
+        
+        guard let imageCacheViewModel else {
+            return
+        }
+        
+        print("CameraViewController:", imageCacheViewModel.firstImage, imageCacheViewModel.secondImage)
     }
     
     // MARK: - IBActions
@@ -498,16 +506,16 @@ class CameraViewController: UIViewController {
         let url = try await FirebaseManager.shared.upload(data: data!, withName: "test_\(UUID().uuidString)")
         print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
         
-        print("섬네일 업로드 시작....")
-        let thumbURL = try await FirebaseManager.shared.upload(data: thumbData!, withName: "test_thumbnail_\(Date())")
-        print("섬네일 업로드 끝:", thumbURL?.absoluteString ?? "unknown URL")
+        // print("섬네일 업로드 시작....")
+        // let thumbURL = try await FirebaseManager.shared.upload(data: thumbData!, withName: "test_thumbnail_\(Date())")
+        // print("섬네일 업로드 끝:", thumbURL?.absoluteString ?? "unknown URL")
         
-        guard let url, let thumbURL else {
+        guard let url else {
             print("url이 존재하지 않습니다.")
             return
         }
         
-        var dictionary: [String: Any]!
+        
         guard let todayPhoto = viewModel?.todayPhoto else {
             print("todayPhoto is nil.")
             return
@@ -516,10 +524,29 @@ class CameraViewController: UIViewController {
         print("todayPhoto!:", todayPhoto.photoFirst, todayPhoto.photoSecond, isFirst, todayPhoto.photoSecond.isEmpty,  todayPhoto.photoFirst.isEmpty)
         
         // TODO: - thumbnail은 isComplete가 true될 경우에만
-        dictionary = [
-            "thumbnail": thumbURL.absoluteString,
-            "isCompleted": isFirst ? !todayPhoto.photoSecond.isEmpty : !todayPhoto.photoFirst.isEmpty,
+        let isCompleted = isFirst ? !todayPhoto.photoSecond.isEmpty : !todayPhoto.photoFirst.isEmpty
+        var dictionary: [String: Any] = [
+            "isCompleted": isCompleted,
         ]
+        
+        if isCompleted {
+            var uploadThumb: Data!
+            if isFirst, let halfThumb = imageCacheViewModel?.firstImage {
+                // second 섬네일이랑 합쳐야 됨
+                uploadThumb = halfThumb.jpegData(compressionQuality: 0.9)
+            } else if let halfThumb = imageCacheViewModel?.secondImage {
+                // first 섬네일이랑 합쳐야 됨
+                uploadThumb = halfThumb.jpegData(compressionQuality: 0.9)
+            }
+            
+            print("섬네일 업로드 시작....")
+            let thumbURL = try await FirebaseManager.shared.upload(data: uploadThumb!, withName: "test_thumbnail_\(Date())")
+            dictionary["thumbnail"] = thumbURL?.absoluteString
+            print("섬네일 업로드 끝")
+        }
+        
+        
+        
         
         let photoKey = isFirst ? "photoFirst" : "photoSecond"
         dictionary[photoKey] = url.absoluteString
