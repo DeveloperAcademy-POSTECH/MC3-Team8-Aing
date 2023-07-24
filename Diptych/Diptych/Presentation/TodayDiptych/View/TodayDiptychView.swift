@@ -45,7 +45,7 @@ struct TodayDiptychView: View {
             viewModel.weeklyData.removeAll()
         }
         .fullScreenCover(isPresented: $isShowCamera) {
-            CameraRepresentableView()
+            CameraRepresentableView(viewModel: viewModel)
                  .toolbar(.hidden, for: .tabBar)
         }
     }
