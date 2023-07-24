@@ -18,7 +18,6 @@ struct TodayDiptychView: View {
     @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
     
     @StateObject private var viewModel = TodayDiptychViewModel()
-    @State private var mondayDate = 0
     @State private var isAllTasksCompleted = false
     let days = ["월", "화", "수", "목", "금", "토", "일"]
 
@@ -32,8 +31,6 @@ struct TodayDiptychView: View {
         }
         .ignoresSafeArea(edges: .top)
         .onAppear {
-            mondayDate = viewModel.calculateThisWeekMondayDate()
-            
             Task {
                 await viewModel.fetchUser()
                 await viewModel.setUserCameraLoactionState()
@@ -167,8 +164,10 @@ struct TodayDiptychView: View {
                     if viewModel.isLoading {
                         ProgressView()
                     } else {
+                        let weeklyDates = viewModel.setWeeklyDates()
+                        
                         ForEach(0..<7) { index in
-                            let date = setCalendarDate(mondayDate, index: index)
+                            let date = weeklyDates[index]
                             let data = viewModel.weeklyData.filter { $0.date == date }
                             let formattedDate = String(format: "%02d", date)
                             let isToday = date == viewModel.setTodayDate()
@@ -182,22 +181,6 @@ struct TodayDiptychView: View {
                 }
             }
         }
-    }
-}
-
-extension TodayDiptychView {
-
-    func setCalendarDate(_ mondayDate: Int, index: Int) -> Int {
-        var date: Int
-        switch mondayDate {
-        case 30:
-            date = index > 0 ? mondayDate + index - 30 : mondayDate + index
-        case 31:
-            date = index > 0 ? mondayDate + index - 31 : mondayDate + index
-        default:
-            date = mondayDate + index
-        }
-        return date
     }
 }
 

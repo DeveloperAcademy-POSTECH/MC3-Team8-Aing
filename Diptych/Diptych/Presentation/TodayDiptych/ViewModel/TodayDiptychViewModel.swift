@@ -184,11 +184,10 @@ final class TodayDiptychViewModel: ObservableObject {
 
     // MARK: - Custom Methods
 
-    func calculateThisWeekMondayDate() -> Int {
+    func calculateThisMondayDate() -> Date {
         let (todayDate, calendar, daysAfterMonday) = setTodayCalendar()
-        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return 0 }
-        let day = calendar.component(.day, from: thisMonday)
-        return day
+        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return Date() }
+        return thisMonday
     }
 
     func calculateThisMondayTimestamp() -> Timestamp {
@@ -219,5 +218,16 @@ final class TodayDiptychViewModel: ObservableObject {
         let daysAfterMonday = (currentWeekday + 5) % 7
 
         return (todayDate, calendar, daysAfterMonday)
+    }
+
+    func setWeeklyDates() -> [Int] {
+        let calendar = Calendar.current
+        let weekday = calendar.component(.weekday, from: calculateThisMondayDate())
+        let daysToAdd = (2...8).map { $0 - weekday }
+        let weeklyDates = daysToAdd.map { calendar.date(byAdding: .day,
+                                                        value: $0,
+                                                        to: calculateThisMondayDate())! }
+                                    .map { calendar.component(.day, from: $0) }
+        return weeklyDates
     }
 }
