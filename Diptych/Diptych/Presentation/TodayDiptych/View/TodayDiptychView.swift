@@ -10,8 +10,8 @@ import FirebaseStorage
 
 struct TodayDiptychView: View {
 
-    // TODO: - 섬네일 사이즈 ? (일단 200 * 200)
-    let thumbSize: CGSize = .init(width: 100, height: 200)
+    // TODO: - 섬네일 사이즈 ? (일단 200 * 200), 가로세로 여부도 고려..
+    let thumbSize: CGSize = .init(width: 2 / THUMB_SIZE, height: THUMB_SIZE)
     @State var isShowCamera = false
     @State private var firstUIImage: UIImage?
     @State private var secondUIImage: UIImage?
@@ -105,7 +105,6 @@ struct TodayDiptychView: View {
                                 }.onAppear {
                                     
                                     imageCacheViewModel.firstImage = image.getUIImage(newSize: thumbSize)
-                                    print("firstImage 할당:", imageCacheViewModel.firstImage)
                                 }
                         case .failure:
                             Rectangle()
@@ -140,7 +139,6 @@ struct TodayDiptychView: View {
                                 }
                                 .onAppear {
                                     imageCacheViewModel.secondImage = image.getUIImage(newSize: thumbSize)
-                                    print("secondImage 할당:", imageCacheViewModel.secondImage)
                                 }
                         case .failure:
                             Rectangle()

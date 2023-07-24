@@ -66,8 +66,6 @@ class CameraViewController: UIViewController {
     
     // MARK: - Constants
     let RESIZE_WIDTH: CGFloat = 2048
-    let JPEG_COMPRESSION_QUALITY: CGFloat = 1.0
-    let THUMB_COMPRESSION_QUALITY: CGFloat = 0.9
     
     // MARK: - Vars
     var viewModel: TodayDiptychViewModel?
@@ -165,16 +163,11 @@ class CameraViewController: UIViewController {
         DispatchQueue.main.async { [unowned self] in
             print("isFirst?", viewModel.isFirst)
             currentAxis = viewModel.isFirst ? .verticalLeft : .verticalRight
-            
-            print(viewModel.currentUser?.id,
-                  viewModel.todayPhoto)
         }
         
         guard let imageCacheViewModel else {
             return
         }
-        
-        print("CameraViewController:", imageCacheViewModel.firstImage, imageCacheViewModel.secondImage)
     }
     
     // MARK: - IBActions
@@ -494,8 +487,10 @@ class CameraViewController: UIViewController {
           -
          */
         
+        // 반으로 된 사진 데이터
         let data = uiImage.jpegData(compressionQuality: JPEG_COMPRESSION_QUALITY)
-        let thumbData = uiImage.resize(width: 400, height: 400).jpegData(compressionQuality: 0.8)
+        // TODO: - 가로 가이드라인일때는?
+        let thumbnail = uiImage.resize(width: THUMB_SIZE / 2, height: THUMB_SIZE)
         
         guard let isFirst = viewModel?.currentUser?.isFirst else {
             return
@@ -530,23 +525,17 @@ class CameraViewController: UIViewController {
         ]
         
         if isCompleted {
-            var uploadThumb: Data!
-            if isFirst, let halfThumb = imageCacheViewModel?.firstImage {
-                // second 섬네일이랑 합쳐야 됨
-                uploadThumb = halfThumb.jpegData(compressionQuality: 0.9)
-            } else if let halfThumb = imageCacheViewModel?.secondImage {
-                // first 섬네일이랑 합쳐야 됨
-                uploadThumb = halfThumb.jpegData(compressionQuality: 0.9)
+            if let halfAnotherThumb = imageCacheViewModel?.firstImage ?? imageCacheViewModel?.secondImage,
+               let mergedThumb = thumbnail.merge(with: halfAnotherThumb, division: currentAxis),
+               let uploadThumb = mergedThumb.jpegData(compressionQuality: THUMB_COMPRESSION_QUALITY) {
+                print("섬네일 업로드 시작....")
+                let thumbURL = try await FirebaseManager.shared.upload(data: uploadThumb, withName: "test_thumbnail_\(Date())")
+                dictionary["thumbnail"] = thumbURL?.absoluteString
+                print("섬네일 업로드 끝")
+            } else {
+                print("섬네일 생성 실패:")
             }
-            
-            print("섬네일 업로드 시작....")
-            let thumbURL = try await FirebaseManager.shared.upload(data: uploadThumb!, withName: "test_thumbnail_\(Date())")
-            dictionary["thumbnail"] = thumbURL?.absoluteString
-            print("섬네일 업로드 끝")
         }
-        
-        
-        
         
         let photoKey = isFirst ? "photoFirst" : "photoSecond"
         dictionary[photoKey] = url.absoluteString
