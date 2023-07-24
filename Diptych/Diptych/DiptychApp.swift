@@ -18,9 +18,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct DiptychApp: App {
+    @State var isSplashCompleted: Bool = false
+    
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-//    @StateObject var authViewModel: AuthenticationViewModel = AuthenticationViewModel()
     @StateObject var userViewModel: UserViewModel = UserViewModel()
     
     var body: some Scene {
@@ -30,23 +31,45 @@ struct DiptychApp: App {
 
 //            DiptychTabView2()
 
-            
-            if userViewModel.flow == .initialized {
-                OnBoardingView()
-                    .environmentObject(userViewModel)
-            } else if userViewModel.flow == .signedUp {
-                LoadingVerificationView()
-                    .environmentObject(userViewModel)
-            } else if userViewModel.flow == .emailVerified {
-                CouplingView()
-                    .environmentObject(userViewModel)
-            } else if userViewModel.flow == .coupled {
-                ProfileSettingView()
-                    .environmentObject(userViewModel)
+            if isSplashCompleted {
+                if userViewModel.flow == .initialized {
+                    OnBoardingView()
+                        .environmentObject(userViewModel)
+                } else if userViewModel.flow == .signedUp {
+                    LoadingVerificationView()
+                        .environmentObject(userViewModel)
+                } else if userViewModel.flow == .emailVerified {
+                    CouplingView()
+                        .environmentObject(userViewModel)
+                } else if userViewModel.flow == .coupled {
+                    ProfileSettingView()
+                        .environmentObject(userViewModel)
+                } else {
+                    DiptychTabView()
+                        .environmentObject(userViewModel)
+                }
             } else {
-                DiptychTabView()
-                    .environmentObject(userViewModel)
+                LottieView() { isSplashCompleted in
+                    self.isSplashCompleted = true
+                }
             }
+            
+//            if userViewModel.flow == .initialized {
+//                OnBoardingView()
+//                    .environmentObject(userViewModel)
+//            } else if userViewModel.flow == .signedUp {
+//                LoadingVerificationView()
+//                    .environmentObject(userViewModel)
+//            } else if userViewModel.flow == .emailVerified {
+//                CouplingView()
+//                    .environmentObject(userViewModel)
+//            } else if userViewModel.flow == .coupled {
+//                ProfileSettingView()
+//                    .environmentObject(userViewModel)
+//            } else {
+//                DiptychTabView()
+//                    .environmentObject(userViewModel)
+//            }
             
             
 //            if userViewModel.flow == .completed {

@@ -34,6 +34,9 @@
 		98A8E82B2A691938005DF658 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A8E82A2A691938005DF658 /* UserViewModel.swift */; };
 		98D4A0842A6A625200EB8C94 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4A0832A6A625200EB8C94 /* Date+.swift */; };
 		98D4A0862A6E3E7D00EB8C94 /* DiptychAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */; };
+		98D4A0892A6E6AAB00EB8C94 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 98D4A0882A6E6AAB00EB8C94 /* Lottie */; };
+		98D4A08B2A6E6E1E00EB8C94 /* DiptychSplashLogo.json in Resources */ = {isa = PBXBuildFile; fileRef = 98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */; };
+		98D4A08D2A6E6EF100EB8C94 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */; };
 		AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */; };
 		AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */; };
 		AB2A9EA82A5EC46200D70C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */; };
@@ -137,6 +140,8 @@
 		98A8E82A2A691938005DF658 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		98D4A0832A6A625200EB8C94 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychAlbum.swift; sourceTree = "<group>"; };
+		98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DiptychSplashLogo.json; sourceTree = "<group>"; };
+		98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		AB2A9EA02A5EC46100D70C33 /* Diptych.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diptych.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychApp.swift; sourceTree = "<group>"; };
 		AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychTabView.swift; sourceTree = "<group>"; };
@@ -188,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				989DFFD82A5FD1AD00EBBC12 /* FirebaseDatabase in Frameworks */,
+				98D4A0892A6E6AAB00EB8C94 /* Lottie in Frameworks */,
 				989DFFDA2A5FD1AD00EBBC12 /* FirebaseFirestore in Frameworks */,
 				989DFFD42A5FD1AD00EBBC12 /* FirebaseAnalytics in Frameworks */,
 				989DFFDC2A5FD1AD00EBBC12 /* FirebaseStorage in Frameworks */,
@@ -281,6 +287,7 @@
 		AB2A9EA22A5EC46100D70C33 /* Diptych */ = {
 			isa = PBXGroup;
 			children = (
+				98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */,
 				989B44982A659F1A00D99439 /* Model */,
 				987E425F2A627A2B00C682D9 /* Diptych.entitlements */,
 				ABFD3E7C2A5ED26E008678D0 /* Global */,
@@ -289,6 +296,7 @@
 				ABFD3E822A5EDA35008678D0 /* Presentation */,
 				AB2AC21C2A5F28DB00B162E1 /* Util */,
 				AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */,
+				98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */,
 				AB2A9EA92A5EC46200D70C33 /* Preview Content */,
 				AB2AC21B2A5F282A00B162E1 /* Info.plist */,
 			);
@@ -486,7 +494,6 @@
 			children = (
 				989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */,
 				987E425B2A5FE17F00C682D9 /* LogInView.swift */,
-				9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */,
 				985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */,
 			);
 			path = Auth;
@@ -496,6 +503,7 @@
 			isa = PBXGroup;
 			children = (
 				989B44932A65752100D99439 /* CouplingView.swift */,
+				9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */,
 			);
 			path = Matching;
 			sourceTree = "<group>";
@@ -603,6 +611,7 @@
 				989DFFD92A5FD1AD00EBBC12 /* FirebaseFirestore */,
 				989DFFDB2A5FD1AD00EBBC12 /* FirebaseStorage */,
 				989B44962A65977200D99439 /* FirebaseFirestoreSwift */,
+				98D4A0882A6E6AAB00EB8C94 /* Lottie */,
 			);
 			productName = Diptych;
 			productReference = AB2A9EA02A5EC46100D70C33 /* Diptych.app */;
@@ -678,6 +687,7 @@
 			mainGroup = AB2A9E972A5EC46100D70C33;
 			packageReferences = (
 				989DFFD22A5FD1AD00EBBC12 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				98D4A0872A6E6AAB00EB8C94 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = AB2A9EA12A5EC46100D70C33 /* Products */;
 			projectDirPath = "";
@@ -710,6 +720,7 @@
 				AB2AC2002A5F280000B162E1 /* Pretendard-ExtraBold.otf in Resources */,
 				ABFA53B42A5F95E700298F3B /* Images.xcassets in Resources */,
 				AB2AC2182A5F280000B162E1 /* Pretendard-ExtraLight.otf in Resources */,
+				98D4A08B2A6E6E1E00EB8C94 /* DiptychSplashLogo.json in Resources */,
 				989DFFDE2A5FD65F00EBBC12 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -794,6 +805,7 @@
 				989B449A2A65BB9200D99439 /* DiptychUser.swift in Sources */,
 				ABCB300F2A6D368D007724DC /* WeeklyData.swift in Sources */,
 				F3263AA22A667AA200B4581C /* PhotoDetailView.swift in Sources */,
+				98D4A08D2A6E6EF100EB8C94 /* LottieView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1146,6 +1158,14 @@
 				kind = branch;
 			};
 		};
+		98D4A0872A6E6AAB00EB8C94 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1178,6 +1198,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 989DFFD22A5FD1AD00EBBC12 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		98D4A0882A6E6AAB00EB8C94 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98D4A0872A6E6AAB00EB8C94 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

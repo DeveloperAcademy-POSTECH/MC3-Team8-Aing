@@ -10,13 +10,6 @@ import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-//extension UserViewModel {
-//    @Published var isLogInLinkActive = false
-//    @Published var isSignUpLinkActive = false
-//    @Published var isEmailVerificationLinkActive = false
-//    @Published var isProfileSettingLinkActive = false
-//}
-
 enum UserFlow: String {
     case initialized = "initialized"
     case signedUp = "signedUp"
@@ -51,7 +44,7 @@ class UserViewModel: ObservableObject {
         }
     }
     
-    // MARK : Singing, Authentication
+    //MARK: - Singing, Authentication
     func signInWithEmailPassword(email: String, password: String) async throws {
         do {
             print("[DEBUG] signInWithEmailPassword -> email: \(email), password: \(password)")
@@ -190,7 +183,6 @@ class UserViewModel: ObservableObject {
             self.currentUser = currentUser
             self.flow = UserFlow(rawValue: currentUser.flow) ?? .initialized
         }
-        
     }
     
     func fetchLoverData() async {
@@ -200,6 +192,16 @@ class UserViewModel: ObservableObject {
         if let lover = try? snapshot.data(as: DiptychUser.self) {
             self.lover = lover
             print("DEBUG: fetchLoverData Done")
+        }
+    }
+    
+    func fetchCoupleAlbumData() async {
+        print("DEBUG : fetchCoupleAlbumData self.coupleAlbum : \(self.coupleAlbum)")
+        guard let uid = self.currentUser?.coupleAlbumId else { return }
+        guard let snapshot = try? await Firestore.firestore().collection("albums").document(uid).getDocument() else { return }
+        if let coupleAlbum = try? snapshot.data(as: DiptychAlbum.self) {
+            self.coupleAlbum = coupleAlbum
+            print("DEBUG: fetchCoupleAlbum Done")
         }
     }
     
@@ -216,7 +218,7 @@ class UserViewModel: ObservableObject {
     }
 }
 
-// MARK : Coupling
+//MARK: - Coupling
 extension UserViewModel {
     func generatedCouplingCode() async throws {
         do {
@@ -341,11 +343,13 @@ extension UserViewModel {
             if var currentUser = self.currentUser, var lover = self.lover {
                 currentUser.name = name
                 currentUser.startDate = startDate
-                try await addCoupleAlbumData(startDate: startDate)
-                let coupleAlbumId = self.coupleAlbum?.id
-                print("[DEBUG] check!!!! coupleAlbumId: \(coupleAlbumId)")
-                currentUser.coupleAlbumId = coupleAlbumId
-                lover.coupleAlbumId = coupleAlbumId
+                await fetchCoupleAlbumData()
+                if let coupleAlbum = self.coupleAlbum {
+                    try await addCoupleAlbumData(startDate: startDate)
+                    print("[DEBUG] check!!!! coupleAlbumId: \(coupleAlbum.id)")
+                    currentUser.coupleAlbumId = coupleAlbum.id
+                    lover.coupleAlbumId = coupleAlbum.id
+                }
                 currentUser.flow = "completed"
                 let encodedCurrentUser = try Firestore.Encoder().encode(currentUser)
                 let encodedLover = try Firestore.Encoder().encode(lover)
