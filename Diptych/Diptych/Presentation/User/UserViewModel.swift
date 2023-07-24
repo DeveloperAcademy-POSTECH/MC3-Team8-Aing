@@ -38,15 +38,9 @@ class UserViewModel: ObservableObject {
     var listenerAboutAuth: AuthStateDidChangeListenerHandle?
     var listenerAboutUserData: ListenerRegistration?
     
-    //    @Published var isEmailVerified: Bool = false
-    
     init() {
-        //        self.userSession = Auth.auth().currentUser //currentUser가 없으면 nil이 할당
         Task {
             await fetchUserData()
-//            if let currentUser = self.currentUser {
-//                self.flow = UserFlow(rawValue: currentUser.flow) ?? .initialized
-//            }
             print("[DEBUG] currentUser : \(self.currentUser) /// flow : \(self.flow)")
             listenerAboutUserData = Firestore.firestore().collection("users").addSnapshotListener() { snapshot, error in
                 Task{
