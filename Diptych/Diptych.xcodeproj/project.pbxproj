@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A47AE2A5FD6B6005573DC /* AlbumListView.swift */; };
 		445A47B12A5FE3DE005573DC /* AlbumNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A47B02A5FE3DE005573DC /* AlbumNavigationView.swift */; };
+		44671A212A6BE3D000C9C99A /* FirebaseMananger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44671A202A6BE3D000C9C99A /* FirebaseMananger.swift */; };
+		4498B2362A6D37E00069F54A /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4498B2352A6D37E00069F54A /* CameraViewModel.swift */; };
 		44DE9B8E2A67DC2100E6615B /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B8D2A67DC2100E6615B /* UIDevice+.swift */; };
 		44DE9B902A67DC3B00E6615B /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B8F2A67DC3B00E6615B /* UIImage+.swift */; };
 		44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */; };
@@ -117,6 +119,8 @@
 /* Begin PBXFileReference section */
 		445A47AE2A5FD6B6005573DC /* AlbumListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListView.swift; sourceTree = "<group>"; };
 		445A47B02A5FE3DE005573DC /* AlbumNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumNavigationView.swift; sourceTree = "<group>"; };
+		44671A202A6BE3D000C9C99A /* FirebaseMananger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMananger.swift; sourceTree = "<group>"; };
+		4498B2352A6D37E00069F54A /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
 		44DE9B8D2A67DC2100E6615B /* UIDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
 		44DE9B8F2A67DC3B00E6615B /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRepresentableView.swift; sourceTree = "<group>"; };
@@ -370,6 +374,7 @@
 			children = (
 				AB2AC21D2A5F28E900B162E1 /* NameSpace */,
 				44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */,
+				44671A202A6BE3D000C9C99A /* FirebaseMananger.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -386,6 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */,
+				4498B2352A6D37E00069F54A /* CameraViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -763,6 +769,7 @@
 				44DE9B8E2A67DC2100E6615B /* UIDevice+.swift in Sources */,
 				44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */,
 				AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */,
+				4498B2362A6D37E00069F54A /* CameraViewModel.swift in Sources */,
 				984614492A67B7D60043EAE9 /* TestViewModel.swift in Sources */,
 				9846144B2A69075E0043EAE9 /* ProfileSettingView.swift in Sources */,
 				AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */,
@@ -772,6 +779,7 @@
 				AB2AC1ED2A5F093B00B162E1 /* TodayDiptychView.swift in Sources */,
 				985DBC202A6A40AD006C64FC /* LogInFlowView.swift in Sources */,
 				989DFFE02A5FD75A00EBBC12 /* SignUpView.swift in Sources */,
+				44671A212A6BE3D000C9C99A /* FirebaseMananger.swift in Sources */,
 				984614472A67A72E0043EAE9 /* TestView.swift in Sources */,
 				ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */,
 				AB2AC1F52A5F15A100B162E1 /* Color+.swift in Sources */,
