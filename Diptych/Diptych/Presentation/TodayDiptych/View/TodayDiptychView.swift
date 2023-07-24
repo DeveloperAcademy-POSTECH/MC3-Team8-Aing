@@ -82,7 +82,7 @@ struct TodayDiptychView: View {
                         .foregroundColor(.offBlack)
                         .padding(.top, 12)
                         .padding(.leading, 15)
-                        .padding(.bottom, 34)
+                        .padding(.bottom, 35)
                     Spacer()
                 }
 
@@ -158,7 +158,7 @@ struct TodayDiptychView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .aspectRatio(1.0, contentMode: .fit)
-                .padding(.bottom, 23)
+                .padding(.bottom, 20)
 
                 HStack(spacing: 9) {
                     if viewModel.isLoading {
