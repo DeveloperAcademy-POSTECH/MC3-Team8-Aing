@@ -40,6 +40,7 @@
 		98A8E82B2A691938005DF658 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A8E82A2A691938005DF658 /* UserViewModel.swift */; };
 		98A8E82D2A69906B005DF658 /* SignUpFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A8E82C2A69906B005DF658 /* SignUpFlowView.swift */; };
 		98D4A0842A6A625200EB8C94 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4A0832A6A625200EB8C94 /* Date+.swift */; };
+		98D4A0862A6E3E7D00EB8C94 /* DiptychAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */; };
 		AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */; };
 		AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */; };
 		AB2A9EA82A5EC46200D70C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */; };
@@ -145,6 +146,7 @@
 		98A8E82A2A691938005DF658 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		98A8E82C2A69906B005DF658 /* SignUpFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFlowView.swift; sourceTree = "<group>"; };
 		98D4A0832A6A625200EB8C94 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychAlbum.swift; sourceTree = "<group>"; };
 		AB2A9EA02A5EC46100D70C33 /* Diptych.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diptych.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychApp.swift; sourceTree = "<group>"; };
 		AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychTabView.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				989B44992A65BB9200D99439 /* DiptychUser.swift */,
+				98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -756,6 +759,7 @@
 				F3263AB62A691C4400B4581C /* DiptychTabView2.swift in Sources */,
 				F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */,
 				445A47B12A5FE3DE005573DC /* AlbumNavigationView.swift in Sources */,
+				98D4A0862A6E3E7D00EB8C94 /* DiptychAlbum.swift in Sources */,
 				F3263AA82A667D8300B4581C /* AlbumViewModel.swift in Sources */,
 				445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */,
 				F3263AA62A667D7700B4581C /* AlbumModel.swift in Sources */,
