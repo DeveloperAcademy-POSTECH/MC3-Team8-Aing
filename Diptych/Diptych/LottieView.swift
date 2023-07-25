@@ -26,7 +26,7 @@ struct LottieView: UIViewRepresentable {
     var loopMode: LottieLoopMode = .playOnce
     var animationCompletionHandler: ((Bool) -> Void)? = nil
     
-    init(_ jsonName: String = "DiptychSplashLogo", loopMode: LottieLoopMode = .playOnce, completionHandler: ((Bool) -> Void)?) {
+    init(_ jsonName: String = "DiptychSplashLogo3sec2", loopMode: LottieLoopMode = .playOnce, completionHandler: ((Bool) -> Void)?) {
         self.name = jsonName
         self.loopMode = loopMode
         self.animationCompletionHandler = completionHandler
