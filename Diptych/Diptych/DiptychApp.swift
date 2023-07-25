@@ -23,6 +23,7 @@ struct DiptychApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var userViewModel: UserViewModel = UserViewModel()
+    @StateObject var todayDiptychViewModel = TodayDiptychViewModel()
     
     var body: some Scene {
         WindowGroup {
@@ -47,6 +48,7 @@ struct DiptychApp: App {
                 } else {
                     DiptychTabView()
                         .environmentObject(userViewModel)
+                        .environmentObject(todayDiptychViewModel)
                 }
             } else {
                 LottieView() { isSplashCompleted in
