@@ -288,6 +288,8 @@ class CameraViewController: UIViewController {
     // MARK: - Camera Functions
     
     func setupPhotoCamera() {
+        // 로딩 시작
+        btnShutter.isEnabled = false
         // 메인 스레드에서 실행 방지 - startRunning()이 차단 호출(block call)이기 때문
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             // 세션 초기화
@@ -345,7 +347,10 @@ class CameraViewController: UIViewController {
             // 캡처 세션 실행
             captureSession.startRunning()
             
-            // TODO: - startRunning이 시작되면 UI/UX 동작되게 하기
+            DispatchQueue.main.async {
+                self.btnShutter.isEnabled = true
+            }
+            
         }
     }
     
