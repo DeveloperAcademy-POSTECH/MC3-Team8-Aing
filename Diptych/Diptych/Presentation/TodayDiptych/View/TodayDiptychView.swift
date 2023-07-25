@@ -36,6 +36,13 @@ struct TodayDiptychView: View {
                      .onAppear {
                          print("fullScreenCover")
                      }
+                     .onDisappear {
+                         Task {
+                             await viewModel.fetchTodayImage()
+                             await viewModel.fetchWeeklyCalender()
+                             await viewModel.fetchContents()
+                         }
+                     }
 
             }
         }
