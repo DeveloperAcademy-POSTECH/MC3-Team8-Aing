@@ -22,27 +22,10 @@ struct TodayDiptychView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                if isAllTasksCompleted {
-                    MainDiptychView()
-                } else {
-                    ProgressView()
-                }
-            }
+            MainDiptychView()
             .ignoresSafeArea(edges: .top)
             .onAppear {
-                Task {
-                    await viewModel.fetchUser()
-                    await viewModel.setUserCameraLoactionState()
-                    await viewModel.fetchTodayImage()
-                    await viewModel.fetchWeeklyCalender()
-                    await viewModel.fetchContents()
-                    await viewModel.setTodayPhoto()
 
-                    DispatchQueue.main.async {
-                        isAllTasksCompleted = true
-                    }
-                }
             }
             .onDisappear {
                 viewModel.weeklyData.removeAll()
@@ -110,7 +93,7 @@ struct TodayDiptychView: View {
                                 .fill(Color.offWhite)
                         case .empty:
                             Rectangle()
-                                .fill(Color.offBlack)
+                                .fill(viewModel.isFirst ? Color.lightGray : Color.offBlack)
                                 .overlay {
                                     if viewModel.isFirst {
                                         Image("imgDiptychCamera")
@@ -144,7 +127,7 @@ struct TodayDiptychView: View {
                                 .fill(Color.offBlack)
                         case .empty:
                             Rectangle()
-                                .fill(Color.lightGray)
+                                .fill(viewModel.isFirst ? Color.offBlack : Color.lightGray)
                                 .overlay {
                                     if !viewModel.isFirst {
                                         Image("imgDiptychCamera")
