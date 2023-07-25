@@ -81,7 +81,7 @@ struct WeeklyCalenderView: View {
     }
 
     func downloadImage() async {
-        if let thumbnail = thumbnail {
+        if let thumbnail = thumbnail, !thumbnail.isEmpty {
             do {
                 let url = try await Storage.storage().reference(forURL: thumbnail).downloadURL()
                    thumbnailURL = url

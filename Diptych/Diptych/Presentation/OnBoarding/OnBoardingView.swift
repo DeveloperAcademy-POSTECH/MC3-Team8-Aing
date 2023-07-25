@@ -11,7 +11,6 @@ struct OnBoardingView: View {
     @State var isLogInLinkActive = false
     @State var isSignUpLinkActive = false
     @EnvironmentObject var userViewModel: UserViewModel
-//    @EnvironmentObject var authViewModel: AuthenticationViewModel
     /// 카메라 표시 여부
     @State var isShowCamera = false
     
@@ -29,7 +28,7 @@ struct OnBoardingView: View {
                         .padding(.trailing, 41)
                     Spacer()
                         .frame(height: 28)
-                    Image("diptych_sample1")
+                    Image("OnBoardingViewImage")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 393, height: 393)
@@ -55,30 +54,18 @@ struct OnBoardingView: View {
                         }
                     }// (E) LogIn, SignUp
                     Spacer()
-                        .frame(height: 55)
+                        .frame(height: 47)
                 }
                 .ignoresSafeArea()
             }
-            //            .onAppear {
-            //                print("user: \(authViewModel.user)")
-            //                print("user: \(authViewModel.user?.isEmailVerified)")
-            //                print("state: \(authViewModel.authenticationState)")
-            //            }
-        }
-        .fullScreenCover(isPresented: $isShowCamera) {
-            CameraRepresentableView()
-                 .toolbar(.hidden, for: .tabBar)
         }
         .navigationViewStyle(.stack)
-//        .onDisappear {
-//            isSignUpLinkActive.toggle()
-//        }
     }
 }
 
 struct OnBoardingView_Previews: PreviewProvider {
     static var previews: some View {
         OnBoardingView()
-            .environmentObject(AuthenticationViewModel())
+            .environmentObject(UserViewModel())
     }
 }

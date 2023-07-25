@@ -18,10 +18,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct DiptychApp: App {
+    @State var isSplashCompleted: Bool = false
+    
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-//    @StateObject var authViewModel: AuthenticationViewModel = AuthenticationViewModel()
     @StateObject var userViewModel: UserViewModel = UserViewModel()
+    @StateObject var todayDiptychViewModel = TodayDiptychViewModel()
     
     var body: some Scene {
         WindowGroup {
@@ -47,6 +49,22 @@ struct DiptychApp: App {
 //            }
             
             
+//            if userViewModel.flow == .initialized {
+//                OnBoardingView()
+//                    .environmentObject(userViewModel)
+//            } else if userViewModel.flow == .signedUp {
+//                LoadingVerificationView()
+//                    .environmentObject(userViewModel)
+//            } else if userViewModel.flow == .emailVerified {
+//                CouplingView()
+//                    .environmentObject(userViewModel)
+//            } else if userViewModel.flow == .coupled {
+//                ProfileSettingView()
+//                    .environmentObject(userViewModel)
+//            } else {
+//                DiptychTabView()
+//                    .environmentObject(userViewModel)
+//            }
             
             /// 원래 주석이었던것
 //            if userViewModel.flow == .completed {

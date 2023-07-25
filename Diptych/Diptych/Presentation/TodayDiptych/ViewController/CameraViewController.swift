@@ -66,9 +66,11 @@ class CameraViewController: UIViewController {
     
     // MARK: - Constants
     let RESIZE_WIDTH: CGFloat = 2048
-    let JPEG_COMPRESSION_QUALITY: CGFloat = 1.0
     
     // MARK: - Vars
+    var viewModel: TodayDiptychViewModel?
+    var imageCacheViewModel: ImageCacheViewModel?
+    
     var previewLayer: AVCaptureVideoPreviewLayer!
     var captureSession: AVCaptureSession!
     var backCameraInput: AVCaptureDeviceInput!
@@ -149,6 +151,25 @@ class CameraViewController: UIViewController {
         setupPhotoCamera()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // 뷰모델 정보 가져오기 - 별도 함수로 분리
+        guard let viewModel else {
+            return
+        }
+        
+        lblTopic.text = viewModel.question
+        DispatchQueue.main.async { [unowned self] in
+            print("isFirst?", viewModel.isFirst)
+            currentAxis = viewModel.isFirst ? .verticalLeft : .verticalRight
+        }
+        
+        guard let imageCacheViewModel else {
+            return
+        }
+    }
+    
     // MARK: - IBActions
     
     @IBAction func btnActShutter(_ sender: UIButton) {
@@ -179,14 +200,18 @@ class CameraViewController: UIViewController {
             // 가이드라인에 따라 사진 자르기
             let cropRect: CGRect = currentAxis.rect(squareSideLength: RESIZE_WIDTH)
             let croppedImage: CGImage? = resizedImage.cgImage!.cropping(to: cropRect)
-            let data = UIImage(cgImage: croppedImage!, scale: 1, orientation: transformedImage.imageOrientation).jpegData(compressionQuality: JPEG_COMPRESSION_QUALITY)
+            let uiImage = UIImage(cgImage: croppedImage!, scale: 1, orientation: transformedImage.imageOrientation)
             
-            savePhotoToLibrary(data: data!) {_, _ in
-                DispatchQueue.main.async {
-                    self.dismiss(animated: true)
-                }
-                
-            }
+            // savePhotoToLibrary(data: data!) {_, _ in
+            //     DispatchQueue.main.async {
+            //         self.dismiss(animated: true)
+            //     }
+            // }
+            
+            Task {
+                try await taskUpload(image: uiImage)
+                self.dismiss(animated: true)
+            }   
         }
     }
     
@@ -441,6 +466,84 @@ class CameraViewController: UIViewController {
                                        width: originalOverlayFrame.size.width,
                                        height: originalOverlayFrame.size.height / 2)
         }
+    }
+    
+    // MARK: - Network Task
+    
+    func taskUpload(image uiImage: UIImage) async throws {
+        /*
+         1. 앨범 아이디로 photos를 찾음
+         .collection("photos")
+         .where("albumId", "==", "3ZtcHka4I3loqa7Xopc4")
+         
+         2. 오늘 날짜 or Content ID를 찾음
+         .collection("photos")
+         .where("contentId", "==", "bDKIjB5XdlVc8anNbp7Q")
+         
+            2-1. contentId 비어있으면 하나 생성??
+            2-2. contentId 있다면 3번으로
+         
+         3. 앨범 아이디와 Content ID가 일치하는 곳 또는 새 컨텐츠에 정보 업데이트
+          -
+         */
+        
+        // 반으로 된 사진 데이터
+        let data = uiImage.jpegData(compressionQuality: JPEG_COMPRESSION_QUALITY)
+        // TODO: - 가로 가이드라인일때는?
+        let thumbnail = uiImage.resize(width: THUMB_SIZE / 2, height: THUMB_SIZE)
+        
+        guard let isFirst = viewModel?.currentUser?.isFirst else {
+            return
+        }
+        print("isFirst?", isFirst)
+        
+        // TODO: - print는 로딩 인디케이터 또는 작업상황 구분점임
+        print("파일 업로드 시작....")
+        let url = try await FirebaseManager.shared.upload(data: data!, withName: "test_\(UUID().uuidString)")
+        print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
+        
+        // print("섬네일 업로드 시작....")
+        // let thumbURL = try await FirebaseManager.shared.upload(data: thumbData!, withName: "test_thumbnail_\(Date())")
+        // print("섬네일 업로드 끝:", thumbURL?.absoluteString ?? "unknown URL")
+        
+        guard let url else {
+            print("url이 존재하지 않습니다.")
+            return
+        }
+        
+        
+        guard let todayPhoto = viewModel?.todayPhoto else {
+            print("todayPhoto is nil.")
+            return
+        }
+        
+        print("todayPhoto!:", todayPhoto.photoFirst, todayPhoto.photoSecond, isFirst, todayPhoto.photoSecond.isEmpty,  todayPhoto.photoFirst.isEmpty)
+        
+        // TODO: - thumbnail은 isComplete가 true될 경우에만
+        let isCompleted = isFirst ? !todayPhoto.photoSecond.isEmpty : !todayPhoto.photoFirst.isEmpty
+        var dictionary: [String: Any] = [
+            "isCompleted": isCompleted,
+        ]
+        
+        if isCompleted {
+            if let halfAnotherThumb = imageCacheViewModel?.firstImage ?? imageCacheViewModel?.secondImage,
+               let mergedThumb = thumbnail.merge(with: halfAnotherThumb, division: isFirst ? .verticalLeft : .verticalRight),
+               let uploadThumb = mergedThumb.jpegData(compressionQuality: THUMB_COMPRESSION_QUALITY) {
+                print("섬네일 업로드 시작....", halfAnotherThumb.size)
+                let thumbURL = try await FirebaseManager.shared.upload(data: uploadThumb, withName: "test_thumbnail_\(Date())")
+                dictionary["thumbnail"] = thumbURL?.absoluteString
+                print("섬네일 업로드 끝")
+            } else {
+                print("섬네일 생성 실패:")
+            }
+        }
+        
+        let photoKey = isFirst ? "photoFirst" : "photoSecond"
+        dictionary[photoKey] = url.absoluteString
+        
+        print("정보 업로드 시작....")
+        try await FirebaseManager.shared.updateValue(collectionPath: "photos", documentId: todayPhoto.id, dictionary: dictionary)
+        print("정보 업로드 끝")
     }
     
     // MARK: - OBJC Methods

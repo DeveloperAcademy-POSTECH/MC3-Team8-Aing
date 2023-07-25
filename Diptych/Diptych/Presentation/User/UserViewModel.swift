@@ -10,13 +10,6 @@ import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-//extension UserViewModel {
-//    @Published var isLogInLinkActive = false
-//    @Published var isSignUpLinkActive = false
-//    @Published var isEmailVerificationLinkActive = false
-//    @Published var isProfileSettingLinkActive = false
-//}
-
 enum UserFlow: String {
     case initialized = "initialized"
     case signedUp = "signedUp"
@@ -32,21 +25,16 @@ class UserViewModel: ObservableObject {
     
     @Published var couplingCode: String?
     @Published var lover: DiptychUser?
+    @Published var coupleAlbum: DiptychAlbum?
     @Published var isCompleted: Bool = false
     
     var listenerAboutAuth: AuthStateDidChangeListenerHandle?
     var listenerAboutUserData: ListenerRegistration?
     
-    //    @Published var isEmailVerified: Bool = false
-    
     init() {
-        //        self.userSession = Auth.auth().currentUser //currentUser가 없으면 nil이 할당
         Task {
             await fetchUserData()
-//            if let currentUser = self.currentUser {
-//                self.flow = UserFlow(rawValue: currentUser.flow) ?? .initialized
-//            }
-            print("[DEBUG] currentUser : \(self.currentUser) /// flow : \(self.flow)")
+            print("[DEBUG] currentUser : \(self.currentUser)\nflow : \(self.flow)")
             listenerAboutUserData = Firestore.firestore().collection("users").addSnapshotListener() { snapshot, error in
                 Task{
                     await self.fetchUserData()
@@ -56,7 +44,7 @@ class UserViewModel: ObservableObject {
         }
     }
     
-    // MARK : Singing, Authentication
+    //MARK: - Singing, Authentication
     func signInWithEmailPassword(email: String, password: String) async throws {
         do {
             print("[DEBUG] signInWithEmailPassword -> email: \(email), password: \(password)")
@@ -195,7 +183,6 @@ class UserViewModel: ObservableObject {
             self.currentUser = currentUser
             self.flow = UserFlow(rawValue: currentUser.flow) ?? .initialized
         }
-        
     }
     
     func fetchLoverData() async {
@@ -205,6 +192,16 @@ class UserViewModel: ObservableObject {
         if let lover = try? snapshot.data(as: DiptychUser.self) {
             self.lover = lover
             print("DEBUG: fetchLoverData Done")
+        }
+    }
+    
+    func fetchCoupleAlbumData() async {
+        print("DEBUG : fetchCoupleAlbumData self.coupleAlbum : \(self.coupleAlbum)")
+        guard let uid = self.currentUser?.coupleAlbumId else { return }
+        guard let snapshot = try? await Firestore.firestore().collection("albums").document(uid).getDocument() else { return }
+        if let coupleAlbum = try? snapshot.data(as: DiptychAlbum.self) {
+            self.coupleAlbum = coupleAlbum
+            print("DEBUG: fetchCoupleAlbum Done")
         }
     }
     
@@ -221,7 +218,7 @@ class UserViewModel: ObservableObject {
     }
 }
 
-// MARK : Coupling
+//MARK: - Coupling
 extension UserViewModel {
     func generatedCouplingCode() async throws {
         do {
@@ -300,15 +297,64 @@ extension UserViewModel {
         }
     }
     
+    func addCoupleAlbumData(startDate: Date) async throws {
+        do {
+            print("[DEBUG] addCoupleAlbumData start!!!")
+            // Add a new document with a generated id.
+            var data = DiptychAlbum(id: "")
+            var ref: DocumentReference? = nil
+//            ref = try Firestore.firestore().collection("albums").addDocument(from: data) { err in
+//                if let err = err {
+//                    print("Error adding document: \(err)")
+//                } else {
+//                    data.id = ref!.documentID
+//                    // 업데이트된 데이터를 Firestore에 다시 저장
+////                    let encodedCoupleAlbum = try Firestore.Encoder().encode(data)
+////                    try await Firestore.firestore().collection("albums").document(data.id).setData(encodedCoupleAlbum, merge: true)
+//                    try? ref!.setData(from: data) { error in
+//                        if let error = error {
+//                            print(error.localizedDescription)
+//                        } else {
+//                            self.coupleAlbum = data
+//                            if let coupleAlbum = self.coupleAlbum {
+//                                print("Document added with ID: \(coupleAlbum.id)")
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+            var encodedData = try Firestore.Encoder().encode(data)
+            ref = try await Firestore.firestore().collection("albums").addDocument(data: encodedData)
+            data.id = ref!.documentID
+            data.startDate = startDate
+            encodedData = try Firestore.Encoder().encode(data)
+            try await ref?.setData(encodedData, merge: true)
+            self.coupleAlbum = data
+            if let coupleAlbum = self.coupleAlbum {
+                print("Document added with ID: \(coupleAlbum.id)")
+            }
+//            print(data.id)
+        }
+    }
+    
     func setProfileData(name: String, startDate: Date) async throws {
         do {
             print("[DEBUG] setProfileDate -> name: \(name), startDate: \(startDate)")
-            if var currentUser = self.currentUser {
+            if var currentUser = self.currentUser, var lover = self.lover {
                 currentUser.name = name
                 currentUser.startDate = startDate
+                await fetchCoupleAlbumData()
+                if let coupleAlbum = self.coupleAlbum {
+                    try await addCoupleAlbumData(startDate: startDate)
+                    print("[DEBUG] check!!!! coupleAlbumId: \(coupleAlbum.id)")
+                    currentUser.coupleAlbumId = coupleAlbum.id
+                    lover.coupleAlbumId = coupleAlbum.id
+                }
                 currentUser.flow = "completed"
                 let encodedCurrentUser = try Firestore.Encoder().encode(currentUser)
+                let encodedLover = try Firestore.Encoder().encode(lover)
                 try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedCurrentUser, merge: true)
+                try await Firestore.firestore().collection("users").document(lover.id).setData(encodedLover, merge: true)
             }
         }
         catch {
@@ -319,7 +365,7 @@ extension UserViewModel {
     private func wait() async {
         do {
             print("Wait")
-            try await Task.sleep(nanoseconds: 2_000_000_000)
+            try await Task.sleep(nanoseconds: 1_000_000_000)
             print("Done")
         }
         catch {
