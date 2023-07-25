@@ -12,7 +12,7 @@ import SwiftUI
 struct CalendarView: View {
     
     ///Property
-//    @StateObject var VM = AlbumViewModel()
+    
     @State var date: Date
     let changeMonthInt : Int
     

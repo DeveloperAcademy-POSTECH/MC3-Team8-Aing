@@ -15,6 +15,10 @@ struct PhotoDetailView {
     var question: String
     var imageUrl1: String
     var imageUrl2: String
+    
+    @State private var image1: UIImage?
+    @State private var image2: UIImage?
+    
 }
 
 // MARK: - View
@@ -84,16 +88,20 @@ extension PhotoDetailView: View {
                 
                 /// [4]버튼
                 HStack {
-                    
-                    Image("download")
-                        .foregroundColor(.offBlack)
-                        .frame(width: 30, height: 30)
-                        .padding(.leading, 118)
-                        .padding(.trailing, 97)
-                    Image("send")
-                        .foregroundColor(.offBlack)
-                        .frame(width: 30, height: 30)
-                        .padding(.trailing, 118)
+                    RoundedRectangle(cornerRadius: 30)
+                        .frame(width: 300, height: 50)
+                        .overlay(
+                            Text("공유하기")
+                                .font(.title2)
+                                .foregroundColor(.white)
+                        )
+                        .onTapGesture {
+//                            image =
+//                                
+//                            let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+//                            UIApplication.shared.windows.first?.rootViewController?.present(activityViewController, animated: true)
+                            
+                        }
                 }
             } // VStack
             .padding(.bottom, 110)
@@ -104,6 +112,26 @@ extension PhotoDetailView: View {
 // MARK: - Component
 
 extension PhotoDetailView {
+    
+    private func DiptychImage() -> UIImage? {
+        guard let image1 = image1, let image2 = image2
+            else{
+            return nil
+        }
+        
+        let size = CGSize(width: 200, height: 200)
+        
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 200, height: 200))
+        let image = renderer.image { ctx in
+            
+            let rect1 = CGRect(x: 0, y: 0, width: 100, height: 200)
+            let rect2 = CGRect(x: 0, y: 0, width: 100, height: 200)
+        }
+        return image
+    }
+    
+    
+    
     func textLabel(text: String) -> some View {
         return Text(text)
             .font(.custom(PretendardType.medium.rawValue, size: 16))

@@ -26,7 +26,7 @@ struct DiptychApp: App {
     var body: some Scene {
         WindowGroup {
             
-            CellView(VM: AlbumViewModel(), day: 24, isToday: true)
+            CalendarView(date: Date(), changeMonthInt: 0)
 
             /// 잠시 주석 처리
 //            if userViewModel.flow == .initialized {

@@ -33,7 +33,7 @@ class AlbumViewModel: ObservableObject {
     @Published var photos : [Photo2] = []
     @Published var startDay : [StartDay] = []
     
-    init(){ 
+    init(){
         fetchDiptychCalender()
         fetchStartDate()
     }
@@ -44,6 +44,7 @@ class AlbumViewModel: ObservableObject {
         
         firestore.collection("photos")
             .whereField("albumId", isEqualTo: "albumTest")
+        
             .getDocuments { querySnapshot, error in
                 guard let documents = querySnapshot?.documents else {
                     print("Error fetching photos: \(error?.localizedDescription ?? "Unknown error")")
@@ -56,11 +57,13 @@ class AlbumViewModel: ObservableObject {
                           let timestamp = document.data()["date"] as? Timestamp else {
                             return nil
                           }
-                    
+
                     let day = timestamp.dateValue().get(.day)
                     let month = timestamp.dateValue().get(.month)
-                    
-                    return Photo2(id: document.documentID, albumId: "3ZtcHka4I3loqa7Xopc4",
+
+                    print("🍎", self.photos)
+
+                    return Photo2(id: document.documentID, albumId: "albumTest",
                                   isCompleted: isCompleted, thumbnail: thumbnail,
                                   date: timestamp.dateValue(), day: day, month: month)
                 }
@@ -81,7 +84,7 @@ class AlbumViewModel: ObservableObject {
                 }
                 
                 self.startDay = documents.compactMap { document in
-                    guard let timestamp = document.data()["date"] as? Timestamp else {
+                    guard let timestamp = document.data()["startDate"] as? Timestamp else {
                         return nil
                     }
                     let day = timestamp.dateValue().get(.day)
