@@ -64,6 +64,7 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var viewOverlay: UIView!
     @IBOutlet weak var tempSegDirection: UISegmentedControl!
     @IBOutlet weak var imgGuidelineDashed: UIImageView!
+    @IBOutlet weak var viewLottieLoading: UIView!
     
     // MARK: - Constants
     let RESIZE_WIDTH: CGFloat = 2048
@@ -130,22 +131,18 @@ class CameraViewController: UIViewController {
         
         // TODO: - Limited 위한 커스텀 뷰를 또 만들어야 하는가?
         // https://zeddios.tistory.com/620
-        // let fetchOptions = PHFetchOptions()
-        // let allPhotos = PHAsset.fetchAssets(with: .image, options: fetchOptions)
-        //
-        // for i in 0...(allPhotos.count - 1) {
-        //     print(allPhotos.object(at: i))
-        // }
+        /*
+         let fetchOptions = PHFetchOptions()
+         let allPhotos = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+         
+         for i in 0...(allPhotos.count - 1) {
+             print(allPhotos.object(at: i))
+         }
+         */
         
-        DispatchQueue.main.async { [unowned self] in
-            viewOverlay.layoutIfNeeded()
-            originalOverlayFrame = viewOverlay.frame
-            
-            shrinkOverlayByAxis(.verticalLeft)
-        }
-        
-        imgGuidelineDashed.isHidden = true
-        viewOverlay.isHidden = true
+        setupOverlay()
+        displayGuideAndOverlay(false)
+        setupLottieLoading()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -277,19 +274,27 @@ class CameraViewController: UIViewController {
         }
     }
     
-    // MARK: - Navigations
+    // MARK: - UI Assistants
     
-    // override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //     switch segue.identifier {
-    //     case "RetouchCameraSegue":
-    //         let data = sender as! Data
-    //         let destination = segue.destination as! CameraRetouchViewController
-    //         destination.modalPresentationStyle = .fullScreen
-    //         destination.photoData = data
-    //     default:
-    //         break
-    //     }
-    // }
+    private func setupOverlay() {
+        DispatchQueue.main.async { [unowned self] in
+            viewOverlay.layoutIfNeeded()
+            originalOverlayFrame = viewOverlay.frame
+            
+            shrinkOverlayByAxis(.verticalLeft)
+        }
+    }
+    
+    private func displayGuideAndOverlay(_ isShow: Bool) {
+        imgGuidelineDashed.isHidden = !isShow
+        viewOverlay.isHidden = !isShow
+    }
+    
+    private func setupLottieLoading() {
+        let lottieRect = CGRect(origin: .zero, size: viewLottieLoading.frame.size)
+        let lottieView = LottieUIViews.shared.lottieView(frame: lottieRect, backgroundColor: .diptychLightGray)
+        viewLottieLoading.addSubview(lottieView)
+    }
     
     // MARK: - Camera Functions
     
@@ -355,9 +360,9 @@ class CameraViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self.btnShutter.isEnabled = true
-                self.imgGuidelineDashed.isHidden = false
-                self.viewOverlay.isHidden = false
+                self.displayGuideAndOverlay(true)
                 // 로딩 끝
+                self.viewLottieLoading.isHidden = true
             }
         }
     }

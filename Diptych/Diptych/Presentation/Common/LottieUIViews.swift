@@ -1,5 +1,5 @@
 //
-//  LottieUIView.swift
+//  LottieUIViews.swift
 //  Diptych
 //
 //  Created by 윤범태 on 2023/07/25.
@@ -9,10 +9,11 @@ import UIKit
 import Lottie
 
 class LottieUIViews {
-    
     static let shared = LottieUIViews()
     
-    func lottieView(name: String = "LoadingLottie", frame: CGRect, lottieFrame: CGRect = .init(x: 0, y: 0, width: 200, height: 200), backgroundColor: UIColor? = UIColor(named: "OffWhite")) -> UIView {
+    private init() {}
+    
+    func lottieView(name: String = "LoadingLottie", frame: CGRect, lottieFrame: CGRect = .init(x: 0, y: 0, width: 200, height: 200), backgroundColor: UIColor? = .offWhite) -> UIView {
         let view = UIView(frame: frame)
         
         view.backgroundColor = backgroundColor

@@ -61,6 +61,11 @@
                                 <rect key="frame" x="0.0" y="214" width="390" height="390"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lTr-Lb-rDZ">
+                                <rect key="frame" x="0.0" y="214" width="390" height="390"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ay-Aq-O9x">
                                 <rect key="frame" x="150" y="661" width="93" height="93"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -97,7 +102,7 @@
                                     <action selector="btnActDismissView:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="hR3-ru-UGE"/>
                                 </connections>
                             </button>
-                            <segmentedControl opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FCk-u2-lzr">
+                            <segmentedControl hidden="YES" opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FCk-u2-lzr">
                                 <rect key="frame" x="182" y="20" width="192" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
@@ -126,6 +131,7 @@
                         <outlet property="lblTopic" destination="PzM-kO-bXw" id="5bn-QX-nhh"/>
                         <outlet property="scrollViewImageContainer" destination="wNV-bx-VUt" id="YH7-XM-RXn"/>
                         <outlet property="tempSegDirection" destination="FCk-u2-lzr" id="55L-qe-VlC"/>
+                        <outlet property="viewLottieLoading" destination="lTr-Lb-rDZ" id="YhL-qV-cpC"/>
                         <outlet property="viewOverlay" destination="rTr-yx-Hmc" id="rf3-PI-eWk"/>
                     </connections>
                 </viewController>
