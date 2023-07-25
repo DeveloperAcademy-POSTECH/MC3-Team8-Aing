@@ -165,9 +165,7 @@ class CameraViewController: UIViewController {
             currentAxis = viewModel.isFirst ? .verticalLeft : .verticalRight
         }
         
-        guard let imageCacheViewModel else {
-            return
-        }
+        btnShutter.isEnabled = false
     }
     
     // MARK: - IBActions
@@ -182,6 +180,8 @@ class CameraViewController: UIViewController {
             
             photoOutput.capturePhoto(with: photoSettings, delegate: self)
         case .retouch:
+            btnShutter.isEnabled = false
+            
             // guard let data = imgViewGuideOverlay.image?.jpegData(compressionQuality: 1) else {
             //     debugPrint("\(#function): Image data is nil")
             //     return
@@ -289,7 +289,7 @@ class CameraViewController: UIViewController {
     
     func setupPhotoCamera() {
         // 로딩 시작
-        btnShutter.isEnabled = false
+        
         // 메인 스레드에서 실행 방지 - startRunning()이 차단 호출(block call)이기 때문
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             // 세션 초기화
@@ -349,6 +349,7 @@ class CameraViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self.btnShutter.isEnabled = true
+                // 로딩 끝
             }
             
         }
@@ -638,6 +639,7 @@ class CameraViewController: UIViewController {
     }
     
     func changeCameraPosition() {
+        btnChangePosition.isEnabled = false
         captureSession.beginConfiguration()
         
         switch captureSession.inputs[0] {
@@ -655,6 +657,7 @@ class CameraViewController: UIViewController {
         
         // commitConfiguration : captureSession 의 설정 변경이 완료되었음을 알리는 함수.
         captureSession.commitConfiguration()
+        btnChangePosition.isEnabled = true
     }
 }
 
