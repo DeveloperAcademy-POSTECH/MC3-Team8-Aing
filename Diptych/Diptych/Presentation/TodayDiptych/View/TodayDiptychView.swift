@@ -77,7 +77,8 @@ struct TodayDiptychView: View {
                 .padding(.top, 35)
 
                 HStack(spacing: 0) {
-                    Text("\"\(viewModel.question)\"")
+                    Text("오늘 본 동그라미는?")
+//                    Text("\"\(viewModel.question)\"")
                         .frame(height: 78, alignment: .topLeading)
                         .lineSpacing(6)
                         .font(.pretendard(.light, size: 28))

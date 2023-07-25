@@ -41,6 +41,7 @@
 		98D4A0892A6E6AAB00EB8C94 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 98D4A0882A6E6AAB00EB8C94 /* Lottie */; };
 		98D4A08B2A6E6E1E00EB8C94 /* DiptychSplashLogo.json in Resources */ = {isa = PBXBuildFile; fileRef = 98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */; };
 		98D4A08D2A6E6EF100EB8C94 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */; };
+		98EEBEC82A6FA87100F575ED /* DiptychSplashLogo3sec.json in Resources */ = {isa = PBXBuildFile; fileRef = 98EEBEC72A6FA87100F575ED /* DiptychSplashLogo3sec.json */; };
 		AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */; };
 		AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */; };
 		AB2A9EA82A5EC46200D70C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */; };
@@ -150,6 +151,7 @@
 		98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychAlbum.swift; sourceTree = "<group>"; };
 		98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DiptychSplashLogo.json; sourceTree = "<group>"; };
 		98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		98EEBEC72A6FA87100F575ED /* DiptychSplashLogo3sec.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DiptychSplashLogo3sec.json; sourceTree = "<group>"; };
 		AB2A9EA02A5EC46100D70C33 /* Diptych.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diptych.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychApp.swift; sourceTree = "<group>"; };
 		AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychTabView.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 		AB2A9EA22A5EC46100D70C33 /* Diptych */ = {
 			isa = PBXGroup;
 			children = (
+				98EEBEC72A6FA87100F575ED /* DiptychSplashLogo3sec.json */,
 				98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */,
 				989B44982A659F1A00D99439 /* Model */,
 				987E425F2A627A2B00C682D9 /* Diptych.entitlements */,
@@ -724,6 +727,7 @@
 				ABFA53B62A5F95FE00298F3B /* Colors.xcassets in Resources */,
 				AB2AC20F2A5F280000B162E1 /* Pretendard-Light.otf in Resources */,
 				AB2A9EA82A5EC46200D70C33 /* Assets.xcassets in Resources */,
+				98EEBEC82A6FA87100F575ED /* DiptychSplashLogo3sec.json in Resources */,
 				AB2AC20C2A5F280000B162E1 /* Pretendard-Bold.otf in Resources */,
 				AB2AC2122A5F280000B162E1 /* Pretendard-Regular.otf in Resources */,
 				AB2AC2062A5F280000B162E1 /* Pretendard-SemiBold.otf in Resources */,
@@ -986,7 +990,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
-				DEVELOPMENT_TEAM = N3H5YNSQ64;
+				DEVELOPMENT_TEAM = 662HVTXJ55;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diptych/Info.plist;
@@ -1003,7 +1007,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych;
+				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych.Benny;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1022,7 +1026,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
-				DEVELOPMENT_TEAM = N3H5YNSQ64;
+				DEVELOPMENT_TEAM = 662HVTXJ55;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diptych/Info.plist;
@@ -1039,7 +1043,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych;
+				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych.Benny;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
