@@ -63,6 +63,7 @@ class CameraViewController: UIViewController {
     
     @IBOutlet weak var viewOverlay: UIView!
     @IBOutlet weak var tempSegDirection: UISegmentedControl!
+    @IBOutlet weak var imgGuidelineDashed: UIImageView!
     
     // MARK: - Constants
     let RESIZE_WIDTH: CGFloat = 2048
@@ -142,11 +143,13 @@ class CameraViewController: UIViewController {
             
             shrinkOverlayByAxis(.verticalLeft)
         }
+        
+        imgGuidelineDashed.isHidden = true
+        viewOverlay.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         checkCameraPermissions()
         setupPhotoCamera()
     }
@@ -289,6 +292,8 @@ class CameraViewController: UIViewController {
     
     func setupPhotoCamera() {
         // 로딩 시작
+        let lottieView = LottieUIViews.shared.lottieView(frame: view.frame)
+        view.addSubview(lottieView)
         
         // 메인 스레드에서 실행 방지 - startRunning()이 차단 호출(block call)이기 때문
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
@@ -349,9 +354,10 @@ class CameraViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self.btnShutter.isEnabled = true
+                self.imgGuidelineDashed.isHidden = false
+                self.viewOverlay.isHidden = false
                 // 로딩 끝
             }
-            
         }
     }
     
