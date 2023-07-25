@@ -12,23 +12,24 @@ class LottieUIViews {
     
     static let shared = LottieUIViews()
     
-    func lottieView(name: String = "LoadingLottie", frame: CGRect, backgroundColor: UIColor? = UIColor(named: "OffWhite")) -> UIView {
+    func lottieView(name: String = "LoadingLottie", frame: CGRect, lottieFrame: CGRect = .init(x: 0, y: 0, width: 200, height: 200), backgroundColor: UIColor? = UIColor(named: "OffWhite")) -> UIView {
         let view = UIView(frame: frame)
         
         view.backgroundColor = backgroundColor
         let animationView = LottieAnimationView(name: name)
         
+        animationView.frame = .init(x: 0, y: 0, width: 200, height: 200)
         animationView.center = view.center
         animationView.contentMode = .scaleAspectFit
         animationView.loopMode = .loop
         
-        animationView.translatesAutoresizingMaskIntoConstraints = false
+        // animationView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(animationView)
-        NSLayoutConstraint.activate([
-            animationView.heightAnchor.constraint(equalTo: view.heightAnchor),
-            animationView.widthAnchor.constraint(equalTo: view.widthAnchor)
-        ])
+        // NSLayoutConstraint.activate([
+        //     animationView.heightAnchor.constraint(equalTo: view.heightAnchor),
+        //     animationView.widthAnchor.constraint(equalTo: view.widthAnchor)
+        // ])
         
         animationView.play()
         

@@ -185,6 +185,9 @@ class CameraViewController: UIViewController {
         case .retouch:
             btnShutter.isEnabled = false
             
+            let lottieView = LottieUIViews.shared.lottieView(frame: view.frame)
+            view.addSubview(lottieView)
+            
             // guard let data = imgViewGuideOverlay.image?.jpegData(compressionQuality: 1) else {
             //     debugPrint("\(#function): Image data is nil")
             //     return
@@ -291,9 +294,7 @@ class CameraViewController: UIViewController {
     // MARK: - Camera Functions
     
     func setupPhotoCamera() {
-        // 로딩 시작
-        let lottieView = LottieUIViews.shared.lottieView(frame: view.frame)
-        view.addSubview(lottieView)
+        // 카메라 로딩 시작
         
         // 메인 스레드에서 실행 방지 - startRunning()이 차단 호출(block call)이기 때문
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
