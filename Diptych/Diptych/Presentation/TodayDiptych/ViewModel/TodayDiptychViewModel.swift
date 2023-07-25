@@ -30,10 +30,11 @@ final class TodayDiptychViewModel: ObservableObject {
     // MARK: - Network
 
     func fetchWeeklyCalender() async {
+        guard let albumId = currentUser?.coupleAlbumId else { return }
 
         do {
             let querySnapshot = try await db.collection("photos")
-                .whereField("albumId", isEqualTo: "3ZtcHka4I3loqa7Xopc4") // TODO: - 유저의 앨범과 연결
+                .whereField("albumId", isEqualTo: albumId) // TODO: - 유저의 앨범과 연결
                 .whereField("date", isGreaterThanOrEqualTo: calculateThisMondayTimestamp())
                 .getDocuments()
 
@@ -72,10 +73,11 @@ final class TodayDiptychViewModel: ObservableObject {
     func fetchTodayImage() async {
         let (todayDate, _, _) = setTodayCalendar()
         let timestamp = Timestamp(date: todayDate)
+        guard let albumId = currentUser?.coupleAlbumId else { return }
 
         do {
             let querySnapshot = try await db.collection("photos")
-                .whereField("albumId", isEqualTo: "3ZtcHka4I3loqa7Xopc4")
+                .whereField("albumId", isEqualTo: albumId)
                 .whereField("date", isGreaterThanOrEqualTo: timestamp)
                 .getDocuments()
 
@@ -131,9 +133,11 @@ final class TodayDiptychViewModel: ObservableObject {
     }
 
     func fetchContents() async {
+        guard let albumId = currentUser?.coupleAlbumId else { return }
+
         do {
             let daySnapshot = try await db.collection("albums")
-                .whereField("id", isEqualTo: "3ZtcHka4I3loqa7Xopc4") // TODO: - 유저의 앨범과 연결
+                .whereField("id", isEqualTo: albumId)  
                 .getDocuments()
 
             let data = daySnapshot.documents[0].data()
@@ -155,11 +159,11 @@ final class TodayDiptychViewModel: ObservableObject {
     func setTodayPhoto() async {
         let (todayDate, _, _) = setTodayCalendar()
         let timestamp = Timestamp(date: todayDate)
+        guard let albumId = currentUser?.coupleAlbumId else { return }
 
-        // TODO: - 유저의 albumId와 연결하기 (현재 test albumId: 4WX8aANlqOCHS9hmET6X)
         do {
             let querySnapshot = try await db.collection("photos")
-                .whereField("albumId", isEqualTo: "3ZtcHka4I3loqa7Xopc4") // TODO: - 유저의 앨범과 연결
+                .whereField("albumId", isEqualTo: albumId)
                 .whereField("date", isEqualTo: timestamp)
                 .getDocuments()
 
@@ -172,7 +176,7 @@ final class TodayDiptychViewModel: ObservableObject {
                           thumbnail: "",
                           date: timestamp,
                           contentId: "",
-                          albumId: "4WX8aANlqOCHS9hmET6X",
+                          albumId: albumId,
                           isCompleted: false)
                     .convertToDictionary()
                 )
