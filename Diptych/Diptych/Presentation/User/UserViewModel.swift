@@ -34,7 +34,7 @@ class UserViewModel: ObservableObject {
     init() {
         Task {
             await fetchUserData()
-            print("[DEBUG] currentUser : \(self.currentUser) /// flow : \(self.flow)")
+            print("[DEBUG] currentUser : \(self.currentUser)\nflow : \(self.flow)")
             listenerAboutUserData = Firestore.firestore().collection("users").addSnapshotListener() { snapshot, error in
                 Task{
                     await self.fetchUserData()

@@ -28,7 +28,7 @@ struct OnBoardingView: View {
                         .padding(.trailing, 41)
                     Spacer()
                         .frame(height: 28)
-                    Image("diptych_sample1")
+                    Image("OnBoardingViewImage")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 393, height: 393)
