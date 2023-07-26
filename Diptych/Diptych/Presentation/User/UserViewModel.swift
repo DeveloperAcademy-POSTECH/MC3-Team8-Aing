@@ -169,18 +169,17 @@ class UserViewModel: ObservableObject {
         do {
             print("[DEBUG] deleteAccount is called")
             
-            if let currentUser = self.currentUser {
-                try await Firestore.firestore().collection("users").document(currentUser.id).delete()
+            if let currentUserData = self.currentUser, let currentUserAuth = Auth.auth().currentUser {
+                try await Firestore.firestore().collection("users").document(currentUserData.id).delete()
                 print("DEBUG : user data delete done")
                 
-                print(Auth.auth().currentUser)
-                if let user = Auth.auth().currentUser {
-                    try await user.delete()
-                    print("DEBUG : auth account delete done")
-                    
-                    self.currentUser = nil
-                    self.flow = .initialized
-                }
+                print("currentUserAuth : \(currentUserAuth)")
+                try await currentUserAuth.delete()
+                print("DEBUG : auth account delete done")
+                
+                self.currentUser = nil
+                self.flow = .initialized
+                
             }
         }
     }
