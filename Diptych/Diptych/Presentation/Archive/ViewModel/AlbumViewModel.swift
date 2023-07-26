@@ -29,6 +29,7 @@ final class AlbumViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var contentDay = 0
     @Published var startDay = 0
+    @Published var startDate: Timestamp?
     @Published var content: Content?
     @Published var todayPhoto: Photo?
     @Published var isCompleted = false
@@ -39,12 +40,9 @@ final class AlbumViewModel: ObservableObject {
     init() {
         Task {
             await fetchUser()
-            await setUserCameraLoactionState()
-            await fetchTodayImage()
-            await fetchMonthlyCalender()
             await fetchStartDate()
+            await fetchMonthlyCalender()
             await fetchContents()
-//          await setTodayPhoto()
         }
     }
 
@@ -53,19 +51,20 @@ final class AlbumViewModel: ObservableObject {
     /// 포토 컬렉션 필드 데이터 가져오기
     func fetchMonthlyCalender() async {
         guard let albumId = currentUser?.coupleAlbumId else { return }
+        guard let startDate = startDate else { return }
         
         do {
             let querySnapshot = try await db.collection("photos")
-                .whereField("albumId", isEqualTo: albumId) // TODO: - 유저의 앨범과 연결
+                .whereField("albumId", isEqualTo: albumId)
+                .whereField("date", isGreaterThanOrEqualTo: startDate)
                 .getDocuments()
-            
+
             for document in querySnapshot.documents {
                 let photo = try document.data(as: Photo.self)
 
                 let isCompleted = photo.isCompleted
                 let thumbnail = photo.thumbnail
                 let date = Date(timeIntervalSince1970: TimeInterval(photo.date.seconds))
-                guard let day = Calendar.current.dateComponents([.day], from: date).day else { return }
                 guard let month = Calendar.current.dateComponents([.month], from: date).month else { return }
                 
                 if isCompleted {
@@ -81,7 +80,6 @@ final class AlbumViewModel: ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
-        print("🍠", self.photos)
     }//: fetchDiptychCalender
     
     
@@ -99,42 +97,17 @@ final class AlbumViewModel: ObservableObject {
             
             let startDay = startDate.dateValue().get(.day)
             self.startDay = startDay
+            self.startDate = startDate
 
         } catch {
             print(error.localizedDescription)
         }
-        print("🔥시작일 : ", startDay)
+        print("🔥시작일: \(startDay)/ timestamp: \(startDate)")
     }//:fetchStartDate
     
     
     
-//MARK: - Iamge
-    
-    /// 오늘의 사진 불러오기
-    func fetchTodayImage() async {
-        let (todayDate, _, _) = setTodayCalendar()
-        let timestamp = Timestamp(date: todayDate)
-        guard let albumId = currentUser?.coupleAlbumId else { return }
 
-        do {
-            let querySnapshot = try await db.collection("photos")
-                .whereField("albumId", isEqualTo: albumId)
-                .whereField("date", isGreaterThanOrEqualTo: timestamp)
-                .getDocuments()
-
-            for document in querySnapshot.documents {
-                self.todayPhoto = try document.data(as: Photo.self)
-            }
-            await fetchCompleteState()
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-    ///오늘의 사진 완료 여부 확인
-    func fetchCompleteState() async {
-        guard let todayPhoto = todayPhoto else { return }
-        isCompleted = todayPhoto.isCompleted
-    }
 
 //MARK: - User
     
@@ -149,11 +122,7 @@ final class AlbumViewModel: ObservableObject {
         }
     }
     
-    /// 유저의 카메라 좌/우 정보
-    func setUserCameraLoactionState() async {
-        guard let isFirst = currentUser?.isFirst else { return }
-        self.isFirst = isFirst
-    }
+  
 
     
 //MARK: - Contents

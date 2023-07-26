@@ -13,6 +13,7 @@ struct CellView: View {
     ///Property
     @State var day: Int
     @State var isToday: Bool
+    @State var isThisMonth: Bool
     @State var isCompleted: Bool
     @State var thumbnail: String?
     @State var thumbnailURL: URL?
@@ -27,7 +28,7 @@ struct CellView: View {
                 .frame(width: 44, height: 50)
                 .overlay{
                     /// 썸네일 사진 불러오기
-                    if isCompleted {
+                    if isThisMonth && isCompleted {
                         ZStack {
                             AsyncImage(url: thumbnailURL) { image in
                                 image
@@ -36,7 +37,7 @@ struct CellView: View {
                             } placeholder: {
                                 ProgressView()
                             }
-                            Color.offBlack.opacity(0.5)
+                            Color.offBlack.opacity(0.1)
                                 .clipShape(RoundedRectangle(cornerRadius: 18))
                         }//】 ZStack
                     } else {
@@ -46,8 +47,11 @@ struct CellView: View {
             
             /// 날짜 표시
             Text("\(day)")
-                .font(.pretendard(.bold, size: 16))
-                .foregroundColor(.offBlack)
+                .font(.pretendard(isThisMonth && isCompleted ? .extraBold : .bold, size: 16))
+                .shadow(color: .black,
+                        radius: isThisMonth && isCompleted  ? 1 : 0,
+                        y: isThisMonth && isCompleted  ? 1 : 0)
+                .foregroundColor(isThisMonth && isCompleted  ? .offWhite : .offBlack)
                 .offset(y: -10)
             
         }//】 ZStack
@@ -80,8 +84,7 @@ struct CellView: View {
 struct CellView_Previews: PreviewProvider {
     static var previews: some View {
         HStack{
-            CellView(day: 26, isToday: true, isCompleted: false)
-            CellView(day: 25, isToday: false, isCompleted: false)
+            CellView(day: 26, isToday: true, isThisMonth: false, isCompleted: false)
         }
     }
 }

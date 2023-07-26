@@ -7,6 +7,7 @@
 
 
 import SwiftUI
+import Foundation
   
 
 struct CalendarView: View {
@@ -23,10 +24,7 @@ struct CalendarView: View {
         }//】 VStack
         .onAppear{
             changeMonth(by: changeMonthInt)
-            
-            Task {
-                await VM.fetchStartDate()
-            }
+
         }
         
     }//】 body
@@ -37,6 +35,9 @@ struct CalendarView: View {
         
         let daysInMonth: Int = numberOfDays(in: date)
         let firstWeekday: Int = firstWeekdayOfMonth(in: date) - 2
+        
+        let today = Date()
+        let calendar = Calendar.current
 
         return VStack(spacing: 0) {
             
@@ -74,62 +75,66 @@ struct CalendarView: View {
                 ProgressView()
             } else {
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7),spacing: 0) {
-                    ForEach(0 ..< (daysInMonth + firstWeekday), id: \.self) { index in
-
-                        let day = index - firstWeekday + 1
-                        let data = VM.photos
-                        let start = VM.startDay // 18(일)
-                        let isToday = day == Calendar.current.component(.day, from: Date()) && changeMonthInt == 0
-                        let safeIndex = day - start
-                        let isSafeIndex : Bool = safeIndex >= 0 && safeIndex < data.count
-                        let indexIsCompleted: Bool = isSafeIndex ? !data.isEmpty && data[safeIndex].isCompleted : false
+                    ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
                         
-                        let cellViewFalse = CellView(day: day,
-                                                     isToday: isToday,
-                                                     isCompleted: false,
-                                                     thumbnail: "")
-                        
-                        let cellViewTrue = CellView(day: day,
-                                                    isToday: isToday,
-                                                    isCompleted: true,
-                                                    thumbnail: isSafeIndex && !data.isEmpty ? data[safeIndex].thumbnail : "")
-                        
-                        
-                        
-                        let photoDetailView = PhotoDetailView(date: "더미더미더미",
-                                                              questionNum: 3,
-                                                              question: "더미더미더미더미더미더미",
-                                                              imageUrl1: "",
-                                                              imageUrl2: "")
-                        
-                   
                         if index < firstWeekday {
-                            EmptyView() /// 빈칸 표시
-                        }else {
-                            if indexIsCompleted {
-                                // isSafeIndex && !data.isEmpty && data[dataIndex].isCompleted -> 위에서 선언
-                                    NavigationLink {
-                                        photoDetailView
-                                    } label: {
-                                        cellViewTrue
-                                    }
-                            } else {
-                                cellViewFalse
-                            }
+                            Color.clear /// 빈칸 표시
+                        } else {
                             
-                        }
-
-                    }//: Loop
-                }//: LazyGrid
+                            let day = index - firstWeekday + 1
+                            let data = VM.photos
+                            let start = VM.startDay // 18(일)
+                            let safeIndex = day - start
+                            let isToday: Bool = day == calendar.component(.day, from: today) && changeMonthInt == 0
+                            let isSafeIndex: Bool = safeIndex >= 0 && safeIndex < data.count
+                            
+                            let isThisMonth: Bool = isSafeIndex ? data[safeIndex].month - calendar.component(.month, from: today) == changeMonthInt : false
+                            
+                            let indexIsCompleted: Bool = isSafeIndex ? !data.isEmpty && data[safeIndex].isCompleted : false
+                            
+                            let isMatched: Bool = isThisMonth && indexIsCompleted
+                            
+                            let cellViewFalse = CellView(day: day,
+                                                         isToday: isToday,
+                                                         isThisMonth: false,
+                                                         isCompleted: false,
+                                                         thumbnail: "")
+                            
+                            let cellViewTrue = CellView(day: day,
+                                                        isToday: isToday,
+                                                        isThisMonth: true,
+                                                        isCompleted: true,
+                                                        thumbnail: isSafeIndex && !data.isEmpty ? data[safeIndex].thumbnail : "")
+                            
+                            let photoDetailView = PhotoDetailView(date: "더미더미더미",
+                                                                  questionNum: 3,
+                                                                  question: "더미더미더미더미더미더미",
+                                                                  imageUrl1: "",
+                                                                  imageUrl2: "")
+                            /// 날짜 표기 시작
+                            if isMatched {
+                                // isSafeIndex && !data.isEmpty && data[dataIndex].isCompleted -> 위에서 선언
+                                NavigationLink {
+                                    photoDetailView
+                                } label: {
+                                    cellViewTrue
+                                }
+                            } else {
+                                cellViewFalse}
+                            
+                        }//:if
+                    }//】 Loop
+                }//】 Grid
                 .padding(.horizontal,15)
                 .padding(.bottom, 51)
-            }//if
-               
+            }
+            
         }//】 VStack
         .padding(.top,10)
+        
     }//: oneMonthCalendarView
 
-}
+}// Struct
 
 
 
