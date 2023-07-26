@@ -35,6 +35,8 @@ struct ProfileSettingView: View {
                             .foregroundColor(.darkGray))
                         .font(.pretendard(.light, size: 18))
                         .foregroundColor(.darkGray)
+                        .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
                         Divider()
                             .overlay(Color.darkGray)
                         Text(nameWarning)
