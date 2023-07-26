@@ -20,6 +20,8 @@ enum UserFlow: String {
 
 @MainActor
 class UserViewModel: ObservableObject {
+    @Published var email: String = ""
+    @Published var password: String = ""
     @Published var currentUser: DiptychUser?
     @Published var flow: UserFlow = .initialized
     
@@ -131,6 +133,9 @@ class UserViewModel: ObservableObject {
             await wait()
             print("DEBUG: checkEmailVerification3/ currentUser: \(Auth.auth().currentUser)\n")
             try await Auth.auth().currentUser?.reload()
+//            guard let currentUser = Auth.auth().currentUser else {
+//                await signInWithEmailPassword(email: self.email, password: <#T##String#>)
+//            }
             if let isEmailVerified = Auth.auth().currentUser?.isEmailVerified {
                 if isEmailVerified {
                     print("DEBUG: checkEmailVerification3 / before: \(self.currentUser)\n")
@@ -185,7 +190,9 @@ class UserViewModel: ObservableObject {
     }
     
     func fetchUserData() async {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid = Auth.auth().currentUser?.uid else {
+            self.flow = .initialized
+            return }
         guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else { return }
         if let currentUser = try? snapshot.data(as: DiptychUser.self) {
             self.currentUser = currentUser
@@ -263,17 +270,17 @@ extension UserViewModel {
         do {
             try await getLoverDataWithCode(code: code)
 
-            if var currentUser = self.currentUser, var lover = self.lover {
-
+//            if var currentUser = self.currentUser, var lover = self.lover {
+            if var currentUser = self.currentUser {
                 currentUser.loverId = self.lover?.id
-                lover.loverId = self.currentUser?.id
+//                lover.loverId = self.currentUser?.id
 
                 currentUser.flow = "coupled"
-                lover.flow = "coupled"
+//                lover.flow = "coupled"
                 let encodedCurrentUser = try Firestore.Encoder().encode(currentUser)
-                let encodedLover = try Firestore.Encoder().encode(lover)
+//                let encodedLover = try Firestore.Encoder().encode(lover)
                 try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedCurrentUser, merge: true)
-                try await Firestore.firestore().collection("users").document(lover.id).setData(encodedLover, merge: true)
+//                try await Firestore.firestore().collection("users").document(lover.id).setData(encodedLover, merge: true)
                 self.isCompleted = true
             }
         }

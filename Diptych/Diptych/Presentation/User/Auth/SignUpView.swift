@@ -81,6 +81,8 @@ struct SignUpView: View {
                     passwordWarning = ""
                     passwordConfirmWarning = ""
                     if checkEmail(input: email) && checkPassword(input: password) && confirmPassword(password: password, passwordConfirm: passwordConfirm){
+                        userViewModel.email = email
+                        userViewModel.password = password
                         Task {
                             let result = try await userViewModel.signUpWithEmailPassword(email: email, password: password, name: name)
                             if result == "" {
