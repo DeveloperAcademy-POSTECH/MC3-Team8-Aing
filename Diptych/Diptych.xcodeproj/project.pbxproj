@@ -96,6 +96,7 @@
 		ABFA53B42A5F95E700298F3B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABFA53B32A5F95E700298F3B /* Images.xcassets */; };
 		ABFA53B62A5F95FE00298F3B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABFA53B52A5F95FE00298F3B /* Colors.xcassets */; };
 		ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */; };
+		C1F79A4E2A700E9500A1D63A /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F79A4D2A700E9500A1D63A /* ShareSheetView.swift */; };
 		F3263A932A6543F700B4581C /* ArchiveTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A922A6543F700B4581C /* ArchiveTabView.swift */; };
 		F3263A972A65448400B4581C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A962A65448400B4581C /* CalendarView.swift */; };
 		F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A982A6544AA00B4581C /* CalendarScrollView.swift */; };
@@ -191,6 +192,7 @@
 		ABFA53B32A5F95E700298F3B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		ABFA53B52A5F95FE00298F3B /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalenderView.swift; sourceTree = "<group>"; };
+		C1F79A4D2A700E9500A1D63A /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
 		F3263A922A6543F700B4581C /* ArchiveTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveTabView.swift; sourceTree = "<group>"; };
 		F3263A962A65448400B4581C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		F3263A982A6544AA00B4581C /* CalendarScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScrollView.swift; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 			children = (
 				F3263A922A6543F700B4581C /* ArchiveTabView.swift */,
 				F3263AA12A667AA200B4581C /* PhotoDetailView.swift */,
+				C1F79A4D2A700E9500A1D63A /* ShareSheetView.swift */,
 				F3263A942A65441B00B4581C /* CalendarView */,
 				F3263A952A65442700B4581C /* AlbumView */,
 				F3263A9C2A65B66F00B4581C /* QuestionListView */,
@@ -819,6 +822,7 @@
 				ABCB300B2A6D366A007724DC /* Content.swift in Sources */,
 				44DE9B8E2A67DC2100E6615B /* UIDevice+.swift in Sources */,
 				44EE2BFB2A6E6EF5003B5C1F /* Image+.swift in Sources */,
+				C1F79A4E2A700E9500A1D63A /* ShareSheetView.swift in Sources */,
 				ABCB300D2A6D367F007724DC /* Photo.swift in Sources */,
 				44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */,
 				AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */,

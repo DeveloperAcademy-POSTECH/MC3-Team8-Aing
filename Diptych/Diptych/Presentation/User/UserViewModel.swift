@@ -20,6 +20,8 @@ enum UserFlow: String {
 
 @MainActor
 class UserViewModel: ObservableObject {
+    @Published var email: String = ""
+    @Published var password: String = ""
     @Published var currentUser: DiptychUser?
     @Published var flow: UserFlow = .initialized
     
@@ -47,35 +49,41 @@ class UserViewModel: ObservableObject {
     }
     
     //MARK: - Singing, Authentication
-    func signInWithEmailPassword(email: String, password: String) async throws {
+    func signInWithEmailPassword(email: String, password: String) async throws -> String {
         do {
             print("[DEBUG] signInWithEmailPassword -> email: \(email), password: \(password)")
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             print("[DEBUG] signInWithEmailPassword -> result:  \(result)")
             await fetchUserData()
+            return ""
         }
         catch {
             print(error.localizedDescription)
+            return error.localizedDescription
         }
     }
     
-    func signUpWithEmailPassword(email: String, password: String, name: String) async throws {
+    func signUpWithEmailPassword(email: String, password: String, name: String) async throws -> String {
         do {
-            print("DEBUG: signUpWithEmailPassword")
+            print("DEBUG: signUpWithEmailPassword (Start)")
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             let user = DiptychUser(id: result.user.uid, email: email, flow: "signedUp", name: name)
             let encodedUser = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
+            print("DEBUG: signUpWithEmailPassword (End)")
+            return ""
         }
         catch {
             print(error.localizedDescription)
+            return error.localizedDescription
         }
     }
     
     func sendEmailVerification() async throws {
         do {
-            print("DEBUG: sendEmailVerification")
+            print("DEBUG: sendEmailVerification (Start)")
             try await Auth.auth().currentUser?.sendEmailVerification()
+            print("DEBUG: sendEmailVerification (End)")
         }
         catch {
             print(error.localizedDescription)
@@ -121,19 +129,29 @@ class UserViewModel: ObservableObject {
     
     func checkEmailVerification3() async {
         do {
-            print("DEBUG: checkEmailVerification2")
+            print("DEBUG: checkEmailVerification3 (Start)\n")
             await wait()
+            print("DEBUG: checkEmailVerification3/ currentUser: \(Auth.auth().currentUser)\n")
             try await Auth.auth().currentUser?.reload()
+//            guard let currentUser = Auth.auth().currentUser else {
+//                await signInWithEmailPassword(email: self.email, password: <#T##String#>)
+//            }
             if let isEmailVerified = Auth.auth().currentUser?.isEmailVerified {
-                if isEmailVerified{
-                    self.flow = .emailVerified
+                if isEmailVerified {
+                    print("DEBUG: checkEmailVerification3 / before: \(self.currentUser)\n")
+                    print("DEBUG: checkEmailVerification3 / self.flow: \(self.flow), self.flow.rawVlaue: \(self.flow.rawValue)\n")
+                    if var currentUser = self.currentUser {
+                        currentUser.flow = "emailVerified"
+                        print("DEBUG: checkEmailVerification3 / mid: \(currentUser)\n")
+                        let encodedUser = try Firestore.Encoder().encode(currentUser)
+                        print("DEBUG: checkEmailVerification3 / encoded: \(encodedUser)\n")
+                        try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedUser, merge: true)
+//                        await fetchUserData()
+                        print("DEBUG: checkEmailVerification3 / after: \(self.currentUser)\n")
+                    }
                 }
             }
-            if var currentUser = self.currentUser {
-                currentUser.flow = self.flow.rawValue
-                let encodedUser = try Firestore.Encoder().encode(currentUser)
-                try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedUser, merge: true)
-            }
+            print("DEBUG: checkEmailVerification3 (End)")
         }
         catch {
             print(error.localizedDescription)
@@ -144,7 +162,6 @@ class UserViewModel: ObservableObject {
         do {
             print("[DEBUG] signOut is called")
             try Auth.auth().signOut()
-            //            self.userSession = nil
             self.currentUser = nil
             self.flow = .initialized
         }
@@ -153,37 +170,34 @@ class UserViewModel: ObservableObject {
         }
     }
     
-    func deleteAccount() {
-        print("[DEBUG] deleteAccount is called")
-        
-        if let currentUser = self.currentUser {
-            Firestore.firestore().collection("users").document(currentUser.id).delete() { error in
-                if let error = error {
-                    print(error.localizedDescription)
-                } else {
-                    print("[DEBUG] deleteAccount is processing. Delete in DB")
-                }
+    func deleteAccount() async throws {
+        do {
+            print("[DEBUG] deleteAccount is called")
+            
+            if let currentUserData = self.currentUser, let currentUserAuth = Auth.auth().currentUser {
+                try await Firestore.firestore().collection("users").document(currentUserData.id).delete()
+                print("DEBUG : user data delete done")
+                
+                print("currentUserAuth : \(currentUserAuth)")
+                try await currentUserAuth.delete()
+                print("DEBUG : auth account delete done")
+                
+                self.currentUser = nil
+                self.flow = .initialized
+                
             }
         }
-        
-        let user = Auth.auth().currentUser
-        user?.delete { error in
-            if let error = error {
-                print(error.localizedDescription)
-            } else {
-                print("DEBUG : delete done")
-            }
-        }
-        self.currentUser = nil
-        self.flow = .initialized
     }
     
     func fetchUserData() async {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid = Auth.auth().currentUser?.uid else {
+            self.flow = .initialized
+            return }
         guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else { return }
         if let currentUser = try? snapshot.data(as: DiptychUser.self) {
             self.currentUser = currentUser
             self.flow = UserFlow(rawValue: currentUser.flow) ?? .initialized
+            print("[DEBUG] currentUser : \(self.currentUser)\nflow : \(self.flow)")
         }
     }
     
@@ -255,19 +269,18 @@ extension UserViewModel {
     func setCoupleData(code: String) async throws {
         do {
             try await getLoverDataWithCode(code: code)
-//            print("DEBUG setCoupleData : \(String(describing: self.currentUser))\n \(String(describing: self.lover))")
-            if var currentUser = self.currentUser, var lover = self.lover {
-//                print("1: \(currentUser.email) \(lover.email)")
+
+//            if var currentUser = self.currentUser, var lover = self.lover {
+            if var currentUser = self.currentUser {
                 currentUser.loverId = self.lover?.id
-                lover.loverId = self.currentUser?.id
-//                print("2: \(currentUser.id) /// \(lover.id)")
-//                print("3: \(String(describing: currentUser.loverId)) /// \(String(describing: lover.loverId))")
+//                lover.loverId = self.currentUser?.id
+
                 currentUser.flow = "coupled"
-                lover.flow = "coupled"
+//                lover.flow = "coupled"
                 let encodedCurrentUser = try Firestore.Encoder().encode(currentUser)
-                let encodedLover = try Firestore.Encoder().encode(lover)
+//                let encodedLover = try Firestore.Encoder().encode(lover)
                 try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedCurrentUser, merge: true)
-                try await Firestore.firestore().collection("users").document(lover.id).setData(encodedLover, merge: true)
+//                try await Firestore.firestore().collection("users").document(lover.id).setData(encodedLover, merge: true)
                 self.isCompleted = true
             }
         }
@@ -286,7 +299,6 @@ extension UserViewModel {
                     print((lover.startDate?.get(.day) == startDate.get(.day)) && (lover.startDate?.get(.month) == startDate.get(.month)) && (lover.startDate?.get(.year) == startDate.get(.year)))
                     setFirstSecond(isFirst: false)
                     return (lover.startDate?.get(.day) == startDate.get(.day)) && (lover.startDate?.get(.month) == startDate.get(.month)) && (lover.startDate?.get(.year) == startDate.get(.year))
-//                    return lover.startDate == startDate
                 }
             }
         }
@@ -302,29 +314,8 @@ extension UserViewModel {
     func addCoupleAlbumData(startDate: Date) async throws {
         do {
             print("[DEBUG] addCoupleAlbumData start!!!")
-            // Add a new document with a generated id.
             var data = DiptychAlbum(id: "")
             var ref: DocumentReference? = nil
-//            ref = try Firestore.firestore().collection("albums").addDocument(from: data) { err in
-//                if let err = err {
-//                    print("Error adding document: \(err)")
-//                } else {
-//                    data.id = ref!.documentID
-//                    // 업데이트된 데이터를 Firestore에 다시 저장
-////                    let encodedCoupleAlbum = try Firestore.Encoder().encode(data)
-////                    try await Firestore.firestore().collection("albums").document(data.id).setData(encodedCoupleAlbum, merge: true)
-//                    try? ref!.setData(from: data) { error in
-//                        if let error = error {
-//                            print(error.localizedDescription)
-//                        } else {
-//                            self.coupleAlbum = data
-//                            if let coupleAlbum = self.coupleAlbum {
-//                                print("Document added with ID: \(coupleAlbum.id)")
-//                            }
-//                        }
-//                    }
-//                }
-//            }
             var encodedData = try Firestore.Encoder().encode(data)
             ref = try await Firestore.firestore().collection("albums").addDocument(data: encodedData)
             data.id = ref!.documentID
@@ -335,7 +326,6 @@ extension UserViewModel {
             if let coupleAlbum = self.coupleAlbum {
                 print("Document added with ID: \(coupleAlbum.id)")
             }
-//            print(data.id)
         }
     }
     
@@ -345,9 +335,8 @@ extension UserViewModel {
             if var currentUser = self.currentUser, var lover = self.lover {
                 currentUser.name = name
                 currentUser.startDate = startDate
-                await fetchCoupleAlbumData()
+                try await addCoupleAlbumData(startDate: startDate)
                 if let coupleAlbum = self.coupleAlbum {
-                    try await addCoupleAlbumData(startDate: startDate)
                     print("[DEBUG] check!!!! coupleAlbumId: \(coupleAlbum.id)")
                     currentUser.coupleAlbumId = coupleAlbum.id
                     lover.coupleAlbumId = coupleAlbum.id
