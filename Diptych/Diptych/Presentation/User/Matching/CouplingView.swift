@@ -57,7 +57,7 @@ struct CouplingView: View {
                 Spacer()
                 Button {
                     Task {
-                        try await userViewModel.setCouplingCode()
+//                        try await userViewModel.setCouplingCode()
                         try await userViewModel.setCoupleData(code: loverCode)
                     }
                 } label: {
@@ -72,6 +72,11 @@ struct CouplingView: View {
             .padding([.leading, .trailing], 15)
         }
         .ignoresSafeArea()
+        .onAppear() {
+            Task {
+                try await userViewModel.setCouplingCode()
+            }
+        }
     }
 }
 

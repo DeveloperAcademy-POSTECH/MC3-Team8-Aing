@@ -34,11 +34,15 @@ class UserViewModel: ObservableObject {
     init() {
         Task {
             await fetchUserData()
-            print("[DEBUG] currentUser : \(self.currentUser)\nflow : \(self.flow)")
+//            print("[DEBUG] currentUser : \(self.currentUser)\nflow : \(self.flow)")
             listenerAboutUserData = Firestore.firestore().collection("users").addSnapshotListener() { snapshot, error in
-                Task{
-                    await self.fetchUserData()
-                }
+//                if let source = snapshot?.metadata.hasPendingWrites {
+//                    if !source {
+                        Task{
+                            await self.fetchUserData()
+                        }
+//                    }
+//                }
             }
             try await generatedCouplingCode()
         }
@@ -59,11 +63,12 @@ class UserViewModel: ObservableObject {
     
     func signUpWithEmailPassword(email: String, password: String, name: String) async throws {
         do {
-            print("DEBUG: signUpWithEmailPassword")
+            print("DEBUG: signUpWithEmailPassword (Start)")
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             let user = DiptychUser(id: result.user.uid, email: email, flow: "signedUp", name: name)
             let encodedUser = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
+            print("DEBUG: signUpWithEmailPassword (End)")
         }
         catch {
             print(error.localizedDescription)
@@ -72,8 +77,9 @@ class UserViewModel: ObservableObject {
     
     func sendEmailVerification() async throws {
         do {
-            print("DEBUG: sendEmailVerification")
+            print("DEBUG: sendEmailVerification (Start)")
             try await Auth.auth().currentUser?.sendEmailVerification()
+            print("DEBUG: sendEmailVerification (End)")
         }
         catch {
             print(error.localizedDescription)
@@ -119,19 +125,27 @@ class UserViewModel: ObservableObject {
     
     func checkEmailVerification3() async {
         do {
-            print("DEBUG: checkEmailVerification2")
+            print("DEBUG: checkEmailVerification3 (Start)\n")
             await wait()
+            print("DEBUG: checkEmailVerification3/ currentUser: \(Auth.auth().currentUser)\n")
             try await Auth.auth().currentUser?.reload()
             if let isEmailVerified = Auth.auth().currentUser?.isEmailVerified {
-                if isEmailVerified{
-                    self.flow = .emailVerified
+                if isEmailVerified {
+//                    self.flow = .emailVerified
+                    print("DEBUG: checkEmailVerification3 / before: \(self.currentUser)\n")
+                    print("DEBUG: checkEmailVerification3 / self.flow: \(self.flow), self.flow.rawVlaue: \(self.flow.rawValue)\n")
+                    if var currentUser = self.currentUser {
+                        currentUser.flow = "emailVerified"
+                        print("DEBUG: checkEmailVerification3 / mid: \(currentUser)\n")
+                        let encodedUser = try Firestore.Encoder().encode(currentUser)
+                        print("DEBUG: checkEmailVerification3 / encoded: \(encodedUser)\n")
+                        try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedUser, merge: true)
+//                        await fetchUserData()
+                        print("DEBUG: checkEmailVerification3 / after: \(self.currentUser)\n")
+                    }
                 }
             }
-            if var currentUser = self.currentUser {
-                currentUser.flow = self.flow.rawValue
-                let encodedUser = try Firestore.Encoder().encode(currentUser)
-                try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedUser, merge: true)
-            }
+            print("DEBUG: checkEmailVerification3 (End)")
         }
         catch {
             print(error.localizedDescription)
@@ -151,29 +165,24 @@ class UserViewModel: ObservableObject {
         }
     }
     
-    func deleteAccount() {
-        print("[DEBUG] deleteAccount is called")
-        
-        if let currentUser = self.currentUser {
-            Firestore.firestore().collection("users").document(currentUser.id).delete() { error in
-                if let error = error {
-                    print(error.localizedDescription)
-                } else {
-                    print("[DEBUG] deleteAccount is processing. Delete in DB")
+    func deleteAccount() async throws {
+        do {
+            print("[DEBUG] deleteAccount is called")
+            
+            if let currentUser = self.currentUser {
+                try await Firestore.firestore().collection("users").document(currentUser.id).delete()
+                print("DEBUG : user data delete done")
+                
+                print(Auth.auth().currentUser)
+                if let user = Auth.auth().currentUser {
+                    try await user.delete()
+                    print("DEBUG : auth account delete done")
+                    
+                    self.currentUser = nil
+                    self.flow = .initialized
                 }
             }
         }
-        
-        let user = Auth.auth().currentUser
-        user?.delete { error in
-            if let error = error {
-                print(error.localizedDescription)
-            } else {
-                print("DEBUG : delete done")
-            }
-        }
-        self.currentUser = nil
-        self.flow = .initialized
     }
     
     func fetchUserData() async {
@@ -182,6 +191,7 @@ class UserViewModel: ObservableObject {
         if let currentUser = try? snapshot.data(as: DiptychUser.self) {
             self.currentUser = currentUser
             self.flow = UserFlow(rawValue: currentUser.flow) ?? .initialized
+            print("[DEBUG] currentUser : \(self.currentUser)\nflow : \(self.flow)")
         }
     }
     
@@ -343,9 +353,10 @@ extension UserViewModel {
             if var currentUser = self.currentUser, var lover = self.lover {
                 currentUser.name = name
                 currentUser.startDate = startDate
-                await fetchCoupleAlbumData()
+                try await addCoupleAlbumData(startDate: startDate)
+//                await fetchCoupleAlbumData()
                 if let coupleAlbum = self.coupleAlbum {
-                    try await addCoupleAlbumData(startDate: startDate)
+//                    try await addCoupleAlbumData(startDate: startDate)
                     print("[DEBUG] check!!!! coupleAlbumId: \(coupleAlbum.id)")
                     currentUser.coupleAlbumId = coupleAlbum.id
                     lover.coupleAlbumId = coupleAlbum.id

@@ -58,20 +58,20 @@ struct ProfileSettingView: View {
                 }
                 Spacer()
                 Button {
-                        Task {
-                            print("selectedDate: \(selectedDate)")
-                            if try await userViewModel.checkStartDate(startDate: selectedDate) && checkName(input: name) {
-                                selectedDateWarning = ""
-                                nameWarning = ""
-                                try await userViewModel.setProfileData(name: name, startDate: selectedDate)
-                            }
-                            if try await userViewModel.checkStartDate(startDate: selectedDate) == false {
-                                selectedDateWarning = "상대가 설정한 시작일과 다릅니다."
-                            }
-                            if checkName(input: name) == false {
-                                nameWarning = "닉네임은 최대 8글자의 한글, 영어, 숫자 조합으로 만들어주세요."
-                            }
+                    selectedDateWarning = ""
+                    nameWarning = ""
+                    Task {
+                        print("selectedDate: \(selectedDate)")
+                        if try await userViewModel.checkStartDate(startDate: selectedDate) && checkName(input: name) {
+                            try await userViewModel.setProfileData(name: name, startDate: selectedDate)
                         }
+                        if try await userViewModel.checkStartDate(startDate: selectedDate) == false {
+                            selectedDateWarning = "상대가 설정한 시작일과 다릅니다."
+                        }
+                        if checkName(input: name) == false {
+                            nameWarning = "닉네임은 최대 5글자의 한글이나 최대 6글자의 영어로 만들어주세요."
+                        }
+                    }
                 } label: {
                     Text("딥틱 시작하기")
                         .frame(width: UIScreen.main.bounds.width-30, height:  60)
@@ -102,7 +102,7 @@ struct ProfileSettingView: View {
     }
     
     private func checkName(input: String) -> Bool {
-        let nameRegEx: String = "^[가-힣ㄱ-ㅎㅏ-ㅣA-Za-z0-9]{1,8}$"
+        let nameRegEx: String = "^[가-힣ㄱ-ㅎㅏ-ㅣ]{1,5}|[A-Za-z]{1,6}$"
         return NSPredicate(format: "SELF MATCHES %@", nameRegEx).evaluate(with: input)
     }
 }
