@@ -31,19 +31,21 @@ struct TodayDiptychView: View {
                 viewModel.weeklyData.removeAll()
             }
             .fullScreenCover(isPresented: $isShowCamera) {
-                CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
-                     .toolbar(.hidden, for: .tabBar)
-                     .onAppear {
-                         print("fullScreenCover")
-                     }
-                     .onDisappear {
-                         Task {
-                             await viewModel.fetchTodayImage()
-                             await viewModel.fetchWeeklyCalender()
-                             await viewModel.fetchContents()
+                ZStack {
+                    Color.offWhite.ignoresSafeArea()
+                    CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
+                         .toolbar(.hidden, for: .tabBar)
+                         .onAppear {
+                             print("fullScreenCover")
                          }
-                     }
-
+                         .onDisappear {
+                             Task {
+                                 await viewModel.fetchTodayImage()
+                                 await viewModel.fetchWeeklyCalender()
+                                 await viewModel.fetchContents()
+                             }
+                         }
+                }
             }
         }
     }

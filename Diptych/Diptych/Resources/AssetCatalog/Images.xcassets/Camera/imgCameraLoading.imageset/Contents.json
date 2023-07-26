@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Send.png",
+      "filename" : "imgCameraLoading@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Send@2x.png",
+      "filename" : "imgCameraLoading@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Send@3x.png",
+      "filename" : "imgCameraLoading@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
