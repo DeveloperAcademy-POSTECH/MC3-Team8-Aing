@@ -10,6 +10,9 @@ import SwiftUI
 struct LogInView: View {
     @State var email: String = ""
     @State var password: String = ""
+    @State var passwordWarning: String = ""
+    @State var isAlertShown: Bool = false
+    @State var alertMessage: String = ""
     @EnvironmentObject var userViewModel: UserViewModel
     var body: some View {
         ZStack {
@@ -37,6 +40,9 @@ struct LogInView: View {
                             .font(.pretendard(.light, size: 18))
                             .foregroundColor(.darkGray)
                         Divider()
+//                        Text(passwordWarning)
+//                            .font(.pretendard(.light, size: 12))
+//                            .foregroundColor(.systemRed)
                     }
                 }
                 .padding([.leading, .trailing], 15)
@@ -64,13 +70,20 @@ struct LogInView: View {
                 Spacer()
                 Button {
                     Task {
-                        try await userViewModel.signInWithEmailPassword(email: email, password: password)
+                        let result = try await userViewModel.signInWithEmailPassword(email: email, password: password)
+                        if result != "" {
+                            alertMessage = result
+                            isAlertShown = true
+                        }
                     }
                 } label: {
                     Text("로그인")
                         .frame(width: UIScreen.main.bounds.width-30, height:  60)
                         .background(Color.offBlack)
                         .foregroundColor(.offWhite)
+                }
+                .alert(isPresented: $isAlertShown) {
+                    Alert(title: Text("로그인 에러"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
                 }
 //                NavigationLink(destination: EmailVerificationView()) {
 //                    Text("로그인")

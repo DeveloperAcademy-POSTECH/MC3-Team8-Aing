@@ -49,19 +49,21 @@ class UserViewModel: ObservableObject {
     }
     
     //MARK: - Singing, Authentication
-    func signInWithEmailPassword(email: String, password: String) async throws {
+    func signInWithEmailPassword(email: String, password: String) async throws -> String {
         do {
             print("[DEBUG] signInWithEmailPassword -> email: \(email), password: \(password)")
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             print("[DEBUG] signInWithEmailPassword -> result:  \(result)")
             await fetchUserData()
+            return ""
         }
         catch {
             print(error.localizedDescription)
+            return error.localizedDescription
         }
     }
     
-    func signUpWithEmailPassword(email: String, password: String, name: String) async throws {
+    func signUpWithEmailPassword(email: String, password: String, name: String) async throws -> String {
         do {
             print("DEBUG: signUpWithEmailPassword (Start)")
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
@@ -69,9 +71,11 @@ class UserViewModel: ObservableObject {
             let encodedUser = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
             print("DEBUG: signUpWithEmailPassword (End)")
+            return ""
         }
         catch {
             print(error.localizedDescription)
+            return error.localizedDescription
         }
     }
     
