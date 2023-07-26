@@ -52,6 +52,8 @@ struct CouplingView: View {
                             .foregroundColor(.darkGray))
                         .font(.pretendard(.light, size: 24))
                         .foregroundColor(.darkGray)
+                        .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
                         Divider()
                             .overlay(Color.darkGray)
                     }
