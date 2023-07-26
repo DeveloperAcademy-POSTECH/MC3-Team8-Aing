@@ -63,6 +63,8 @@ class CameraViewController: UIViewController {
     
     @IBOutlet weak var viewOverlay: UIView!
     @IBOutlet weak var tempSegDirection: UISegmentedControl!
+    @IBOutlet weak var imgGuidelineDashed: UIImageView!
+    @IBOutlet weak var viewLottieLoading: UIView!
     
     // MARK: - Constants
     let RESIZE_WIDTH: CGFloat = 2048
@@ -129,24 +131,22 @@ class CameraViewController: UIViewController {
         
         // TODO: - Limited 위한 커스텀 뷰를 또 만들어야 하는가?
         // https://zeddios.tistory.com/620
-        // let fetchOptions = PHFetchOptions()
-        // let allPhotos = PHAsset.fetchAssets(with: .image, options: fetchOptions)
-        //
-        // for i in 0...(allPhotos.count - 1) {
-        //     print(allPhotos.object(at: i))
-        // }
+        /*
+         let fetchOptions = PHFetchOptions()
+         let allPhotos = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+         
+         for i in 0...(allPhotos.count - 1) {
+             print(allPhotos.object(at: i))
+         }
+         */
         
-        DispatchQueue.main.async { [unowned self] in
-            viewOverlay.layoutIfNeeded()
-            originalOverlayFrame = viewOverlay.frame
-            
-            shrinkOverlayByAxis(.verticalLeft)
-        }
+        setupOverlay()
+        displayGuideAndOverlay(false)
+        setupLottieLoading()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         checkCameraPermissions()
         setupPhotoCamera()
     }
@@ -165,9 +165,7 @@ class CameraViewController: UIViewController {
             currentAxis = viewModel.isFirst ? .verticalLeft : .verticalRight
         }
         
-        guard let imageCacheViewModel else {
-            return
-        }
+        btnShutter.isEnabled = false
     }
     
     // MARK: - IBActions
@@ -182,6 +180,11 @@ class CameraViewController: UIViewController {
             
             photoOutput.capturePhoto(with: photoSettings, delegate: self)
         case .retouch:
+            btnShutter.isEnabled = false
+            
+            let lottieView = LottieUIViews.shared.lottieView(frame: view.frame)
+            view.addSubview(lottieView)
+            
             // guard let data = imgViewGuideOverlay.image?.jpegData(compressionQuality: 1) else {
             //     debugPrint("\(#function): Image data is nil")
             //     return
@@ -271,23 +274,33 @@ class CameraViewController: UIViewController {
         }
     }
     
-    // MARK: - Navigations
+    // MARK: - UI Assistants
     
-    // override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //     switch segue.identifier {
-    //     case "RetouchCameraSegue":
-    //         let data = sender as! Data
-    //         let destination = segue.destination as! CameraRetouchViewController
-    //         destination.modalPresentationStyle = .fullScreen
-    //         destination.photoData = data
-    //     default:
-    //         break
-    //     }
-    // }
+    private func setupOverlay() {
+        DispatchQueue.main.async { [unowned self] in
+            viewOverlay.layoutIfNeeded()
+            originalOverlayFrame = viewOverlay.frame
+            
+            shrinkOverlayByAxis(.verticalLeft)
+        }
+    }
+    
+    private func displayGuideAndOverlay(_ isShow: Bool) {
+        imgGuidelineDashed.isHidden = !isShow
+        viewOverlay.isHidden = !isShow
+    }
+    
+    private func setupLottieLoading() {
+        let lottieRect = CGRect(origin: .zero, size: viewLottieLoading.frame.size)
+        let lottieView = LottieUIViews.shared.lottieView(frame: lottieRect, backgroundColor: .diptychLightGray)
+        viewLottieLoading.addSubview(lottieView)
+    }
     
     // MARK: - Camera Functions
     
     func setupPhotoCamera() {
+        // 카메라 로딩 시작
+        
         // 메인 스레드에서 실행 방지 - startRunning()이 차단 호출(block call)이기 때문
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             // 세션 초기화
@@ -345,7 +358,12 @@ class CameraViewController: UIViewController {
             // 캡처 세션 실행
             captureSession.startRunning()
             
-            // TODO: - startRunning이 시작되면 UI/UX 동작되게 하기
+            DispatchQueue.main.async {
+                self.btnShutter.isEnabled = true
+                self.displayGuideAndOverlay(true)
+                // 로딩 끝
+                self.viewLottieLoading.isHidden = true
+            }
         }
     }
     
@@ -633,6 +651,7 @@ class CameraViewController: UIViewController {
     }
     
     func changeCameraPosition() {
+        btnChangePosition.isEnabled = false
         captureSession.beginConfiguration()
         
         switch captureSession.inputs[0] {
@@ -650,6 +669,7 @@ class CameraViewController: UIViewController {
         
         // commitConfiguration : captureSession 의 설정 변경이 완료되었음을 알리는 함수.
         captureSession.commitConfiguration()
+        btnChangePosition.isEnabled = true
     }
 }
 

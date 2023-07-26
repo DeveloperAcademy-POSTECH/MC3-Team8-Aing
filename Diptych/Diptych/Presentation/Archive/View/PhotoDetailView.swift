@@ -28,18 +28,18 @@ extension PhotoDetailView: View {
             VStack(spacing: 0) {
                 
                 /// [1] 해더
-                HStack {
+                HStack(spacing: 8) {
                     textLabel(text: date)
                     textLabel(text: "\(questionNum)번째 질문")
                     Spacer()
-                }
+                }//: HStack
                 .padding(.leading, 15)
-                .padding(.top,30)
-                // 이슈 1. NavigationLink가 들어가면 위에 그 공간만큼 밑으로 밀리기 때문에 정확한 픽셀 값 맞추기 어려움. 눈 대중으로 맞춰둠.
+                .padding(.top,20)
                 .padding(.bottom, 15)
+                // 이슈 1. NavigationLink가 들어가면 위에 그 공간만큼 밑으로 밀리기 때문에 정확한 픽셀 값 맞추기 어려움. 눈 대중으로 맞춰둠.
                 
                 /// [2] 질문
-                HStack {
+                HStack(spacing: 0) {
                     Text(question)
                         // 이슈 2. 자간이 약간 다름
                         // 이슈 3. 문장마다 자동 줄바꿈은 어떻게 할 수 있을까?
@@ -49,9 +49,8 @@ extension PhotoDetailView: View {
                         .multilineTextAlignment(.leading)
                         .padding(.leading, 15)
                     Spacer()
-                }
+                }//: HStack
 
-                Spacer()
                 
                 /// [3] 사진 프레임
                 // photoA와 photoB가 각각 따로 띄워져야 함, 저장할 때 합쳐져서 저장됨
@@ -63,8 +62,8 @@ extension PhotoDetailView: View {
                             image
                                 .resizable()
                                 .frame(width: 196.5, height: 393)
-                                .padding(.top, 20)
-                                .padding(.bottom, 44)
+//                                .padding(.top, 20)
+//                                .padding(.bottom, 44)
                         },
                         placeholder: { ProgressView() }
                     )
@@ -73,30 +72,42 @@ extension PhotoDetailView: View {
                         content: { image in
                             image
                                 .resizable()
+                                .frame(height: 393)
                                 .frame(width: 196.5, height: 393)
-                                .padding(.top, 20)
-                                .padding(.bottom, 44)
+//                                .padding(.top, 20)
+//                                .padding(.bottom, 44)
                         },
                         placeholder: { ProgressView() }
                     )
-                }
-                Spacer()
+                }//: HStack
+//                .frame(height: 393, alignment: .center)
+                .frame(maxWidth: .infinity)
+                .aspectRatio(1, contentMode: .fit)
+                .padding(.top, 20)
+                .padding(.bottom,44)
+                
                 
                 /// [4]버튼
                 HStack {
-                    
-                    Image("download")
+                    ShareSheetView()
+//                    Image("upload")
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
-                        .padding(.leading, 118)
-                        .padding(.trailing, 97)
-                    Image("send")
+                        .padding(.leading, 70)
+                    Image("whiteHeart")
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
-                        .padding(.trailing, 118)
+                        .padding(.horizontal, 80)
+                    Image("comment")
+                        .foregroundColor(.offBlack)
+                        .frame(width: 30, height: 30)
+                        .padding(.trailing, 70)
                 }
+                .padding(.bottom,48)
+                
+                Spacer()
             } // VStack
-            .padding(.bottom, 110)
+            
         } // ZStack
     }
 }
