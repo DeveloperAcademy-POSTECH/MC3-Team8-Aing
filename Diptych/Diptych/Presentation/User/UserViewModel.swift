@@ -179,23 +179,22 @@ class UserViewModel: ObservableObject {
                 print("DEBUG : user data delete done")
                 
                 print("currentUserAuth : \(currentUserAuth)")
-//                try await currentUserAuth.delete()
-                let user = Auth.auth().currentUser
-                        user?.delete(completion: { error in
-                            guard error == nil else
-                            {
-                               
-                                print("delete -> error -> \(error?.localizedDescription)")
-                 
-                                return
-                            }
-                            return
-                        })
+                
+                try await currentUserAuth.delete()
+//                let user = Auth.auth().currentUser
+//                user?.delete(completion: { error in
+//                    guard error == nil else {
+//                        print("delete -> error -> \(error?.localizedDescription)")
+//                        return
+//                    }
+//                    return
+//                })
                 print("DEBUG : auth account delete done")
                 
                 self.currentUser = nil
                 self.flow = .initialized
-                
+            } else {
+                print("something is nil")
             }
         }
     }
@@ -249,6 +248,7 @@ class UserViewModel: ObservableObject {
 extension UserViewModel {
     func generatedCouplingCode() async throws {
         do {
+//            guard let snapshot = try? await Firestore.firestore().collection("users").whereField("couplingCode", )
             self.couplingCode = String(Int.random(in: 10000000 ... 99999999))
         }
     }
@@ -271,9 +271,15 @@ extension UserViewModel {
                 return
             }
             print("snapshot doc: \(snapshot.documents)")
-            if snapshot.documents.count == 1 {
-                self.lover = try snapshot.documents[0].data(as: DiptychUser.self)
+            for document in snapshot.documents {
+                guard let _ = document.get("loverId") else {
+                    self.lover = try document.data(as: DiptychUser.self)
+                    return
+                }
             }
+//            if snapshot.documents.count == 1 {
+//                self.lover = try snapshot.documents[0].data(as: DiptychUser.self)
+//            }
         }
     }
     
