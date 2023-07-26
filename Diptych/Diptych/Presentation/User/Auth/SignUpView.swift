@@ -99,7 +99,7 @@ struct SignUpView: View {
                         }
                     }
                 } label: {
-                    Text("회원가입")
+                    Text("인증메일 받기")
                         .frame(width: UIScreen.main.bounds.width-30, height:  60)
                         .background(Color.offBlack)
                         .foregroundColor(.offWhite)

@@ -16,6 +16,7 @@ struct ProfileSettingView: View {
     @State var selectedDateWarning: String = ""
     
     @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var todayDiptychViewModel: TodayDiptychViewModel
     
     var format = "yyyy년 MM월 dd일"
     var body: some View {
@@ -64,6 +65,7 @@ struct ProfileSettingView: View {
                         print("selectedDate: \(selectedDate)")
                         if try await userViewModel.checkStartDate(startDate: selectedDate) && checkName(input: name) {
                             try await userViewModel.setProfileData(name: name, startDate: selectedDate)
+                            await todayDiptychViewModel.setUserCameraLoactionState()
                         }
                         if try await userViewModel.checkStartDate(startDate: selectedDate) == false {
                             selectedDateWarning = "상대가 설정한 시작일과 다릅니다."

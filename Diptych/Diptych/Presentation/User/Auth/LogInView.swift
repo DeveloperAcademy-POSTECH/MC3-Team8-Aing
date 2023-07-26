@@ -14,6 +14,8 @@ struct LogInView: View {
     @State var isAlertShown: Bool = false
     @State var alertMessage: String = ""
     @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var todayDiptychViewModel: TodayDiptychViewModel
+    
     var body: some View {
         ZStack {
             Color.offWhite
@@ -71,13 +73,14 @@ struct LogInView: View {
                 Button {
                     Task {
                         let result = try await userViewModel.signInWithEmailPassword(email: email, password: password)
+                        await todayDiptychViewModel.setUserCameraLoactionState()
                         if result != "" {
                             alertMessage = result
                             isAlertShown = true
                         }
                     }
                 } label: {
-                    Text("로그인")
+                    Text("로그인하기")
                         .frame(width: UIScreen.main.bounds.width-30, height:  60)
                         .background(Color.offBlack)
                         .foregroundColor(.offWhite)
