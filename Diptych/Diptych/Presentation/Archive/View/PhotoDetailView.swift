@@ -89,7 +89,8 @@ extension PhotoDetailView: View {
                 
                 /// [4]버튼
                 HStack {
-                    Image("upload")
+                    ShareSheetView()
+//                    Image("upload")
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
                         .padding(.leading, 70)
