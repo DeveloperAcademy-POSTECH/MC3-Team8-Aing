@@ -12,6 +12,7 @@ import FirebaseStorage
 class FirebaseManager {
     /// Singleton instance
     static let shared: FirebaseManager = FirebaseManager()
+    private init() {}
     
     /// Path
     private(set) var kFirFileStorageRef = Storage.storage().reference().child("Temp_images")
