@@ -16,47 +16,35 @@ struct TodayDiptychView: View {
     @State private var firstUIImage: UIImage?
     @State private var secondUIImage: UIImage?
     @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
-    
     @StateObject private var viewModel = TodayDiptychViewModel()
-    @State private var mondayDate = 0
     @State private var isAllTasksCompleted = false
     let days = ["월", "화", "수", "목", "금", "토", "일"]
 
     var body: some View {
-        ZStack {
-            if isAllTasksCompleted {
-                MainDiptychView()
-            } else {
-                ProgressView()
+        NavigationStack {
+            MainDiptychView()
+            .ignoresSafeArea(edges: .top)
+            .onAppear {
+
             }
-        }
-        .ignoresSafeArea(edges: .top)
-        .onAppear {
-            mondayDate = viewModel.calculateThisWeekMondayDate()
-            
-            Task {
-                await viewModel.fetchUser()
-                await viewModel.setUserCameraLoactionState()
-                await viewModel.fetchTodayImage()
-                await viewModel.fetchWeeklyCalender()
-                await viewModel.fetchContents()
-                await viewModel.setTodayPhoto()
-                
-                DispatchQueue.main.async {
-                    isAllTasksCompleted = true
-                }
+            .onDisappear {
+                viewModel.weeklyData.removeAll()
             }
-        }
-        .onDisappear {
-            viewModel.weeklyData.removeAll()
-        }
-        .fullScreenCover(isPresented: $isShowCamera) {
-            CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
-                 .toolbar(.hidden, for: .tabBar)
-                 .onAppear {
-                     print("fullScreenCover")
-                 }
-            
+            .fullScreenCover(isPresented: $isShowCamera) {
+                CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
+                     .toolbar(.hidden, for: .tabBar)
+                     .onAppear {
+                         print("fullScreenCover")
+                     }
+                     .onDisappear {
+                         Task {
+                             await viewModel.fetchTodayImage()
+                             await viewModel.fetchWeeklyCalender()
+                             await viewModel.fetchContents()
+                         }
+                     }
+
+            }
         }
     }
 
@@ -79,13 +67,15 @@ struct TodayDiptychView: View {
                 .padding(.top, 35)
 
                 HStack(spacing: 0) {
-                    Text("\"\(viewModel.question)\"")
+                    Text("오늘 본 동그라미는?")
+//                    Text("\"\(viewModel.question)\"")
+                        .frame(height: 78, alignment: .topLeading)
                         .lineSpacing(6)
                         .font(.pretendard(.light, size: 28))
                         .foregroundColor(.offBlack)
                         .padding(.top, 12)
-                        .padding(.leading, 15)
-                        .padding(.bottom, 34)
+                        .padding(.horizontal, 15)
+                        .padding(.bottom, 35)
                     Spacer()
                 }
 
@@ -111,7 +101,7 @@ struct TodayDiptychView: View {
                                 .fill(Color.offWhite)
                         case .empty:
                             Rectangle()
-                                .fill(Color.offBlack)
+                                .fill(viewModel.isFirst ? Color.lightGray : Color.offBlack)
                                 .overlay {
                                     if viewModel.isFirst {
                                         Image("imgDiptychCamera")
@@ -145,7 +135,7 @@ struct TodayDiptychView: View {
                                 .fill(Color.offBlack)
                         case .empty:
                             Rectangle()
-                                .fill(Color.lightGray)
+                                .fill(viewModel.isFirst ? Color.offBlack : Color.lightGray)
                                 .overlay {
                                     if !viewModel.isFirst {
                                         Image("imgDiptychCamera")
@@ -161,24 +151,40 @@ struct TodayDiptychView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .aspectRatio(1.0, contentMode: .fit)
-                .padding(.bottom, 23)
+                .padding(.bottom, 20)
 
                 HStack(spacing: 9) {
                     if viewModel.isLoading {
                         ProgressView()
                     } else {
-                        ForEach(0..<viewModel.weeklyData.count, id: \.self) { index in
-                            WeeklyCalenderView(day: days[index],
-                                               date: "\(mondayDate + index)",
-                                               isToday: index == viewModel.weeklyData.count - 1 ? true : false,
-                                               thumbnail: viewModel.weeklyData[index].thumbnail,
-                                               diptychState: viewModel.weeklyData[index].diptychState)
-                        }
-                        ForEach(viewModel.weeklyData.count..<7, id: \.self) { index in
-                            WeeklyCalenderView(day: days[index],
-                                               date: "\(mondayDate + index)",
-                                               isToday: false,
-                                               diptychState: .incomplete)
+                        let weeklyDates = viewModel.setWeeklyDates()
+                        
+                        ForEach(0..<7) { index in
+                            let date = weeklyDates[index]
+                            let data = viewModel.weeklyData.filter { $0.date == date }
+                            let formattedDate = String(format: "%02d", date)
+                            let isToday = date == viewModel.setTodayDate()
+                            let diptychState = data.isEmpty ? .incomplete : data[0].diptychState
+                            let weeklyCalenderView = WeeklyCalenderView(day: days[index],
+                                                                        date: formattedDate,
+                                                                        isToday: isToday,
+                                                                        thumbnail: data.isEmpty ? "" : data[0].thumbnail,
+                                                                        diptychState: data.isEmpty ? .incomplete : data[0].diptychState)
+
+                            switch diptychState {
+                            case .complete:
+                                NavigationLink {
+                                    PhotoDetailView(date: "더미더미더미",
+                                                    questionNum: 3,
+                                                    question: "더미더미더미더미더미더미",
+                                                    imageUrl1: "",
+                                                    imageUrl2: "")
+                                } label: {
+                                        weeklyCalenderView
+                                }
+                            default:
+                                weeklyCalenderView
+                            }
                         }
                     }
                 }

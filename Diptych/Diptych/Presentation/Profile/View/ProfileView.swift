@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 // MARK: - Property
 
@@ -29,10 +30,10 @@ struct ProfileView: View {
             VStack {
                 LazyVGrid(columns: columns) {
                     ForEach(0 ..< 1) { _ in
-                        userNameLabel(text: "Reene")
+                        userNameLabel(text: userViewModel.currentUser?.name ?? "...") // 로딩중일때 "..."로 표현
                             .padding(.leading, 20)
                         Image("heart")
-                        userNameLabel(text: "Nyla")
+                        userNameLabel(text: userViewModel.lover?.name ?? "...")
                             .padding(.trailing, 20)
                     }
                 }
@@ -43,12 +44,12 @@ struct ProfileView: View {
                     .padding(.top, 80) // 임의로 조정했음
                     .padding(.bottom, 103)
                 
-                Text("D+233")
+                Text("D+\(setDdayCount())")
                     .font(.pretendard(.light, size: 28))
                     .foregroundColor(.offBlack)
                     .padding(.bottom, 30)
                 
-                Text("20번째 딥틱 중")
+                Text("5번째 딥틱 중")
                     .font(.pretendard(.light, size: 28))
                     .foregroundColor(.offBlack)
                     .padding(.bottom, 179)
@@ -87,6 +88,7 @@ struct ProfileView: View {
 
 // MARK: - Component
 
+// 유저 닉네임
 extension ProfileView {
     func userNameLabel(text: String) -> some View {
         return Text(text)
@@ -95,10 +97,21 @@ extension ProfileView {
     }
 }
 
+// startDate로부터 디데이 계산
+extension ProfileView {
+    func setDdayCount() -> Int {
+        guard let startDate = userViewModel.currentUser?.startDate else { return 0 }
+        let currentDate = Date()
+        let daysCount = (Calendar.current.dateComponents([.day], from: startDate, to: currentDate).day ?? 0) + 1
+        return daysCount
+    }
+}
+
 // MARK: - Preview
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileView()
+            .environmentObject(UserViewModel())
     }
 }
