@@ -171,6 +171,7 @@ final class TodayDiptychViewModel: ObservableObject {
     }
 
     func setTodayPhoto() async {
+        
         let (todayDate, _, _) = setTodayCalendar()
         let timestamp = Timestamp(date: todayDate)
         guard let albumId = currentUser?.coupleAlbumId else { return }

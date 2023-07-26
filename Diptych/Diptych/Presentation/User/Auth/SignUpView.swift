@@ -100,12 +100,12 @@ struct SignUpView: View {
                         }
                         if password.isEmpty {
                             passwordWarning = "비밀번호를 입력해주세요."
-                        } else if checkPassword(input: password) {
+                        } else if !checkPassword(input: password) {
                             passwordWarning = "영문 대소문자, 숫자, 특수문자를 포함한 8개 이상이어야 합니다."
                         }
                         if passwordConfirm.isEmpty {
                             passwordConfirmWarning = "비밀번호를 한번 더 입력해주세요."
-                        } else if confirmPassword(password: password, passwordConfirm: passwordConfirm) {
+                        } else if !confirmPassword(password: password, passwordConfirm: passwordConfirm) {
                             passwordConfirmWarning = "비밀번호가 일치하지 않습니다."
                         }
                     }
