@@ -47,17 +47,19 @@ struct CouplingView: View {
                     VStack(alignment: .leading) {
                         Text("상대방 코드를 전달받으셨나요?")
                             .font(.pretendard(.light, size: 16))
-                        TextField("상대방 인증코드", text: $loverCode)
+                        TextField("", text: $loverCode, prompt: Text("상대방 인증코드")
                             .font(.pretendard(.light, size: 24))
-                            .foregroundColor(.darkGray)
+                            .foregroundColor(.darkGray))
+                        .font(.pretendard(.light, size: 24))
+                        .foregroundColor(.darkGray)
                         Divider()
-                            .foregroundColor(.darkGray)
+                            .overlay(Color.darkGray)
                     }
                 }
                 Spacer()
                 Button {
                     Task {
-                        try await userViewModel.setCouplingCode()
+//                        try await userViewModel.setCouplingCode()
                         try await userViewModel.setCoupleData(code: loverCode)
                     }
                 } label: {
@@ -72,6 +74,11 @@ struct CouplingView: View {
             .padding([.leading, .trailing], 15)
         }
         .ignoresSafeArea()
+        .onAppear() {
+            Task {
+                try await userViewModel.setCouplingCode()
+            }
+        }
     }
 }
 

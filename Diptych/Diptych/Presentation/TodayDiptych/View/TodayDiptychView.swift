@@ -16,7 +16,7 @@ struct TodayDiptychView: View {
     @State private var firstUIImage: UIImage?
     @State private var secondUIImage: UIImage?
     @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
-    @StateObject private var viewModel = TodayDiptychViewModel()
+    @EnvironmentObject private var viewModel: TodayDiptychViewModel
     @State private var isAllTasksCompleted = false
     let days = ["월", "화", "수", "목", "금", "토", "일"]
 
