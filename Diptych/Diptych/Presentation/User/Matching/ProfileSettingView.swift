@@ -30,10 +30,13 @@ struct ProfileSettingView: View {
                 Spacer()
                 VStack(spacing: 37) {
                     VStack(alignment: .leading) {
-                        TextField("닉네임", text: $name)
+                        TextField("", text: $name, prompt: Text("닉네임")
                             .font(.pretendard(.light, size: 18))
-                            .foregroundColor(.darkGray)
+                            .foregroundColor(.darkGray))
+                        .font(.pretendard(.light, size: 18))
+                        .foregroundColor(.darkGray)
                         Divider()
+                            .overlay(Color.darkGray)
                         Text(nameWarning)
                             .font(.pretendard(.light, size: 12))
                             .foregroundColor(.systemRed)
@@ -52,6 +55,7 @@ struct ProfileSettingView: View {
                             
                         }
                         Divider()
+                            .overlay(Color.darkGray)
                         Text(selectedDateWarning)
                             .font(.pretendard(.light, size: 12))
                             .foregroundColor(.systemRed)

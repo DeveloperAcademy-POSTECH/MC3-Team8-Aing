@@ -29,19 +29,25 @@ struct LogInView: View {
                 //                        .frame(height: 138)
                 VStack(spacing: 37) {
                     VStack(alignment: .leading) {
-                        TextField("이메일", text: $email)
+                        TextField("", text: $email, prompt: Text("이메일")
                             .font(.pretendard(.light, size: 18))
-                            .foregroundColor(.darkGray)
-                            .keyboardType(.emailAddress)
-                            .textInputAutocapitalization(.never)
-                            .disableAutocorrection(true)
+                            .foregroundColor(.darkGray))
+                        .font(.pretendard(.light, size: 18))
+                        .foregroundColor(.darkGray)
+                        .keyboardType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
                         Divider()
+                            .overlay(Color.darkGray)
                     }
                     VStack(alignment: .leading) {
-                        SecureField("비밀번호", text: $password)
+                        SecureField("", text: $password, prompt: Text("비밀번호")
                             .font(.pretendard(.light, size: 18))
-                            .foregroundColor(.darkGray)
+                            .foregroundColor(.darkGray))
+                        .font(.pretendard(.light, size: 18))
+                        .foregroundColor(.darkGray)
                         Divider()
+                            .overlay(Color.darkGray)
 //                        Text(passwordWarning)
 //                            .font(.pretendard(.light, size: 12))
 //                            .foregroundColor(.systemRed)
@@ -55,17 +61,17 @@ struct LogInView: View {
                         print("pass: 아이디 찾기")
                     } label: {
                         Text("아이디 찾기")
-                            .font(.pretendard(.thin, size: 15))
+                            .font(.pretendard(.light, size: 14))
                             .foregroundColor(.darkGray)
                     }
                     Text("|")
-                        .font(.pretendard(.thin, size: 15))
+                        .font(.pretendard(.light, size: 14))
                         .foregroundColor(.darkGray)
                     Button{
                         print("pass: 비밀번호 찾기")
                     } label: {
                         Text("비밀번호 찾기")
-                            .font(.pretendard(.thin, size: 15))
+                            .font(.pretendard(.light, size: 14))
                             .foregroundColor(.darkGray)
                     }
                 }

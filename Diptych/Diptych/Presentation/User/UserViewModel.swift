@@ -34,15 +34,10 @@ class UserViewModel: ObservableObject {
     init() {
         Task {
             await fetchUserData()
-//            print("[DEBUG] currentUser : \(self.currentUser)\nflow : \(self.flow)")
             listenerAboutUserData = Firestore.firestore().collection("users").addSnapshotListener() { snapshot, error in
-//                if let source = snapshot?.metadata.hasPendingWrites {
-//                    if !source {
-                        Task{
-                            await self.fetchUserData()
-                        }
-//                    }
-//                }
+                    Task{
+                        await self.fetchUserData()
+                    }
             }
             try await generatedCouplingCode()
         }
@@ -135,7 +130,6 @@ class UserViewModel: ObservableObject {
             try await Auth.auth().currentUser?.reload()
             if let isEmailVerified = Auth.auth().currentUser?.isEmailVerified {
                 if isEmailVerified {
-//                    self.flow = .emailVerified
                     print("DEBUG: checkEmailVerification3 / before: \(self.currentUser)\n")
                     print("DEBUG: checkEmailVerification3 / self.flow: \(self.flow), self.flow.rawVlaue: \(self.flow.rawValue)\n")
                     if var currentUser = self.currentUser {
@@ -160,7 +154,6 @@ class UserViewModel: ObservableObject {
         do {
             print("[DEBUG] signOut is called")
             try Auth.auth().signOut()
-            //            self.userSession = nil
             self.currentUser = nil
             self.flow = .initialized
         }
@@ -266,13 +259,12 @@ extension UserViewModel {
     func setCoupleData(code: String) async throws {
         do {
             try await getLoverDataWithCode(code: code)
-//            print("DEBUG setCoupleData : \(String(describing: self.currentUser))\n \(String(describing: self.lover))")
+
             if var currentUser = self.currentUser, var lover = self.lover {
-//                print("1: \(currentUser.email) \(lover.email)")
+
                 currentUser.loverId = self.lover?.id
                 lover.loverId = self.currentUser?.id
-//                print("2: \(currentUser.id) /// \(lover.id)")
-//                print("3: \(String(describing: currentUser.loverId)) /// \(String(describing: lover.loverId))")
+
                 currentUser.flow = "coupled"
                 lover.flow = "coupled"
                 let encodedCurrentUser = try Firestore.Encoder().encode(currentUser)
@@ -297,7 +289,6 @@ extension UserViewModel {
                     print((lover.startDate?.get(.day) == startDate.get(.day)) && (lover.startDate?.get(.month) == startDate.get(.month)) && (lover.startDate?.get(.year) == startDate.get(.year)))
                     setFirstSecond(isFirst: false)
                     return (lover.startDate?.get(.day) == startDate.get(.day)) && (lover.startDate?.get(.month) == startDate.get(.month)) && (lover.startDate?.get(.year) == startDate.get(.year))
-//                    return lover.startDate == startDate
                 }
             }
         }
@@ -313,29 +304,8 @@ extension UserViewModel {
     func addCoupleAlbumData(startDate: Date) async throws {
         do {
             print("[DEBUG] addCoupleAlbumData start!!!")
-            // Add a new document with a generated id.
             var data = DiptychAlbum(id: "")
             var ref: DocumentReference? = nil
-//            ref = try Firestore.firestore().collection("albums").addDocument(from: data) { err in
-//                if let err = err {
-//                    print("Error adding document: \(err)")
-//                } else {
-//                    data.id = ref!.documentID
-//                    // 업데이트된 데이터를 Firestore에 다시 저장
-////                    let encodedCoupleAlbum = try Firestore.Encoder().encode(data)
-////                    try await Firestore.firestore().collection("albums").document(data.id).setData(encodedCoupleAlbum, merge: true)
-//                    try? ref!.setData(from: data) { error in
-//                        if let error = error {
-//                            print(error.localizedDescription)
-//                        } else {
-//                            self.coupleAlbum = data
-//                            if let coupleAlbum = self.coupleAlbum {
-//                                print("Document added with ID: \(coupleAlbum.id)")
-//                            }
-//                        }
-//                    }
-//                }
-//            }
             var encodedData = try Firestore.Encoder().encode(data)
             ref = try await Firestore.firestore().collection("albums").addDocument(data: encodedData)
             data.id = ref!.documentID
@@ -346,7 +316,6 @@ extension UserViewModel {
             if let coupleAlbum = self.coupleAlbum {
                 print("Document added with ID: \(coupleAlbum.id)")
             }
-//            print(data.id)
         }
     }
     
@@ -357,9 +326,7 @@ extension UserViewModel {
                 currentUser.name = name
                 currentUser.startDate = startDate
                 try await addCoupleAlbumData(startDate: startDate)
-//                await fetchCoupleAlbumData()
                 if let coupleAlbum = self.coupleAlbum {
-//                    try await addCoupleAlbumData(startDate: startDate)
                     print("[DEBUG] check!!!! coupleAlbumId: \(coupleAlbum.id)")
                     currentUser.coupleAlbumId = coupleAlbum.id
                     lover.coupleAlbumId = coupleAlbum.id
