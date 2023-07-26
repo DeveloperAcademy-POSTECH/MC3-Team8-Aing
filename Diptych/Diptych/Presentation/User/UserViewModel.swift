@@ -179,7 +179,18 @@ class UserViewModel: ObservableObject {
                 print("DEBUG : user data delete done")
                 
                 print("currentUserAuth : \(currentUserAuth)")
-                try await currentUserAuth.delete()
+//                try await currentUserAuth.delete()
+                let user = Auth.auth().currentUser
+                        user?.delete(completion: { error in
+                            guard error == nil else
+                            {
+                               
+                                print("delete -> error -> \(error?.localizedDescription)")
+                 
+                                return
+                            }
+                            return
+                        })
                 print("DEBUG : auth account delete done")
                 
                 self.currentUser = nil
