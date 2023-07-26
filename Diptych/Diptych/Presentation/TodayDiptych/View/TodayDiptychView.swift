@@ -25,7 +25,7 @@ struct TodayDiptychView: View {
             MainDiptychView()
             .ignoresSafeArea(edges: .top)
             .onAppear {
-                
+                print()
             }
             .onDisappear {
                 viewModel.weeklyData.removeAll()
