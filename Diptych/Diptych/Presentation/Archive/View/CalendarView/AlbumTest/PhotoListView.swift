@@ -9,40 +9,48 @@
 import SwiftUI
 
 struct PhotoListView: View {
-    @ObservedObject var VM = PhotoViewModel()
+    @StateObject var VM = PhotoViewModel()
 
     
     var body: some View {
-        NavigationView {
-            List(VM.photos) { photo in
-                HStack() {
-                    ImageView2(imageURL: photo.imageURL)
-                        .frame(width: 50,height: 50)
-                    Text("\(photo.dayNum)")
-                        .font(.title3)
-                        .foregroundColor(.gray)
-                    Text("\(photo.monthNum)")
-                        .font(.title3)
-                        .foregroundColor(.gray)
+        
+            
+            
+            
+                
+            VStack{
+                ForEach(VM.photos) { index in
+                    HStack() {
+                        ImageView2(imageURL: index.imageURL)
+                            .frame(width: 50,height: 50)
+                        Text("\(index.dayNum)")
+                            .font(.title3)
+                            .foregroundColor(.gray)
+                        Text("\(index.monthNum)")
+                            .font(.title3)
+                            .foregroundColor(.gray)
+                    }//】 HStack
                 }
             }
-            .navigationTitle("Photos")
             
-            List(VM.photos) { photo in
-                HStack() {
-                    ImageView2(imageURL: photo.imageURL)
-                        .frame(width: 50,height: 50)
-                    Text("\(photo.dayNum)")
-                        .font(.title3)
-                        .foregroundColor(.gray)
-                    Text("\(photo.monthNum)")
-                        .font(.title3)
-                        .foregroundColor(.gray)
-                }
-            }
-            .navigationTitle("Photos")
             
-        }
+//            List(VM.photos) {data in
+//
+//                    HStack() {
+//                        ImageView2(imageURL: data.imageURL)
+//                            .frame(width: 50,height: 50)
+//                        Text("\(data.dayNum)")
+//                            .font(.title3)
+//                            .foregroundColor(.gray)
+//                        Text("\(data.monthNum)")
+//                            .font(.title3)
+//                            .foregroundColor(.gray)
+//                    }//】 HStack
+//
+//            }//】 VStack
+
+            
+        
     }
     
     let dateFormatter: DateFormatter = {

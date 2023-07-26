@@ -81,6 +81,7 @@ struct TodayDiptychView: View {
                     Spacer()
                 }
 
+                //MARK: - 사진
                 HStack(spacing: 0) {
                     AsyncImage(url: URL(string: viewModel.photoFirstURL)) { phase in
                         switch phase {
@@ -155,6 +156,7 @@ struct TodayDiptychView: View {
                 .aspectRatio(1.0, contentMode: .fit)
                 .padding(.bottom, 20)
 
+                //MARK: - Weekly 캘린더
                 HStack(spacing: 9) {
                     if viewModel.isLoading {
                         ProgressView()
@@ -189,8 +191,10 @@ struct TodayDiptychView: View {
                             }
                         }
                     }
-                }
-            }
+                }//】 HStack
+                
+                
+            }//】 VStack
         }
     }
 }

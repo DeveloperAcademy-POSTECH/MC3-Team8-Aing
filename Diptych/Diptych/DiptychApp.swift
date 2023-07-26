@@ -28,43 +28,26 @@ struct DiptychApp: App {
     var body: some Scene {
         WindowGroup {
             
-            CalendarView(date: Date(), changeMonthInt: 0)
+//            CalendarView(date: Date(), changeMonthInt: 0)
 
             /// 잠시 주석 처리
-//            if userViewModel.flow == .initialized {
-//                OnBoardingView()
-//                    .environmentObject(userViewModel)
-//            } else if userViewModel.flow == .signedUp {
-//                LoadingVerificationView()
-//                    .environmentObject(userViewModel)
-//            } else if userViewModel.flow == .emailVerified {
-//                CouplingView()
-//                    .environmentObject(userViewModel)
-//            } else if userViewModel.flow == .coupled {
-//                ProfileSettingView()
-//                    .environmentObject(userViewModel)
-//            } else {
-//                DiptychTabView2()
-//                    .environmentObject(userViewModel)
-//            }
+            if userViewModel.flow == .initialized {
+                OnBoardingView()
+                    .environmentObject(userViewModel)
+            } else if userViewModel.flow == .signedUp {
+                LoadingVerificationView()
+                    .environmentObject(userViewModel)
+            } else if userViewModel.flow == .emailVerified {
+                CouplingView()
+                    .environmentObject(userViewModel)
+            } else if userViewModel.flow == .coupled {
+                ProfileSettingView()
+                    .environmentObject(userViewModel)
+            } else {
+                DiptychTabView2()
+                    .environmentObject(userViewModel)
+            }
             
-            
-//            if userViewModel.flow == .initialized {
-//                OnBoardingView()
-//                    .environmentObject(userViewModel)
-//            } else if userViewModel.flow == .signedUp {
-//                LoadingVerificationView()
-//                    .environmentObject(userViewModel)
-//            } else if userViewModel.flow == .emailVerified {
-//                CouplingView()
-//                    .environmentObject(userViewModel)
-//            } else if userViewModel.flow == .coupled {
-//                ProfileSettingView()
-//                    .environmentObject(userViewModel)
-//            } else {
-//                DiptychTabView()
-//                    .environmentObject(userViewModel)
-//            }
             
             /// 원래 주석이었던것
 //            if userViewModel.flow == .completed {

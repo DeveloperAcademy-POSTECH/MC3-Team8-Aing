@@ -25,6 +25,7 @@ class PhotoViewModel: ObservableObject {
     
     init(){
         fetchPhotos()
+        print("📍",self.photos)
     }
     
     
@@ -50,5 +51,6 @@ class PhotoViewModel: ObservableObject {
                               dayNum: day, monthNum: month)
             }
         }//: getDocuments
+        
     }
 }

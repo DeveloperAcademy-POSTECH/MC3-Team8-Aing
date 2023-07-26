@@ -12,30 +12,34 @@ import SwiftUI
 struct CalendarView: View {
     
     ///Property
-    
+    @StateObject private var VM = AlbumViewModel()
     @State var date: Date
     let changeMonthInt : Int
     
     var body: some View {
         
         return VStack(spacing: 0) {
-            oneMonthCalendarView
+            MonthlyCalendarView
         }//】 VStack
         .onAppear{
             changeMonth(by: changeMonthInt)
+            
+            Task {
+                await VM.fetchStartDate()
+            }
         }
         
     }//】 body
     
-  
     
-  // MARK: - 월별 캘린더 뷰
-    private var oneMonthCalendarView: some View {
+    // MARK: - 월별 캘린더 뷰
+    private var MonthlyCalendarView: some View {
+        
         let daysInMonth: Int = numberOfDays(in: date)
         let firstWeekday: Int = firstWeekdayOfMonth(in: date) - 2
 
         return VStack(spacing: 0) {
-        
+            
             /// [1] Month
             HStack(spacing: 0) {
                 Text(date, formatter: Self.monthFormatter)
@@ -49,8 +53,8 @@ struct CalendarView: View {
                     .padding(.trailing,15)
             }//】 HStack
             .padding(.bottom,30)
-        
-            
+                
+                    
             /// [2] Week
             HStack(spacing: 0) {
                 ForEach(Self.weekdaySymbols, id: \.self) { symbol in
@@ -62,30 +66,65 @@ struct CalendarView: View {
             }//】 HStack
             .padding(.bottom, 30)
             .padding(.horizontal,13)
-        
-            
-            
+                
+                    
+                    
             /// [3] Day
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7),spacing: 0) {
-                ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
+            if VM.isLoading {
+                ProgressView()
+            } else {
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7),spacing: 0) {
+                    ForEach(0 ..< (daysInMonth + firstWeekday), id: \.self) { index in
 
-                    /// 빈칸 표시
-                    if index < firstWeekday {
-                        Color.clear
-                    }
-                    /// 날짜 표시
-                    else {
-                        CellView(day: index - firstWeekday + 1,
-                                 isToday: index - firstWeekday + 1
-                                    == Calendar.current.component(.day, from: Date())
-                                 && changeMonthInt == 0
-                        )
-                    }
-                }//: Loop
-            }//: LazyGrid
-            .padding(.horizontal,15)
-            .padding(.bottom, 51)
-           
+                        let day = index - firstWeekday + 1
+                        let data = VM.photos
+                        let start = VM.startDay // 18(일)
+                        let isToday = day == Calendar.current.component(.day, from: Date()) && changeMonthInt == 0
+                        let safeIndex = day - start
+                        let isSafeIndex : Bool = safeIndex >= 0 && safeIndex < data.count
+                        let indexIsCompleted: Bool = isSafeIndex ? !data.isEmpty && data[safeIndex].isCompleted : false
+                        
+                        let cellViewFalse = CellView(day: day,
+                                                     isToday: isToday,
+                                                     isCompleted: false,
+                                                     thumbnail: "")
+                        
+                        let cellViewTrue = CellView(day: day,
+                                                    isToday: isToday,
+                                                    isCompleted: true,
+                                                    thumbnail: isSafeIndex && !data.isEmpty ? data[safeIndex].thumbnail : "")
+                        
+                        
+                        
+                        let photoDetailView = PhotoDetailView(date: "더미더미더미",
+                                                              questionNum: 3,
+                                                              question: "더미더미더미더미더미더미",
+                                                              imageUrl1: "",
+                                                              imageUrl2: "")
+                        
+                   
+                        if index < firstWeekday {
+                            EmptyView() /// 빈칸 표시
+                        }else {
+                            if indexIsCompleted {
+                                // isSafeIndex && !data.isEmpty && data[dataIndex].isCompleted -> 위에서 선언
+                                    NavigationLink {
+                                        photoDetailView
+                                    } label: {
+                                        cellViewTrue
+                                    }
+                            } else {
+                                cellViewFalse
+                            }
+                            
+                        }
+
+                    }//: Loop
+                }//: LazyGrid
+                .padding(.horizontal,15)
+                .padding(.bottom, 51)
+            }//if
+               
         }//】 VStack
         .padding(.top,10)
     }//: oneMonthCalendarView
@@ -108,6 +147,7 @@ extension CalendarView {
     func firstWeekdayOfMonth(in data: Date) -> Int {
         let components = Calendar.current.dateComponents([.year, .month], from: data)
         let firstDayOfMonth = Calendar.current.date(from: components)!
+        
         return Calendar.current.component(.weekday, from: firstDayOfMonth)
     }
   

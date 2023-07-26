@@ -6,57 +6,45 @@
 //
 
 import SwiftUI
+import FirebaseStorage
 
 struct CellView: View {
     
     ///Property
-    @StateObject var VM = AlbumViewModel()
     @State var day: Int
     @State var isToday: Bool
-    
-    
-    let imageUrl1 : String = "gs://diptych.appspot.com/cat1.jpeg"
-    let imageUrl2 : String = "gs://diptych.appspot.com/cat1.jpeg"
+    @State var isCompleted: Bool
+    @State var thumbnail: String?
+    @State var thumbnailURL: URL?
     
     
     var body: some View {
 
         ZStack{
-            
+            /// 오늘 날짜일때 빨간 테두리
             RoundedRectangle(cornerRadius: 18)
                 .stroke(Color.systemSalmon, lineWidth: isToday ? 2 : 0)
                 .frame(width: 44, height: 50)
-
-            /// 캘린더의 날짜가 document의 날짜와 일치 한다면
-            if !VM.startDay.isEmpty && !VM.photos.isEmpty &&
-                day - VM.startDay[0].day >= 0 &&
-                day == VM.photos[day - VM.startDay[0].day].day{
-
-                    /// 썸네일 완성시
-                    if !VM.startDay.isEmpty && !VM.photos.isEmpty &&
-                        day - VM.startDay[0].day >= 0 &&
-                        VM.photos[day - VM.startDay[0].day].isCompleted == true{
-                            NavigationLink {
-                                PhotoDetailView(
-                                    date: "2023년 7월 30일", questionNum: 20,
-                                    question: "\"상대방의 표정 중 당신이\n 가장 좋아하는 표정은?\"",
-                                    imageUrl1: imageUrl1, imageUrl2: imageUrl2)
-                            } label: {
-                                RoundedRectangle(cornerRadius: 18)
-                                    .fill( isToday ? Color.systemSalmon : Color.lightGray)
-                                    .frame(width: 44, height: 50)
-                            }//】 Navigation
-                    }
-                    /// 썸네일 미완성시
-                    else{
+                .overlay{
+                    /// 썸네일 사진 불러오기
+                    if isCompleted {
+                        ZStack {
+                            AsyncImage(url: thumbnailURL) { image in
+                                image
+                                    .resizable()
+                                    .clipShape(RoundedRectangle(cornerRadius: 18))
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            Color.offBlack.opacity(0.5)
+                                .clipShape(RoundedRectangle(cornerRadius: 18))
+                        }//】 ZStack
+                    } else {
                         EmptyView()
                     }
-            }
-            /// 캘린더의 날짜가 document의 날짜에 없을 때
-            else {
-                EmptyView()
-            }
-
+                }//:overlay
+            
+            /// 날짜 표시
             Text("\(day)")
                 .font(.pretendard(.bold, size: 16))
                 .foregroundColor(.offBlack)
@@ -64,21 +52,36 @@ struct CellView: View {
             
         }//】 ZStack
         .padding(.bottom, 19)
-        .onAppear{
-            if !VM.startDay.isEmpty {
+        .onAppear {
+            Task {
+                await downloadImage()
             }
         }
-       
-        
     }//】 Body
+    
+    
+    /// 이미지 불러오기
+    func downloadImage() async {
+        if let thumbnail = thumbnail, !thumbnail.isEmpty {
+            do {
+                let url = try await Storage.storage().reference(forURL: thumbnail).downloadURL()
+                   thumbnailURL = url
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    
+    
 }
 
 
 struct CellView_Previews: PreviewProvider {
     static var previews: some View {
-        Group{
-            CellView(VM: AlbumViewModel(), day: 24, isToday: true)
-            CellView(VM: AlbumViewModel(), day: 22, isToday: false)
+        HStack{
+            CellView(day: 26, isToday: true, isCompleted: false)
+            CellView(day: 25, isToday: false, isCompleted: false)
         }
     }
 }

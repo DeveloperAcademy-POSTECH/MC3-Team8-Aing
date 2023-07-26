@@ -113,22 +113,22 @@ extension PhotoDetailView: View {
 
 extension PhotoDetailView {
     
-    private func DiptychImage() -> UIImage? {
-        guard let image1 = image1, let image2 = image2
-            else{
-            return nil
-        }
-        
-        let size = CGSize(width: 200, height: 200)
-        
-        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 200, height: 200))
-        let image = renderer.image { ctx in
-            
-            let rect1 = CGRect(x: 0, y: 0, width: 100, height: 200)
-            let rect2 = CGRect(x: 0, y: 0, width: 100, height: 200)
-        }
-        return image
-    }
+//    private func DiptychImage() -> UIImage? {
+//        guard let image1 = image1, let image2 = image2
+//            else{
+//            return nil
+//        }
+//
+//        let size = CGSize(width: 200, height: 200)
+//
+//        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 200, height: 200))
+//        let image = renderer.image { ctx in
+//
+//            let rect1 = CGRect(x: 0, y: 0, width: 100, height: 200)
+//            let rect2 = CGRect(x: 0, y: 0, width: 100, height: 200)
+//        }
+//        return image
+//    }
     
     
     
@@ -143,6 +143,9 @@ extension PhotoDetailView {
                     .fill(Color.lightGray)
             )
     }
+    
+    
+    
 }
 
 // MARK: - Preview
