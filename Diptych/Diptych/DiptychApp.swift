@@ -30,19 +30,30 @@ struct DiptychApp: App {
             
 //            CalendarView(date: Date(), changeMonthInt: 0)
 
-            /// 잠시 주석 처리
-            if userViewModel.flow == .initialized {
-                OnBoardingView()
-                    .environmentObject(userViewModel)
-            } else if userViewModel.flow == .signedUp {
-                LoadingVerificationView()
-                    .environmentObject(userViewModel)
-            } else if userViewModel.flow == .emailVerified {
-                CouplingView()
-                    .environmentObject(userViewModel)
-            } else if userViewModel.flow == .coupled {
-                ProfileSettingView()
-                    .environmentObject(userViewModel)
+//            DiptychTabView()
+
+//            DiptychTabView2()
+
+            if isSplashCompleted {
+                if userViewModel.flow == .initialized {
+                    OnBoardingView()
+                        .environmentObject(userViewModel)
+                        .environmentObject(todayDiptychViewModel)
+                } else if userViewModel.flow == .signedUp {
+                    LoadingVerificationView()
+                        .environmentObject(userViewModel)
+                } else if userViewModel.flow == .emailVerified {
+                    CouplingView()
+                        .environmentObject(userViewModel)
+                } else if userViewModel.flow == .coupled {
+                    ProfileSettingView()
+                        .environmentObject(userViewModel)
+                        .environmentObject(todayDiptychViewModel)
+                } else {
+                    DiptychTabView()
+                        .environmentObject(userViewModel)
+                        .environmentObject(todayDiptychViewModel)
+                }
             } else {
                 DiptychTabView2()
                     .environmentObject(userViewModel)

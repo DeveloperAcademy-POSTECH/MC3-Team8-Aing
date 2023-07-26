@@ -18,6 +18,8 @@ struct SignUpView: View {
     @State var emailWarning: String = ""
     @State var passwordWarning: String = ""
     @State var passwordConfirmWarning: String = ""
+    @State var isAlertShown: Bool = false
+    @State var alertMessage: String = ""
     
     @EnvironmentObject var userViewModel: UserViewModel
     
@@ -32,32 +34,41 @@ struct SignUpView: View {
                 Spacer()
                 VStack(spacing: 37) {
                     VStack(alignment: .leading) {
-                        TextField("이메일", text: $email)
+                        TextField("", text: $email, prompt: Text("이메일")
                             .font(.pretendard(.light, size: 18))
-                            .foregroundColor(.darkGray)
-                            .keyboardType(.emailAddress)
-                            .textInputAutocapitalization(.never)
-                            .disableAutocorrection(true)
+                            .foregroundColor(.darkGray))
+                        .font(.pretendard(.light, size: 18))
+                        .foregroundColor(.darkGray)
+                        .keyboardType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
                         Divider()
+                            .overlay(Color.darkGray)
                         Text(emailWarning)
                             .font(.pretendard(.light, size: 12))
                             .foregroundColor(.systemRed)
                     
                     }
                     VStack(alignment: .leading) {
-                        SecureField("비밀번호", text: $password)
+                        SecureField("", text: $password, prompt: Text("비밀번호")
                             .font(.pretendard(.light, size: 18))
-                            .foregroundColor(.darkGray)
+                            .foregroundColor(.darkGray))
+                        .font(.pretendard(.light, size: 18))
+                        .foregroundColor(.darkGray)
                         Divider()
+                            .overlay(Color.darkGray)
                         Text(passwordWarning)
                             .font(.pretendard(.light, size: 12))
                             .foregroundColor(.systemRed)
                     }
                     VStack(alignment: .leading) {
-                        SecureField("비밀번호 확인", text: $passwordConfirm)
+                        SecureField("", text: $passwordConfirm, prompt: Text("비밀번호 확인")
                             .font(.pretendard(.light, size: 18))
-                            .foregroundColor(.darkGray)
+                            .foregroundColor(.darkGray))
+                        .font(.pretendard(.light, size: 18))
+                        .foregroundColor(.darkGray)
                         Divider()
+                            .overlay(Color.darkGray)
                         Text(passwordConfirmWarning)
                             .font(.pretendard(.light, size: 12))
                             .foregroundColor(.systemRed)
@@ -66,39 +77,46 @@ struct SignUpView: View {
                 .padding([.leading, .trailing], 15)
                 Spacer()
                 Button {
+                    emailWarning = ""
+                    passwordWarning = ""
+                    passwordConfirmWarning = ""
                     if checkEmail(input: email) && checkPassword(input: password) && confirmPassword(password: password, passwordConfirm: passwordConfirm){
+                        userViewModel.email = email
+                        userViewModel.password = password
                         Task {
-                            try await userViewModel.signUpWithEmailPassword(email: email, password: password, name: name)
-                            try await userViewModel.sendEmailVerification()
+                            let result = try await userViewModel.signUpWithEmailPassword(email: email, password: password, name: name)
+                            if result == "" {
+                                try await userViewModel.sendEmailVerification()
+                            } else {
+                                alertMessage = result
+                                isAlertShown = true
+                            }
                         }
                     } else {
-                        if checkEmail(input: email) {
-                            emailWarning = ""
-                        } else if email.isEmpty {
+                        if email.isEmpty {
                             emailWarning = "이메일 주소를 입력해주세요."
-                        } else {
+                        } else if !checkEmail(input: email) {
                             emailWarning = "이메일 주소가 유효하지 않습니다."
                         }
-                        if checkPassword(input: password) {
-                            passwordWarning = ""
-                        } else if password.isEmpty {
+                        if password.isEmpty {
                             passwordWarning = "비밀번호를 입력해주세요."
-                        } else {
+                        } else if checkPassword(input: password) {
                             passwordWarning = "영문 대소문자, 숫자, 특수문자를 포함한 8개 이상이어야 합니다."
                         }
-                        if confirmPassword(password: password, passwordConfirm: passwordConfirm) {
-                            passwordConfirmWarning = ""
-                        } else if passwordConfirm.isEmpty {
+                        if passwordConfirm.isEmpty {
                             passwordConfirmWarning = "비밀번호를 한번 더 입력해주세요."
-                        } else {
+                        } else if confirmPassword(password: password, passwordConfirm: passwordConfirm) {
                             passwordConfirmWarning = "비밀번호가 일치하지 않습니다."
                         }
                     }
                 } label: {
-                    Text("로그인")
+                    Text("인증메일 받기")
                         .frame(width: UIScreen.main.bounds.width-30, height:  60)
                         .background(Color.offBlack)
                         .foregroundColor(.offWhite)
+                }
+                .alert(isPresented: $isAlertShown) {
+                    Alert(title: Text("회원가입 에러"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
                 }
                 Spacer()
                     .frame(height: 47)

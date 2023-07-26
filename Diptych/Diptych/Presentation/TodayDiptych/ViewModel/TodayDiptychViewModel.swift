@@ -141,6 +141,7 @@ final class TodayDiptychViewModel: ObservableObject {
     }
 
     func setUserCameraLoactionState() async {
+        await fetchUser()
         guard let isFirst = currentUser?.isFirst else { return }
         self.isFirst = isFirst
     }
