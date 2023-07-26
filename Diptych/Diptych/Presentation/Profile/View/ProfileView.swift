@@ -71,7 +71,9 @@ struct ProfileView: View {
                             .foregroundColor(.darkGray)
                     }
                     Button{
-                        userViewModel.deleteAccount()
+                        Task {
+                            try await userViewModel.deleteAccount()
+                        }
                     } label: {
                         Text("회원탈퇴")
                             .font(.pretendard(.light, size: 18))
