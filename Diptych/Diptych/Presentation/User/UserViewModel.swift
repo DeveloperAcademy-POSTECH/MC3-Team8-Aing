@@ -248,8 +248,23 @@ class UserViewModel: ObservableObject {
 extension UserViewModel {
     func generatedCouplingCode() async throws {
         do {
-//            guard let snapshot = try? await Firestore.firestore().collection("users").whereField("couplingCode", )
-            self.couplingCode = String(Int.random(in: 10000000 ... 99999999))
+            guard let snapshot = try? await Firestore.firestore().collection("users").getDocuments() else {
+                print("ERROR: (generatedCouplingCode) getAllusers")
+                return
+            }
+            var codes: [Any] = []
+            for document in snapshot.documents {
+                if let code = document.get("couplingCode") {
+                    codes.append(code)
+                }
+            }
+//            self.couplingCode = String(Int.random(in: 10000000 ... 99999999))
+            var code = ""
+            repeat {
+                code = String(Int.random(in: 10000000 ... 99999999))
+            } while codes.contains(where: { element in return String(describing: element) == code})
+            
+            self.couplingCode = code
         }
     }
     
