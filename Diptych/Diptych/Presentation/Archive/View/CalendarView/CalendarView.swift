@@ -13,7 +13,7 @@ import Foundation
 struct CalendarView: View {
     
     ///Property
-    @StateObject private var VM = AlbumViewModel()
+    @StateObject private var VM = ArchiveViewModel()
     @State var date: Date
     let changeMonthInt : Int
     
@@ -24,115 +24,116 @@ struct CalendarView: View {
         }//】 VStack
         .onAppear{
             changeMonth(by: changeMonthInt)
-
         }
-        
+
     }//】 body
     
     
-    // MARK: - 월별 캘린더 뷰
-    private var MonthlyCalendarView: some View {
+// MARK: - 월별 캘린더 뷰
+private var MonthlyCalendarView: some View {
         
-        let daysInMonth: Int = numberOfDays(in: date)
-        let firstWeekday: Int = firstWeekdayOfMonth(in: date) - 2
+    let daysInMonth: Int = numberOfDays(in: date)
+    let firstWeekday: Int = firstWeekdayOfMonth(in: date) - 2
         
-        let today = Date()
-        let calendar = Calendar.current
+    let today = Date()
+    let calendar = Calendar.current
 
-        return VStack(spacing: 0) {
+    return VStack(spacing: 0) {
             
-            /// [1] Month
-            HStack(spacing: 0) {
-                Text(date, formatter: Self.monthFormatter)
-                    .font(.system(size:36, weight: .light))
-                    .padding(.leading,15)
-                Spacer()
-                Text(date, formatter: Self.yearFormatter)
-                    .font(.title2)
-                    .fontWeight(.light)
-                    .foregroundColor(.gray)
-                    .padding(.trailing,15)
-            }//】 HStack
+    /// [1] Month
+        HStack(spacing: 0) {
+            Text(date, formatter: Self.monthFormatter)
+                .font(.system(size:36, weight: .light))
+                .padding(.leading,15)
+            Spacer()
+            Text(date, formatter: Self.yearFormatter)
+                .font(.title2)
+                .fontWeight(.light)
+                .foregroundColor(.gray)
+                .padding(.trailing,15)
+        }//】 HStack
             .padding(.bottom,30)
                 
                     
-            /// [2] Week
-            HStack(spacing: 0) {
-                ForEach(Self.weekdaySymbols, id: \.self) { symbol in
-                    Text(symbol)
-                        .font(.system(size:14, weight: .medium))
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(Color.gray)
-                }//: Loop
-            }//】 HStack
-            .padding(.bottom, 30)
-            .padding(.horizontal,13)
+    /// [2] Week
+        HStack(spacing: 0) {
+            ForEach(Self.weekdaySymbols, id: \.self) { symbol in
+                Text(symbol)
+                    .font(.system(size:14, weight: .medium))
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(Color.gray)
+            }//: Loop
+        }//】 HStack
+        .padding(.bottom, 30)
+        .padding(.horizontal,13)
                 
                     
                     
-            /// [3] Day
-            if VM.isLoading {
-                ProgressView()
-            } else {
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7),spacing: 0) {
-                    ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
+    /// [3] Day
+        if VM.isLoading {
+            ProgressView()
+        } else {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7),spacing: 0) {
+                ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
                         
-                        if index < firstWeekday {
-                            Color.clear /// 빈칸 표시
+                    if index < firstWeekday {
+                        Color.clear /// 빈칸 표시
+                    } else {
+                            
+                        let day = index - firstWeekday + 1
+                        let data = VM.photos
+                        let start = VM.startDay // 18(일)
+                        let safeIndex = day - start
+                        let isToday: Bool = day == calendar.component(.day, from: today) && changeMonthInt == 0
+                        let isSafe: Bool = safeIndex >= 0 && safeIndex < data.count && !data.isEmpty
+                        
+
+                        let isThisMonth: Bool = isSafe ? data[safeIndex].month - calendar.component(.month, from: today) == changeMonthInt : false
+                        
+                        let indexIsCompleted: Bool = isSafe ? data[safeIndex].isCompleted : false
+                        
+                        let isMatched: Bool = isThisMonth && indexIsCompleted
+                        
+                        let cVFalse = CellView(day: day,
+                                            isToday: isToday,
+                                            isThisMonth: false,
+                                            isCompleted: false,
+                                            thumbnail: "")
+                            
+                        let cVTrue = CellView(day: day,
+                                            isToday: isToday,
+                                            isThisMonth: true,
+                                            isCompleted: true,
+                                            thumbnail: isSafe ? data[safeIndex].thumbnail : "")
+                            
+                        let photoDV = PhotoDetailView(date: isSafe ? data[safeIndex].date : Date(),
+                                                    questionNum: 3,
+                                                    question: "상대방의 표정 중 당신이\n 가장 좋아하는 표정은?",
+                                                    image1: isSafe ? data[safeIndex].photoFirstURL : "",
+                                                    image2: isSafe ? data[safeIndex].photoSecondURL : "")
+                        /// 날짜 표기 시작
+                        if isMatched {
+                            // safeIndex && !data.isEmpty && data[dataIndex].isCompleted -> 위에서 선언
+                            NavigationLink {
+                                photoDV //PhotoDetailView
+                            } label: {
+                                cVTrue
+                            }
                         } else {
+                            cVFalse
+                        }
                             
-                            let day = index - firstWeekday + 1
-                            let data = VM.photos
-                            let start = VM.startDay // 18(일)
-                            let safeIndex = day - start
-                            let isToday: Bool = day == calendar.component(.day, from: today) && changeMonthInt == 0
-                            let isSafeIndex: Bool = safeIndex >= 0 && safeIndex < data.count
-                            
-                            let isThisMonth: Bool = isSafeIndex ? data[safeIndex].month - calendar.component(.month, from: today) == changeMonthInt : false
-                            
-                            let indexIsCompleted: Bool = isSafeIndex ? !data.isEmpty && data[safeIndex].isCompleted : false
-                            
-                            let isMatched: Bool = isThisMonth && indexIsCompleted
-                            
-                            let cellViewFalse = CellView(day: day,
-                                                         isToday: isToday,
-                                                         isThisMonth: false,
-                                                         isCompleted: false,
-                                                         thumbnail: "")
-                            
-                            let cellViewTrue = CellView(day: day,
-                                                        isToday: isToday,
-                                                        isThisMonth: true,
-                                                        isCompleted: true,
-                                                        thumbnail: isSafeIndex && !data.isEmpty ? data[safeIndex].thumbnail : "")
-                            
-                            let photoDetailView = PhotoDetailView(date: "더미더미더미",
-                                                                  questionNum: 3,
-                                                                  question: "더미더미더미더미더미더미",
-                                                                  imageUrl1: "",
-                                                                  imageUrl2: "")
-                            /// 날짜 표기 시작
-                            if isMatched {
-                                // isSafeIndex && !data.isEmpty && data[dataIndex].isCompleted -> 위에서 선언
-                                NavigationLink {
-                                    photoDetailView
-                                } label: {
-                                    cellViewTrue
-                                }
-                            } else {
-                                cellViewFalse}
-                            
-                        }//:if
-                    }//】 Loop
-                }//】 Grid
-                .padding(.horizontal,15)
-                .padding(.bottom, 51)
-            }
+                    }//:if
+                }//】 Loop
+            }//】 Grid
+            .padding(.horizontal,15)
+            .padding(.bottom, 51)
+        }
             
-        }//】 VStack
-        .padding(.top,10)
+    }//】 VStack
+    .padding(.top,10)
         
-    }//: oneMonthCalendarView
+}//: oneMonthCalendarView
 
 }// Struct
 

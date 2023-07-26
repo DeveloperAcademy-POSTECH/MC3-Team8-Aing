@@ -28,11 +28,6 @@ struct DiptychApp: App {
     var body: some Scene {
         WindowGroup {
             
-//            CalendarView(date: Date(), changeMonthInt: 0)
-
-//            DiptychTabView()
-
-//            DiptychTabView2()
 
             if isSplashCompleted {
                 if userViewModel.flow == .initialized {
@@ -59,43 +54,7 @@ struct DiptychApp: App {
                     .environmentObject(userViewModel)
             }
             
-            
-            /// 원래 주석이었던것
-//            if userViewModel.flow == .completed {
-//                DiptychTabView()
-//            } else {
-//                OnBoardingView()
-//                    .environmentObject(userViewModel)
-//            }
-            
-//            switch userViewModel.flow {
-//            case .initialized :
-//                OnBoardingView()
-////                    .environmentObject(authViewModel)
-//                    .environmentObject(userViewModel)
-//            case .emailVerified :
-//                SignUpView()
-////                    .environmentObject(authViewModel)
-//                    .environmentObject(userViewModel)
-//            case .emailVerified:
-//                CouplingView()
-////                    .environmentObject(authViewModel)
-//                    .environmentObject(userViewModel)
-
-//            switch authViewModel.flow {
-//            case .isInitialized :
-//                OnBoardingView()
-//                    .environmentObject(authViewModel)
-//            case .isSignedUp :
-//                EmailVerificationView()
-//                    .environmentObject(authViewModel)
-//            case .isEmailVerified:
-//                CouplingView()
-//                    .environmentObject(authViewModel)
-
-//            default:
-//                DiptychTabView()
-//            }
+ 
         }
     }
 }

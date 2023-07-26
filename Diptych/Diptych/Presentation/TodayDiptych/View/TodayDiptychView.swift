@@ -18,7 +18,7 @@ struct TodayDiptychView: View {
     @State private var firstUIImage: UIImage?
     @State private var secondUIImage: UIImage?
     @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
-    @EnvironmentObject private var viewModel: TodayDiptychViewModel
+    @StateObject private var viewModel = TodayDiptychViewModel()
     @State private var isAllTasksCompleted = false
     let days = ["월", "화", "수", "목", "금", "토", "일"]
 
@@ -98,7 +98,7 @@ struct TodayDiptychView: View {
                                             }
                                     }
                                 }.onAppear {
-                                    
+
                                     imageCacheViewModel.firstImage = image.getUIImage(newSize: thumbSize)
                                 }
                         case .failure:
@@ -180,11 +180,11 @@ struct TodayDiptychView: View {
                             switch diptychState {
                             case .complete:
                                 NavigationLink {
-                                    PhotoDetailView(date: "더미더미더미",
+                                    PhotoDetailView(date: Date(),
                                                     questionNum: 3,
                                                     question: "더미더미더미더미더미더미",
-                                                    imageUrl1: "",
-                                                    imageUrl2: "")
+                                                    image1: "",
+                                                    image2:"")
                                 } label: {
                                         weeklyCalenderView
                                 }

@@ -6,18 +6,29 @@
 //
 
 import SwiftUI
+import FirebaseStorage
 
 // MARK: - Property
 
 struct PhotoDetailView {
-    var date: String
+    var date: Date
     var questionNum: Int
     var question: String
-    var imageUrl1: String
-    var imageUrl2: String
     
-    @State private var image1: UIImage?
-    @State private var image2: UIImage?
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter
+    }()
+    
+    @State var image1: String?
+    @State var image2: String?
+    @State var imageUrl1: URL?
+    @State var imageUrl2: URL?
+    
+    
+//    @State private var image1: UIImage?
+//    @State private var image2: UIImage?
     
 }
 
@@ -33,7 +44,7 @@ extension PhotoDetailView: View {
                 
                 /// [1] 해더
                 HStack(spacing: 8) {
-                    textLabel(text: date)
+                    textLabel(text: dateFormatter.string(from: date))
                     textLabel(text: "\(questionNum)번째 질문")
                     Spacer()
                 }//: HStack
@@ -60,29 +71,30 @@ extension PhotoDetailView: View {
                 // photoA와 photoB가 각각 따로 띄워져야 함, 저장할 때 합쳐져서 저장됨
                 // 일단 인터넷에서 url 이미지 임시로 넣어둔 상태
                 HStack(spacing: 0) {
-                    AsyncImage(
-                        url: URL(string: imageUrl1),
-                        content: { image in
+                    
+                    ///왼쪽 사진
+                    AsyncImage(url: imageUrl1) { image in
                             image
                                 .resizable()
                                 .frame(width: 196.5, height: 393)
 //                                .padding(.top, 20)
 //                                .padding(.bottom, 44)
-                        },
-                        placeholder: { ProgressView() }
-                    )
-                    AsyncImage(
-                        url: URL(string: imageUrl2),
-                        content: { image in
+                        } placeholder: {
+                            ProgressView()
+                        }
+                    
+                    /// 오른쪽 사진
+                    AsyncImage(url: imageUrl2) { image in
                             image
                                 .resizable()
                                 .frame(height: 393)
                                 .frame(width: 196.5, height: 393)
 //                                .padding(.top, 20)
 //                                .padding(.bottom, 44)
-                        },
-                        placeholder: { ProgressView() }
-                    )
+                        } placeholder: {
+                            ProgressView()
+                        }
+                    
                 }//: HStack
 //                .frame(height: 393, alignment: .center)
                 .frame(maxWidth: .infinity)
@@ -113,7 +125,14 @@ extension PhotoDetailView: View {
             } // VStack
             
         } // ZStack
-    }
+        .onAppear {
+            Task {
+                await downloadImage()
+            }
+        }
+    }//】 Body
+    
+    
 }
 
 // MARK: - Component
@@ -136,7 +155,27 @@ extension PhotoDetailView {
 //        }
 //        return image
 //    }
-    
+   
+    /// 이미지 불러오기
+    func downloadImage() async {
+        if let image1 = image1, !image1.isEmpty {
+            do {
+                let url = try await Storage.storage().reference(forURL: image1).downloadURL()
+                imageUrl1 = url
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if let image2 = image2, !image2.isEmpty {
+            do {
+                let url = try await Storage.storage().reference(forURL: image2).downloadURL()
+                imageUrl2 = url
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
     
     
     func textLabel(text: String) -> some View {
@@ -153,6 +192,8 @@ extension PhotoDetailView {
     
     
     
+    
+    
 }
 
 // MARK: - Preview
@@ -160,11 +201,9 @@ extension PhotoDetailView {
 struct PhotoDetailView_Previews: PreviewProvider {
     static var previews: some View {
         PhotoDetailView(
-            date: "2023년 7월 30일",
+            date: Date.now,
             questionNum: 20,
-            question: "\"상대방의 표정 중 당신이\n 가장 좋아하는 표정은?\"",
-            imageUrl1: "https://file.notion.so/f/s/1ed8775d-60cc-4907-b8f2-edf0acfb484f/%E1%84%89%E1%85%A6%E1%84%85%E1%85%A9_3_copy_5_%E1%84%87%E1%85%A9%E1%86%A8%E1%84%89%E1%85%A1%E1%84%87%E1%85%A9%E1%86%AB_2.jpg?id=8dc957fa-bf1e-4daf-a72a-6be8e69213d6&table=block&spaceId=794074b4-a62e-40a9-9a73-2dc5a7035226&expirationTimestamp=1689933600000&signature=-ZApnHNSBN05IfP5KQJWDd_MUXwXBrAUPvTwjjdI-40&downloadName=%E1%84%89%E1%85%A6%E1%84%85%E1%85%A9+3+copy+5+%E1%84%87%E1%85%A9%E1%86%A8%E1%84%89%E1%85%A1%E1%84%87%E1%85%A9%E1%86%AB+2.jpg",
-            imageUrl2: "https://file.notion.so/f/s/19b32819-43e4-446d-bcb8-917b17cfe2cd/%E1%84%89%E1%85%A6%E1%84%85%E1%85%A9_3_copy_5_%E1%84%87%E1%85%A9%E1%86%A8%E1%84%89%E1%85%A1%E1%84%87%E1%85%A9%E1%86%AB.jpg?id=7fddf6e5-976e-4ed6-af14-be1ff9662108&table=block&spaceId=794074b4-a62e-40a9-9a73-2dc5a7035226&expirationTimestamp=1689933600000&signature=QECxg7nvN5ew0ajmMq5oCJmCV0SqyR7e7n8SwOAI804&downloadName=%E1%84%89%E1%85%A6%E1%84%85%E1%85%A9+3+copy+5+%E1%84%87%E1%85%A9%E1%86%A8%E1%84%89%E1%85%A1%E1%84%87%E1%85%A9%E1%86%AB.jpg"
+            question: "\"상대방의 표정 중 당신이\n 가장 좋아하는 표정은?\""
         )
     }
 }
