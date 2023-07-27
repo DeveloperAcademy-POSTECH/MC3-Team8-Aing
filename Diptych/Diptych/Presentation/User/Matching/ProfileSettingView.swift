@@ -28,6 +28,7 @@ struct ProfileSettingView: View {
                 Text("연결에 성공했어요\n닉네임과 우리의 시작일을\n설정해주세요")
                     .font(.pretendard(.light, size: 28))
                     .multilineTextAlignment(.center)
+                    .lineSpacing(6)
                 Spacer()
                 VStack(spacing: 37) {
                     VStack(alignment: .leading) {

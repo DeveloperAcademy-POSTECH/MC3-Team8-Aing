@@ -23,6 +23,7 @@ struct CouplingView: View {
                 Text("서로의 초대코드를 입력하여 연결해주세요")
                     .font(.pretendard(.light, size: 28))
                     .multilineTextAlignment(.center)
+                    .lineSpacing(6)
                 Spacer()
                 VStack(spacing: 50) {
                     VStack(alignment: .leading){

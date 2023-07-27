@@ -28,6 +28,7 @@ struct OnBoardingView: View {
                         .padding(.leading, 39)
                         .padding(.trailing, 40)
                         .multilineTextAlignment(.center)
+                        .lineSpacing(6)
                     Spacer()
                         .frame(height: 28)
                     Image("OnBoardingViewImage2")

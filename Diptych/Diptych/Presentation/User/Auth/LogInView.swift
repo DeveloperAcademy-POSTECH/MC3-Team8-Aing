@@ -13,6 +13,7 @@ struct LogInView: View {
     @State var passwordWarning: String = ""
     @State var isAlertShown: Bool = false
     @State var alertMessage: String = ""
+    @State var dividerColor: Color = .darkGray
     @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var todayDiptychViewModel: TodayDiptychViewModel
     
@@ -25,7 +26,7 @@ struct LogInView: View {
                     .frame(height: 124)
                 Text("로그인")
                     .font(.pretendard(.light, size: 28))
-                    .multilineTextAlignment(.center)
+                    
                 Spacer()
                 //                        .frame(height: 138)
                 VStack(spacing: 37) {
@@ -39,7 +40,7 @@ struct LogInView: View {
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
                         Divider()
-                            .overlay(Color.darkGray)
+                            .overlay(dividerColor)
                     }
                     VStack(alignment: .leading) {
                         SecureField("", text: $password, prompt: Text("비밀번호")
@@ -48,7 +49,7 @@ struct LogInView: View {
                         .font(.pretendard(.light, size: 18))
                         .foregroundColor(.darkGray)
                         Divider()
-                            .overlay(Color.darkGray)
+                            .overlay(dividerColor)
 //                        Text(passwordWarning)
 //                            .font(.pretendard(.light, size: 12))
 //                            .foregroundColor(.systemRed)
