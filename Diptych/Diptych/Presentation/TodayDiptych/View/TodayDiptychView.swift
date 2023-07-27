@@ -27,7 +27,14 @@ struct TodayDiptychView: View {
             MainDiptychView()
             .ignoresSafeArea(edges: .top)
             .onAppear {
-
+                Task {
+                    await viewModel.fetchUser()
+                    await viewModel.setTodayPhoto()
+                    await viewModel.setUserCameraLoactionState()
+                    await viewModel.fetchTodayImage()
+                    await viewModel.fetchWeeklyCalender()
+                    await viewModel.fetchContents()
+                }
             }
             .onDisappear {
                 viewModel.weeklyData.removeAll()
@@ -41,6 +48,7 @@ struct TodayDiptychView: View {
                              print("fullScreenCover")
                          }
                          .onDisappear {
+                             viewModel.weeklyData.removeAll()
                              Task {
                                  await viewModel.fetchTodayImage()
                                  await viewModel.fetchWeeklyCalender()

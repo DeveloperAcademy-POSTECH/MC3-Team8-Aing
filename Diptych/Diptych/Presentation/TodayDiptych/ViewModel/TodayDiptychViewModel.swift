@@ -26,19 +26,6 @@ final class TodayDiptychViewModel: ObservableObject {
     @Published var isCompleted = false
     private let db = Firestore.firestore()
 
-    // MARK: - Initializer
-    
-    init() {
-        Task {
-            await fetchUser()
-            await setUserCameraLoactionState()
-            await fetchTodayImage()
-            await fetchWeeklyCalender()
-            await fetchContents()
-            await setTodayPhoto()
-        }
-    }
-
     // MARK: - Network
 
     func fetchWeeklyCalender() async {
@@ -141,7 +128,6 @@ final class TodayDiptychViewModel: ObservableObject {
     }
 
     func setUserCameraLoactionState() async {
-        await fetchUser()
         guard let isFirst = currentUser?.isFirst else { return }
         self.isFirst = isFirst
     }
