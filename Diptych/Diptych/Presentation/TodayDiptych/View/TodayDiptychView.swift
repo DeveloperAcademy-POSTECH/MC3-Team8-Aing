@@ -25,7 +25,7 @@ struct TodayDiptychView: View {
             MainDiptychView()
             .ignoresSafeArea(edges: .top)
             .onAppear {
-                debugPrint("[DEBUG] TodayPhotoID:", viewModel.todayPhoto?.id ?? "unknown", "\t", "isFirst?", viewModel.currentUser?.isFirst as Any)
+                print("[DEBUG] TodayPhotoID:", viewModel.todayPhoto?.id ?? "unknown")
             }
             .onDisappear {
                 viewModel.weeklyData.removeAll()
