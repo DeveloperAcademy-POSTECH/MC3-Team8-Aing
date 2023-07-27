@@ -103,7 +103,6 @@ struct TodayDiptychView: View {
                                             }
                                     }
                                 }.onAppear {
-                                    
                                     imageCacheViewModel.firstImage = image.getUIImage(newSize: thumbSize)
                                 }
                         case .failure:
