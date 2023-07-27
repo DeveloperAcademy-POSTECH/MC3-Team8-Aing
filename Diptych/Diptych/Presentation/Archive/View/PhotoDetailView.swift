@@ -17,7 +17,7 @@ struct PhotoDetailView {
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateStyle = .short
+        formatter.dateFormat = "yyyy년 M월 d일"
         return formatter
     }()
     
@@ -48,7 +48,7 @@ extension PhotoDetailView: View {
                     textLabel(text: "\(questionNum)번째 질문")
                     Spacer()
                 }//: HStack
-                .padding(.leading, 15)
+                .padding(.leading, 17)
                 .padding(.top,20)
                 .padding(.bottom, 15)
                 // 이슈 1. NavigationLink가 들어가면 위에 그 공간만큼 밑으로 밀리기 때문에 정확한 픽셀 값 맞추기 어려움. 눈 대중으로 맞춰둠.
@@ -62,7 +62,7 @@ extension PhotoDetailView: View {
                         .font(.custom(PretendardType.light.rawValue, size: 24))
                         .foregroundColor(.offBlack)
                         .multilineTextAlignment(.leading)
-                        .padding(.leading, 15)
+                        .padding(.leading, 17)
                     Spacer()
                 }//: HStack
 
@@ -77,11 +77,11 @@ extension PhotoDetailView: View {
                             image
                                 .resizable()
                                 .frame(width: 196.5, height: 393)
-//                                .padding(.top, 20)
-//                                .padding(.bottom, 44)
                         } placeholder: {
                             ProgressView()
                         }
+                        .frame(width: 196.5)
+                    
                     
                     /// 오른쪽 사진
                     AsyncImage(url: imageUrl2) { image in
@@ -89,14 +89,13 @@ extension PhotoDetailView: View {
                                 .resizable()
                                 .frame(height: 393)
                                 .frame(width: 196.5, height: 393)
-//                                .padding(.top, 20)
-//                                .padding(.bottom, 44)
                         } placeholder: {
                             ProgressView()
                         }
+                        .frame(width: 196.5)
                     
                 }//: HStack
-//                .frame(height: 393, alignment: .center)
+                .frame(height: 393, alignment: .center)
                 .frame(maxWidth: .infinity)
                 .aspectRatio(1, contentMode: .fit)
                 .padding(.top, 20)

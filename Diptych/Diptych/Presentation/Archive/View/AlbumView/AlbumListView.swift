@@ -31,6 +31,7 @@ struct AlbumListView: View {
                                 image2: !data.isEmpty ? data[index].photoSecondURL : "" )
                         } label: {
                             AlbumImageView(imageURL: data[index].thumbnail!)
+                                .aspectRatio(1.0, contentMode: .fit)
                         }
                     }else {
                         EmptyView()
@@ -53,14 +54,18 @@ struct AlbumImageView: View {
     }
 
     var body: some View {
-        if let image = imageLoader.image {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFill()
-                .clipped()
-        } else {
-            ProgressView()
-        }
+        VStack{
+            if let image = imageLoader.image {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 126, height: 126)
+                    .clipped()
+            } else {
+                ProgressView()
+            }
+        }//】 VStack
+        .frame(width: 126, height: 126)
     }//】 Body
 }
 

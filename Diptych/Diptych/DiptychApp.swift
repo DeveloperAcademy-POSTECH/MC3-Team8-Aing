@@ -45,13 +45,14 @@ struct DiptychApp: App {
                         .environmentObject(userViewModel)
                         .environmentObject(todayDiptychViewModel)
                 } else {
-                    DiptychTabView()
+                    DiptychTabView2()
                         .environmentObject(userViewModel)
                         .environmentObject(todayDiptychViewModel)
                 }
             } else {
-                DiptychTabView2()
-                    .environmentObject(userViewModel)
+                LottieView() {isSplashCompleted in
+                    self.isSplashCompleted = true
+                }
             }
             
  

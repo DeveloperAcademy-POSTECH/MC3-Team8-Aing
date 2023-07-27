@@ -159,7 +159,7 @@ class CameraViewController: UIViewController {
             return
         }
         
-        lblTopic.text = viewModel.question
+        lblTopic.text = "오늘 발견한 동그라미는?" //viewModel.question
         DispatchQueue.main.async { [unowned self] in
             print("isFirst?", viewModel.isFirst)
             currentAxis = viewModel.isFirst ? .verticalLeft : .verticalRight

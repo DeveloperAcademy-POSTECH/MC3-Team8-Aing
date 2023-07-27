@@ -71,15 +71,15 @@ struct TodayDiptychView: View {
                 .padding(.top, 35)
 
                 HStack(spacing: 0) {
-                    Text("오늘 본 동그라미는?")
+                    Text("오늘 발견한 동그라미는?")
 //                    Text("\"\(viewModel.question)\"")
-                        .frame(height: 78, alignment: .topLeading)
+                        .frame(height: 75, alignment: .topLeading)
                         .lineSpacing(6)
                         .font(.pretendard(.light, size: 28))
                         .foregroundColor(.offBlack)
                         .padding(.top, 12)
                         .padding(.horizontal, 15)
-                        .padding(.bottom, 35)
+                        .padding(.bottom, 15)
                     Spacer()
                 }
 
@@ -156,7 +156,7 @@ struct TodayDiptychView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .aspectRatio(1.0, contentMode: .fit)
-                .padding(.bottom, 20)
+                .padding(.bottom, 15)
 
                 //MARK: - Weekly 캘린더
                 HStack(spacing: 9) {
@@ -194,6 +194,7 @@ struct TodayDiptychView: View {
                         }
                     }
                 }//】 HStack
+                .padding(.bottom,30)
                 
                 
             }//】 VStack
