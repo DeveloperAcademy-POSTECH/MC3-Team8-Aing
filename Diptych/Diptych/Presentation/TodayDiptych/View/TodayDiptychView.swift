@@ -25,14 +25,7 @@ struct TodayDiptychView: View {
             MainDiptychView()
             .ignoresSafeArea(edges: .top)
             .onAppear {
-                Task {
-                    await viewModel.fetchUser()
-                    await viewModel.setTodayPhoto()
-                    await viewModel.setUserCameraLoactionState()
-                    await viewModel.fetchTodayImage()
-                    await viewModel.fetchWeeklyCalender()
-                    await viewModel.fetchContents()
-                }
+                fetchData()
             }
             .onDisappear {
                 viewModel.weeklyData.removeAll()
@@ -50,13 +43,14 @@ struct TodayDiptychView: View {
                              Task {
                                  await viewModel.fetchTodayImage()
                                  await viewModel.fetchWeeklyCalender()
-                                 await viewModel.fetchContents()
                              }
                          }
                 }
             }
         }
     }
+
+    // MARK: - UI Components
 
     private func MainDiptychView() -> some View {
         ZStack {
@@ -77,7 +71,7 @@ struct TodayDiptychView: View {
                 .padding(.top, 35)
 
                 HStack(spacing: 0) {
-                    Text("\"\(viewModel.question)\"")
+                    Text("\(viewModel.question)")
                         .frame(height: 78, alignment: .topLeading)
                         .lineSpacing(6)
                         .font(.pretendard(.light, size: 28))
@@ -197,6 +191,19 @@ struct TodayDiptychView: View {
                     }
                 }
             }
+        }
+    }
+
+    // MARK: - Custom Methods
+
+    private func fetchData() {
+        Task {
+            await viewModel.fetchUser()
+            await viewModel.setTodayPhoto()
+            await viewModel.setUserCameraLoactionState()
+            await viewModel.fetchTodayImage()
+            await viewModel.fetchWeeklyCalender()
+            await viewModel.fetchContents()
         }
     }
 }
