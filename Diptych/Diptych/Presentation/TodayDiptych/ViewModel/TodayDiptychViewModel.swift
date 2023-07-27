@@ -10,10 +10,6 @@ import Firebase
 import FirebaseFirestore
 import FirebaseStorage
 
-/*
- 오늘 날짜 - 앨범 생성일 빼면 인덱스가 나오니까 그 인덱스대로 질문을 불러오면 안 되나? 30이 넘으면 계산해 주긴 해야겠지만...
- */
-
 final class TodayDiptychViewModel: ObservableObject {
 
     // MARK: - Properties
