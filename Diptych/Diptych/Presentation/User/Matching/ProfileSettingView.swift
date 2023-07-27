@@ -59,6 +59,7 @@ struct ProfileSettingView: View {
                                 })
                                 .sheet(isPresented: $isDatePickerShown, onDismiss: { formattedDateString = formattedDate(selectedDate, format: format) }, content: {
                                     datePicker
+                                        .presentationDetents([.fraction(0.5)])
                                 })
                             
                         }
@@ -110,7 +111,8 @@ struct ProfileSettingView: View {
     
     private var datePicker: some View {
         DatePicker("날짜를 선택하세요", selection: $selectedDate, displayedComponents: .date)
-            .datePickerStyle(GraphicalDatePickerStyle())
+            .datePickerStyle(.graphical)
+//            .datePickerStyle(GraphicalDatePickerStyle())
             .labelsHidden() // 라벨을 숨깁니다.
             .padding()
             .frame(height: 300)
