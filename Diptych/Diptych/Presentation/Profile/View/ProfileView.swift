@@ -85,7 +85,7 @@ struct ProfileView: View {
                             .foregroundColor(.darkGray)
                     }
                     .alert("회원 탈퇴", isPresented: $isShowingAlert, actions: {
-                        SecureInputView(isHidden: $isPasswordHidden, password: $password, isFocused: $isPasswordFocused)
+                        SecureField("", text: $password)
                         Button(role: .destructive){
                             print("DEBUG: 탈퇴 버튼 눌림")
                             Task{
@@ -102,18 +102,6 @@ struct ProfileView: View {
                     }, message: {
                         Text("비밀번호를 입력해주세요.")
                     })
-//                    {
-//                        Alert(
-//                            title: Text("회원 탈퇴"),
-//                            message: Text("정말로 탈퇴하시겠습니까?"),
-//                            primaryButton: .destructive(Text("탈퇴")){
-//                                Task {
-//                                    try await userViewModel.deleteAccount()
-//                                }
-//                            },
-//                            secondaryButton: .cancel(Text("취소"))
-//                        )
-//                    }
                 }
                 // == 충돌 부분 끝 ==
             } // VStack
