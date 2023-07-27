@@ -28,7 +28,7 @@ class UserViewModel: ObservableObject {
     @Published var couplingCode: String?
     @Published var lover: DiptychUser?
     @Published var coupleAlbum: DiptychAlbum?
-    @Published var isCompleted: Bool = false
+//    @Published var isCompleted: Bool = false
     
     var listenerAboutAuth: AuthStateDidChangeListenerHandle?
     var listenerAboutUserData: ListenerRegistration?
@@ -298,6 +298,8 @@ extension UserViewModel {
             print("snapshot doc: \(snapshot.documents)")
             for document in snapshot.documents {
                 if let id = document.get("loverId"), let currentUserId = self.currentUser?.id {
+                    print("id itself : \(id)")
+                    print("id to String : \(String(describing: id))")
                     if String(describing: id) == currentUserId {
                         self.lover = try document.data(as: DiptychUser.self)
                         break
@@ -328,7 +330,7 @@ extension UserViewModel {
 //                let encodedLover = try Firestore.Encoder().encode(lover)
                 try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedCurrentUser, merge: true)
 //                try await Firestore.firestore().collection("users").document(lover.id).setData(encodedLover, merge: true)
-                self.isCompleted = true
+//                self.isCompleted = true
             }
         }
     }

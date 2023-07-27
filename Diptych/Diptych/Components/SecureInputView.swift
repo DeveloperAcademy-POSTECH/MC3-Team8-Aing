@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct SecureInputView: View {
-    @State private var isHiding: Bool = false
+    @Binding var isHidden: Bool
     @Binding var password: String
+    var isFocused: FocusState<Bool>.Binding
+    
     var prompt: String = ""
     
     var body: some View {
         ZStack(alignment: .trailing) {
-            if isHiding {
+            if isHidden {
                 SecureField("", text: $password, prompt: Text(prompt)
                     .font(.pretendard(.light, size: 18))
                     .foregroundColor(.darkGray))
@@ -24,6 +26,7 @@ struct SecureInputView: View {
                 .keyboardType(.asciiCapable)
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
+                .focused(isFocused)
 //                .padding(.bottom, 7)
 //                .overlay(
 //                    Rectangle().frame(width: nil, height: 1, alignment: .bottom)
@@ -43,6 +46,7 @@ struct SecureInputView: View {
                 .keyboardType(.asciiCapable)
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
+                .focused(isFocused)
 //                .padding(.bottom, 7)
 //                .overlay(
 //                    Rectangle().frame(width: nil, height: 1, alignment: .bottom)
@@ -53,19 +57,12 @@ struct SecureInputView: View {
                 //                .frame(height: 100)
                 
             }
-            Spacer()
-            Button {
-                isHiding.toggle()
-            } label: {
-                Image(systemName: isHiding ? "eye" : "eye.slash")
-                    .foregroundColor(.darkGray)
-            }
         }
     }
 }
 
 struct SecureInputView_Previews: PreviewProvider {
     static var previews: some View {
-        SecureInputView(password: .constant("test!1234"))
+        SecureInputView(isHidden: .constant(true), password: .constant("test!1234"), isFocused: FocusState<Bool>().projectedValue)
     }
 }

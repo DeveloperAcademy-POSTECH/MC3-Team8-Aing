@@ -15,8 +15,10 @@ struct ProfileSettingView: View {
     @State var nameWarning: String = ""
     @State var selectedDateWarning: String = ""
     
+    @FocusState var isNameInputFocused: Bool
+    
     @EnvironmentObject var userViewModel: UserViewModel
-    @EnvironmentObject var todayDiptychViewModel: TodayDiptychViewModel
+//    @EnvironmentObject var todayDiptychViewModel: TodayDiptychViewModel
     
     var format = "yyyy년 MM월 dd일"
     var body: some View {
@@ -30,6 +32,7 @@ struct ProfileSettingView: View {
                     .multilineTextAlignment(.center)
                     .lineSpacing(6)
                 Spacer()
+                    .frame(height: 86)
                 VStack(spacing: 37) {
                     VStack(alignment: .leading) {
                         TextField("", text: $name, prompt: Text("닉네임")
@@ -39,8 +42,9 @@ struct ProfileSettingView: View {
                         .foregroundColor(.darkGray)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
+                        .focused($isNameInputFocused)
                         Divider()
-                            .overlay(Color.darkGray)
+                            .overlay(nameWarning == "" ? Color.darkGray : Color.systemRed)
                         Text(nameWarning)
                             .font(.pretendard(.light, size: 12))
                             .foregroundColor(.systemRed)
@@ -59,14 +63,14 @@ struct ProfileSettingView: View {
                             
                         }
                         Divider()
-                            .overlay(Color.darkGray)
+                            .overlay(selectedDateWarning == "" ? Color.darkGray : Color.systemRed)
                         Text(selectedDateWarning)
                             .font(.pretendard(.light, size: 12))
                             .foregroundColor(.systemRed)
                     }
                 }
                 Spacer()
-                Text("내 초대코드: \(String(describing: userViewModel.couplingCode))")
+                Text("내 초대코드: \(userViewModel.couplingCode ?? "문제가 생겼어요 :(")")
                     .font(.pretendard(.light, size: 18))
                     .foregroundColor(.darkGray)
                 Spacer()
@@ -78,7 +82,7 @@ struct ProfileSettingView: View {
                         print("selectedDate: \(selectedDate)")
                         if try await userViewModel.checkStartDate(startDate: selectedDate) && checkName(input: name) {
                             try await userViewModel.setProfileData(name: name, startDate: selectedDate)
-                            await todayDiptychViewModel.setUserCameraLoactionState()
+//                            await todayDiptychViewModel.setUserCameraLoactionState()
                         }
                         if try await userViewModel.checkStartDate(startDate: selectedDate) == false {
                             selectedDateWarning = "상대가 설정한 시작일과 다릅니다."
@@ -99,6 +103,9 @@ struct ProfileSettingView: View {
             .padding([.leading, .trailing], 15)
         }
         .ignoresSafeArea()
+        .onTapGesture {
+            isNameInputFocused = false
+        }
     }
     
     private var datePicker: some View {

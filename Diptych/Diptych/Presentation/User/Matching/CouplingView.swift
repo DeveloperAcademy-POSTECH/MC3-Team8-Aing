@@ -12,6 +12,8 @@ struct CouplingView: View {
     @State var loverCode: String = ""
     @State var isProfileSettingLinkActive = false
     
+    @FocusState var isCodeInputFocused: Bool
+    
     @EnvironmentObject var userViewModel: UserViewModel
     
     var body: some View {
@@ -25,6 +27,7 @@ struct CouplingView: View {
                     .multilineTextAlignment(.center)
                     .lineSpacing(6)
                 Spacer()
+                    .frame(height: 65)
                 VStack(spacing: 50) {
                     VStack(alignment: .leading){
                         Text("내 초대코드")
@@ -56,6 +59,7 @@ struct CouplingView: View {
                         .foregroundColor(.darkGray)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
+                        .focused($isCodeInputFocused)
                         Divider()
                             .overlay(Color.darkGray)
                     }
@@ -78,6 +82,9 @@ struct CouplingView: View {
             .padding([.leading, .trailing], 15)
         }
         .ignoresSafeArea()
+        .onTapGesture {
+            isCodeInputFocused = false
+        }
         .onAppear() {
             Task {
                 try await userViewModel.setCouplingCode()
