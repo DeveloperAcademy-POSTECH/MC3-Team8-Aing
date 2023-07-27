@@ -48,5 +48,6 @@ struct DiptychTabView: View {
 struct DiptychTabView_Previews: PreviewProvider {
     static var previews: some View {
         DiptychTabView()
+            .environmentObject(UserViewModel())
     }
 }

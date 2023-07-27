@@ -23,7 +23,6 @@ struct DiptychApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var userViewModel: UserViewModel = UserViewModel()
-    @StateObject var todayDiptychViewModel = TodayDiptychViewModel()
     
     var body: some Scene {
         WindowGroup {
@@ -36,7 +35,6 @@ struct DiptychApp: App {
                 if userViewModel.flow == .initialized {
                     OnBoardingView()
                         .environmentObject(userViewModel)
-                        .environmentObject(todayDiptychViewModel)
                 } else if userViewModel.flow == .signedUp {
                     LoadingVerificationView()
                         .environmentObject(userViewModel)
@@ -46,11 +44,9 @@ struct DiptychApp: App {
                 } else if userViewModel.flow == .coupled {
                     ProfileSettingView()
                         .environmentObject(userViewModel)
-                        .environmentObject(todayDiptychViewModel)
                 } else {
                     DiptychTabView()
                         .environmentObject(userViewModel)
-                        .environmentObject(todayDiptychViewModel)
                 }
             } else {
                 LottieView() { isSplashCompleted in

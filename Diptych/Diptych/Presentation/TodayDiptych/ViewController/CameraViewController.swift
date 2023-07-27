@@ -184,7 +184,7 @@ class CameraViewController: UIViewController {
             
             let lottieView = LottieUIViews.shared.lottieView(frame: view.frame)
             view.addSubview(lottieView)
-            
+
             // guard let data = imgViewGuideOverlay.image?.jpegData(compressionQuality: 1) else {
             //     debugPrint("\(#function): Image data is nil")
             //     return
@@ -214,7 +214,7 @@ class CameraViewController: UIViewController {
             Task {
                 try await taskUpload(image: uiImage)
                 self.dismiss(animated: true)
-            }   
+            }
         }
     }
     
@@ -293,7 +293,12 @@ class CameraViewController: UIViewController {
     private func setupLottieLoading() {
         let lottieRect = CGRect(origin: .zero, size: viewLottieLoading.frame.size)
         let lottieView = LottieUIViews.shared.lottieView(frame: lottieRect, backgroundColor: .diptychLightGray)
-        viewLottieLoading.addSubview(lottieView)
+
+        #if targetEnvironment(simulator)
+            //
+        #else
+            viewLottieLoading.addSubview(lottieView)
+        #endif
     }
     
     // MARK: - Camera Functions
@@ -433,6 +438,8 @@ class CameraViewController: UIViewController {
         
         btnCloseBack.setImage(UIImage(named: "imgBackButton"), for: .normal)
         btnShutter.setImage(UIImage(named: "imgCircleCheckButton"), for: .normal)
+
+        btnShutter.isEnabled = true
     }
     
     func changeCameraMode() {
