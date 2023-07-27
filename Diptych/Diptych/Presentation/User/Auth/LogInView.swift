@@ -8,13 +8,18 @@
 import SwiftUI
 
 struct LogInView: View {
-    @State var email: String = ""
-    @State var password: String = ""
-    @State var passwordWarning: String = ""
-    @State var isAlertShown: Bool = false
-    @State var alertMessage: String = ""
+    @State private var email: String = ""
+    @State private var password: String = ""
+    @State private var passwordWarning: String = ""
+    @State private var isAlertShown: Bool = false
+    @State private var alertMessage: String = ""
+    @State private var dividerColor: Color = .darkGray
+    @State private var isPasswordHidden: Bool = true
+    
+    @FocusState var isPasswordFocused: Bool
+    
     @EnvironmentObject var userViewModel: UserViewModel
-    @EnvironmentObject var todayDiptychViewModel: TodayDiptychViewModel
+//    @EnvironmentObject var todayDiptychViewModel: TodayDiptychViewModel
     
     var body: some View {
         ZStack {
@@ -25,7 +30,9 @@ struct LogInView: View {
                     .frame(height: 124)
                 Text("로그인")
                     .font(.pretendard(.light, size: 28))
+                    
                 Spacer()
+                    .frame(height: 164)
                 //                        .frame(height: 138)
                 VStack(spacing: 37) {
                     VStack(alignment: .leading) {
@@ -38,16 +45,30 @@ struct LogInView: View {
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
                         Divider()
-                            .overlay(Color.darkGray)
+                            .overlay(dividerColor)
                     }
                     VStack(alignment: .leading) {
-                        SecureField("", text: $password, prompt: Text("비밀번호")
-                            .font(.pretendard(.light, size: 18))
-                            .foregroundColor(.darkGray))
-                        .font(.pretendard(.light, size: 18))
-                        .foregroundColor(.darkGray)
+                        HStack {
+                            SecureInputView(isHidden: $isPasswordHidden, password: $password, isFocused: $isPasswordFocused, prompt: "비밀번호")
+                                .onTapGesture {
+                                    isPasswordFocused = true
+                                }
+                            Button {
+                                isPasswordHidden.toggle()
+                            } label: {
+                                Image(systemName: isPasswordHidden ? "eye" : "eye.slash")
+                                    .foregroundColor(.darkGray)
+                            }
+                        }
                         Divider()
-                            .overlay(Color.darkGray)
+                            .overlay(passwordWarning == "" ? Color.darkGray : Color.systemRed)
+//                        SecureField("", text: $password, prompt: Text("비밀번호")
+//                            .font(.pretendard(.light, size: 18))
+//                            .foregroundColor(.darkGray))
+//                        .font(.pretendard(.light, size: 18))
+//                        .foregroundColor(.darkGray)
+//                        Divider()
+//                            .overlay(dividerColor)
 //                        Text(passwordWarning)
 //                            .font(.pretendard(.light, size: 12))
 //                            .foregroundColor(.systemRed)
@@ -103,6 +124,16 @@ struct LogInView: View {
                     .frame(height: 47)
             }
             .ignoresSafeArea()
+        }
+        .onTapGesture {
+            isPasswordFocused = false
+        }
+        .navigationViewStyle(.stack)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                NavigationBackItem()
+            }
         }
     }
 }
