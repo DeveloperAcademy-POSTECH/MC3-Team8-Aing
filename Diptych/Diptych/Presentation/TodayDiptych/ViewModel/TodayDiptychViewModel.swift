@@ -19,7 +19,6 @@ final class TodayDiptychViewModel: ObservableObject {
     @Published var isFirst = true
     @Published var weeklyData = [WeeklyData]()
     @Published var isLoading = false
-    @Published var contentDay = 0
     @Published var content: Content?
     @Published var todayPhoto: Photo?
     @Published var photoFirstURL = ""
@@ -144,7 +143,9 @@ final class TodayDiptychViewModel: ObservableObject {
             guard let startDate = data["startDate"] as? Timestamp else { return }
 
             let dateComponents = Calendar.current.dateComponents([.day], from: startDate.dateValue(), to: Date())
-            guard let order = dateComponents.day else { return }
+            guard var order = dateComponents.day else { return }
+
+            if order >= 24 { order -= 24 } // TODO: - 질문 개수에 따라 초기화
 
             let contentSnapshot = try await db.collection("contents")
                 .whereField("order", isEqualTo: order) 
@@ -159,7 +160,6 @@ final class TodayDiptychViewModel: ObservableObject {
     }
 
     func setTodayPhoto() async {
-        
         let (todayDate, _, _) = setTodayCalendar()
         let timestamp = Timestamp(date: todayDate)
         guard let albumId = currentUser?.coupleAlbumId else { return }
