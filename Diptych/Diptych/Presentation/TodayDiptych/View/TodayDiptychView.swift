@@ -25,7 +25,7 @@ struct TodayDiptychView: View {
             MainDiptychView()
             .ignoresSafeArea(edges: .top)
             .onAppear {
-
+                debugPrint("[DEBUG] TodayPhotoID:", viewModel.todayPhoto?.id ?? "unknown", "\t", "isFirst?", viewModel.currentUser?.isFirst as Any)
             }
             .onDisappear {
                 viewModel.weeklyData.removeAll()
@@ -35,9 +35,6 @@ struct TodayDiptychView: View {
                     Color.offWhite.ignoresSafeArea()
                     CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
                          .toolbar(.hidden, for: .tabBar)
-                         .onAppear {
-                             print("fullScreenCover")
-                         }
                          .onDisappear {
                              Task {
                                  await viewModel.fetchTodayImage()
