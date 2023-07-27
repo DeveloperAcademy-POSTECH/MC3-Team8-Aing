@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct LogInView: View {
-    @State var email: String = ""
-    @State var password: String = ""
-    @State var passwordWarning: String = ""
-    @State var isAlertShown: Bool = false
-    @State var alertMessage: String = ""
-    @State var dividerColor: Color = .darkGray
-    @State var isPasswordHidden: Bool = true
+    @State private var email: String = ""
+    @State private var password: String = ""
+    @State private var passwordWarning: String = ""
+    @State private var isAlertShown: Bool = false
+    @State private var alertMessage: String = ""
+    @State private var dividerColor: Color = .darkGray
+    @State private var isPasswordHidden: Bool = true
     
     @FocusState var isPasswordFocused: Bool
     

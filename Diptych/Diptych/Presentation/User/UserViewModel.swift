@@ -169,12 +169,14 @@ class UserViewModel: ObservableObject {
         }
     }
     
-    func deleteAccount() async throws {
+    func deleteAccount(password: String) async throws {
         do {
             print("[DEBUG] deleteAccount is called")
             
             if let currentUserData = self.currentUser, let currentUserAuth = Auth.auth().currentUser {
                 print("assigning is done")
+                let credential = EmailAuthProvider.credential(withEmail: currentUserData.email, password: password)
+                try await currentUserAuth.reauthenticate(with: credential)
                 try await currentUserAuth.delete()
 //                currentUserAuth.delete() { error in
 //                    print(error?.localizedDescription)

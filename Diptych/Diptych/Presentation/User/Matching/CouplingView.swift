@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct CouplingView: View {
-    @State var sample: String = ""
-    @State var loverCode: String = ""
-    @State var isProfileSettingLinkActive = false
+    @State private var sample: String = ""
+    @State private var loverCode: String = ""
+    @State private var isProfileSettingLinkActive = false
     
     @FocusState var isCodeInputFocused: Bool
     

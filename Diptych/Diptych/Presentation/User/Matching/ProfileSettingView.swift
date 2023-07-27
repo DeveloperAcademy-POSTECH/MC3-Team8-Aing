@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ProfileSettingView: View {
-    @State var name: String = ""
-    @State var selectedDate: Date = Date()
-    @State var formattedDateString: String = "기념일"
-    @State var isDatePickerShown: Bool = false
-    @State var nameWarning: String = ""
-    @State var selectedDateWarning: String = ""
+    @State private var name: String = ""
+    @State private var selectedDate: Date = Date()
+    @State private var formattedDateString: String = "기념일"
+    @State private var isDatePickerShown: Bool = false
+    @State private var nameWarning: String = ""
+    @State private var selectedDateWarning: String = ""
     
     @FocusState var isNameInputFocused: Bool
     

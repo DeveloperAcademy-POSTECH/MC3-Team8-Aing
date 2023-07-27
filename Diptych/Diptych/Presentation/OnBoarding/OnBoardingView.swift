@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct OnBoardingView: View {
-    @State var isLogInLinkActive = false
-    @State var isSignUpLinkActive = false
+    @State private var isLogInLinkActive = false
+    @State private var isSignUpLinkActive = false
     @EnvironmentObject var userViewModel: UserViewModel
     /// 카메라 표시 여부
     @State var isShowCamera = false

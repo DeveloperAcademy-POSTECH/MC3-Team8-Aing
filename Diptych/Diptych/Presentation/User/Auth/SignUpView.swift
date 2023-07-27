@@ -11,17 +11,17 @@ import FirebaseAuth
 
 struct SignUpView: View {
     
-    @State var name: String = ""
-    @State var email: String = ""
-    @State var password: String = ""
-    @State var passwordConfirm: String = ""
-    @State var emailWarning: String = ""
-    @State var passwordWarning: String = ""
-    @State var passwordConfirmWarning: String = ""
-    @State var isAlertShown: Bool = false
-    @State var alertMessage: String = ""
-    @State var isPasswordHidden: Bool = true
-    @State var isPasswordConfirmHidden: Bool = true
+    @State private var name: String = ""
+    @State private var email: String = ""
+    @State private var password: String = ""
+    @State private var passwordConfirm: String = ""
+    @State private var emailWarning: String = ""
+    @State private var passwordWarning: String = ""
+    @State private var passwordConfirmWarning: String = ""
+    @State private var isAlertShown: Bool = false
+    @State private var alertMessage: String = ""
+    @State private var isPasswordHidden: Bool = true
+    @State private var isPasswordConfirmHidden: Bool = true
     @FocusState var isEmailFocused: Bool
     @FocusState var isPasswordFocused: Bool
     @FocusState var isPasswordConfirmFocused: Bool
