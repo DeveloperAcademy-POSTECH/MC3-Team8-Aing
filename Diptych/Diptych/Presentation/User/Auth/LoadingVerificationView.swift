@@ -27,16 +27,6 @@ struct LoadingVerificationView: View {
             Spacer()
             Button {
                 Task {
-                    try await userViewModel.sendEmailVerification()
-                }
-            } label: {
-                Text("인증메일 재전송")
-                    .frame(width: UIScreen.main.bounds.width-30, height:  60)
-                    .background(Color.offBlack)
-                    .foregroundColor(.offWhite)
-            }
-            Button {
-                Task {
                     await userViewModel.checkEmailVerification3()
                 }
             } label: {
@@ -45,6 +35,18 @@ struct LoadingVerificationView: View {
                     .background(Color.offBlack)
                     .foregroundColor(.offWhite)
             }
+            Button {
+                Task {
+                    try await userViewModel.sendEmailVerification()
+                }
+            } label: {
+                Text("인증 메일 다시 보내기")
+                    .frame(width: UIScreen.main.bounds.width-30, height:  60)
+                    .background(Color.offWhite)
+                    .foregroundColor(.offBlack)
+                    .border(Color.offBlack)
+            }
+            
             Spacer()
                 .frame(height: 47)
         }

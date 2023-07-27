@@ -27,6 +27,7 @@
 		9846144B2A69075E0043EAE9 /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */; };
 		985DBC1E2A699DAA006C64FC /* LoadingVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */; };
 		987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E425B2A5FE17F00C682D9 /* LogInView.swift */; };
+		988A277F2A72351900A9B5C0 /* SecureInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A277E2A72351900A9B5C0 /* SecureInputView.swift */; };
 		989B44942A65752100D99439 /* CouplingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44932A65752100D99439 /* CouplingView.swift */; };
 		989B44972A65977200D99439 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 989B44962A65977200D99439 /* FirebaseFirestoreSwift */; };
 		989B449A2A65BB9200D99439 /* DiptychUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44992A65BB9200D99439 /* DiptychUser.swift */; };
@@ -148,6 +149,7 @@
 		985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingVerificationView.swift; sourceTree = "<group>"; };
 		987E425B2A5FE17F00C682D9 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		987E425F2A627A2B00C682D9 /* Diptych.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Diptych.entitlements; sourceTree = "<group>"; };
+		988A277E2A72351900A9B5C0 /* SecureInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputView.swift; sourceTree = "<group>"; };
 		989B44932A65752100D99439 /* CouplingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplingView.swift; sourceTree = "<group>"; };
 		989B44992A65BB9200D99439 /* DiptychUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychUser.swift; sourceTree = "<group>"; };
 		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -246,6 +248,14 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		988A277D2A7234EE00A9B5C0 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				988A277E2A72351900A9B5C0 /* SecureInputView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		989B44952A65977200D99439 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -305,6 +315,7 @@
 		AB2A9EA22A5EC46100D70C33 /* Diptych */ = {
 			isa = PBXGroup;
 			children = (
+				988A277D2A7234EE00A9B5C0 /* Components */,
 				98EEBEC72A6FA87100F575ED /* DiptychSplashLogo3sec.json */,
 				98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */,
 				989B44982A659F1A00D99439 /* Model */,
@@ -823,6 +834,7 @@
 				44DE9B8E2A67DC2100E6615B /* UIDevice+.swift in Sources */,
 				44EE2BFB2A6E6EF5003B5C1F /* Image+.swift in Sources */,
 				C1F79A4E2A700E9500A1D63A /* ShareSheetView.swift in Sources */,
+				988A277F2A72351900A9B5C0 /* SecureInputView.swift in Sources */,
 				ABCB300D2A6D367F007724DC /* Photo.swift in Sources */,
 				44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */,
 				AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */,

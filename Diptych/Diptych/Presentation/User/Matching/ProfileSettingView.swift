@@ -25,8 +25,9 @@ struct ProfileSettingView: View {
             VStack {
                 Spacer()
                     .frame(height: 124)
-                Text("연결에 성공했어요\n닉네임과 우리의 시작일을 알려주세요")
+                Text("연결에 성공했어요\n닉네임과 우리의 시작일을\n설정해주세요")
                     .font(.pretendard(.light, size: 28))
+                    .multilineTextAlignment(.center)
                 Spacer()
                 VStack(spacing: 37) {
                     VStack(alignment: .leading) {
@@ -64,6 +65,11 @@ struct ProfileSettingView: View {
                     }
                 }
                 Spacer()
+                Text("내 초대코드: \(String(describing: userViewModel.couplingCode))")
+                    .font(.pretendard(.light, size: 18))
+                    .foregroundColor(.darkGray)
+                Spacer()
+                    .frame(height: 20)
                 Button {
                     selectedDateWarning = ""
                     nameWarning = ""

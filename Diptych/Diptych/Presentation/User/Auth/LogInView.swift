@@ -25,6 +25,7 @@ struct LogInView: View {
                     .frame(height: 124)
                 Text("로그인")
                     .font(.pretendard(.light, size: 28))
+                    .multilineTextAlignment(.center)
                 Spacer()
                 //                        .frame(height: 138)
                 VStack(spacing: 37) {

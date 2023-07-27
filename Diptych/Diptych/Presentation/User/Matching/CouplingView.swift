@@ -22,6 +22,7 @@ struct CouplingView: View {
                     .frame(height: 124)
                 Text("서로의 초대코드를 입력하여 연결해주세요")
                     .font(.pretendard(.light, size: 28))
+                    .multilineTextAlignment(.center)
                 Spacer()
                 VStack(spacing: 50) {
                     VStack(alignment: .leading){
@@ -47,7 +48,7 @@ struct CouplingView: View {
                     VStack(alignment: .leading) {
                         Text("상대방 코드를 전달받으셨나요?")
                             .font(.pretendard(.light, size: 16))
-                        TextField("", text: $loverCode, prompt: Text("상대방 인증코드")
+                        TextField("", text: $loverCode, prompt: Text("전달받은 초대코드 입력")
                             .font(.pretendard(.light, size: 24))
                             .foregroundColor(.darkGray))
                         .font(.pretendard(.light, size: 24))

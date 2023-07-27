@@ -31,6 +31,7 @@ struct SignUpView: View {
                     .frame(height: 124)
                 Text("회원가입")
                     .font(.pretendard(.light, size: 28))
+                    .multilineTextAlignment(.center)
                 Spacer()
                 VStack(spacing: 37) {
                     VStack(alignment: .leading) {
@@ -50,11 +51,12 @@ struct SignUpView: View {
                     
                     }
                     VStack(alignment: .leading) {
-                        SecureField("", text: $password, prompt: Text("비밀번호")
-                            .font(.pretendard(.light, size: 18))
-                            .foregroundColor(.darkGray))
-                        .font(.pretendard(.light, size: 18))
-                        .foregroundColor(.darkGray)
+                        SecureInputView(password: $password, prompt: "비밀번호")
+//                        SecureField("", text: $password, prompt: Text("비밀번호")
+//                            .font(.pretendard(.light, size: 18))
+//                            .foregroundColor(.darkGray))
+//                        .font(.pretendard(.light, size: 18))
+//                        .foregroundColor(.darkGray)
                         Divider()
                             .overlay(Color.darkGray)
                         Text(passwordWarning)
@@ -62,11 +64,12 @@ struct SignUpView: View {
                             .foregroundColor(.systemRed)
                     }
                     VStack(alignment: .leading) {
-                        SecureField("", text: $passwordConfirm, prompt: Text("비밀번호 확인")
-                            .font(.pretendard(.light, size: 18))
-                            .foregroundColor(.darkGray))
-                        .font(.pretendard(.light, size: 18))
-                        .foregroundColor(.darkGray)
+                        SecureInputView(password: $passwordConfirm, prompt: "비밀번호 확인")
+//                        SecureField("", text: $passwordConfirm, prompt: Text("비밀번호 확인")
+//                            .font(.pretendard(.light, size: 18))
+//                            .foregroundColor(.darkGray))
+//                        .font(.pretendard(.light, size: 18))
+//                        .foregroundColor(.darkGray)
                         Divider()
                             .overlay(Color.darkGray)
                         Text(passwordConfirmWarning)
@@ -110,7 +113,7 @@ struct SignUpView: View {
                         }
                     }
                 } label: {
-                    Text("인증메일 받기")
+                    Text("인증 메일 받기")
                         .frame(width: UIScreen.main.bounds.width-30, height:  60)
                         .background(Color.offBlack)
                         .foregroundColor(.offWhite)
