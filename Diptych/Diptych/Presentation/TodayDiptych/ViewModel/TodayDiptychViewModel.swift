@@ -10,6 +10,10 @@ import Firebase
 import FirebaseFirestore
 import FirebaseStorage
 
+/*
+ 오늘 날짜 - 앨범 생성일 빼면 인덱스가 나오니까 그 인덱스대로 질문을 불러오면 안 되나? 30이 넘으면 계산해 주긴 해야겠지만...
+ */
+
 final class TodayDiptychViewModel: ObservableObject {
 
     // MARK: - Properties
@@ -141,11 +145,13 @@ final class TodayDiptychViewModel: ObservableObject {
                 .getDocuments()
 
             let data = daySnapshot.documents[0].data()
-            guard let contentDay = data["contentDay"] as? Int else { return }
-            self.contentDay = contentDay
+            guard let startDate = data["startDate"] as? Timestamp else { return }
+
+            let dateComponents = Calendar.current.dateComponents([.day], from: startDate.dateValue(), to: Date())
+            guard let order = dateComponents.day else { return }
 
             let contentSnapshot = try await db.collection("contents")
-                .whereField("order", isEqualTo: contentDay) // TODO: - 유저의 앨범과 연결
+                .whereField("order", isEqualTo: order) 
                 .getDocuments()
 
             self.content = try contentSnapshot.documents[0].data(as: Content.self)
