@@ -37,7 +37,6 @@ class UserViewModel: ObservableObject {
         Task {
             await fetchUserData()
             await fetchLoverData() // 이걸 안 불러주니까 프로필뷰에 상대방 닉네임이 안 떠서 수정했습니다!
-            print("[DEBUG] currentUser : \(self.currentUser) /// flow : \(self.flow)")
             listenerAboutUserData = Firestore.firestore().collection("users").addSnapshotListener() { snapshot, error in
                 Task {
                     await self.fetchUserData()
@@ -175,12 +174,18 @@ class UserViewModel: ObservableObject {
             print("[DEBUG] deleteAccount is called")
             
             if let currentUserData = self.currentUser, let currentUserAuth = Auth.auth().currentUser {
+                print("assigning is done")
+                try await currentUserAuth.delete()
+//                currentUserAuth.delete() { error in
+//                    print(error?.localizedDescription)
+//                }
+                print("DEBUG : auth account delete done")
                 try await Firestore.firestore().collection("users").document(currentUserData.id).delete()
                 print("DEBUG : user data delete done")
                 
-                print("currentUserAuth : \(currentUserAuth)")
+//                print("currentUserAuth : \(currentUserAuth)")
                 
-                try await currentUserAuth.delete()
+//                try await currentUserAuth.delete()
 //                let user = Auth.auth().currentUser
 //                user?.delete(completion: { error in
 //                    guard error == nil else {
@@ -189,13 +194,18 @@ class UserViewModel: ObservableObject {
 //                    }
 //                    return
 //                })
-                print("DEBUG : auth account delete done")
+                
                 
                 self.currentUser = nil
                 self.flow = .initialized
             } else {
-                print("something is nil")
+                print("something is wrong")
+                print("\t self.currentUser : \(self.currentUser)")
+                print("\t self.currentUser : \(Auth.auth().currentUser)")
             }
+        }
+        catch {
+            print(error.localizedDescription)
         }
     }
     
@@ -207,18 +217,18 @@ class UserViewModel: ObservableObject {
         if let currentUser = try? snapshot.data(as: DiptychUser.self) {
             self.currentUser = currentUser
             self.flow = UserFlow(rawValue: currentUser.flow) ?? .initialized
-            print("[DEBUG] currentUser : \(self.currentUser)\nflow : \(self.flow)")
         }
+        print("DEBUG : fetchLoverData self.currentUser : \(self.currentUser)\n")
+        print("[DEBUG] flow : \(self.flow)")
     }
     
     func fetchLoverData() async {
-        print("DEBUG : fetchLoverData self.lover : \(self.lover)")
         guard let uid = self.currentUser?.loverId else { return }
         guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else { return }
         if let lover = try? snapshot.data(as: DiptychUser.self) {
             self.lover = lover
-            print("DEBUG: fetchLoverData Done")
         }
+        print("DEBUG : fetchLoverData self.lover : \(self.lover)\n")
     }
     
     func fetchCoupleAlbumData() async {
@@ -287,9 +297,14 @@ extension UserViewModel {
             }
             print("snapshot doc: \(snapshot.documents)")
             for document in snapshot.documents {
-                guard let _ = document.get("loverId") else {
+                if let id = document.get("loverId"), let currentUserId = self.currentUser?.id {
+                    if String(describing: id) == currentUserId {
+                        self.lover = try document.data(as: DiptychUser.self)
+                        break
+                    }
+                } else {
                     self.lover = try document.data(as: DiptychUser.self)
-                    return
+                    break
                 }
             }
 //            if snapshot.documents.count == 1 {
