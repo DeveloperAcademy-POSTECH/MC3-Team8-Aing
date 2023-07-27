@@ -33,13 +33,12 @@ struct ArchiveTabView: View {
                 }//】 HStack
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal,30)
-                .background(Color.gray.opacity(0.1))
-                //            .ignoresSafeArea()
                 
-                Divider()
+                Rectangle()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 1.5)
                     .foregroundColor(.lightGray)
-                    .frame(height: 1)
-                
+
                 
                 /// 각 뷰로 이동
                 if currentTab == 0 {
@@ -87,7 +86,7 @@ struct ArchiveTabBarItem: View {
                     /// 탭바 밑줄
                     if isSelected{
                         Color.black
-                            .frame(width: 76, height: 2)
+                            .frame(width: 76, height: 3)
                             .matchedGeometryEffect(id: "underline", in: namespace) //→애니메이션
                     } else {
                         Color.clear.frame(width: 76, height: 2)

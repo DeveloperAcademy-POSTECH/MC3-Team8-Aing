@@ -14,22 +14,21 @@ struct PhotoDetailView {
     var date: Date
     var questionNum: Int
     var question: String
+    var isLoading: Bool
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy년 M월 d일"
+        formatter.dateFormat = "yy. MM. d"
         return formatter
     }()
     
+    @State var index : Int = 2
     @State var image1: String?
     @State var image2: String?
     @State var imageUrl1: URL?
     @State var imageUrl2: URL?
-    
-    
-//    @State private var image1: UIImage?
-//    @State private var image2: UIImage?
-    
+    @State private var isImageLoaded = false
+
 }
 
 // MARK: - View
@@ -43,63 +42,102 @@ extension PhotoDetailView: View {
             VStack(spacing: 0) {
                 
                 /// [1] 해더
-                HStack(spacing: 8) {
-                    textLabel(text: dateFormatter.string(from: date))
-                    textLabel(text: "\(questionNum)번째 질문")
-                    Spacer()
-                }//: HStack
-                .padding(.leading, 17)
-                .padding(.top,20)
-                .padding(.bottom, 15)
-                // 이슈 1. NavigationLink가 들어가면 위에 그 공간만큼 밑으로 밀리기 때문에 정확한 픽셀 값 맞추기 어려움. 눈 대중으로 맞춰둠.
+                HStack{
+                    previousButton
+                    
+                    VStack(spacing: 5) {
+                        Text("\(questionNum)번째 딥틱")
+                        Text("( \(dateFormatter.string(from: date)) )")
+                    }//: VStack
+                    .padding(.horizontal, 25)
+                    .padding(.top,20)
+                    .padding(.bottom,20)
+                    
+                    nextButton
+                }
+                
+//                HStack(spacing: 8) {
+//                    Text("\(questionNum)번째 딥틱 입니다")
+//                    Spacer()
+//                    textLabel(text: dateFormatter.string(from: date))
+//                }//: HStack
+//                .padding(.horizontal, 17)
+//                .padding(.top,20)
+//                .padding(.bottom, 15)
+                
                 
                 /// [2] 질문
-                HStack(spacing: 0) {
-                    Text(question)
-                        // 이슈 2. 자간이 약간 다름
-                        // 이슈 3. 문장마다 자동 줄바꿈은 어떻게 할 수 있을까?
-                        // 이슈 4. padding 값에 따라 글자 짤릴 수 있음
-                        .font(.custom(PretendardType.light.rawValue, size: 24))
+                ZStack{
+                    RoundedRectangle(cornerRadius:0)
+                        .stroke(Color.lightGray, lineWidth: 1)
+                        .frame(height: 90)
+                    
+                    Text("❝  \(question)  ❞")
+                        .font(.custom(PretendardType.light.rawValue, size: 20))
                         .foregroundColor(.offBlack)
                         .multilineTextAlignment(.leading)
-                        .padding(.leading, 17)
-                    Spacer()
-                }//: HStack
+                    
+                }//: ZStack
+                
+//                HStack(spacing:0){
+//                    Text("\(question)")
+//                        // 이슈 2. 자간이 약간 다름
+//                        // 이슈 3. 문장마다 자동 줄바꿈은 어떻게 할 수 있을까?
+//                        // 이슈 4. padding 값에 따라 글자 짤릴 수 있음
+//                        .font(.custom(PretendardType.light.rawValue, size: 24))
+//                        .foregroundColor(.offBlack)
+//                        .multilineTextAlignment(.leading)
+//                        .padding(.leading, 17)
+//                    Spacer()
+//                }//: HStack
 
                 
                 /// [3] 사진 프레임
                 // photoA와 photoB가 각각 따로 띄워져야 함, 저장할 때 합쳐져서 저장됨
                 // 일단 인터넷에서 url 이미지 임시로 넣어둔 상태
-                HStack(spacing: 0) {
+              
+                ZStack{
+                    RoundedRectangle(cornerRadius: 0)
+                        .foregroundColor(Color.darkGray)
+//                        .stroke(Color.lightGray, lineWidth: 1)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        
                     
-                    ///왼쪽 사진
-                    AsyncImage(url: imageUrl1) { image in
-                            image
-                                .resizable()
-                                .frame(width: 196.5, height: 393)
-                        } placeholder: {
-                            ProgressView()
-                        }
-                        .frame(width: 196.5)
-                    
-                    
-                    /// 오른쪽 사진
-                    AsyncImage(url: imageUrl2) { image in
-                            image
-                                .resizable()
-                                .frame(height: 393)
-                                .frame(width: 196.5, height: 393)
-                        } placeholder: {
-                            ProgressView()
-                        }
-                        .frame(width: 196.5)
-                    
-                }//: HStack
-                .frame(height: 393, alignment: .center)
-                .frame(maxWidth: .infinity)
-                .aspectRatio(1, contentMode: .fit)
-                .padding(.top, 20)
-                .padding(.bottom,44)
+                    HStack(spacing: 0) {
+                            ///왼쪽 사진
+                            AsyncImage(url: imageUrl1) { image in
+                                image
+                                    .resizable()
+                                    .frame(width: 196.5, height: 393)
+                                
+                            } placeholder: {
+                                if !isLoading {
+                                    ProgressView()
+                                }
+                            }
+                            .frame(width: 196.5)
+                            
+                            
+                            /// 오른쪽 사진
+                            AsyncImage(url: imageUrl2) { image in
+                                image
+                                    .resizable()
+                                    .frame(width: 196.5, height: 393)
+                            } placeholder: {
+                                if !isLoading {
+                                    ProgressView()
+                                }
+                            }
+                            .frame(width: 196.5)
+                            
+                        }//】 HStack
+                    }//】 ZStack
+                    .frame(height: 393, alignment: .center)
+                    .frame(maxWidth: .infinity)
+                    .aspectRatio(1, contentMode: .fit)
+                    .padding(.bottom,30)
+                
+                
                 
                 
                 /// [4]버튼
@@ -138,23 +176,45 @@ extension PhotoDetailView: View {
 
 extension PhotoDetailView {
     
-//    private func DiptychImage() -> UIImage? {
-//        guard let image1 = image1, let image2 = image2
-//            else{
-//            return nil
-//        }
-//
-//        let size = CGSize(width: 200, height: 200)
-//
-//        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 200, height: 200))
-//        let image = renderer.image { ctx in
-//
-//            let rect1 = CGRect(x: 0, y: 0, width: 100, height: 200)
-//            let rect2 = CGRect(x: 0, y: 0, width: 100, height: 200)
-//        }
-//        return image
-//    }
-   
+    /// 이전 필터 버튼
+    private var previousButton: some View {
+        Button {
+            index - 1
+        } label: {
+            ZStack{
+                Circle()
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(.offBlack.opacity(0.5))
+                
+                Image(systemName: "chevron.left")
+                    .foregroundColor(.white)
+                    .font(.headline)
+                    .fontWeight(.medium)
+                    
+            }
+        }//】 Button
+    }// 이전 필터 버튼
+    
+    
+    /// 다음 필터 버튼
+    private var nextButton: some View {
+        Button {
+            index + 1
+        } label: {
+            ZStack{
+                Circle()
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(.offBlack.opacity(0.5))
+                
+                Image(systemName: "chevron.right")
+                    .foregroundColor(.white)
+                    .font(.headline)
+                    .fontWeight(.medium)
+                    
+            }
+        }//】 Button
+    }// 다음 필터 버튼
+    
     /// 이미지 불러오기
     func downloadImage() async {
         if let image1 = image1, !image1.isEmpty {
@@ -202,7 +262,8 @@ struct PhotoDetailView_Previews: PreviewProvider {
         PhotoDetailView(
             date: Date.now,
             questionNum: 20,
-            question: "\"상대방의 표정 중 당신이\n 가장 좋아하는 표정은?\""
+            question: "\"상대방의 표정 중 당신이\n 가장 좋아하는 표정은?\"",
+            isLoading: false
         )
     }
 }

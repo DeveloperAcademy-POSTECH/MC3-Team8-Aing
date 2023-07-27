@@ -64,7 +64,7 @@ private var MonthlyCalendarView: some View {
                     .foregroundColor(Color.gray)
             }//: Loop
         }//】 HStack
-        .padding(.bottom, 30)
+        .padding(.bottom, 20)
         .padding(.horizontal,13)
                 
                     
@@ -86,6 +86,7 @@ private var MonthlyCalendarView: some View {
                         let safeIndex = day - start
                         let isToday: Bool = day == calendar.component(.day, from: today) && changeMonthInt == 0
                         let isSafe: Bool = safeIndex >= 0 && safeIndex < data.count && !data.isEmpty
+                        let isSafe3: Bool = safeIndex >= 0 && safeIndex < data.count
                         
 
                         let isThisMonth: Bool = isSafe ? data[safeIndex].month - calendar.component(.month, from: today) == changeMonthInt : false
@@ -94,44 +95,54 @@ private var MonthlyCalendarView: some View {
                         
                         let isMatched: Bool = isThisMonth && indexIsCompleted
                         
-                        let cVFalse = CellView(day: day,
-                                            isToday: isToday,
-                                            isThisMonth: false,
-                                            isCompleted: false,
-                                            thumbnail: "")
+                        let CVFalse = CellView(
+                                        day: day,
+                                        isToday: isToday,
+                                        isThisMonth: false,
+                                        isCompleted: false,
+                                        thumbnail: "")
                             
-                        let cVTrue = CellView(day: day,
-                                            isToday: isToday,
-                                            isThisMonth: true,
-                                            isCompleted: true,
-                                            thumbnail: isSafe ? data[safeIndex].thumbnail : "")
-                            
-                        let photoDV = PhotoDetailView(date: isSafe ? data[safeIndex].date : Date(),
-                                                    questionNum: 3,
-                                                    question: "상대방의 표정 중 당신이\n 가장 좋아하는 표정은?",
-                                                    image1: isSafe ? data[safeIndex].photoFirstURL : "",
-                                                    image2: isSafe ? data[safeIndex].photoSecondURL : "")
+                        let CVTrue = CellView(
+                                        day: day,
+                                        isToday: isToday,
+                                        isThisMonth: true,
+                                        isCompleted: true,
+                                        thumbnail: isSafe ? data[safeIndex].thumbnail : "")
+                        
+                        
+                        let content = VM.questions
+                        let isSafe2 = isSafe && !content.isEmpty
+                        
+                        
+                        let photoDetailView = PhotoDetailView(
+                                                date: isSafe ? data[safeIndex].date : Date(),
+                                                questionNum: isSafe2 ? content[safeIndex].order : 0,
+                                                question: isSafe2 ? content[safeIndex].question! : "",
+                                                isLoading: VM.isLoading ,
+                                                index: isSafe3 ? safeIndex : 0,
+                                                image1: isSafe ? data[safeIndex].photoFirstURL : "",
+                                                image2: isSafe ? data[safeIndex].photoSecondURL : "")
                         /// 날짜 표기 시작
                         if isMatched {
                             // safeIndex && !data.isEmpty && data[dataIndex].isCompleted -> 위에서 선언
                             NavigationLink {
-                                photoDV //PhotoDetailView
+                                photoDetailView
                             } label: {
-                                cVTrue
+                                CVTrue
                             }
                         } else {
-                            cVFalse
+                            CVFalse
                         }
                             
                     }//:if
                 }//】 Loop
             }//】 Grid
             .padding(.horizontal,15)
-            .padding(.bottom, 51)
+            .padding(.bottom, 30)
         }
             
     }//】 VStack
-    .padding(.top,10)
+    .padding(.top,20)
         
 }//: oneMonthCalendarView
 

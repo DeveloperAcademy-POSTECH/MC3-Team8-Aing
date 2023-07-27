@@ -187,15 +187,15 @@ struct TodayDiptychView: View {
 
                             switch diptychState {
                             case .complete:
-                                NavigationLink {
-                                    PhotoDetailView(date: Date(),
-                                                    questionNum: 3,
-                                                    question: "더미더미더미더미더미더미",
-                                                    image1: "",
-                                                    image2:"")
-                                } label: {
+//                                NavigationLink {
+//                                    PhotoDetailView(date: Date(),
+//                                                    questionNum: 3,
+//                                                    question: "더미더미더미더미더미더미",
+//                                                    image1: "",
+//                                                    image2:"")
+//                                } label: {
                                         weeklyCalenderView
-                                }
+//                                }
                             default:
                                 weeklyCalenderView
                             }

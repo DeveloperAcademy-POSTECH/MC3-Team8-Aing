@@ -22,29 +22,32 @@ struct CellView: View {
     var body: some View {
 
         ZStack{
+            
+                    
+            /// 썸네일 사진 불러오기
+            if isThisMonth && isCompleted {
+                ZStack {
+                    AsyncImage(url: thumbnailURL) { image in
+                        image
+                            .resizable()
+                            .clipShape(RoundedRectangle(cornerRadius: 18))
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    Color.offBlack.opacity(0.1)
+                        .clipShape(RoundedRectangle(cornerRadius: 18))
+                }//】 ZStack
+                .frame(width: 44, height: 50)
+            } else {
+                EmptyView()
+            }
+            
             /// 오늘 날짜일때 빨간 테두리
             RoundedRectangle(cornerRadius: 18)
                 .stroke(Color.systemSalmon, lineWidth: isToday ? 2 : 0)
                 .frame(width: 44, height: 50)
-                .overlay{
-                    /// 썸네일 사진 불러오기
-                    if isThisMonth && isCompleted {
-                        ZStack {
-                            AsyncImage(url: thumbnailURL) { image in
-                                image
-                                    .resizable()
-                                    .clipShape(RoundedRectangle(cornerRadius: 18))
-                            } placeholder: {
-                                ProgressView()
-                            }
-                            Color.offBlack.opacity(0.1)
-                                .clipShape(RoundedRectangle(cornerRadius: 18))
-                        }//】 ZStack
-                    } else {
-                        EmptyView()
-                    }
-                }//:overlay
-            
+                .overlay{}
+                
             /// 날짜 표시
             Text("\(day)")
                 .font(.pretendard(isThisMonth && isCompleted ? .extraBold : .bold, size: 16))
@@ -55,7 +58,7 @@ struct CellView: View {
                 .offset(y: -10)
             
         }//】 ZStack
-        .padding(.bottom, 19)
+        .padding(.bottom, 10)
         .onAppear {
             Task {
                 await downloadImage()

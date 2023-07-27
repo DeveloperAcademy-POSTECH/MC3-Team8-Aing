@@ -16,17 +16,22 @@ struct AlbumListView: View {
         ScrollView {
             
             let data = VM.photos
+            let content = VM.questions
             
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()),count: 3),spacing: 7) {
                 ForEach(0..<data.count, id: \.self) { index in
+                    
+                    let isSafe2 = !data.isEmpty && !content.isEmpty
                     
                     if !data.isEmpty && data[index].isCompleted {
                         /// 사진 디테일 뷰
                         NavigationLink {
                             PhotoDetailView(
                                 date: !data.isEmpty ? data[index].date : Date(),
-                                questionNum: 20,
-                                question: "\"상대방의 표정 중 당신이\n 가장 좋아하는 표정은?\"",
+                                questionNum: isSafe2 ? content[index].order : 0,
+                                question: isSafe2 ? content[index].question! : "",
+                                isLoading: VM.isLoading ,
+                                index: index ,
                                 image1: !data.isEmpty ? data[index].photoFirstURL : "",
                                 image2: !data.isEmpty ? data[index].photoSecondURL : "" )
                         } label: {
