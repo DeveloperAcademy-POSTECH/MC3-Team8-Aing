@@ -79,7 +79,6 @@ struct LogInView: View {
                 Button {
                     Task {
                         let result = try await userViewModel.signInWithEmailPassword(email: email, password: password)
-                        await todayDiptychViewModel.setUserCameraLoactionState()
                         if result != "" {
                             alertMessage = result
                             isAlertShown = true
