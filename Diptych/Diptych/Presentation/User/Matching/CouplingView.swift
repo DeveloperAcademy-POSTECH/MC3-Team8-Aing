@@ -47,6 +47,7 @@ struct CouplingView: View {
                             }
                         }
                         Divider()
+                            .frame(height: 1)
                             .foregroundColor(.darkGray)
                     }
                     VStack(alignment: .leading) {
@@ -61,6 +62,7 @@ struct CouplingView: View {
                         .disableAutocorrection(true)
                         .focused($isCodeInputFocused)
                         Divider()
+                            .frame(height: 1)
                             .overlay(Color.darkGray)
                     }
                 }

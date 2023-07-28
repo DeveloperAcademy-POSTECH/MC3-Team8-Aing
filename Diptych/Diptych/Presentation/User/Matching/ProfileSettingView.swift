@@ -44,6 +44,7 @@ struct ProfileSettingView: View {
                         .disableAutocorrection(true)
                         .focused($isNameInputFocused)
                         Divider()
+                            .frame(height: 1)
                             .overlay(nameWarning == "" ? Color.darkGray : Color.systemRed)
                         Text(nameWarning)
                             .font(.pretendard(.light, size: 12))
@@ -64,6 +65,7 @@ struct ProfileSettingView: View {
                             
                         }
                         Divider()
+                            .frame(height: 1)
                             .overlay(selectedDateWarning == "" ? Color.darkGray : Color.systemRed)
                         Text(selectedDateWarning)
                             .font(.pretendard(.light, size: 12))

@@ -49,6 +49,7 @@ struct LogInView: View {
                             isEmailFocused = true
                         }
                         Divider()
+                            .frame(height: 1)
                             .overlay(dividerColor)
                     }
                     VStack(alignment: .leading) {
@@ -60,11 +61,12 @@ struct LogInView: View {
                             Button {
                                 isPasswordHidden.toggle()
                             } label: {
-                                Image(systemName: isPasswordHidden ? "eye" : "eye.slash")
+                                Image(systemName: isPasswordHidden ? "eye.slash" : "eye")
                                     .foregroundColor(.darkGray)
                             }
                         }
                         Divider()
+                            .frame(height: 1)
                             .overlay(passwordWarning == "" ? Color.darkGray : Color.systemRed)
 //                        SecureField("", text: $password, prompt: Text("비밀번호")
 //                            .font(.pretendard(.light, size: 18))
