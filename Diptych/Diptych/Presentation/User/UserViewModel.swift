@@ -43,6 +43,7 @@ class UserViewModel: ObservableObject {
                     await self.fetchLoverData()
                 }
             }
+//            listenerAboutUserData
             try await generatedCouplingCode()
         }
     }
@@ -54,6 +55,7 @@ class UserViewModel: ObservableObject {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             print("[DEBUG] signInWithEmailPassword -> result:  \(result)")
             await fetchUserData()
+            await fetchLoverData()
             return ""
         }
         catch {

@@ -524,7 +524,18 @@ class CameraViewController: UIViewController {
         
         // TODO: - print는 로딩 인디케이터 또는 작업상황 구분점임
         print("파일 업로드 시작....")
-        let url = try await FirebaseManager.shared.upload(data: data!, withName: "test_\(UUID().uuidString)")
+        guard let data else {
+            print("no data")
+            return
+        }
+        
+        var url: URL?
+        do {
+            url = try await FirebaseManager.shared.upload(data: data, withName: "test_\(UUID().uuidString)")
+        } catch {
+            print("upload error 1:", error)
+        }
+        
         print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
         
         // print("섬네일 업로드 시작....")

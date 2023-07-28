@@ -25,6 +25,7 @@
 		44EE2BFB2A6E6EF5003B5C1F /* Image+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EE2BFA2A6E6EF5003B5C1F /* Image+.swift */; };
 		44EE2BFD2A6E8AAB003B5C1F /* ImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EE2BFC2A6E8AAB003B5C1F /* ImageSize.swift */; };
 		9846144B2A69075E0043EAE9 /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */; };
+		9854E6F62A73B3DA009442B0 /* GoogleService-Info-2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9854E6F52A73B3D9009442B0 /* GoogleService-Info-2.plist */; };
 		985DBC1E2A699DAA006C64FC /* LoadingVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */; };
 		987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E425B2A5FE17F00C682D9 /* LogInView.swift */; };
 		988A277F2A72351900A9B5C0 /* SecureInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A277E2A72351900A9B5C0 /* SecureInputView.swift */; };
@@ -147,6 +148,7 @@
 		44EE2BFA2A6E6EF5003B5C1F /* Image+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+.swift"; sourceTree = "<group>"; };
 		44EE2BFC2A6E8AAB003B5C1F /* ImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSize.swift; sourceTree = "<group>"; };
 		9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
+		9854E6F52A73B3D9009442B0 /* GoogleService-Info-2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-2.plist"; sourceTree = "<group>"; };
 		985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingVerificationView.swift; sourceTree = "<group>"; };
 		987E425B2A5FE17F00C682D9 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		987E425F2A627A2B00C682D9 /* Diptych.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Diptych.entitlements; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */,
+				9854E6F52A73B3D9009442B0 /* GoogleService-Info-2.plist */,
 				AB2A9EA22A5EC46100D70C33 /* Diptych */,
 				AB2A9EB32A5EC46300D70C33 /* DiptychTests */,
 				AB2A9EBD2A5EC46300D70C33 /* DiptychUITests */,
@@ -756,6 +759,7 @@
 				98EEBEC82A6FA87100F575ED /* DiptychSplashLogo3sec.json in Resources */,
 				AB2AC20C2A5F280000B162E1 /* Pretendard-Bold.otf in Resources */,
 				AB2AC2122A5F280000B162E1 /* Pretendard-Regular.otf in Resources */,
+				9854E6F62A73B3DA009442B0 /* GoogleService-Info-2.plist in Resources */,
 				AB2AC2062A5F280000B162E1 /* Pretendard-SemiBold.otf in Resources */,
 				AB2AC2092A5F280000B162E1 /* Pretendard-Thin.otf in Resources */,
 				AB2AC2032A5F280000B162E1 /* Pretendard-Black.otf in Resources */,
