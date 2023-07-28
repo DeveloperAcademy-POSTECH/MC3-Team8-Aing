@@ -121,6 +121,8 @@ class CameraViewController: UIViewController {
         }
     }
     
+    
+    
     // MARK: - Lifecycles
     
     override func viewDidLoad() {
@@ -664,10 +666,8 @@ class CameraViewController: UIViewController {
     }
     
     func toggleTorch(forceOff: Bool = false) {
-        guard let device = AVCaptureDevice.default(for: .video) else {
-            return
-        }
-        guard device.hasTorch else {
+        guard let device = AVCaptureDevice.default(for: .video), device.hasTorch else {
+            btnFlash.setImage(.init(named: "imgFlashButtonOff"), for: .normal)
             return
         }
         
@@ -675,13 +675,18 @@ class CameraViewController: UIViewController {
             try device.lockForConfiguration()
             
             if device.torchMode == AVCaptureDevice.TorchMode.on || forceOff {
+                // Off
                 device.torchMode = .off
+                btnFlash.setImage(.init(named: "imgFlashButtonOff"), for: .normal)
             } else {
+                // On
                 try device.setTorchModeOn(level: 1.0)
+                btnFlash.setImage(.init(named: "imgFlashButton"), for: .normal)
             }
             
             device.unlockForConfiguration()
         } catch {
+            btnFlash.setImage(.init(named: "imgFlashButtonOff"), for: .normal)
             print(#function, error.localizedDescription)
         }
     }
