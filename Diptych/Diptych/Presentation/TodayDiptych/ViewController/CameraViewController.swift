@@ -120,6 +120,45 @@ class CameraViewController: UIViewController {
     }
     
     private var lottieViewForUpload: UIView!
+    private var isShowHelpPopup: Bool = false {
+        didSet {
+            if isShowHelpPopup {
+                btnQuestionMark.setImage(.init(named: "imgQuestionMarkButton"), for: .normal)
+            } else {
+                btnQuestionMark.setImage(.init(named: "imgQuestionMarkButtonOff"), for: .normal)
+            }
+        }
+    }
+    
+    // MARK: - Lazy vars
+    private lazy var blurPopupView: BlurPopupUIView = {
+        let xMargin: CGFloat = 15
+        let yMargin: CGFloat = 9
+        
+        let frame = CGRect(x: scrollViewImageContainer.frame.minX + xMargin,
+                           y: scrollViewImageContainer.frame.minY - yMargin,
+                           width: scrollViewImageContainer.frame.width - xMargin * 2,
+                           height: scrollViewImageContainer.frame.height + yMargin * 2 + 20)
+        return BlurPopupUIView(frame: frame)
+    }()
+    
+    private lazy var popupDescLabel: UILabel = {
+        let descLabel = UILabel(frame: .init(x: 10, y: 10, width: blurPopupView.frame.width - 20, height: 50))
+        descLabel.text = "얼굴 가이드라인에 맞춰 최대한 정면을 보고 찍어보세요!\n완성된 사진은 두 손가락을 이용해 움직일 수 있어요"
+        descLabel.font = .init(name: "Pretendard-Light", size: 15)
+        descLabel.numberOfLines = 0
+        descLabel.textAlignment = .center
+        descLabel.textColor = .offWhite
+        return descLabel
+    }()
+    
+    private lazy var squareView: UIView = {
+        let squareWidth: CGFloat = 284
+        let squareView = UIView(frame: .init(x: popupDescLabel.frame.midX - (squareWidth / 2.0), y: popupDescLabel.frame.height + 25, width: squareWidth, height: squareWidth))
+        squareView.backgroundColor = .diptychDarkGray
+        
+        return squareView
+    }()
     
     // MARK: - Lifecycles
     
@@ -160,8 +199,7 @@ class CameraViewController: UIViewController {
             return
         }
         
-        // lblTopic.text = viewModel.question
-        lblTopic.text = "오늘 본 동그라미는?"
+        lblTopic.text = !viewModel.question.isEmpty ? viewModel.question : "오늘 본 동그라미는?"
         DispatchQueue.main.async { [unowned self] in
             print("isFirst?", viewModel.isFirst)
             currentAxis = viewModel.isFirst ? .verticalLeft : .verticalRight
@@ -274,6 +312,24 @@ class CameraViewController: UIViewController {
         default:
             break
         }
+    }
+    
+    @IBAction func btnActPopoverHelp(_ sender: UIButton) {
+        if isShowHelpPopup {
+            blurPopupView.removeFromSuperview()
+        } else {
+            blurPopupView.addSubview(popupDescLabel)
+            blurPopupView.addSubview(squareView)
+            
+            let arrowView = BlurPopupUIView(frame: .init(x: btnQuestionMark.frame.minX, y: btnQuestionMark.frame.maxY, width: btnQuestionMark.frame.width, height: btnQuestionMark.frame.height))
+            arrowView.layer.cornerRadius = 0
+            arrowView.layer.cornerCurve = .circular
+            
+            view.addSubview(blurPopupView)
+            view.addSubview(arrowView)
+        }
+        
+        isShowHelpPopup.toggle()
     }
     
     // MARK: - UI Assistants
