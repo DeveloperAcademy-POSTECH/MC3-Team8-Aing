@@ -49,7 +49,7 @@ struct DiptychApp: App {
                         .environmentObject(userViewModel)
                 }
             } else {
-                LottieView() { isSplashCompleted in
+                LottieView() {
                     self.isSplashCompleted = true
                 }
             }

@@ -220,7 +220,7 @@ class UserViewModel: ObservableObject {
             self.currentUser = currentUser
             self.flow = UserFlow(rawValue: currentUser.flow) ?? .initialized
         }
-        print("DEBUG : fetchLoverData self.currentUser : \(self.currentUser)\n")
+        print("DEBUG : fetchUserData self.currentUser : \(self.currentUser)\n")
         print("[DEBUG] flow : \(self.flow)")
     }
     

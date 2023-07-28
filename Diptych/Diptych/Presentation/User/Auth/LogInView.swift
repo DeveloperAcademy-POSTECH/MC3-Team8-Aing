@@ -16,6 +16,7 @@ struct LogInView: View {
     @State private var dividerColor: Color = .darkGray
     @State private var isPasswordHidden: Bool = true
     
+    @FocusState var isEmailFocused: Bool
     @FocusState var isPasswordFocused: Bool
     
     @EnvironmentObject var userViewModel: UserViewModel
@@ -44,6 +45,9 @@ struct LogInView: View {
                         .keyboardType(.emailAddress)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
+                        .onTapGesture {
+                            isEmailFocused = true
+                        }
                         Divider()
                             .overlay(dividerColor)
                     }

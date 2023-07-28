@@ -21,12 +21,23 @@ import UIKit
 //    }
 //}
 
-struct LottieView: UIViewRepresentable {
+struct LottieView: View {
+    var animationCompletionHandler: (() -> Void)? = nil
+    var body: some View {
+        ZStack {
+            Color.offWhite
+            AnimationView(completionHandler: animationCompletionHandler)
+        }
+        .ignoresSafeArea()
+    }
+}
+
+struct AnimationView: UIViewRepresentable {
     var name: String = "DiptychSplashLogo"
     var loopMode: LottieLoopMode = .playOnce
-    var animationCompletionHandler: ((Bool) -> Void)? = nil
+    var animationCompletionHandler: (() -> Void)? = nil
     
-    init(_ jsonName: String = "DiptychSplashLogo3sec", loopMode: LottieLoopMode = .playOnce, completionHandler: ((Bool) -> Void)?) {
+    init(_ jsonName: String = "DiptychSplashLogo3sec", loopMode: LottieLoopMode = .playOnce, completionHandler: (() -> Void)?) {
         self.name = jsonName
         self.loopMode = loopMode
         self.animationCompletionHandler = completionHandler
@@ -41,8 +52,8 @@ struct LottieView: UIViewRepresentable {
         animationView.animation = animation
         animationView.contentMode = .scaleAspectFit
         animationView.loopMode = loopMode
-        animationView.play() { isSplashCompleted in
-            self.animationCompletionHandler?(isSplashCompleted)
+        animationView.play() { _ in
+            self.animationCompletionHandler?()
         }
 
         animationView.translatesAutoresizingMaskIntoConstraints = false
