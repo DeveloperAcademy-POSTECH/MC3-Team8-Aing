@@ -162,7 +162,8 @@ class CameraViewController: UIViewController {
             return
         }
         
-        lblTopic.text = viewModel.question
+        // lblTopic.text = viewModel.question
+        lblTopic.text = "오늘 본 동그라미는?"
         DispatchQueue.main.async { [unowned self] in
             print("isFirst?", viewModel.isFirst)
             currentAxis = viewModel.isFirst ? .verticalLeft : .verticalRight
@@ -517,7 +518,7 @@ class CameraViewController: UIViewController {
                     self.btnPhotoLibrary.imageView?.contentMode = .scaleAspectFill
                     self.btnPhotoLibrary.clipsToBounds = true
                     self.btnPhotoLibrary.layer.cornerCurve = .continuous
-                    self.btnPhotoLibrary.layer.cornerRadius = 16
+                    self.btnPhotoLibrary.layer.cornerRadius = 16.5
                 }
             }
             
