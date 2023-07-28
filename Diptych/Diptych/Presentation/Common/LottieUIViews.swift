@@ -33,7 +33,7 @@ class LottieUIViews {
         
         if let text {
             label = UILabel(frame: .init(x: 0, y: 0, width: view.frame.width, height: 30))
-            label.center = .init(x: view.center.x, y: view.center.y + 130)
+            label.center = .init(x: view.center.x, y: view.center.y + 67)
             label.textAlignment = .center
             view.addSubview(label)
             

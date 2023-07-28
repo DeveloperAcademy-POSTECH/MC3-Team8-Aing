@@ -451,6 +451,7 @@ class CameraViewController: UIViewController {
         btnFlash.isHidden = false
         btnChangePosition.isHidden = false
         btnPhotoLibrary.isHidden = false
+        btnQuestionMark.isHidden = false
         
         btnCloseBack.setImage(UIImage(named: "imgCloseButton"), for: .normal)
         btnShutter.setImage(UIImage(named: "imgShutterButton"), for: .normal)
