@@ -131,6 +131,7 @@
                         <outlet property="btnCloseBack" destination="FdG-gs-Ltn" id="5SY-d4-fgf"/>
                         <outlet property="btnFlash" destination="NlX-75-jOa" id="HKc-JY-s04"/>
                         <outlet property="btnPhotoLibrary" destination="Vw9-oA-Z2v" id="6Gs-Dp-2g1"/>
+                        <outlet property="btnQuestionMark" destination="WWY-X5-HDE" id="19K-8B-Wze"/>
                         <outlet property="btnShutter" destination="9Ay-Aq-O9x" id="Y3y-JS-hZP"/>
                         <outlet property="imgGuidelineDashed" destination="I88-A6-6t0" id="rnQ-Od-wCv"/>
                         <outlet property="imgViewGuideOverlay" destination="KEx-jB-uim" id="BST-4G-w4p"/>

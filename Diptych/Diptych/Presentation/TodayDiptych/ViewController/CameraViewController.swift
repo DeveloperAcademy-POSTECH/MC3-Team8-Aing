@@ -60,14 +60,12 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var btnChangePosition: UIButton!
     @IBOutlet weak var btnPhotoLibrary: UIButton!
     @IBOutlet weak var btnShutter: UIButton!
+    @IBOutlet weak var btnQuestionMark: UIButton!
     
     @IBOutlet weak var viewOverlay: UIView!
     @IBOutlet weak var tempSegDirection: UISegmentedControl!
     @IBOutlet weak var imgGuidelineDashed: UIImageView!
     @IBOutlet weak var viewLottieLoading: UIView!
-    
-    // MARK: - Constants
-    let RESIZE_WIDTH: CGFloat = 2048
     
     // MARK: - Vars
     var viewModel: TodayDiptychViewModel?
@@ -121,7 +119,7 @@ class CameraViewController: UIViewController {
         }
     }
     
-    
+    private var lottieViewForUpload: UIView!
     
     // MARK: - Lifecycles
     
@@ -186,8 +184,8 @@ class CameraViewController: UIViewController {
         case .retouch:
             btnShutter.isEnabled = false
             
-            let lottieView = LottieUIViews.shared.lottieView(frame: view.frame)
-            view.addSubview(lottieView)
+            lottieViewForUpload = LottieUIViews.shared.lottieView(frame: view.frame, text: "파일 업로드 중...")
+            view.addSubview(lottieViewForUpload)
 
             // guard let data = imgViewGuideOverlay.image?.jpegData(compressionQuality: 1) else {
             //     debugPrint("\(#function): Image data is nil")
@@ -202,10 +200,10 @@ class CameraViewController: UIViewController {
                 return
             }
             
-            let resizedImage = transformedImage.resize(width: RESIZE_WIDTH, height: RESIZE_WIDTH)
+            let resizedImage = transformedImage.resize(width: IMAGE_SIZE, height: IMAGE_SIZE)
             
             // 가이드라인에 따라 사진 자르기
-            let cropRect: CGRect = currentAxis.rect(squareSideLength: RESIZE_WIDTH)
+            let cropRect: CGRect = currentAxis.rect(squareSideLength: IMAGE_SIZE)
             let croppedImage: CGImage? = resizedImage.cgImage!.cropping(to: cropRect)
             let uiImage = UIImage(cgImage: croppedImage!, scale: 1, orientation: transformedImage.imageOrientation)
             
@@ -439,6 +437,7 @@ class CameraViewController: UIViewController {
         btnFlash.isHidden = true
         btnChangePosition.isHidden = true
         btnPhotoLibrary.isHidden = true
+        btnQuestionMark.isHidden = true // ??
         
         btnCloseBack.setImage(UIImage(named: "imgBackButton"), for: .normal)
         btnShutter.setImage(UIImage(named: "imgCircleCheckButton"), for: .normal)
@@ -556,6 +555,7 @@ class CameraViewController: UIViewController {
         
         // TODO: - print는 로딩 인디케이터 또는 작업상황 구분점임
         print("파일 업로드 시작....")
+        LottieUIViews.shared.label.text = "이미지 파일 업로드 중..."
         let url = try await FirebaseManager.shared.upload(data: data!, withName: "test_\(UUID().uuidString)")
         print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
         
@@ -586,6 +586,7 @@ class CameraViewController: UIViewController {
             if let halfAnotherThumb = imageCacheViewModel?.firstImage ?? imageCacheViewModel?.secondImage,
                let mergedThumb = thumbnail.merge(with: halfAnotherThumb, division: isFirst ? .verticalLeft : .verticalRight),
                let uploadThumb = mergedThumb.jpegData(compressionQuality: THUMB_COMPRESSION_QUALITY) {
+                LottieUIViews.shared.label.text = "섬네일 업로드 중..."
                 print("섬네일 업로드 시작....", halfAnotherThumb.size)
                 let thumbURL = try await FirebaseManager.shared.upload(data: uploadThumb, withName: "test_thumbnail_\(Date())")
                 dictionary["thumbnail"] = thumbURL?.absoluteString
@@ -599,6 +600,7 @@ class CameraViewController: UIViewController {
         dictionary[photoKey] = url.absoluteString
         
         print("정보 업로드 시작....")
+        LottieUIViews.shared.label.text = "정보 업로드 중..."
         try await FirebaseManager.shared.updateValue(collectionPath: "photos", documentId: todayPhoto.id, dictionary: dictionary)
         print("정보 업로드 끝")
     }
