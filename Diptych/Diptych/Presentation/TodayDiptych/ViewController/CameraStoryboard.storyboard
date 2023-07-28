@@ -107,13 +107,19 @@
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NlX-75-jOa">
-                                <rect key="frame" x="181" y="130" width="28" height="28"/>
+                                <rect key="frame" x="86" y="133" width="28" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="imgFlashButtonOff"/>
                                 <connections>
                                     <action selector="btnToggleTorch:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="9bk-ym-cwu"/>
                                 </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WWY-X5-HDE">
+                                <rect key="frame" x="276" y="133" width="28" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="imgQuestionMarkButtonOff"/>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
@@ -146,6 +152,7 @@
         <image name="imgCameraLoading" width="390" height="390"/>
         <image name="imgCloseButton" width="22" height="22"/>
         <image name="imgFlashButtonOff" width="28" height="28"/>
+        <image name="imgQuestionMarkButtonOff" width="28" height="28"/>
         <image name="imgShutterButton" width="92.333335876464844" height="92.333335876464844"/>
         <image name="imgToggleButton" width="45" height="45"/>
         <namedColor name="OffWhite">
