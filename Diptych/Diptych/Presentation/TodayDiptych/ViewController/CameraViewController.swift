@@ -556,12 +556,8 @@ class CameraViewController: UIViewController {
         // TODO: - print는 로딩 인디케이터 또는 작업상황 구분점임
         print("파일 업로드 시작....")
         LottieUIViews.shared.label.text = "이미지 파일 업로드 중..."
-        let url = try await FirebaseManager.shared.upload(data: data!, withName: "test_\(UUID().uuidString)")
+        let url = try await FirebaseManager.shared.upload(data: data!, withName: "image_\(viewModel?.todayPhoto?.id ?? Date().formatted())")
         print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
-        
-        // print("섬네일 업로드 시작....")
-        // let thumbURL = try await FirebaseManager.shared.upload(data: thumbData!, withName: "test_thumbnail_\(Date())")
-        // print("섬네일 업로드 끝:", thumbURL?.absoluteString ?? "unknown URL")
         
         guard let url else {
             print("url이 존재하지 않습니다.")
@@ -588,7 +584,7 @@ class CameraViewController: UIViewController {
                let uploadThumb = mergedThumb.jpegData(compressionQuality: THUMB_COMPRESSION_QUALITY) {
                 LottieUIViews.shared.label.text = "섬네일 업로드 중..."
                 print("섬네일 업로드 시작....", halfAnotherThumb.size)
-                let thumbURL = try await FirebaseManager.shared.upload(data: uploadThumb, withName: "test_thumbnail_\(Date())")
+                let thumbURL = try await FirebaseManager.shared.upload(data: uploadThumb, withName: "thumb_\(viewModel?.todayPhoto?.id ?? Date().formatted())")
                 dictionary["thumbnail"] = thumbURL?.absoluteString
                 print("섬네일 업로드 끝")
             } else {
