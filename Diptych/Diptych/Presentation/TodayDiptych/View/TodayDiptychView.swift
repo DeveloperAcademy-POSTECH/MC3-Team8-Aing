@@ -25,14 +25,7 @@ struct TodayDiptychView: View {
             MainDiptychView()
             .ignoresSafeArea(edges: .top)
             .onAppear {
-                Task {
-                    await viewModel.fetchUser()
-                    await viewModel.setTodayPhoto()
-                    await viewModel.setUserCameraLoactionState()
-                    await viewModel.fetchTodayImage()
-                    await viewModel.fetchWeeklyCalender()
-                    await viewModel.fetchContents()
-                }
+                fetchData()
             }
             .onDisappear {
                 viewModel.weeklyData.removeAll()
@@ -42,21 +35,19 @@ struct TodayDiptychView: View {
                     Color.offWhite.ignoresSafeArea()
                     CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
                          .toolbar(.hidden, for: .tabBar)
-                         .onAppear {
-                             print("fullScreenCover")
-                         }
                          .onDisappear {
                              viewModel.weeklyData.removeAll()
                              Task {
                                  await viewModel.fetchTodayImage()
                                  await viewModel.fetchWeeklyCalender()
-                                 await viewModel.fetchContents()
                              }
                          }
                 }
             }
         }
     }
+
+    // MARK: - UI Components
 
     private func MainDiptychView() -> some View {
         ZStack {
@@ -77,8 +68,7 @@ struct TodayDiptychView: View {
                 .padding(.top, 35)
 
                 HStack(spacing: 0) {
-                    Text("오늘 본 동그라미는?")
-//                    Text("\"\(viewModel.question)\"")
+                    Text("\(viewModel.question)")
                         .frame(height: 78, alignment: .topLeading)
                         .lineSpacing(6)
                         .font(.pretendard(.light, size: 28))
@@ -103,7 +93,6 @@ struct TodayDiptychView: View {
                                             }
                                     }
                                 }.onAppear {
-                                    
                                     imageCacheViewModel.firstImage = image.getUIImage(newSize: thumbSize)
                                 }
                         case .failure:
@@ -199,6 +188,19 @@ struct TodayDiptychView: View {
                     }
                 }
             }
+        }
+    }
+
+    // MARK: - Custom Methods
+
+    private func fetchData() {
+        Task {
+            await viewModel.fetchUser()
+            await viewModel.setTodayPhoto()
+            await viewModel.setUserCameraLoactionState()
+            await viewModel.fetchTodayImage()
+            await viewModel.fetchWeeklyCalender()
+            await viewModel.fetchContents()
         }
     }
 }
