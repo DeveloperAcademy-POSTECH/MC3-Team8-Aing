@@ -16,7 +16,7 @@ struct TodayDiptychView: View {
     @State private var firstUIImage: UIImage?
     @State private var secondUIImage: UIImage?
     @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
-    @EnvironmentObject private var viewModel: TodayDiptychViewModel
+    @StateObject private var viewModel = TodayDiptychViewModel()
     @State private var isAllTasksCompleted = false
     let days = ["월", "화", "수", "목", "금", "토", "일"]
 
@@ -25,7 +25,15 @@ struct TodayDiptychView: View {
             MainDiptychView()
             .ignoresSafeArea(edges: .top)
             .onAppear {
-
+                Task {
+                    await viewModel.fetchUser()
+                    await viewModel.setTodayPhoto()
+                    await viewModel.setUserCameraLoactionState()
+                    await viewModel.fetchTodayImage()
+                    await viewModel.fetchWeeklyCalender()
+                    await viewModel.fetchContents()
+                }
+                print("[DEBUG] TodayPhotoID:", viewModel.todayPhoto?.id ?? "unknown")
             }
             .onDisappear {
                 viewModel.weeklyData.removeAll()
@@ -35,10 +43,8 @@ struct TodayDiptychView: View {
                     Color.offWhite.ignoresSafeArea()
                     CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
                          .toolbar(.hidden, for: .tabBar)
-                         .onAppear {
-                             print("fullScreenCover")
-                         }
                          .onDisappear {
+                             viewModel.weeklyData.removeAll()
                              Task {
                                  await viewModel.fetchTodayImage()
                                  await viewModel.fetchWeeklyCalender()

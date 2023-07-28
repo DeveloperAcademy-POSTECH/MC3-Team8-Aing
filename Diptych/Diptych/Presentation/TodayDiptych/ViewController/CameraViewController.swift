@@ -143,6 +143,7 @@ class CameraViewController: UIViewController {
         setupOverlay()
         displayGuideAndOverlay(false)
         setupLottieLoading()
+        setLastImageFromLibraryToButtonImage()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -184,7 +185,7 @@ class CameraViewController: UIViewController {
             
             let lottieView = LottieUIViews.shared.lottieView(frame: view.frame)
             view.addSubview(lottieView)
-            
+
             // guard let data = imgViewGuideOverlay.image?.jpegData(compressionQuality: 1) else {
             //     debugPrint("\(#function): Image data is nil")
             //     return
@@ -214,7 +215,7 @@ class CameraViewController: UIViewController {
             Task {
                 try await taskUpload(image: uiImage)
                 self.dismiss(animated: true)
-            }   
+            }
         }
     }
     
@@ -293,7 +294,12 @@ class CameraViewController: UIViewController {
     private func setupLottieLoading() {
         let lottieRect = CGRect(origin: .zero, size: viewLottieLoading.frame.size)
         let lottieView = LottieUIViews.shared.lottieView(frame: lottieRect, backgroundColor: .diptychLightGray)
-        viewLottieLoading.addSubview(lottieView)
+
+        #if targetEnvironment(simulator)
+            displayGuideAndOverlay(true)
+        #else
+            viewLottieLoading.addSubview(lottieView)
+        #endif
     }
     
     // MARK: - Camera Functions
@@ -336,7 +342,7 @@ class CameraViewController: UIViewController {
                 // captureSession에 cameraInput을 받도록 설정
                 captureSession.addInput(backCameraInput)
             } catch  {
-                debugPrint("Camera Input Error:", error.localizedDescription)
+                print("Camera Input Error:", error.localizedDescription)
             }
             
             // 고해상도의 이미지 캡처 가능 설정
@@ -433,6 +439,8 @@ class CameraViewController: UIViewController {
         
         btnCloseBack.setImage(UIImage(named: "imgBackButton"), for: .normal)
         btnShutter.setImage(UIImage(named: "imgCircleCheckButton"), for: .normal)
+
+        btnShutter.isEnabled = true
     }
     
     func changeCameraMode() {
@@ -483,6 +491,34 @@ class CameraViewController: UIViewController {
                                        y: originalOverlayFrame.minY,
                                        width: originalOverlayFrame.size.width,
                                        height: originalOverlayFrame.size.height / 2)
+        }
+    }
+    
+    func setLastImageFromLibraryToButtonImage() {
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.sortDescriptors = [.init(key: "creationDate", ascending: false)]
+        fetchOptions.fetchLimit = 1
+        
+        let fetchResult: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+        
+        // 결과가 0이 아니면 리퀘스트 진행
+        if fetchResult.count > 0 {
+            let requestOptions = PHImageRequestOptions()
+            
+            PHImageManager.default().requestImage(for: fetchResult.object(at: 0) as PHAsset,
+                                                  targetSize: .init(width: 45, height: 45),
+                                                  contentMode: .default,
+                                                  options: requestOptions) { image, _ in
+                if let image {
+                    self.btnPhotoLibrary.setImage(image, for: .normal)
+                    self.btnPhotoLibrary.contentMode = .scaleAspectFit
+                    self.btnPhotoLibrary.imageView?.contentMode = .scaleAspectFill
+                    self.btnPhotoLibrary.clipsToBounds = true
+                    self.btnPhotoLibrary.layer.cornerCurve = .continuous
+                    self.btnPhotoLibrary.layer.cornerRadius = 16
+                }
+            }
+            
         }
     }
     

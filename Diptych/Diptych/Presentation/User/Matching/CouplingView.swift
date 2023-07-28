@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct CouplingView: View {
-    @State var sample: String = ""
-    @State var loverCode: String = ""
-    @State var isProfileSettingLinkActive = false
+    @State private var sample: String = ""
+    @State private var loverCode: String = ""
+    @State private var isProfileSettingLinkActive = false
+    
+    @FocusState var isCodeInputFocused: Bool
     
     @EnvironmentObject var userViewModel: UserViewModel
     
@@ -22,7 +24,10 @@ struct CouplingView: View {
                     .frame(height: 124)
                 Text("서로의 초대코드를 입력하여 연결해주세요")
                     .font(.pretendard(.light, size: 28))
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(6)
                 Spacer()
+                    .frame(height: 65)
                 VStack(spacing: 50) {
                     VStack(alignment: .leading){
                         Text("내 초대코드")
@@ -47,13 +52,14 @@ struct CouplingView: View {
                     VStack(alignment: .leading) {
                         Text("상대방 코드를 전달받으셨나요?")
                             .font(.pretendard(.light, size: 16))
-                        TextField("", text: $loverCode, prompt: Text("상대방 인증코드")
+                        TextField("", text: $loverCode, prompt: Text("전달받은 초대코드 입력")
                             .font(.pretendard(.light, size: 24))
                             .foregroundColor(.darkGray))
                         .font(.pretendard(.light, size: 24))
                         .foregroundColor(.darkGray)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
+                        .focused($isCodeInputFocused)
                         Divider()
                             .overlay(Color.darkGray)
                     }
@@ -76,6 +82,9 @@ struct CouplingView: View {
             .padding([.leading, .trailing], 15)
         }
         .ignoresSafeArea()
+        .onTapGesture {
+            isCodeInputFocused = false
+        }
         .onAppear() {
             Task {
                 try await userViewModel.setCouplingCode()
