@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct OnBoardingView: View {
-    @State var isLogInLinkActive = false
-    @State var isSignUpLinkActive = false
+    @State private var isLogInLinkActive = false
+    @State private var isSignUpLinkActive = false
     @EnvironmentObject var userViewModel: UserViewModel
     /// 카메라 표시 여부
     @State var isShowCamera = false
@@ -24,8 +24,11 @@ struct OnBoardingView: View {
                         .frame(height: 124)
                     Text("딥틱에서 매일 서로의 일상을 하나의 사진으로 완성해요")
                         .font(.pretendard(.light, size: 28))
-                        .padding(.leading, 41)
-                        .padding(.trailing, 41)
+//                        .padding([.leading,.trailing], 41)
+                        .padding(.leading, 39)
+                        .padding(.trailing, 40)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(6)
                     Spacer()
                         .frame(height: 28)
                     Image("OnBoardingViewImage2")
@@ -59,7 +62,19 @@ struct OnBoardingView: View {
                 .ignoresSafeArea()
             }
         }
-        .navigationViewStyle(.stack)
+    }
+}
+
+struct NavigationBackItem: View {
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        Button {
+            dismiss()
+        } label: {
+            Image(systemName: "chevron.backward")
+                .foregroundColor(Color.darkGray)
+        }
     }
 }
 

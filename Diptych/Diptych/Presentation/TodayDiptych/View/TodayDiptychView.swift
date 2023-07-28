@@ -33,6 +33,7 @@ struct TodayDiptychView: View {
                     await viewModel.fetchWeeklyCalender()
                     await viewModel.fetchContents()
                 }
+                print("[DEBUG] TodayPhotoID:", viewModel.todayPhoto?.id ?? "unknown")
             }
             .onDisappear {
                 viewModel.weeklyData.removeAll()
@@ -42,9 +43,6 @@ struct TodayDiptychView: View {
                     Color.offWhite.ignoresSafeArea()
                     CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
                          .toolbar(.hidden, for: .tabBar)
-                         .onAppear {
-                             print("fullScreenCover")
-                         }
                          .onDisappear {
                              viewModel.weeklyData.removeAll()
                              Task {
