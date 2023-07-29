@@ -11,13 +11,13 @@ import Photos
 import PhotosUI
 
 enum ImageDivisionAxis {
-    /// 세로선 왼쪽에 검은칠
+    /// 세로선 왼쪽이 촬영됨
     case verticalLeft
-    /// 세로선 오른쪽에 검은칠
+    /// 세로선 오른쪽이 촬영됨
     case verticalRight
-    /// 가로선 위에 검은칠
+    /// 가로선 위가 촬영됨
     case horizontalUp
-    /// 가로선 아래에 검은칠
+    /// 가로선 아래가 촬영됨
     case horizontalDown
     
     func rect(squareSideLength length: CGFloat) -> CGRect {
@@ -122,11 +122,9 @@ class CameraViewController: UIViewController {
     private var lottieViewForUpload: UIView!
     private var isShowHelpPopup: Bool = false {
         didSet {
-            if isShowHelpPopup {
-                btnQuestionMark.setImage(.init(named: "imgQuestionMarkButton"), for: .normal)
-            } else {
-                btnQuestionMark.setImage(.init(named: "imgQuestionMarkButtonOff"), for: .normal)
-            }
+            btnQuestionMark.setImage(.init(named: "imgQuestionMarkButton\(!isShowHelpPopup ? "Off" : ""  )"), for: .normal)
+            showHelpPopup(isShowHelpPopup)
+            
         }
     }
     
@@ -139,25 +137,49 @@ class CameraViewController: UIViewController {
                            y: scrollViewImageContainer.frame.minY - yMargin,
                            width: scrollViewImageContainer.frame.width - xMargin * 2,
                            height: scrollViewImageContainer.frame.height + yMargin * 2 + 20)
-        return BlurPopupUIView(frame: frame)
-    }()
-    
-    private lazy var popupDescLabel: UILabel = {
-        let descLabel = UILabel(frame: .init(x: 10, y: 10, width: blurPopupView.frame.width - 20, height: 50))
+        let popupView = BlurPopupUIView(frame: frame)
+        
+        // 설명 레이블
+        let descLabel = UILabel(frame: .init(x: 10, y: 10, width: popupView.frame.width - 20, height: 50))
         descLabel.text = "얼굴 가이드라인에 맞춰 최대한 정면을 보고 찍어보세요!\n완성된 사진은 두 손가락을 이용해 움직일 수 있어요"
         descLabel.font = .init(name: "Pretendard-Light", size: 15)
         descLabel.numberOfLines = 0
         descLabel.textAlignment = .center
         descLabel.textColor = .offWhite
-        return descLabel
-    }()
-    
-    private lazy var squareView: UIView = {
+        
+        // 사각형 (또는 이미지)
         let squareWidth: CGFloat = 284
-        let squareView = UIView(frame: .init(x: popupDescLabel.frame.midX - (squareWidth / 2.0), y: popupDescLabel.frame.height + 25, width: squareWidth, height: squareWidth))
+        let squareView = UIView(frame: .init(x: descLabel.frame.midX - (squareWidth / 2.0), y: descLabel.frame.height + 25, width: squareWidth, height: squareWidth))
         squareView.backgroundColor = .diptychDarkGray
         
-        return squareView
+        popupView.addSubview(descLabel)
+        popupView.addSubview(squareView)
+        
+        return popupView
+    }()
+    
+    private lazy var arrowView: BlurPopupUIView = {
+        let arrowView = BlurPopupUIView(
+            frame: .init(
+                x: btnQuestionMark.frame.minX + 1,
+                y: btnQuestionMark.frame.maxY + 2.4,
+                width: btnQuestionMark.frame.width - 2,
+                height: blurPopupView.frame.minY - btnQuestionMark.frame.maxY - 0.001
+            ))
+        arrowView.setCorner(radius: 0, curve: .circular)
+        
+        // 화살표 삼각형 레이어
+        let trianglePath = CGMutablePath()
+        trianglePath.move(to: .init(x: 0, y: arrowView.frame.height))
+        trianglePath.addLine(to: .init(x: arrowView.frame.width / 2, y: 0))
+        trianglePath.addLine(to: .init(x: arrowView.frame.width, y: arrowView.frame.height))
+        trianglePath.addLine(to: .init(x: 0, y: arrowView.frame.height))
+        
+        let mask = CAShapeLayer()
+        mask.path = trianglePath
+        arrowView.layer.mask = mask
+        
+        return arrowView
     }()
     
     // MARK: - Lifecycles
@@ -315,20 +337,6 @@ class CameraViewController: UIViewController {
     }
     
     @IBAction func btnActPopoverHelp(_ sender: UIButton) {
-        if isShowHelpPopup {
-            blurPopupView.removeFromSuperview()
-        } else {
-            blurPopupView.addSubview(popupDescLabel)
-            blurPopupView.addSubview(squareView)
-            
-            let arrowView = BlurPopupUIView(frame: .init(x: btnQuestionMark.frame.minX, y: btnQuestionMark.frame.maxY, width: btnQuestionMark.frame.width, height: btnQuestionMark.frame.height))
-            arrowView.layer.cornerRadius = 0
-            arrowView.layer.cornerCurve = .circular
-            
-            view.addSubview(blurPopupView)
-            view.addSubview(arrowView)
-        }
-        
         isShowHelpPopup.toggle()
     }
     
@@ -357,6 +365,16 @@ class CameraViewController: UIViewController {
         #else
             viewLottieLoading.addSubview(lottieView)
         #endif
+    }
+    
+    private func showHelpPopup(_ isShow: Bool) {
+        if isShow {
+            view.addSubview(blurPopupView)
+            view.addSubview(arrowView)
+        } else {
+            blurPopupView.removeFromSuperview()
+            arrowView.removeFromSuperview()
+        }
     }
     
     // MARK: - Camera Functions
