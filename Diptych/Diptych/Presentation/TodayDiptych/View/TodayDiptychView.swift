@@ -54,9 +54,9 @@ struct TodayDiptychView: View {
             Color.offWhite
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    Text("2023.09.09 오늘의 주제")
+                    Text("\(viewModel.setTodayDate()) 오늘의 주제")
                     Spacer()
-                    Text("#999번째 딥틱")
+                    Text("#999번째 딥틱") // TODO: - 완료 딥틱 개수 세기
                 }
                 .font(.pretendard(.medium, size: 16))
                 .foregroundColor(.darkGray)
