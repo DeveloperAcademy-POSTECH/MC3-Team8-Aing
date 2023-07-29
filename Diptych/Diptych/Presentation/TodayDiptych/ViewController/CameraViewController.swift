@@ -371,9 +371,13 @@ class CameraViewController: UIViewController {
         if isShow {
             view.addSubview(blurPopupView)
             view.addSubview(arrowView)
+            if currentMode == .camera {
+                btnShutter.isEnabled = false
+            }
         } else {
             blurPopupView.removeFromSuperview()
             arrowView.removeFromSuperview()
+            btnShutter.isEnabled = true
         }
     }
     
@@ -517,6 +521,7 @@ class CameraViewController: UIViewController {
         btnShutter.setImage(UIImage(named: "imgCircleCheckButton"), for: .normal)
 
         btnShutter.isEnabled = true
+        isShowHelpPopup = false
     }
     
     func changeCameraMode() {
