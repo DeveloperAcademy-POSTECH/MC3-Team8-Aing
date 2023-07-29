@@ -9,6 +9,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Pretendard-Light.otf">
+            <string>Pretendard-Light</string>
+        </array>
         <array key="Pretendard-Regular.otf">
             <string>Pretendard-Regular</string>
         </array>
@@ -27,7 +30,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <string key="text">“상대방의 표정 중 당신이
 가장 좋아하는 표정은?”</string>
-                                <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="Pretendard-Light" family="Pretendard" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -124,6 +127,13 @@
                                     <action selector="btnActPopoverHelp:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="8PQ-6S-vbQ"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="다시 찍기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6cc-XC-GxS">
+                                <rect key="frame" x="44" y="25" width="60" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" name="OffWhite"/>
@@ -138,6 +148,7 @@
                         <outlet property="btnShutter" destination="9Ay-Aq-O9x" id="Y3y-JS-hZP"/>
                         <outlet property="imgGuidelineDashed" destination="I88-A6-6t0" id="rnQ-Od-wCv"/>
                         <outlet property="imgViewGuideOverlay" destination="KEx-jB-uim" id="BST-4G-w4p"/>
+                        <outlet property="lblRetake" destination="6cc-XC-GxS" id="35r-fu-Euo"/>
                         <outlet property="lblTopic" destination="PzM-kO-bXw" id="5bn-QX-nhh"/>
                         <outlet property="scrollViewImageContainer" destination="wNV-bx-VUt" id="YH7-XM-RXn"/>
                         <outlet property="tempSegDirection" destination="FCk-u2-lzr" id="55L-qe-VlC"/>

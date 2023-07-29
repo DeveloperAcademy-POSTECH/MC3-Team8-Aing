@@ -56,6 +56,7 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var scrollViewImageContainer: UIScrollView!
     @IBOutlet weak var imgViewGuideOverlay: UIImageView!
     @IBOutlet weak var btnCloseBack: UIButton!
+    @IBOutlet weak var lblRetake: UILabel!
     @IBOutlet weak var btnFlash: UIButton!
     @IBOutlet weak var btnChangePosition: UIButton!
     @IBOutlet weak var btnPhotoLibrary: UIButton!
@@ -522,6 +523,7 @@ class CameraViewController: UIViewController {
 
         btnShutter.isEnabled = true
         isShowHelpPopup = false
+        lblRetake.isHidden = false
     }
     
     func changeCameraMode() {
@@ -536,6 +538,7 @@ class CameraViewController: UIViewController {
         btnShutter.setImage(UIImage(named: "imgShutterButton"), for: .normal)
         
         previewLayer?.isHidden = false
+        lblRetake.isHidden = true
     }
     
     func resetImageViewTransform() {
