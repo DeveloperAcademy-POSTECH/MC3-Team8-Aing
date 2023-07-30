@@ -10,7 +10,6 @@ import FirebaseStorage
 
 struct TodayDiptychView: View {
 
-    // TODO: - 섬네일 사이즈 ? (일단 200 * 200), 가로세로 여부도 고려..
     let thumbSize: CGSize = .init(width: THUMB_SIZE / 2.0, height: THUMB_SIZE)
     @State var isShowCamera = false
     @State private var firstUIImage: UIImage?
@@ -25,14 +24,7 @@ struct TodayDiptychView: View {
             MainDiptychView()
             .ignoresSafeArea(edges: .top)
             .onAppear {
-                Task {
-                    await viewModel.fetchUser()
-                    await viewModel.setTodayPhoto()
-                    await viewModel.setUserCameraLoactionState()
-                    await viewModel.fetchTodayImage()
-                    await viewModel.fetchWeeklyCalender()
-                    await viewModel.fetchContents()
-                }
+                fetchData()
             }
             .onDisappear {
                 viewModel.weeklyData.removeAll()
@@ -42,15 +34,11 @@ struct TodayDiptychView: View {
                     Color.offWhite.ignoresSafeArea()
                     CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
                          .toolbar(.hidden, for: .tabBar)
-                         .onAppear {
-                             print("fullScreenCover")
-                         }
                          .onDisappear {
                              viewModel.weeklyData.removeAll()
                              Task {
                                  await viewModel.fetchTodayImage()
                                  await viewModel.fetchWeeklyCalender()
-                                 await viewModel.fetchContents()
                              }
                          }
                 }
@@ -58,32 +46,35 @@ struct TodayDiptychView: View {
         }
     }
 
+    // MARK: - UI Components
+
     private func MainDiptychView() -> some View {
         ZStack {
             Color.offWhite
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    Text("오늘의 주제")
-                        .font(.pretendard(.medium, size: 16))
-                        .foregroundColor(.offBlack)
-                        .padding(.vertical, 7)
-                        .padding(.leading, 9)
-                        .padding(.trailing, 10)
-                        .background(Color.lightGray)
+                    Text("\(viewModel.setTodayDate()) 오늘의 주제")
                     Spacer()
-                    Image("imgNotification")
+                    Text("#999번째 딥틱") // TODO: - 완료 딥틱 개수 세기
                 }
+                .font(.pretendard(.medium, size: 16))
+                .foregroundColor(.darkGray)
                 .padding(.horizontal, 15)
-                .padding(.top, 35)
+                .padding(.top, 31)
+
+                Rectangle()
+                    .frame(height: 1)
+                    .background(Color.darkGray)
+                    .padding(.top, 10)
+                    .padding(.horizontal, 15)
 
                 HStack(spacing: 0) {
-                    Text("오늘 본 동그라미는?")
-//                    Text("\"\(viewModel.question)\"")
+                    Text("\(viewModel.question)")
                         .frame(height: 78, alignment: .topLeading)
                         .lineSpacing(6)
                         .font(.pretendard(.light, size: 28))
                         .foregroundColor(.offBlack)
-                        .padding(.top, 12)
+                        .padding(.top, 29)
                         .padding(.horizontal, 15)
                         .padding(.bottom, 35)
                     Spacer()
@@ -103,7 +94,6 @@ struct TodayDiptychView: View {
                                             }
                                     }
                                 }.onAppear {
-                                    
                                     imageCacheViewModel.firstImage = image.getUIImage(newSize: thumbSize)
                                 }
                         case .failure:
@@ -199,6 +189,19 @@ struct TodayDiptychView: View {
                     }
                 }
             }
+        }
+    }
+
+    // MARK: - Custom Methods
+
+    private func fetchData() {
+        Task {
+            await viewModel.fetchUser()
+            await viewModel.setTodayPhoto()
+            await viewModel.setUserCameraLoactionState()
+            await viewModel.fetchTodayImage()
+            await viewModel.fetchWeeklyCalender()
+            await viewModel.fetchContents()
         }
     }
 }
