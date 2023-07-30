@@ -53,18 +53,20 @@ struct TodayDiptychView: View {
             Color.offWhite
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    Text("오늘의 주제")
-                        .font(.pretendard(.medium, size: 16))
-                        .foregroundColor(.offBlack)
-                        .padding(.vertical, 7)
-                        .padding(.leading, 9)
-                        .padding(.trailing, 10)
-                        .background(Color.lightGray)
+                    Text("\(viewModel.setTodayDate()) 오늘의 주제")
                     Spacer()
-                    Image("imgNotification")
+                    Text("#999번째 딥틱") // TODO: - 완료 딥틱 개수 세기
                 }
+                .font(.pretendard(.medium, size: 16))
+                .foregroundColor(.darkGray)
                 .padding(.horizontal, 15)
-                .padding(.top, 35)
+                .padding(.top, 31)
+
+                Rectangle()
+                    .frame(height: 1)
+                    .background(Color.darkGray)
+                    .padding(.top, 10)
+                    .padding(.horizontal, 15)
 
                 HStack(spacing: 0) {
                     Text("\(viewModel.question)")
@@ -72,7 +74,7 @@ struct TodayDiptychView: View {
                         .lineSpacing(6)
                         .font(.pretendard(.light, size: 28))
                         .foregroundColor(.offBlack)
-                        .padding(.top, 12)
+                        .padding(.top, 29)
                         .padding(.horizontal, 15)
                         .padding(.bottom, 35)
                     Spacer()
