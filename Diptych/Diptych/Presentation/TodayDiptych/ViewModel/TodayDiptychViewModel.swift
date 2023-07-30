@@ -27,6 +27,17 @@ final class TodayDiptychViewModel: ObservableObject {
     private let db = Firestore.firestore()
 
     // MARK: - Network
+    
+    init() {
+        Task {
+            await fetchUser()
+            await setTodayPhoto()
+            await setUserCameraLoactionState()
+            await fetchTodayImage()
+            await fetchWeeklyCalender()
+            await fetchContents()
+        }
+    }
 
     func fetchWeeklyCalender() async {
         guard let albumId = currentUser?.coupleAlbumId else { return }

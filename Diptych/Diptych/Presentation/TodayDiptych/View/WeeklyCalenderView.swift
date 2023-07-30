@@ -72,6 +72,7 @@ struct WeeklyCalenderView: View {
             }
         }
         .onAppear {
+            print("thumbnail: \(thumbnail)")
             Task {
                 await downloadImage()
             }
