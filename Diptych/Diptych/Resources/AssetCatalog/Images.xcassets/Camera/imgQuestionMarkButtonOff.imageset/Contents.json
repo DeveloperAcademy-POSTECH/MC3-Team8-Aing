@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "btnToggle@1x.png",
+      "filename" : "questOff@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "btnToggle@2x.png",
+      "filename" : "questOff@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "btnToggle@3x.png",
+      "filename" : "questOff@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
