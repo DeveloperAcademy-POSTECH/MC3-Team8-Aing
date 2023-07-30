@@ -51,13 +51,13 @@ struct WeeklyCalenderView: View {
                             switch diptychState {
                             case .complete:
                                 ZStack {
-                                    AsyncImage(url: thumbnailURL) { image in
-                                        image
-                                            .resizable()
-                                            .clipShape(RoundedRectangle(cornerRadius: 18))
-                                    } placeholder: {
-                                        ProgressView()
-                                    }
+//                                    AsyncImage(url: thumbnailURL) { image in
+//                                        image
+//                                            .resizable()
+//                                            .clipShape(RoundedRectangle(cornerRadius: 18))
+//                                    } placeholder: {
+//                                        ProgressView()
+//                                    }
 
                                     Color.offBlack.opacity(0.5)
                                         .clipShape(RoundedRectangle(cornerRadius: 18))

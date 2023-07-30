@@ -44,7 +44,8 @@ class PhotoViewModel: ObservableObject {
             
             self.photos = documents.compactMap { document in
                 guard let imageURL = document.data()["imageURL"] as? String,
-                      let timestamp = document.data()["date"] as? Timestamp else {return nil}
+                      let timestamp = document.data()["date"] as? Timestamp
+                else {return nil}
                 
                 let day = timestamp.dateValue().get(.day)
                 let month = timestamp.dateValue().get(.month)

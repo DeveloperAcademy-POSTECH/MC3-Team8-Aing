@@ -10,34 +10,35 @@ import SwiftUI
 struct AlbumListView: View {
     
     ///Property
-    @StateObject private var VM = ArchiveViewModel()
+    @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
   
     var body: some View {
         ScrollView {
             
-            let data = VM.photos
-            let content = VM.questions
             
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()),count: 3),spacing: 7) {
-                ForEach(0..<data.count, id: \.self) { index in
+                ForEach(0..<VM.photos.count, id: \.self) { index in
                     
-                    let isSafe2 = !data.isEmpty && !content.isEmpty
+                    let data = VM.photos
+                    let data2 = VM.questions
+                    let currentIndex = indexOfCompleted(index)
                     
                     if !data.isEmpty && data[index].isCompleted {
                         /// 사진 디테일 뷰
                         NavigationLink {
                             PhotoDetailView(
+                                VM: VM,
                                 date: !data.isEmpty ? data[index].date : Date(),
-                                questionNum: isSafe2 ? content[index].order : 0,
-                                question: isSafe2 ? content[index].question! : "",
-                                isLoading: VM.isLoading ,
-                                index: index ,
                                 image1: !data.isEmpty ? data[index].photoFirstURL : "",
-                                image2: !data.isEmpty ? data[index].photoSecondURL : "" )
+                                image2: !data.isEmpty ? data[index].photoSecondURL : "",
+                                question: !data2.isEmpty ? data2[index].question : "",
+                                currentIndex: !data.isEmpty ? currentIndex : 0
+                            )
                         } label: {
                             AlbumImageView(imageURL: data[index].thumbnail!)
                                 .aspectRatio(1.0, contentMode: .fit)
                         }
+                        .navigationTitle("")
                     }else {
                         EmptyView()
                     }
@@ -46,6 +47,10 @@ struct AlbumListView: View {
             
         }//】 Scroll
     }//】 Body
+    private func indexOfCompleted(_ index: Int) -> Int {
+        guard let completedPhoto = VM.photos[index].thumbnail else { return 0 }
+        return VM.truePhotos.firstIndex { $0.thumbnail == completedPhoto } ?? 0
+    }
 }
 
 //MARK: - 사진 뷰

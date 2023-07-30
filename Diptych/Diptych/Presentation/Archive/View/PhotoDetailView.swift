@@ -11,23 +11,23 @@ import FirebaseStorage
 // MARK: - Property
 
 struct PhotoDetailView {
-    var date: Date
-    var questionNum: Int
-    var question: String
-    var isLoading: Bool
     
-    let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yy. MM. d"
-        return formatter
-    }()
-    
-    @State var index : Int = 2
+    @ObservedObject var VM : ArchiveViewModel
+    @State var date: Date = Date()
     @State var image1: String?
     @State var image2: String?
     @State var imageUrl1: URL?
     @State var imageUrl2: URL?
+    @State var question: String?
+    @State var currentIndex: Int
     @State private var isImageLoaded = false
+    
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 M월 d일"
+        return formatter
+    }()
+    
 
 }
 
@@ -37,86 +37,57 @@ extension PhotoDetailView: View {
     var body: some View {
         ZStack {
             Color.offWhite.edgesIgnoringSafeArea(.top)
-            // 이렇게 안 하면 탭바까지 offWhite가 덮어져버려서 해두었습니다
 
             VStack(spacing: 0) {
                 
                 /// [1] 해더
-                HStack{
-                    previousButton
+                VStack(spacing: 0){
+                    HStack(spacing: 8) {
+                        Text(dateFormatter.string(from: date))
+                        Spacer()
+                        Text("#\(currentIndex + 1)번째 딥틱")
+                    }//: HStack
+                    .font(.custom(PretendardType.medium.rawValue, size: 16))
+                    .padding(.bottom,10)
                     
-                    VStack(spacing: 5) {
-                        Text("\(questionNum)번째 딥틱")
-                        Text("( \(dateFormatter.string(from: date)) )")
-                    }//: VStack
-                    .padding(.horizontal, 25)
-                    .padding(.top,20)
-                    .padding(.bottom,20)
-                    
-                    nextButton
+                    RoundedRectangle(cornerRadius: 0)
+                        .frame(height: 1)
                 }
+                .foregroundColor(Color.darkGray)
+                .padding(.top,32)
+                .padding(.horizontal,13)
                 
-//                HStack(spacing: 8) {
-//                    Text("\(questionNum)번째 딥틱 입니다")
-//                    Spacer()
-//                    textLabel(text: dateFormatter.string(from: date))
-//                }//: HStack
-//                .padding(.horizontal, 17)
-//                .padding(.top,20)
-//                .padding(.bottom, 15)
                 
                 
                 /// [2] 질문
-                ZStack{
-                    RoundedRectangle(cornerRadius:0)
-                        .stroke(Color.lightGray, lineWidth: 1)
-                        .frame(height: 90)
-                    
-                    Text("❝  \(question)  ❞")
-                        .font(.custom(PretendardType.light.rawValue, size: 20))
+                HStack(spacing: 0){
+                    Text("\(question ?? "")")
+                        .font(.custom(PretendardType.light.rawValue, size: 24))
                         .foregroundColor(.offBlack)
                         .multilineTextAlignment(.leading)
-                    
-                }//: ZStack
-                
-//                HStack(spacing:0){
-//                    Text("\(question)")
-//                        // 이슈 2. 자간이 약간 다름
-//                        // 이슈 3. 문장마다 자동 줄바꿈은 어떻게 할 수 있을까?
-//                        // 이슈 4. padding 값에 따라 글자 짤릴 수 있음
-//                        .font(.custom(PretendardType.light.rawValue, size: 24))
-//                        .foregroundColor(.offBlack)
-//                        .multilineTextAlignment(.leading)
-//                        .padding(.leading, 17)
-//                    Spacer()
-//                }//: HStack
+                        .padding(.leading, 17)
+                    Spacer()
+                }//】 HStack
+                .frame(height: 120)
 
                 
                 /// [3] 사진 프레임
-                // photoA와 photoB가 각각 따로 띄워져야 함, 저장할 때 합쳐져서 저장됨
-                // 일단 인터넷에서 url 이미지 임시로 넣어둔 상태
-              
                 ZStack{
                     RoundedRectangle(cornerRadius: 0)
                         .foregroundColor(Color.darkGray)
 //                        .stroke(Color.lightGray, lineWidth: 1)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         
-                    
                     HStack(spacing: 0) {
                             ///왼쪽 사진
                             AsyncImage(url: imageUrl1) { image in
                                 image
                                     .resizable()
                                     .frame(width: 196.5, height: 393)
-                                
                             } placeholder: {
-                                if !isLoading {
                                     ProgressView()
-                                }
                             }
                             .frame(width: 196.5)
-                            
                             
                             /// 오른쪽 사진
                             AsyncImage(url: imageUrl2) { image in
@@ -124,26 +95,28 @@ extension PhotoDetailView: View {
                                     .resizable()
                                     .frame(width: 196.5, height: 393)
                             } placeholder: {
-                                if !isLoading {
                                     ProgressView()
-                                }
                             }
                             .frame(width: 196.5)
-                            
-                        }//】 HStack
-                    }//】 ZStack
-                    .frame(height: 393, alignment: .center)
-                    .frame(maxWidth: .infinity)
-                    .aspectRatio(1, contentMode: .fit)
-                    .padding(.bottom,30)
-                
-                
-                
+                    }//】 HStack
+                    
+                    HStack(spacing: 0){
+                        if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
+                        Spacer()
+                        if currentIndex < VM.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
+                        
+                    }
+                    .padding(.horizontal,18)
+                   
+                    
+                }//】 ZStack
+                .frame(height: 393, alignment: .center)
+                .frame(maxWidth: .infinity)
+                .aspectRatio(1, contentMode: .fit)
                 
                 /// [4]버튼
-                HStack {
+                HStack(spacing: 0){
                     ShareSheetView()
-//                    Image("upload")
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
                         .padding(.leading, 70)
@@ -155,10 +128,9 @@ extension PhotoDetailView: View {
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
                         .padding(.trailing, 70)
-                }
-                .padding(.bottom,48)
-                
-                Spacer()
+                }//】 HStack
+                .frame(height: 100)
+                .padding(.bottom,100)
             } // VStack
             
         } // ZStack
@@ -172,67 +144,92 @@ extension PhotoDetailView: View {
     
 }
 
-// MARK: - Component
+// MARK: - 버튼 디자인
+struct indexButton: View {
+    let icon : String
+    var body: some View {
+        ZStack{
+            Circle()
+                .frame(width: 28, height: 28)
+                .foregroundColor(.offBlack.opacity(0.5))
+            
+            Image(systemName: icon)
+                .foregroundColor(.white)
+                .font(.headline)
+                .fontWeight(.bold)
+        }
+    }
+}
 
+// MARK: - Component
 extension PhotoDetailView {
-    
-    /// 이전 필터 버튼
+    /// 이전 버튼
     private var previousButton: some View {
-        Button {
-            index - 1
-        } label: {
-            ZStack{
-                Circle()
-                    .frame(width: 25, height: 25)
-                    .foregroundColor(.offBlack.opacity(0.5))
-                
-                Image(systemName: "chevron.left")
-                    .foregroundColor(.white)
-                    .font(.headline)
-                    .fontWeight(.medium)
-                    
+        return Button {
+            Task {
+                showPrevDetail()
+                await downloadImage()
             }
+        } label: {
+            indexButton(icon: "chevron.left")
         }//】 Button
-    }// 이전 필터 버튼
+    }// 이전 버튼
     
-    
-    /// 다음 필터 버튼
+    /// 다음 버튼
     private var nextButton: some View {
-        Button {
-            index + 1
-        } label: {
-            ZStack{
-                Circle()
-                    .frame(width: 25, height: 25)
-                    .foregroundColor(.offBlack.opacity(0.5))
-                
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.white)
-                    .font(.headline)
-                    .fontWeight(.medium)
-                    
+        return Button {
+            Task {
+                showNextDetail()
+                await downloadImage()
             }
+            
+        } label: {
+            indexButton(icon: "chevron.right")
         }//】 Button
-    }// 다음 필터 버튼
+    }// 다음 버튼
+    
+    
+    /// 이전 버튼 로직
+    func showPrevDetail() {
+            if currentIndex > 0{
+                self.currentIndex = currentIndex - 1
+                self.date = VM.truePhotos[currentIndex].date
+                self.image1 = VM.truePhotos[currentIndex].photoFirstURL
+                self.image2 = VM.truePhotos[currentIndex].photoSecondURL
+                self.question = VM.trueQuestions[currentIndex].question
+            } else {
+                currentIndex = currentIndex
+            }
+    }
+    
+    /// 다음 버튼 로직
+    func showNextDetail() {
+            if currentIndex < VM.truePhotos.count - 1{
+                self.currentIndex = currentIndex + 1
+                self.date = VM.truePhotos[currentIndex].date
+                self.image1 = VM.truePhotos[currentIndex].photoFirstURL
+                self.image2 = VM.truePhotos[currentIndex].photoSecondURL
+                self.question = VM.trueQuestions[currentIndex].question
+            } else{
+                currentIndex = currentIndex
+            }
+    }
+    
     
     /// 이미지 불러오기
     func downloadImage() async {
-        if let image1 = image1, !image1.isEmpty {
+        if let image1 = image1 {
             do {
                 let url = try await Storage.storage().reference(forURL: image1).downloadURL()
                 imageUrl1 = url
-            } catch {
-                print(error.localizedDescription)
-            }
+            } catch { print(error.localizedDescription)}
         }
         
         if let image2 = image2, !image2.isEmpty {
             do {
                 let url = try await Storage.storage().reference(forURL: image2).downloadURL()
                 imageUrl2 = url
-            } catch {
-                print(error.localizedDescription)
-            }
+            } catch { print(error.localizedDescription)}
         }
     }
     
@@ -243,27 +240,9 @@ extension PhotoDetailView {
             .foregroundColor(.offBlack)
             .padding(.vertical, 7)
             .padding(.horizontal, 8)
-            .background(
-                Rectangle()
-                    .fill(Color.lightGray)
+            .background(Rectangle()
+                        .fill(Color.lightGray)
             )
     }
-    
-    
-    
-    
-    
 }
 
-// MARK: - Preview
-
-struct PhotoDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        PhotoDetailView(
-            date: Date.now,
-            questionNum: 20,
-            question: "\"상대방의 표정 중 당신이\n 가장 좋아하는 표정은?\"",
-            isLoading: false
-        )
-    }
-}

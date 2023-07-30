@@ -5,6 +5,7 @@
 //  Created by Koo on 2023/07/26.
 //
 
+import SwiftUI
 import Foundation
 import Firebase
 import FirebaseFirestore
@@ -21,25 +22,27 @@ struct Photos {
     let month: Int
 }
 
-struct Questions {
-    let order: Int
+struct Questions{
+    let id: String?
     let question: String?
 }
+
 
 @MainActor
 final class ArchiveViewModel: ObservableObject {
 
     // MARK: - Properties
 
-    @Published var questions = [Questions]()
     @Published var currentUser: DiptychUser?
-    @Published var isFirst = true
-    @Published var photos = [Photos]()
+    @Published var photos: [Photos] = [Photos]()
+    @Published var questions: [Questions] = [Questions]()
+    @Published var truePhotos: [Photos] = []
+    @Published var trueQuestions: [Questions] = []
     @Published var isLoading = false
-    @Published var contentId = "" //fetchQuestion에서 사용
+    
     @Published var startDay = 0
     @Published var startDate: Timestamp? //fetchMonthlyCalender에서 사용
-    @Published var content: Content?
+//    @Published var content: Content?
     @Published var todayPhoto: Photo?
     @Published var isCompleted = false
     private let db = Firestore.firestore()
@@ -50,133 +53,122 @@ final class ArchiveViewModel: ObservableObject {
         Task {
             await fetchUser()
             await fetchStartDate()
-            await fetchMonthlyCalender()
+            await fetchPhotosData()
             await fetchQuestion()
+            await makeTruePhotos()
+            await makeTrueQuestions()
+            print("🍠",truePhotos)
+            print("🥦",trueQuestions)
         }
     }
 
-// MARK: - Network
-    /// 컨텐츠 필드  데이터 가져오기
+    //MARK: - 컨텐츠 필드  데이터 가져오기
     func fetchQuestion() async {
-        var contentId = contentId
-        
         do {
             let contentSnapshot = try await db.collection("contents")
-                .whereField("contentId", isEqualTo: contentId )
-                .whereField("order", isGreaterThanOrEqualTo: 0 )
+                .whereField("order", isGreaterThanOrEqualTo: 0)
                 .getDocuments()
-            
-            for document in contentSnapshot.documents {
-                let content = try document.data(as: Content.self)
-                let order = content.order
-                let question = content.question
-                
-                /// 질문 배열 생성
-                await MainActor.run{
-                    questions.append(Questions(order: order,question: question))
-                }
-                print("🍠:", questions)
+            self.questions = contentSnapshot.documents.compactMap { document in
+                guard let question = document.data()["question"] as? String,
+                      let id = document.data()["id"] as? String
+                else {return nil}
+                return Questions(id: id, question: question)
             }
-        } catch {
-            print(error.localizedDescription)
-        }
-    }//: fetchDiptychCalender
+        } catch { print(error.localizedDescription) }
+    }
     
+    // MARK: - 컨텐츠 컬랙션에서 완성된 질문만 배열 만들기
+    func makeTrueQuestions() async -> [Questions] {
+        let truePhotoIDs = Set(truePhotos.map { $0.contentID })
+        self.trueQuestions = questions.filter { truePhotoIDs.contains($0.id) }
+        return trueQuestions
+    }
     
-    /// 포토 컬렉션 필드 데이터 가져오기
-    func fetchMonthlyCalender() async {
-        guard let albumId = currentUser?.coupleAlbumId else { return }
-        guard let startDate = startDate else { return }
-        
-        do {
-            let querySnapshot = try await db.collection("photos")
-                .whereField("albumId", isEqualTo: albumId)
-                .whereField("date", isGreaterThanOrEqualTo: startDate)
-                .getDocuments()
-
-            for document in querySnapshot.documents {
-                let photo = try document.data(as: Photo.self)
-
-                let isCompleted = photo.isCompleted
-                let thumbnail = photo.thumbnail
-                let firstPhoto = photo.photoFirst
-                let secondPhoto = photo.photoSecond
-                let contentId = photo.contentId
-                let date = Date(timeIntervalSince1970: TimeInterval(photo.date.seconds))
-                
-                guard let month = Calendar.current.dateComponents([.month], from: date).month else { return }
-                
-                self.contentId = contentId
-                
-                /// Photos 배열 생성
-                if isCompleted {
-                    await MainActor.run {
-                        photos.append(Photos(isCompleted: true,
-                                             thumbnail: thumbnail,
-                                             photoFirstURL: firstPhoto,
-                                             photoSecondURL: secondPhoto,
-                                             contentID: contentId,
-                                             date: date,
-                                             month: month))
-                    }
-                } else {
-                    await MainActor.run {
-                        photos.append(Photos(isCompleted: false,
-                                             thumbnail: nil,
-                                             photoFirstURL: nil,
-                                             photoSecondURL: nil,
-                                             contentID: contentId,
-                                             date: date,
-                                             month: month))
-                    }
-                }
-                
+    // MARK: - 포토 컬랙션에서 완성된 사진만 배열 만들기
+    func makeTruePhotos() async -> [Photos] {
+        photos.forEach { data in
+            if data.isCompleted {
+                self.truePhotos.append(data)
             }
-        } catch {
-            print(error.localizedDescription)
-        }
-    }//: fetchDiptychCalender
+        }//】 Loop
+        return truePhotos
+    }
     
-    
-    /// 시작 날짜 가져오기
+    // MARK: - 시작 날짜 가져오기
     func fetchStartDate() async {
         guard let albumId = currentUser?.coupleAlbumId else { return }
         do {
             let startDaySnapshot = try await db.collection("albums")
                 .whereField("id", isEqualTo: albumId)
                 .getDocuments()
-
-            
             let data = startDaySnapshot.documents[0].data()
             guard let startDate = data["startDate"] as? Timestamp else { return }
-            
             let startDay = startDate.dateValue().get(.day)
             self.startDay = startDay
             self.startDate = startDate
-
-        } catch {
-            print(error.localizedDescription)
-        }
-       
+        } catch { print(error.localizedDescription) }
     }//:fetchStartDate
     
-
-//MARK: - User
     
-    /// 유저 정보 불러오기
+    
+    //MARK: - 포토 컬렉션 필드 데이터 가져오기
+    func fetchPhotosData() async {
+        guard let albumId = currentUser?.coupleAlbumId else { return }
+        guard let startDate = startDate else { return }
+        do {
+//            if 변화사항 있어? {
+//
+//            } else {
+//                if 캐싱 된거 있어? {
+//                    캐싱 된거 씀
+//                } else {
+//
+//                }
+//            }
+            let querySnapshot = try await db.collection("photos")
+                .whereField("albumId", isEqualTo: albumId)
+                .whereField("date", isGreaterThanOrEqualTo: startDate)
+                .getDocuments()
+            for document in querySnapshot.documents {
+                let photo = try document.data(as: Photo.self)
+                let isCompleted = photo.isCompleted
+                let thumbnail = photo.thumbnail
+                let firstPhoto = photo.photoFirst
+                let secondPhoto = photo.photoSecond
+                let contentId = photo.contentId
+                let date = Date(timeIntervalSince1970: TimeInterval(photo.date.seconds))
+                guard let month = Calendar.current.dateComponents([.month], from: date).month else { return }
+                
+                /// Photos 배열 생성
+                if isCompleted {
+                    await MainActor.run {
+                        photos.append(Photos(isCompleted: true, thumbnail: thumbnail,
+                                             photoFirstURL: firstPhoto, photoSecondURL: secondPhoto,
+                                             contentID: contentId, date: date, month: month))
+                    }
+                } else {
+                    await MainActor.run {
+                        photos.append(Photos(isCompleted: false, thumbnail: nil,
+                                             photoFirstURL: nil, photoSecondURL: nil,
+                                             contentID: contentId, date: date, month: month))
+                    }
+                }
+            }
+        } catch { print(error.localizedDescription) }
+    }//: fetchDiptychCalender
+    
+    
+    //MARK: - 유저 정보 불러오기
+    
     func fetchUser() async {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         do {
             let snapshot = try await Firestore.firestore().collection("users").document(uid).getDocument()
             self.currentUser = try? snapshot.data(as: DiptychUser.self)
-        } catch {
-            print(error.localizedDescription)
-        }
+        } catch { print(error.localizedDescription) }
     }
-    
-  
 
-// MARK: - Custom Methods
+    // MARK: - Custom Methods
 
     func setTodayDate() -> Int {
         let (todayDate, calendar, _) = setTodayCalendar()

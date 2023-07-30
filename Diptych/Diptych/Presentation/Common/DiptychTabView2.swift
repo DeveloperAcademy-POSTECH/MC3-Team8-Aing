@@ -32,6 +32,8 @@ struct DiptychTabView2: View {
                     }
                 }//】 VStack
                 .frame(maxWidth: .infinity)
+                
+                
                 Spacer()
                 
                 /// 하단 탭바
@@ -60,6 +62,8 @@ struct DiptychTabView2: View {
             }//】 ZStack
             .ignoresSafeArea()
         }//】 Navigation
+        .accentColor(Color.offBlack)
+
     }//】 Body
 }
 

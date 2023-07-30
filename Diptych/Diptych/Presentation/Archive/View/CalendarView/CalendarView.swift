@@ -13,7 +13,7 @@ import Foundation
 struct CalendarView: View {
     
     ///Property
-    @StateObject private var VM = ArchiveViewModel()
+    @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
     @State var date: Date
     let changeMonthInt : Int
     
@@ -29,8 +29,8 @@ struct CalendarView: View {
     }//】 body
     
     
-// MARK: - 월별 캘린더 뷰
-private var MonthlyCalendarView: some View {
+    // MARK: - 월별 캘린더 뷰
+    private var MonthlyCalendarView: some View {
         
     let daysInMonth: Int = numberOfDays(in: date)
     let firstWeekday: Int = firstWeekdayOfMonth(in: date) - 2
@@ -68,7 +68,6 @@ private var MonthlyCalendarView: some View {
         .padding(.horizontal,13)
                 
                     
-                    
     /// [3] Day
         if VM.isLoading {
             ProgressView()
@@ -82,18 +81,23 @@ private var MonthlyCalendarView: some View {
                             
                         let day = index - firstWeekday + 1
                         let data = VM.photos
+                        let data2 = VM.questions
                         let start = VM.startDay // 18(일)
                         let safeIndex = day - start
-                        let isToday: Bool = day == calendar.component(.day, from: today) && changeMonthInt == 0
-                        let isSafe: Bool = safeIndex >= 0 && safeIndex < data.count && !data.isEmpty
-                        let isSafe3: Bool = safeIndex >= 0 && safeIndex < data.count
-                        
-
-                        let isThisMonth: Bool = isSafe ? data[safeIndex].month - calendar.component(.month, from: today) == changeMonthInt : false
-                        
+                        let isToday: Bool = calendar.component(.day, from: today) == day && changeMonthInt == 0
+                        let isSafe: Bool = safeIndex >= 0 && safeIndex < data.count && !data.isEmpty && !data2.isEmpty
                         let indexIsCompleted: Bool = isSafe ? data[safeIndex].isCompleted : false
-                        
+                        let isThisMonth: Bool = isSafe ? data[safeIndex].month - calendar.component(.month, from: today) == changeMonthInt : false
                         let isMatched: Bool = isThisMonth && indexIsCompleted
+                        
+                        let currentIndex = isSafe ? indexOfCompleted(safeIndex) : 0
+                        
+                        let CVTrue = CellView(
+                                        day: day,
+                                        isToday: isToday,
+                                        isThisMonth: true,
+                                        isCompleted: true,
+                                        thumbnail: isSafe ? data[safeIndex].thumbnail : "")
                         
                         let CVFalse = CellView(
                                         day: day,
@@ -102,38 +106,28 @@ private var MonthlyCalendarView: some View {
                                         isCompleted: false,
                                         thumbnail: "")
                             
-                        let CVTrue = CellView(
-                                        day: day,
-                                        isToday: isToday,
-                                        isThisMonth: true,
-                                        isCompleted: true,
-                                        thumbnail: isSafe ? data[safeIndex].thumbnail : "")
                         
-                        
-                        let content = VM.questions
-                        let isSafe2 = isSafe && !content.isEmpty
-                        
-                        
-                        let photoDetailView = PhotoDetailView(
-                                                date: isSafe ? data[safeIndex].date : Date(),
-                                                questionNum: isSafe2 ? content[safeIndex].order : 0,
-                                                question: isSafe2 ? content[safeIndex].question! : "",
-                                                isLoading: VM.isLoading ,
-                                                index: isSafe3 ? safeIndex : 0,
-                                                image1: isSafe ? data[safeIndex].photoFirstURL : "",
-                                                image2: isSafe ? data[safeIndex].photoSecondURL : "")
+                       
                         /// 날짜 표기 시작
                         if isMatched {
-                            // safeIndex && !data.isEmpty && data[dataIndex].isCompleted -> 위에서 선언
                             NavigationLink {
-                                photoDetailView
+                                PhotoDetailView(
+                                    VM: VM,
+                                    date: isSafe ? data[safeIndex].date : today,
+                                    image1: isSafe ? data[safeIndex].photoFirstURL : "",
+                                    image2: isSafe ? data[safeIndex].photoSecondURL : "",
+                                    question: isSafe ? data2[safeIndex].question : "",
+                                    currentIndex: isSafe ? currentIndex : 0
+                                )
+                                    
                             } label: {
                                 CVTrue
                             }
+                            .navigationTitle("")
                         } else {
                             CVFalse
                         }
-                            
+                          
                     }//:if
                 }//】 Loop
             }//】 Grid
@@ -154,6 +148,12 @@ private var MonthlyCalendarView: some View {
 
 // MARK: - 내부 메서드
 extension CalendarView {
+    
+    /// True 컬랙션 index 가져오기
+    private func indexOfCompleted(_ index: Int) -> Int {
+            guard let completedPhoto = VM.photos[index].thumbnail else { return 0 }
+            return VM.truePhotos.firstIndex { $0.thumbnail == completedPhoto } ?? 0
+    }
   
     /// 이번달 날짜 수
     func numberOfDays(in data: Date) -> Int {
