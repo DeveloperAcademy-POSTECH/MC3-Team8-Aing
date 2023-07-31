@@ -21,7 +21,7 @@ struct WeeklyCalenderView: View {
     @State var isToday: Bool
     @State var thumbnail: String?
     @State var thumbnailURL: URL?
-    var diptychState = DiptychState.complete
+    var diptychState = DiptychState.half
 
     var body: some View {
         ZStack {
@@ -37,12 +37,23 @@ struct WeeklyCalenderView: View {
                             Color.lightGray
                                 .clipShape(RoundedRectangle(cornerRadius: 18))
                         }
+                    case .half:
+                        if isToday {
+                            RoundedRectangle(cornerRadius: 18)
+                                .trim(from: 0.25, to: 0.75)
+                                .fill(Color.systemSalmon)
+                        } else {
+                            Color.lightGray
+                                .clipShape(RoundedRectangle(cornerRadius: 18))
+                        }
+                    case .complete:
+                        RoundedRectangle(cornerRadius: 18)
+                            .fill(Color.systemSalmon)
                     }
-                Text(date)
-                    .font(.pretendard(.bold, size: 16))
-                    .foregroundColor(!isToday && diptychState == .complete ? .offWhite : .offBlack)
-                    .padding(.top, 7)
-            }
+                }
+            Text(day)
+                .font(.pretendard(.bold, size: 16))
+                .foregroundColor(.offBlack)
         }
         .onAppear {
             Task {
