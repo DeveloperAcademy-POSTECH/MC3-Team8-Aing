@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Rectangle 357@1x_guideline.png",
+      "filename" : "Group 250@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Rectangle 357@2x_guideline.png",
+      "filename" : "Group 250@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Rectangle 357guideline.png",
+      "filename" : "Group 250@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Line 104@1x_guideline.png",
+      "filename" : "Group 246@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Line 104@2x_guideline.png",
+      "filename" : "Group 246@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Line 104guideline.png",
+      "filename" : "Group 246@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

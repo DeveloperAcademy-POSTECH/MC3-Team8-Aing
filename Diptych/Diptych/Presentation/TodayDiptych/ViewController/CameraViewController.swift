@@ -359,9 +359,7 @@ class CameraViewController: UIViewController {
                 return
             }
             
-            // imgGuidelineDashed.image = UIImage(named: "GUIDELINE-\(content.guideline)") ?? UIImage(named: "GUIDELINE-circle")
-            
-            imgGuidelineDashed.image = UIImage(named: "GUIDELINE-couple_standing")
+            imgGuidelineDashed.image = UIImage(named: "GUIDELINE-\(content.guideline)") ?? UIImage(named: "GUIDELINE-circle")
         }
     }
     

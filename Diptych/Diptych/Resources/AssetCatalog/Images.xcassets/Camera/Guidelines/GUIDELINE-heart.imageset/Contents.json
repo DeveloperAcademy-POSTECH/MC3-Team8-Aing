@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Union@1x_guideline.png",
+      "filename" : "Group 249@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Union@2x_guideline.png",
+      "filename" : "Group 249@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Unionguideline.png",
+      "filename" : "Group 249@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
