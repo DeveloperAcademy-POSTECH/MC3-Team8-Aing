@@ -828,7 +828,6 @@
 				F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */,
 				98D4A0862A6E3E7D00EB8C94 /* DiptychAlbum.swift in Sources */,
 				445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */,
-				F3263AA62A667D7700B4581C /* AlbumModel.swift in Sources */,
 				44CE81972A7430A800D1420E /* BlurPopupUIView.swift in Sources */,
 				44852D332A7012590074D3D4 /* UIColor+.swift in Sources */,
 				AB2AC2232A5F8E8700B162E1 /* PretendardType.swift in Sources */,

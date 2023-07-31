@@ -15,6 +15,15 @@ enum TodayDiptychState {
     case complete
 }
 
+enum DiptychState {
+    case none
+    case incomplete
+    case todayIncomplete
+    case todayfirst
+    case todaySecond
+    case complete
+}
+
 final class TodayDiptychViewModel: ObservableObject {
 
     // MARK: - Properties
@@ -22,8 +31,7 @@ final class TodayDiptychViewModel: ObservableObject {
     @Published var question = ""
     @Published var currentUser: DiptychUser?
     @Published var isFirst = true
-    @Published var weeklyData = [WeeklyData]()
-    @Published var isLoading = false
+    @Published var weeklyData = [DiptychState]()
     @Published var content: Content?
     @Published var todayPhoto: Photo?
     @Published var photoFirstURL = ""
@@ -42,34 +50,26 @@ final class TodayDiptychViewModel: ObservableObject {
             let querySnapshot = try await db.collection("photos")
                 .whereField("albumId", isEqualTo: albumId) // TODO: - 유저의 앨범과 연결
                 .whereField("date", isGreaterThanOrEqualTo: calculateThisMondayTimestamp())
+                .whereField("date", isLessThan: calculateThisTodayTimestamp())
                 .getDocuments()
 
             for document in querySnapshot.documents {
                 let photo = try document.data(as: Photo.self)
+                let isCompleted = photo.isCompleted
 
-                let photoFirst = photo.photoFirst
-                let photoSecond = photo.photoSecond
-                let thumbnail = photo.thumbnail
-                let date = Date(timeIntervalSince1970: TimeInterval(photo.date.seconds))
-                guard let day = Calendar.current.dateComponents([.day], from: date).day else { return }
+                weeklyData.append(isCompleted ? DiptychState.complete : DiptychState.incomplete)
+            }
 
-                if photoFirst != "" && photoSecond != "" {
-                    await MainActor.run {
-                        weeklyData.append(WeeklyData(date: day, diptychState: .complete, thumbnail: thumbnail))
-                    }
-                } else if photoFirst != "" {
-                    await MainActor.run {
-                        weeklyData.append(WeeklyData(date: day, diptychState: .half, thumbnail: nil))
-                    }
-                } else if photoSecond != "" {
-                    await MainActor.run {
-                        weeklyData.append(WeeklyData(date: day, diptychState: .half, thumbnail: nil))
-                    }
-                } else {
-                    await MainActor.run {
-                        weeklyData.append(WeeklyData(date: day, diptychState: .incomplete, thumbnail: nil))
-                    }
-                }
+            guard let todayPhoto = self.todayPhoto else { return }
+
+            if todayPhoto.isCompleted {
+                weeklyData.append(.complete)
+            } else if !todayPhoto.photoFirst.isEmpty && todayPhoto.photoSecond.isEmpty {
+                weeklyData.append(.todayfirst)
+            } else if todayPhoto.photoFirst.isEmpty && !todayPhoto.photoSecond.isEmpty {
+                weeklyData.append(.todaySecond)
+            } else {
+                weeklyData.append(.todayIncomplete)
             }
         } catch {
             print(error.localizedDescription)
@@ -103,7 +103,6 @@ final class TodayDiptychViewModel: ObservableObject {
                 photoFirstState = .incomplete
                 photoSecondState = .incomplete
             }
-//            await fetchCompleteState()
         } catch {
             print(error.localizedDescription)
         }
@@ -117,11 +116,6 @@ final class TodayDiptychViewModel: ObservableObject {
     func downloadImage() async {
         guard let todayPhoto = todayPhoto else { return }
         if todayPhoto.photoFirst != "" {
-//            do {
-//                photoFirstURL = todayPhoto.photoFirst
-//            } catch {
-//                print(error.localizedDescription)
-//            }
             photoFirstURL = todayPhoto.photoFirst
         }
 
@@ -219,6 +213,12 @@ final class TodayDiptychViewModel: ObservableObject {
         let (todayDate, calendar, daysAfterMonday) = setTodayCalendar()
         guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return Date() }
         return thisMonday
+    }
+
+    func calculateThisTodayTimestamp() -> Timestamp {
+        let (todayDate, calendar, daysAfterMonday) = setTodayCalendar()
+        let timestamp = Timestamp(date: todayDate)
+        return timestamp
     }
 
     func calculateThisMondayTimestamp() -> Timestamp {
