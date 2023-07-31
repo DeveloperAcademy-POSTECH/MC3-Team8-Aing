@@ -14,6 +14,7 @@
 		44852D312A6FBC120074D3D4 /* LoadingLottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 44852D302A6FBC120074D3D4 /* LoadingLottie.json */; };
 		44852D332A7012590074D3D4 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44852D322A7012590074D3D4 /* UIColor+.swift */; };
 		4498B2362A6D37E00069F54A /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4498B2352A6D37E00069F54A /* CameraViewModel.swift */; };
+		44CE81972A7430A800D1420E /* BlurPopupUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CE81962A7430A800D1420E /* BlurPopupUIView.swift */; };
 		44DE9B8E2A67DC2100E6615B /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B8D2A67DC2100E6615B /* UIDevice+.swift */; };
 		44DE9B902A67DC3B00E6615B /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B8F2A67DC3B00E6615B /* UIImage+.swift */; };
 		44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */; };
@@ -136,6 +137,7 @@
 		44852D302A6FBC120074D3D4 /* LoadingLottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LoadingLottie.json; sourceTree = "<group>"; };
 		44852D322A7012590074D3D4 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		4498B2352A6D37E00069F54A /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
+		44CE81962A7430A800D1420E /* BlurPopupUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurPopupUIView.swift; sourceTree = "<group>"; };
 		44DE9B8D2A67DC2100E6615B /* UIDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
 		44DE9B8F2A67DC3B00E6615B /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRepresentableView.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 			children = (
 				44DE9B942A67DCA000E6615B /* CameraViewController.swift */,
 				44DE9B982A67E8C000E6615B /* CameraStoryboard.storyboard */,
+				44CE81962A7430A800D1420E /* BlurPopupUIView.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -824,6 +827,7 @@
 				F3263AA82A667D8300B4581C /* AlbumViewModel.swift in Sources */,
 				445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */,
 				F3263AA62A667D7700B4581C /* AlbumModel.swift in Sources */,
+				44CE81972A7430A800D1420E /* BlurPopupUIView.swift in Sources */,
 				44852D332A7012590074D3D4 /* UIColor+.swift in Sources */,
 				AB2AC2232A5F8E8700B162E1 /* PretendardType.swift in Sources */,
 				F3263AAC2A66839800B4581C /* JsonDecodeExtension.swift in Sources */,
@@ -1021,7 +1025,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
-				DEVELOPMENT_TEAM = 662HVTXJ55;
+				DEVELOPMENT_TEAM = 6S2SA26VAN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diptych/Info.plist;
@@ -1039,7 +1043,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych.Benny;
+				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych.fifi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1058,7 +1062,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
-				DEVELOPMENT_TEAM = 662HVTXJ55;
+				DEVELOPMENT_TEAM = 6S2SA26VAN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diptych/Info.plist;
@@ -1076,7 +1080,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych.Benny;
+				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych.fifi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

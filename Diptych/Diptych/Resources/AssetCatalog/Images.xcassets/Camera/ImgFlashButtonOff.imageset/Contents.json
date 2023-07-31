@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "btnToggle@1x.png",
+      "filename" : "flashOff@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "btnToggle@2x.png",
+      "filename" : "flashOff@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "btnToggle@3x.png",
+      "filename" : "flashOff@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

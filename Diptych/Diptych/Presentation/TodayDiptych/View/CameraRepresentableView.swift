@@ -22,7 +22,7 @@ struct CameraRepresentableView: UIViewControllerRepresentable {
     @StateObject var imageCacheViewModel: ImageCacheViewModel
     
     func makeUIViewController(context: Context) -> CameraViewController {
-        print("makeUIViewController:", imageCacheViewModel.firstImage, imageCacheViewModel.secondImage)
+        // print("makeUIViewController:", imageCacheViewModel.firstImage, imageCacheViewModel.secondImage)
         let cameraStoryboard = UIStoryboard(name: "CameraStoryboard", bundle: nil)
         guard let viewController = cameraStoryboard.instantiateViewController(withIdentifier: "CameraViewController") as? CameraViewController else {
             return CameraViewController()
