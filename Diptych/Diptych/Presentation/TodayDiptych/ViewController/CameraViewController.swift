@@ -136,20 +136,22 @@ class CameraViewController: UIViewController {
         let frame = CGRect(x: scrollViewImageContainer.frame.minX + xMargin,
                            y: scrollViewImageContainer.frame.minY - yMargin,
                            width: scrollViewImageContainer.frame.width - xMargin * 2,
-                           height: scrollViewImageContainer.frame.height + yMargin * 2 + 20)
+                           height: scrollViewImageContainer.frame.height + yMargin * 2)
         let popupView = BlurPopupUIView(frame: frame)
         
         // 설명 레이블
-        let descLabel = UILabel(frame: .init(x: 10, y: 10, width: popupView.frame.width - 20, height: 50))
+        let labelPaddingX: CGFloat = 42
+        let labelPaddingY: CGFloat = 24
+        let descLabel = UILabel(frame: .init(x: labelPaddingX, y: labelPaddingY, width: popupView.frame.width - (labelPaddingX * 2), height: 50))
         descLabel.text = "얼굴 가이드라인에 맞춰 최대한 정면을 보고 찍어보세요!\n완성된 사진은 두 손가락을 이용해 움직일 수 있어요"
-        descLabel.font = .init(name: "Pretendard-Light", size: 15)
+        descLabel.font = .init(name: "Pretendard-Light", size: 16)
         descLabel.numberOfLines = 0
         descLabel.textAlignment = .center
         descLabel.textColor = .offWhite
         
         // 사각형 (또는 이미지)
-        let squareWidth: CGFloat = 284
-        let squareView = UIView(frame: .init(x: descLabel.frame.midX - (squareWidth / 2.0), y: descLabel.frame.height + 25, width: squareWidth, height: squareWidth))
+        let squareWidth: CGFloat = 246
+        let squareView = UIView(frame: .init(x: descLabel.frame.midX - (squareWidth / 2.0), y: descLabel.frame.maxY + 28, width: squareWidth, height: squareWidth))
         squareView.backgroundColor = .diptychDarkGray
         
         popupView.addSubview(descLabel)
@@ -379,16 +381,37 @@ class CameraViewController: UIViewController {
     }
     
     private func showHelpPopup(_ isShow: Bool) {
+        let DURATION: CGFloat = 0.25
+        
         if isShow {
+            blurPopupView.alpha = 0
+            arrowView.alpha = 0
+            
             view.addSubview(blurPopupView)
             view.addSubview(arrowView)
+            
+            
+            // fade-in
+            UIView.animate(withDuration: DURATION) { [unowned self] in
+                blurPopupView.alpha = 1.0
+                arrowView.alpha = 1.0
+            }
+            
             if currentMode == .camera {
                 btnShutter.isEnabled = false
             }
         } else {
-            blurPopupView.removeFromSuperview()
-            arrowView.removeFromSuperview()
-            btnShutter.isEnabled = true
+            blurPopupView.alpha = 1
+            arrowView.alpha = 1
+            
+            UIView.animate(withDuration: DURATION) { [unowned self] in
+                blurPopupView.alpha = 0
+                arrowView.alpha = 0
+            } completion: { [unowned self] _ in
+                blurPopupView.removeFromSuperview()
+                arrowView.removeFromSuperview()
+                btnShutter.isEnabled = true
+            }
         }
     }
     
