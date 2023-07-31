@@ -61,6 +61,7 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var btnPhotoLibrary: UIButton!
     @IBOutlet weak var btnShutter: UIButton!
     @IBOutlet weak var btnQuestionMark: UIButton!
+    @IBOutlet weak var lblYouCantEditImage: UILabel!
     
     @IBOutlet weak var viewOverlay: UIView!
     @IBOutlet weak var tempSegDirection: UISegmentedControl!
@@ -556,11 +557,13 @@ class CameraViewController: UIViewController {
         btnQuestionMark.isHidden = true // ??
         
         btnCloseBack.setImage(UIImage(named: "imgBackButton"), for: .normal)
-        btnShutter.setImage(UIImage(named: "imgCircleCheckButton"), for: .normal)
+        btnShutter.setImage(UIImage(named: "imgCircleUploadButton"), for: .normal)
 
         btnShutter.isEnabled = true
         isShowHelpPopup = false
         btnCloseBack.setTitle("다시 찍기", for: .normal)
+        
+        lblYouCantEditImage.isHidden = false
     }
     
     func changeCameraMode() {
@@ -576,6 +579,8 @@ class CameraViewController: UIViewController {
         
         previewLayer?.isHidden = false
         btnCloseBack.setTitle("", for: .normal)
+        
+        lblYouCantEditImage.isHidden = true
     }
     
     func resetImageViewTransform() {
