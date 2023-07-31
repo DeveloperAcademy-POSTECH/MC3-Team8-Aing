@@ -104,6 +104,8 @@ final class TodayDiptychViewModel: ObservableObject {
                 photoFirstState = .incomplete
                 photoSecondState = .incomplete
             }
+
+            await fetchCompleteState()
         } catch {
             print(error.localizedDescription)
         }

@@ -14,13 +14,21 @@ struct TodayDiptychView: View {
     @State var isShowCamera = false
     @State private var firstUIImage: UIImage?
     @State private var secondUIImage: UIImage?
+    @State private var isDiptychCompleted = true
     @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
     @StateObject private var viewModel = TodayDiptychViewModel()
     let days = ["월", "화", "수", "목", "금", "토", "일"]
 
     var body: some View {
         NavigationStack {
-            MainDiptychView()
+            ZStack {
+                MainDiptychView()
+
+                if isDiptychCompleted {
+                    Rectangle()
+                        .frame(width: 50, height: 50)
+                }
+            }
             .ignoresSafeArea(edges: .top)
             .onAppear {
                 fetchData()

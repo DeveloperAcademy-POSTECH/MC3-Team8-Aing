@@ -93,6 +93,7 @@
 		AB6C7B7D2A6DD56600CD5D68 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C7B7C2A6DD56600CD5D68 /* CalendarManager.swift */; };
 		AB96A0AB2A66E4DF004C01FF /* TodayDiptychViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */; };
 		ABB613252A77D5A90063107E /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB613242A77D5A90063107E /* VisualEffectView.swift */; };
+		ABC6DAFB2A784E0E000FE73A /* DiptychCompleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC6DAFA2A784E0E000FE73A /* DiptychCompleteAlertView.swift */; };
 		ABCB300B2A6D366A007724DC /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB300A2A6D366A007724DC /* Content.swift */; };
 		ABCB300D2A6D367F007724DC /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB300C2A6D367F007724DC /* Photo.swift */; };
 		ABCB300F2A6D368D007724DC /* WeeklyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB300E2A6D368D007724DC /* WeeklyData.swift */; };
@@ -190,6 +191,7 @@
 		AB6C7B7C2A6DD56600CD5D68 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
 		AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDiptychViewModel.swift; sourceTree = "<group>"; };
 		ABB613242A77D5A90063107E /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
+		ABC6DAFA2A784E0E000FE73A /* DiptychCompleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychCompleteAlertView.swift; sourceTree = "<group>"; };
 		ABCB300A2A6D366A007724DC /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
 		ABCB300C2A6D367F007724DC /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		ABCB300E2A6D368D007724DC /* WeeklyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyData.swift; sourceTree = "<group>"; };
@@ -367,6 +369,7 @@
 				AB2AC1EC2A5F093B00B162E1 /* TodayDiptychView.swift */,
 				ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */,
 				44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */,
+				ABC6DAFA2A784E0E000FE73A /* DiptychCompleteAlertView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -836,6 +839,7 @@
 				F35ADA542A6DA53C00A510E7 /* CellView.swift in Sources */,
 				989B44942A65752100D99439 /* CouplingView.swift in Sources */,
 				98A8E82B2A691938005DF658 /* UserViewModel.swift in Sources */,
+				ABC6DAFB2A784E0E000FE73A /* DiptychCompleteAlertView.swift in Sources */,
 				44EE2BF92A6E6436003B5C1F /* UIView+.swift in Sources */,
 				987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */,
 				ABCB300B2A6D366A007724DC /* Content.swift in Sources */,
