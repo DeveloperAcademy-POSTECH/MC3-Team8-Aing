@@ -65,7 +65,7 @@ extension TodayDiptychView {
             Color.offWhite
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    Text("\(viewModel.setTodayDate()) 오늘의 주제")
+                    Text("\(viewModel.setTodayDate())")
                     Spacer()
                     Text("#999번째 딥틱") // TODO: - 완료 딥틱 개수 세기
                 }

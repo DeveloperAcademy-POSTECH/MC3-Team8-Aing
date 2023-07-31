@@ -201,7 +201,7 @@ final class TodayDiptychViewModel: ObservableObject {
 
     func setTodayDate() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy.MM.dd"
+        formatter.dateFormat = "yyyy년 M월 d일"
         let todayDateString = formatter.string(from: Date())
 
         return todayDateString
@@ -249,16 +249,5 @@ final class TodayDiptychViewModel: ObservableObject {
         let daysAfterMonday = (currentWeekday + 5) % 7
 
         return (todayDate, calendar, daysAfterMonday)
-    }
-
-    func setWeeklyDates() -> [Int] {
-        let calendar = Calendar.current
-        let weekday = calendar.component(.weekday, from: calculateThisMondayDate())
-        let daysToAdd = (2...8).map { $0 - weekday }
-        let weeklyDates = daysToAdd.map { calendar.date(byAdding: .day,
-                                                        value: $0,
-                                                        to: calculateThisMondayDate())! }
-                                    .map { calendar.component(.day, from: $0) }
-        return weeklyDates
     }
 }
