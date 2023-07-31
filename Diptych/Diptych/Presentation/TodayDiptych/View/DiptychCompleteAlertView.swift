@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct DiptychCompleteAlertView: View {
+    @Binding var isDiptychCompleteAlertShown: Bool
 
     var body: some View {
         ZStack {
             Color.offWhite
-
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Image("icnXMark")
+                        .onTapGesture {
+                            isDiptychCompleteAlertShown = true
+                        }
                     Spacer()
                 }
                 .padding(.top, 15)
@@ -39,7 +42,7 @@ struct DiptychCompleteAlertView: View {
                     .padding(.top, 9)
 
                 Button {
-                    print("확인하기")
+                    isDiptychCompleteAlertShown = true
                 } label: {
                     Text("확인하기")
                         .font(.pretendard(.light, size: 20))
@@ -58,7 +61,7 @@ struct DiptychCompleteAlertView: View {
 
 struct DiptychCompleteAlertView_Previews: PreviewProvider {
     static var previews: some View {
-        DiptychCompleteAlertView()
+        DiptychCompleteAlertView(isDiptychCompleteAlertShown: .constant(false))
             .frame(width: 300, height: 360)
     }
 }

@@ -14,7 +14,8 @@ struct TodayDiptychView: View {
     @State var isShowCamera = false
     @State private var firstUIImage: UIImage?
     @State private var secondUIImage: UIImage?
-    @State private var isDiptychCompleted = true
+    @State private var isDiptychCompleted = false
+    @State private var isDiptychCompleteAlertShown = false
     @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
     @StateObject private var viewModel = TodayDiptychViewModel()
     let days = ["월", "화", "수", "목", "금", "토", "일"]
@@ -23,10 +24,10 @@ struct TodayDiptychView: View {
         NavigationStack {
             ZStack {
                 MainDiptychView()
-
-                if isDiptychCompleted {
-                    Rectangle()
-                        .frame(width: 50, height: 50)
+                if isDiptychCompleted && !isDiptychCompleteAlertShown {
+                    Color.black.opacity(0.54)
+                    DiptychCompleteAlertView(isDiptychCompleteAlertShown: $isDiptychCompleteAlertShown)
+                        .frame(width: 300, height: 360)
                 }
             }
             .ignoresSafeArea(edges: .top)
@@ -61,6 +62,9 @@ struct TodayDiptychView: View {
             await viewModel.setDiptychNumber()
             await viewModel.fetchWeeklyCalender()
             await viewModel.fetchContents()
+
+            guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
+            isDiptychCompleted = isCompleted
         }
     }
 }
