@@ -8,6 +8,8 @@
 import SwiftUI
 import FirebaseStorage
 
+
+
 struct TodayDiptychView: View {
 
     let thumbSize: CGSize = .init(width: THUMB_SIZE / 2.0, height: THUMB_SIZE)
@@ -76,10 +78,11 @@ struct TodayDiptychView: View {
                         .foregroundColor(.offBlack)
                         .padding(.top, 29)
                         .padding(.horizontal, 15)
-                        .padding(.bottom, 35)
+                        .padding(.bottom, 15)
                     Spacer()
                 }
 
+                //MARK: - 사진
                 HStack(spacing: 0) {
                     AsyncImage(url: URL(string: viewModel.photoFirstURL)) { phase in
                         switch phase {
@@ -151,8 +154,9 @@ struct TodayDiptychView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .aspectRatio(1.0, contentMode: .fit)
-                .padding(.bottom, 20)
+                .padding(.bottom, 15)
 
+                //MARK: - Weekly 캘린더
                 HStack(spacing: 9) {
                     if viewModel.isLoading {
                         ProgressView()
@@ -173,22 +177,17 @@ struct TodayDiptychView: View {
 
                             switch diptychState {
                             case .complete:
-                                NavigationLink {
-                                    PhotoDetailView(date: "더미더미더미",
-                                                    questionNum: 3,
-                                                    question: "더미더미더미더미더미더미",
-                                                    imageUrl1: "",
-                                                    imageUrl2: "")
-                                } label: {
                                         weeklyCalenderView
-                                }
                             default:
                                 weeklyCalenderView
                             }
                         }
                     }
-                }
-            }
+                }//】 HStack
+                .padding(.bottom,30)
+                
+                
+            }//】 VStack
         }
     }
 
