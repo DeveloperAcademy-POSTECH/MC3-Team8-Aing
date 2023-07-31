@@ -28,7 +28,7 @@ class UserViewModel: ObservableObject {
     @Published var couplingCode: String?
     @Published var lover: DiptychUser?
     @Published var coupleAlbum: DiptychAlbum?
-    @Published var isCompleted: Bool = false
+//    @Published var isCompleted: Bool = false
     
     var listenerAboutAuth: AuthStateDidChangeListenerHandle?
     var listenerAboutUserData: ListenerRegistration?
@@ -37,7 +37,6 @@ class UserViewModel: ObservableObject {
         Task {
             await fetchUserData()
             await fetchLoverData() // 이걸 안 불러주니까 프로필뷰에 상대방 닉네임이 안 떠서 수정했습니다!
-            print("[DEBUG] currentUser : \(self.currentUser) /// flow : \(self.flow)")
             listenerAboutUserData = Firestore.firestore().collection("users").addSnapshotListener() { snapshot, error in
                 Task {
                     await self.fetchUserData()
@@ -170,22 +169,45 @@ class UserViewModel: ObservableObject {
         }
     }
     
-    func deleteAccount() async throws {
+    func deleteAccount(password: String) async throws {
         do {
             print("[DEBUG] deleteAccount is called")
             
             if let currentUserData = self.currentUser, let currentUserAuth = Auth.auth().currentUser {
+                print("assigning is done")
+                let credential = EmailAuthProvider.credential(withEmail: currentUserData.email, password: password)
+                try await currentUserAuth.reauthenticate(with: credential)
+                try await currentUserAuth.delete()
+//                currentUserAuth.delete() { error in
+//                    print(error?.localizedDescription)
+//                }
+                print("DEBUG : auth account delete done")
                 try await Firestore.firestore().collection("users").document(currentUserData.id).delete()
                 print("DEBUG : user data delete done")
                 
-                print("currentUserAuth : \(currentUserAuth)")
-                try await currentUserAuth.delete()
-                print("DEBUG : auth account delete done")
+//                print("currentUserAuth : \(currentUserAuth)")
+                
+//                try await currentUserAuth.delete()
+//                let user = Auth.auth().currentUser
+//                user?.delete(completion: { error in
+//                    guard error == nil else {
+//                        print("delete -> error -> \(error?.localizedDescription)")
+//                        return
+//                    }
+//                    return
+//                })
+                
                 
                 self.currentUser = nil
                 self.flow = .initialized
-                
+            } else {
+                print("something is wrong")
+                print("\t self.currentUser : \(self.currentUser)")
+                print("\t self.currentUser : \(Auth.auth().currentUser)")
             }
+        }
+        catch {
+            print(error.localizedDescription)
         }
     }
     
@@ -197,18 +219,18 @@ class UserViewModel: ObservableObject {
         if let currentUser = try? snapshot.data(as: DiptychUser.self) {
             self.currentUser = currentUser
             self.flow = UserFlow(rawValue: currentUser.flow) ?? .initialized
-            print("[DEBUG] currentUser : \(self.currentUser)\nflow : \(self.flow)")
         }
+        print("DEBUG : fetchLoverData self.currentUser : \(self.currentUser)\n")
+        print("[DEBUG] flow : \(self.flow)")
     }
     
     func fetchLoverData() async {
-        print("DEBUG : fetchLoverData self.lover : \(self.lover)")
         guard let uid = self.currentUser?.loverId else { return }
         guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else { return }
         if let lover = try? snapshot.data(as: DiptychUser.self) {
             self.lover = lover
-            print("DEBUG: fetchLoverData Done")
         }
+        print("DEBUG : fetchLoverData self.lover : \(self.lover)\n")
     }
     
     func fetchCoupleAlbumData() async {
@@ -238,7 +260,23 @@ class UserViewModel: ObservableObject {
 extension UserViewModel {
     func generatedCouplingCode() async throws {
         do {
-            self.couplingCode = String(Int.random(in: 10000000 ... 99999999))
+            guard let snapshot = try? await Firestore.firestore().collection("users").getDocuments() else {
+                print("ERROR: (generatedCouplingCode) getAllusers")
+                return
+            }
+            var codes: [Any] = []
+            for document in snapshot.documents {
+                if let code = document.get("couplingCode") {
+                    codes.append(code)
+                }
+            }
+//            self.couplingCode = String(Int.random(in: 10000000 ... 99999999))
+            var code = ""
+            repeat {
+                code = String(Int.random(in: 10000000 ... 99999999))
+            } while codes.contains(where: { element in return String(describing: element) == code})
+            
+            self.couplingCode = code
         }
     }
     
@@ -260,9 +298,22 @@ extension UserViewModel {
                 return
             }
             print("snapshot doc: \(snapshot.documents)")
-            if snapshot.documents.count == 1 {
-                self.lover = try snapshot.documents[0].data(as: DiptychUser.self)
+            for document in snapshot.documents {
+                if let id = document.get("loverId"), let currentUserId = self.currentUser?.id {
+                    print("id itself : \(id)")
+                    print("id to String : \(String(describing: id))")
+                    if String(describing: id) == currentUserId {
+                        self.lover = try document.data(as: DiptychUser.self)
+                        break
+                    }
+                } else {
+                    self.lover = try document.data(as: DiptychUser.self)
+                    break
+                }
             }
+//            if snapshot.documents.count == 1 {
+//                self.lover = try snapshot.documents[0].data(as: DiptychUser.self)
+//            }
         }
     }
     
@@ -281,7 +332,7 @@ extension UserViewModel {
 //                let encodedLover = try Firestore.Encoder().encode(lover)
                 try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedCurrentUser, merge: true)
 //                try await Firestore.firestore().collection("users").document(lover.id).setData(encodedLover, merge: true)
-                self.isCompleted = true
+//                self.isCompleted = true
             }
         }
     }

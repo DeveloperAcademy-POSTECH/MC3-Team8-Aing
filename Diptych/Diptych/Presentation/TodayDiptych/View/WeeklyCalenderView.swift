@@ -21,57 +21,39 @@ struct WeeklyCalenderView: View {
     @State var isToday: Bool
     @State var thumbnail: String?
     @State var thumbnailURL: URL?
-    var diptychState = DiptychState.complete
+    var diptychState = DiptychState.half
 
     var body: some View {
-        VStack(spacing: 9) {
-            Text(day)
-                .font(.pretendard(.medium, size: 14))
-
-            ZStack(alignment: .top) {
-                RoundedRectangle(cornerRadius: 18)
-                    .stroke(Color.systemSalmon, lineWidth: isToday ? 2 : 0)
-                    .frame(width: 44, height: 50)
-                    .overlay {
-                        /// [1] 오늘 일 때
+        ZStack {
+            RoundedRectangle(cornerRadius: 18)
+                .stroke(Color.systemSalmon, lineWidth: isToday ? 2 : 0)
+                .frame(width: 44, height: 44)
+                .overlay {
+                    switch diptychState {
+                    case .incomplete: // TODO: - 오늘 이후에는 그냥 빈 뷰가 나가야 하는디 ...
                         if isToday {
-                            switch diptychState {
-                            case .incomplete:
-                                EmptyView()
-                            case .half:
-                                RoundedRectangle(cornerRadius: 18)
-                                    .trim(from: 0.25, to: 0.75)
-                                    .fill(Color.systemSalmon)
-                            case .complete:
-                                RoundedRectangle(cornerRadius: 18)
-                                    .fill(Color.systemSalmon)
-                            }
-                        /// [2] 오늘이 아닐 때
+                            EmptyView()
                         } else {
-                            switch diptychState {
-                            case .complete:
-                                ZStack {
-//                                    AsyncImage(url: thumbnailURL) { image in
-//                                        image
-//                                            .resizable()
-//                                            .clipShape(RoundedRectangle(cornerRadius: 18))
-//                                    } placeholder: {
-//                                        ProgressView()
-//                                    }
-
-                                    Color.offBlack.opacity(0.5)
-                                        .clipShape(RoundedRectangle(cornerRadius: 18))
-                                }
-                            default:
-                                EmptyView()
-                            }
+                            Color.lightGray
+                                .clipShape(RoundedRectangle(cornerRadius: 18))
                         }
+                    case .half:
+                        if isToday {
+                            RoundedRectangle(cornerRadius: 18)
+                                .trim(from: 0.25, to: 0.75)
+                                .fill(Color.systemSalmon)
+                        } else {
+                            Color.lightGray
+                                .clipShape(RoundedRectangle(cornerRadius: 18))
+                        }
+                    case .complete:
+                        RoundedRectangle(cornerRadius: 18)
+                            .fill(Color.systemSalmon)
                     }
-                Text(date)
-                    .font(.pretendard(.bold, size: 16))
-                    .foregroundColor(!isToday && diptychState == .complete ? .offWhite : .offBlack)
-                    .padding(.top, 7)
-            }
+                }
+            Text(day)
+                .font(.pretendard(.bold, size: 16))
+                .foregroundColor(.offBlack)
         }
         .onAppear {
             Task {

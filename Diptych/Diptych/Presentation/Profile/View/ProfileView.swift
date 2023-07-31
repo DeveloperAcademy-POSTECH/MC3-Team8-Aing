@@ -21,6 +21,11 @@ var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
 // MARK: - View
 
 struct ProfileView: View {
+    @State private var isShowingAlert: Bool = false
+    @State private var password: String = ""
+    @State private var isPasswordHidden: Bool = true
+    @FocusState var isPasswordFocused: Bool
+    
     @EnvironmentObject var userViewModel: UserViewModel
     
     var body: some View {
@@ -71,9 +76,7 @@ struct ProfileView: View {
                             .foregroundColor(.darkGray)
                     }
                     Button{
-                        Task {
-                            try await userViewModel.deleteAccount()
-                        }
+                        isShowingAlert = true
                     } label: {
                         Text("회원탈퇴")
                             .font(.pretendard(.light, size: 18))
@@ -81,6 +84,24 @@ struct ProfileView: View {
 //                            .background(Color.offBlack)
                             .foregroundColor(.darkGray)
                     }
+                    .alert("회원 탈퇴", isPresented: $isShowingAlert, actions: {
+                        SecureField("", text: $password)
+                        Button(role: .destructive){
+                            print("DEBUG: 탈퇴 버튼 눌림")
+                            Task{
+                                try await userViewModel.deleteAccount(password: password)
+                            }
+                        } label: {
+                            Text("탈퇴")
+                        }
+                        Button(role: .cancel) {
+                            print("DEBUG: 취소 버튼 눌림")
+                        } label: {
+                            Text("취소")
+                        }
+                    }, message: {
+                        Text("비밀번호를 입력해주세요.")
+                    })
                 }
                 // == 충돌 부분 끝 ==
             } // VStack

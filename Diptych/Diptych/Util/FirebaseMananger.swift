@@ -15,7 +15,7 @@ class FirebaseManager {
     private init() {}
     
     /// Path
-    private(set) var kFirFileStorageRef = Storage.storage().reference().child("Temp_images")
+    private(set) var kFirFileStorageRef = Storage.storage().reference().child("images")
     private var firestore = Firestore.firestore()
     
     /// Current Uploading Task
