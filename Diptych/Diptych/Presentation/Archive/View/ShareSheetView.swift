@@ -33,12 +33,13 @@ struct ShareSheetView: View {
                 self.isSharePresented = true
             }
         } label: {
-            Image("upload")
+            Image("imgShareBox")
                 .foregroundColor(.offBlack)
                 .frame(width: 30, height: 30)
         }
         .sheet(isPresented: $isSharePresented) {
             ActivityViewController(activityItems: [UIImage(named: "heart")!])
+            // TODO: - 여기에 이미지 url 연결해야 함
         }
     }
 
