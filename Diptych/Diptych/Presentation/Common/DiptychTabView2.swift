@@ -10,6 +10,8 @@ import SwiftUI
 struct DiptychTabView2: View {
     ///Property
     @State var currentTab : Int = 0
+    
+    
     @Namespace var namespace
     var tabBarTitle: [String] = ["오늘의 딥틱", "보관함", "프로필"]
     var selectedIcons: [String] = ["imgTodayDiptychTabSelected", "imgArchiveTabSelected", "imgProfileTabSelected"]

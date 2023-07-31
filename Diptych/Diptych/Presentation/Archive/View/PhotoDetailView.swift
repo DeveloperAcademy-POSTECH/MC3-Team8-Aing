@@ -12,7 +12,7 @@ import FirebaseStorage
 
 struct PhotoDetailView {
     
-    @ObservedObject var VM : ArchiveViewModel
+    @EnvironmentObject var VM : ArchiveViewModel
     @State var date: Date = Date()
     @State var image1: String?
     @State var image2: String?

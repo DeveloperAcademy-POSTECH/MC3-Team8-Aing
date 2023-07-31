@@ -9,7 +9,8 @@ import SwiftUI
 
 struct QuestionListView: View {
     
-    @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
+//    @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
+    @EnvironmentObject var VM: ArchiveViewModel
     
     var body: some View {
         
@@ -22,7 +23,7 @@ struct QuestionListView: View {
                     
                     NavigationLink {
                         PhotoDetailView(
-                            VM: VM,
+//                            VM: VM,
                             date: data[index].date,
                             image1: data[index].photoFirstURL,
                             image2: data[index].photoSecondURL,

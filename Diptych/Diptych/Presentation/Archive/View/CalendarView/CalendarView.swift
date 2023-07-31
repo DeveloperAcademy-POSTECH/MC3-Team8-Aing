@@ -13,7 +13,8 @@ import Foundation
 struct CalendarView: View {
     
     ///Property
-    @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
+//    @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
+    @EnvironmentObject var VM: ArchiveViewModel
     @State var date: Date
     let changeMonthInt : Int
     
@@ -116,7 +117,7 @@ struct CalendarView: View {
                         if isMatched {
                             NavigationLink {
                                 PhotoDetailView(
-                                    VM: VM,
+//                                    VM: VM,
                                     date: isSafe ? data[safeIndex].date : today,
                                     image1: isSafe ? data[safeIndex].photoFirstURL : "",
                                     image2: isSafe ? data[safeIndex].photoSecondURL : "",

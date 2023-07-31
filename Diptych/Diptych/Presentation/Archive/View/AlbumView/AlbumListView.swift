@@ -10,7 +10,8 @@ import SwiftUI
 struct AlbumListView: View {
     
     ///Property
-    @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
+//    @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
+    @EnvironmentObject var VM: ArchiveViewModel
   
     var body: some View {
         ScrollView {
@@ -24,7 +25,7 @@ struct AlbumListView: View {
                         /// 사진 디테일 뷰
                         NavigationLink {
                             PhotoDetailView(
-                                VM: VM,
+//                                VM: VM,
                                 date: data[index].date,
                                 image1: data[index].photoFirstURL,
                                 image2: data[index].photoSecondURL,
