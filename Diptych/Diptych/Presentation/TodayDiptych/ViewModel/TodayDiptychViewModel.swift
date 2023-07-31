@@ -39,6 +39,7 @@ final class TodayDiptychViewModel: ObservableObject {
     @Published var isCompleted = false
     @Published var photoFirstState = TodayDiptychState.incomplete
     @Published var photoSecondState = TodayDiptychState.incomplete
+    @Published var diptychNumber = 1
     private let db = Firestore.firestore()
 
     // MARK: - Network
@@ -192,6 +193,25 @@ final class TodayDiptychViewModel: ObservableObject {
                     .convertToDictionary()
                 )
             }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    func setDiptychNumber() async {
+        guard let albumId = currentUser?.coupleAlbumId else { return }
+
+        do {
+            let querySnapshot = try await db.collection("photos")
+                .whereField("albumId", isEqualTo: albumId)
+                .whereField("isCompleted", isEqualTo: true)
+                .getDocuments()
+            
+            diptychNumber += querySnapshot.documents.count
+
+            guard let isCompleted = todayPhoto?.isCompleted else { return }
+            if isCompleted { diptychNumber -= 1 }
+
         } catch {
             print(error.localizedDescription)
         }

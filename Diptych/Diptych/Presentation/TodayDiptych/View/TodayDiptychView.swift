@@ -52,6 +52,7 @@ struct TodayDiptychView: View {
             await viewModel.fetchTodayImage()
             await viewModel.fetchWeeklyCalender()
             await viewModel.fetchContents()
+            await viewModel.setDiptychNumber()
         }
     }
 }
@@ -67,7 +68,7 @@ extension TodayDiptychView {
                 HStack(spacing: 0) {
                     Text("\(viewModel.setTodayDate())")
                     Spacer()
-                    Text("#999번째 딥틱") // TODO: - 완료 딥틱 개수 세기
+                    Text("#\(viewModel.diptychNumber)번째 딥틱")
                 }
                 .font(.pretendard(.medium, size: 16))
                 .foregroundColor(.darkGray)
