@@ -680,16 +680,14 @@ class CameraViewController: UIViewController {
         // TODO: - print는 로딩 인디케이터 또는 작업상황 구분점임
         print("파일 업로드 시작....")
         LottieUIViews.shared.label.text = "이미지 파일 업로드 중..."
-        // let url = try await FirebaseManager.shared.upload(data: data!, withName: "image_\(viewModel?.todayPhoto?.id ?? Date().formatted())")
         let url = try await FirebaseManager.shared.upload(data: data!, withName: "image_\(isFirst ? "first" : "second")_\(viewModel?.todayPhoto?.id ?? Date().formatted())")
-        
         print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
         
         guard let url else {
             print("url이 존재하지 않습니다.")
             return
         }
-        
+      
         guard let todayPhoto = viewModel?.todayPhoto else {
             print("todayPhoto is nil.")
             return

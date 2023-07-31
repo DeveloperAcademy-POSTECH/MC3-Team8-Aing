@@ -38,7 +38,7 @@ struct TodayDiptychView: View {
                              viewModel.weeklyData.removeAll()
                              Task {
                                  await viewModel.fetchTodayImage()
-                                 await viewModel.fetchWeeklyCalender()
+//                                 await viewModel.fetchWeeklyCalender()
                              }
                          }
                 }
@@ -46,7 +46,23 @@ struct TodayDiptychView: View {
         }
     }
 
-    // MARK: - UI Components
+    // MARK: - Custom Methods
+
+    private func fetchData() {
+        Task {
+            await viewModel.fetchUser()
+            await viewModel.setTodayPhoto()
+            await viewModel.setUserCameraLoactionState()
+            await viewModel.fetchTodayImage()
+//            await viewModel.fetchWeeklyCalender()
+            await viewModel.fetchContents()
+        }
+    }
+}
+
+// MARK: - UI Components
+
+extension TodayDiptychView {
 
     private func MainDiptychView() -> some View {
         ZStack {
@@ -76,89 +92,35 @@ struct TodayDiptychView: View {
                         .foregroundColor(.offBlack)
                         .padding(.top, 29)
                         .padding(.horizontal, 15)
-                        .padding(.bottom, 35)
+                        .padding(.bottom, 15)
                     Spacer()
                 }
 
+                //MARK: - 사진
                 HStack(spacing: 0) {
-                    AsyncImage(url: URL(string: viewModel.photoFirstURL)) { phase in
-                        switch phase {
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .overlay {
-                                    if viewModel.isFirst && !viewModel.isCompleted {
-                                        Image("imgRetry")
-                                            .onTapGesture {
-                                                isShowCamera = true
-                                            }
-                                    }
-                                }.onAppear {
-                                    imageCacheViewModel.firstImage = image.getUIImage(newSize: thumbSize)
-                                }
-                        case .failure:
-                            Rectangle()
-                                .fill(Color.offWhite)
-                        case .empty:
-                            Rectangle()
-                                .fill(viewModel.isFirst ? Color.lightGray : Color.offBlack)
-                                .overlay {
-                                    if viewModel.isFirst {
-                                        Image("imgDiptychCamera")
-                                            .onTapGesture {
-                                                isShowCamera = true
-                                            }
-                                    }
-                                }
-                        @unknown default:
-                            ProgressView()
-                        }
-                    }
-                    AsyncImage(url: URL(string: viewModel.photoSecondURL)) { phase in
-                        switch phase {
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .overlay {
-                                    if !viewModel.isFirst && !viewModel.isCompleted {
-                                        Image("imgRetry")
-                                            .onTapGesture {
-                                                isShowCamera = true
-                                            }
-                                    }
-                                }
-                                .onAppear {
-                                    imageCacheViewModel.secondImage = image.getUIImage(newSize: thumbSize)
-                                }
-                        case .failure:
-                            Rectangle()
-                                .fill(Color.offBlack)
-                        case .empty:
-                            Rectangle()
-                                .fill(viewModel.isFirst ? Color.offBlack : Color.lightGray)
-                                .overlay {
-                                    if !viewModel.isFirst {
-                                        Image("imgDiptychCamera")
-                                            .onTapGesture {
-                                                isShowCamera = true
-                                            }
-                                    }
-                                }
-                        @unknown default:
-                            ProgressView()
-                        }
+                    switch viewModel.isFirst {
+                    case true:
+                        myDiptychImageView(viewModel.photoFirstState, viewModel.photoFirstURL)
+                        loverDiptychImageView(viewModel.photoSecondState, viewModel.photoSecondURL)
+                    case false:
+                        loverDiptychImageView(viewModel.photoFirstState, viewModel.photoFirstURL)
+                        myDiptychImageView(viewModel.photoSecondState, viewModel.photoSecondURL)
                     }
                 }
                 .frame(maxWidth: .infinity)
                 .aspectRatio(1.0, contentMode: .fit)
                 .padding(.bottom, 20)
+                .font(.pretendard(.light, size: 14))
+                .foregroundColor(.offWhite)
+                .multilineTextAlignment(.center)
 
+                //MARK: - Weekly 캘린더
                 HStack(spacing: 9) {
                     if viewModel.isLoading {
                         ProgressView()
                     } else {
                         let weeklyDates = viewModel.setWeeklyDates()
-                        
+
                         ForEach(0..<7) { index in
                             let date = weeklyDates[index]
                             let data = viewModel.weeklyData.filter { $0.date == date }
@@ -173,36 +135,83 @@ struct TodayDiptychView: View {
 
                             switch diptychState {
                             case .complete:
-                                NavigationLink {
-                                    PhotoDetailView(date: "더미더미더미",
-                                                    questionNum: 3,
-                                                    question: "더미더미더미더미더미더미",
-                                                    imageUrl1: "",
-                                                    imageUrl2: "")
-                                } label: {
                                         weeklyCalenderView
-                                }
                             default:
                                 weeklyCalenderView
                             }
                         }
                     }
-                }
-            }
+                }//】 HStack
+                .padding(.bottom,30)
+                
+                
+            }//】 VStack
         }
     }
 
-    // MARK: - Custom Methods
-
-    private func fetchData() {
-        Task {
-            await viewModel.fetchUser()
-            await viewModel.setTodayPhoto()
-            await viewModel.setUserCameraLoactionState()
-            await viewModel.fetchTodayImage()
-            await viewModel.fetchWeeklyCalender()
-            await viewModel.fetchContents()
+    @ViewBuilder
+    private func myDiptychImageView(_ todayDiptychState: TodayDiptychState, _ url: String) -> some View {
+        switch todayDiptychState {
+        case .incomplete:
+            Rectangle()
+                .fill(Color.lightGray)
+                .overlay {
+                    Image("imgDiptychCamera")
+                        .onTapGesture {
+                            isShowCamera = true
+                        }
+                }
+        default:
+            rectangleOverlayImage(Color.lightGray, url)
         }
+    }
+
+    @ViewBuilder
+    private func loverDiptychImageView(_ todayDiptychState: TodayDiptychState, _ url: String) -> some View {
+        switch todayDiptychState {
+        case .incomplete:
+            Rectangle()
+                .fill(Color.offBlack)
+                .overlay {
+                    VStack(spacing: 13) {
+                        Image("icnCross")
+                        Text("상대방이 오늘 딥틱을\n아직 완성하지 않았어요")
+                    }
+                }
+        case .upload:
+            ZStack {
+                rectangleOverlayImage(Color.offBlack, url)
+                Color.black
+                    .opacity(0.54)
+                    .background(VisualEffectView(effect: UIBlurEffect(style: .regular)))
+                VStack(spacing: 17) {
+                    Image("icnCheck")
+                    Text("상대방이 오늘 딥틱을\n완성했어요")
+                }
+            }
+        case .complete:
+            rectangleOverlayImage(Color.offBlack, url)
+        }
+    }
+
+    private func rectangleOverlayImage(_ color: Color, _ url: String) -> some View {
+        Rectangle()
+            .fill(color)
+            .overlay {
+                AsyncImage(url: URL(string: url)) { image in
+                    image
+                        .resizable()
+                        .onAppear {
+                            if url == viewModel.photoFirstURL {
+                                imageCacheViewModel.firstImage = image.getUIImage(newSize: thumbSize)
+                            } else {
+                                imageCacheViewModel.secondImage = image.getUIImage(newSize: thumbSize)
+                            }
+                        }
+                } placeholder: {
+                    ProgressView()
+                }
+            }
     }
 }
 
