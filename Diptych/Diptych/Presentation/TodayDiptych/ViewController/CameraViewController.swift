@@ -11,13 +11,13 @@ import Photos
 import PhotosUI
 
 enum ImageDivisionAxis {
-    /// 세로선 왼쪽에 검은칠
+    /// 세로선 왼쪽이 촬영됨
     case verticalLeft
-    /// 세로선 오른쪽에 검은칠
+    /// 세로선 오른쪽이 촬영됨
     case verticalRight
-    /// 가로선 위에 검은칠
+    /// 가로선 위가 촬영됨
     case horizontalUp
-    /// 가로선 아래에 검은칠
+    /// 가로선 아래가 촬영됨
     case horizontalDown
     
     func rect(squareSideLength length: CGFloat) -> CGRect {
@@ -56,18 +56,17 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var scrollViewImageContainer: UIScrollView!
     @IBOutlet weak var imgViewGuideOverlay: UIImageView!
     @IBOutlet weak var btnCloseBack: UIButton!
+    @IBOutlet weak var lblRetake: UILabel!
     @IBOutlet weak var btnFlash: UIButton!
     @IBOutlet weak var btnChangePosition: UIButton!
     @IBOutlet weak var btnPhotoLibrary: UIButton!
     @IBOutlet weak var btnShutter: UIButton!
+    @IBOutlet weak var btnQuestionMark: UIButton!
     
     @IBOutlet weak var viewOverlay: UIView!
     @IBOutlet weak var tempSegDirection: UISegmentedControl!
     @IBOutlet weak var imgGuidelineDashed: UIImageView!
     @IBOutlet weak var viewLottieLoading: UIView!
-    
-    // MARK: - Constants
-    let RESIZE_WIDTH: CGFloat = 2048
     
     // MARK: - Vars
     var viewModel: TodayDiptychViewModel?
@@ -121,6 +120,69 @@ class CameraViewController: UIViewController {
         }
     }
     
+    private var lottieViewForUpload: UIView!
+    private var isShowHelpPopup: Bool = false {
+        didSet {
+            btnQuestionMark.setImage(.init(named: "imgQuestionMarkButton\(!isShowHelpPopup ? "Off" : ""  )"), for: .normal)
+            showHelpPopup(isShowHelpPopup)
+            
+        }
+    }
+    
+    // MARK: - Lazy vars
+    private lazy var blurPopupView: BlurPopupUIView = {
+        let xMargin: CGFloat = 15
+        let yMargin: CGFloat = 9
+        
+        let frame = CGRect(x: scrollViewImageContainer.frame.minX + xMargin,
+                           y: scrollViewImageContainer.frame.minY - yMargin,
+                           width: scrollViewImageContainer.frame.width - xMargin * 2,
+                           height: scrollViewImageContainer.frame.height + yMargin * 2 + 20)
+        let popupView = BlurPopupUIView(frame: frame)
+        
+        // 설명 레이블
+        let descLabel = UILabel(frame: .init(x: 10, y: 10, width: popupView.frame.width - 20, height: 50))
+        descLabel.text = "얼굴 가이드라인에 맞춰 최대한 정면을 보고 찍어보세요!\n완성된 사진은 두 손가락을 이용해 움직일 수 있어요"
+        descLabel.font = .init(name: "Pretendard-Light", size: 15)
+        descLabel.numberOfLines = 0
+        descLabel.textAlignment = .center
+        descLabel.textColor = .offWhite
+        
+        // 사각형 (또는 이미지)
+        let squareWidth: CGFloat = 284
+        let squareView = UIView(frame: .init(x: descLabel.frame.midX - (squareWidth / 2.0), y: descLabel.frame.height + 25, width: squareWidth, height: squareWidth))
+        squareView.backgroundColor = .diptychDarkGray
+        
+        popupView.addSubview(descLabel)
+        popupView.addSubview(squareView)
+        
+        return popupView
+    }()
+    
+    private lazy var arrowView: BlurPopupUIView = {
+        let arrowView = BlurPopupUIView(
+            frame: .init(
+                x: btnQuestionMark.frame.minX + 1,
+                y: btnQuestionMark.frame.maxY + 2.4,
+                width: btnQuestionMark.frame.width - 2,
+                height: blurPopupView.frame.minY - btnQuestionMark.frame.maxY - 0.001
+            ))
+        arrowView.setCorner(radius: 0, curve: .circular)
+        
+        // 화살표 삼각형 레이어
+        let trianglePath = CGMutablePath()
+        trianglePath.move(to: .init(x: 0, y: arrowView.frame.height))
+        trianglePath.addLine(to: .init(x: arrowView.frame.width / 2, y: 0))
+        trianglePath.addLine(to: .init(x: arrowView.frame.width, y: arrowView.frame.height))
+        trianglePath.addLine(to: .init(x: 0, y: arrowView.frame.height))
+        
+        let mask = CAShapeLayer()
+        mask.path = trianglePath
+        arrowView.layer.mask = mask
+        
+        return arrowView
+    }()
+    
     // MARK: - Lifecycles
     
     override func viewDidLoad() {
@@ -160,7 +222,7 @@ class CameraViewController: UIViewController {
             return
         }
         
-        lblTopic.text = viewModel.question
+        lblTopic.text = !viewModel.question.isEmpty ? viewModel.question : "오늘 본 동그라미는?"
         DispatchQueue.main.async { [unowned self] in
             print("isFirst?", viewModel.isFirst)
             currentAxis = viewModel.isFirst ? .verticalLeft : .verticalRight
@@ -183,8 +245,8 @@ class CameraViewController: UIViewController {
         case .retouch:
             btnShutter.isEnabled = false
             
-            let lottieView = LottieUIViews.shared.lottieView(frame: view.frame)
-            view.addSubview(lottieView)
+            lottieViewForUpload = LottieUIViews.shared.lottieView(frame: view.frame, text: "파일 업로드 중...")
+            view.addSubview(lottieViewForUpload)
 
             // guard let data = imgViewGuideOverlay.image?.jpegData(compressionQuality: 1) else {
             //     debugPrint("\(#function): Image data is nil")
@@ -199,10 +261,10 @@ class CameraViewController: UIViewController {
                 return
             }
             
-            let resizedImage = transformedImage.resize(width: RESIZE_WIDTH, height: RESIZE_WIDTH)
+            let resizedImage = transformedImage.resize(width: IMAGE_SIZE, height: IMAGE_SIZE)
             
             // 가이드라인에 따라 사진 자르기
-            let cropRect: CGRect = currentAxis.rect(squareSideLength: RESIZE_WIDTH)
+            let cropRect: CGRect = currentAxis.rect(squareSideLength: IMAGE_SIZE)
             let croppedImage: CGImage? = resizedImage.cgImage!.cropping(to: cropRect)
             let uiImage = UIImage(cgImage: croppedImage!, scale: 1, orientation: transformedImage.imageOrientation)
             
@@ -275,6 +337,10 @@ class CameraViewController: UIViewController {
         }
     }
     
+    @IBAction func btnActPopoverHelp(_ sender: UIButton) {
+        isShowHelpPopup.toggle()
+    }
+    
     // MARK: - UI Assistants
     
     private func setupOverlay() {
@@ -300,6 +366,20 @@ class CameraViewController: UIViewController {
         #else
             viewLottieLoading.addSubview(lottieView)
         #endif
+    }
+    
+    private func showHelpPopup(_ isShow: Bool) {
+        if isShow {
+            view.addSubview(blurPopupView)
+            view.addSubview(arrowView)
+            if currentMode == .camera {
+                btnShutter.isEnabled = false
+            }
+        } else {
+            blurPopupView.removeFromSuperview()
+            arrowView.removeFromSuperview()
+            btnShutter.isEnabled = true
+        }
     }
     
     // MARK: - Camera Functions
@@ -436,11 +516,14 @@ class CameraViewController: UIViewController {
         btnFlash.isHidden = true
         btnChangePosition.isHidden = true
         btnPhotoLibrary.isHidden = true
+        btnQuestionMark.isHidden = true // ??
         
         btnCloseBack.setImage(UIImage(named: "imgBackButton"), for: .normal)
         btnShutter.setImage(UIImage(named: "imgCircleCheckButton"), for: .normal)
 
         btnShutter.isEnabled = true
+        isShowHelpPopup = false
+        lblRetake.isHidden = false
     }
     
     func changeCameraMode() {
@@ -449,11 +532,13 @@ class CameraViewController: UIViewController {
         btnFlash.isHidden = false
         btnChangePosition.isHidden = false
         btnPhotoLibrary.isHidden = false
+        btnQuestionMark.isHidden = false
         
         btnCloseBack.setImage(UIImage(named: "imgCloseButton"), for: .normal)
         btnShutter.setImage(UIImage(named: "imgShutterButton"), for: .normal)
         
         previewLayer?.isHidden = false
+        lblRetake.isHidden = true
     }
     
     func resetImageViewTransform() {
@@ -515,7 +600,7 @@ class CameraViewController: UIViewController {
                     self.btnPhotoLibrary.imageView?.contentMode = .scaleAspectFill
                     self.btnPhotoLibrary.clipsToBounds = true
                     self.btnPhotoLibrary.layer.cornerCurve = .continuous
-                    self.btnPhotoLibrary.layer.cornerRadius = 16
+                    self.btnPhotoLibrary.layer.cornerRadius = 16.5
                 }
             }
             
@@ -553,23 +638,11 @@ class CameraViewController: UIViewController {
         
         // TODO: - print는 로딩 인디케이터 또는 작업상황 구분점임
         print("파일 업로드 시작....")
-        guard let data else {
-            print("no data")
-            return
-        }
-        
-        var url: URL?
-        do {
-            url = try await FirebaseManager.shared.upload(data: data, withName: "test_\(UUID().uuidString)")
-        } catch {
-            print("upload error 1:", error)
-        }
-        
+
+        LottieUIViews.shared.label.text = "이미지 파일 업로드 중..."
+        let url = try await FirebaseManager.shared.upload(data: data!, withName: "image_\(viewModel?.todayPhoto?.id ?? Date().formatted())")
+
         print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
-        
-        // print("섬네일 업로드 시작....")
-        // let thumbURL = try await FirebaseManager.shared.upload(data: thumbData!, withName: "test_thumbnail_\(Date())")
-        // print("섬네일 업로드 끝:", thumbURL?.absoluteString ?? "unknown URL")
         
         guard let url else {
             print("url이 존재하지 않습니다.")
@@ -594,8 +667,9 @@ class CameraViewController: UIViewController {
             if let halfAnotherThumb = imageCacheViewModel?.firstImage ?? imageCacheViewModel?.secondImage,
                let mergedThumb = thumbnail.merge(with: halfAnotherThumb, division: isFirst ? .verticalLeft : .verticalRight),
                let uploadThumb = mergedThumb.jpegData(compressionQuality: THUMB_COMPRESSION_QUALITY) {
+                LottieUIViews.shared.label.text = "섬네일 업로드 중..."
                 print("섬네일 업로드 시작....", halfAnotherThumb.size)
-                let thumbURL = try await FirebaseManager.shared.upload(data: uploadThumb, withName: "test_thumbnail_\(Date())")
+                let thumbURL = try await FirebaseManager.shared.upload(data: uploadThumb, withName: "thumb_\(viewModel?.todayPhoto?.id ?? Date().formatted())")
                 dictionary["thumbnail"] = thumbURL?.absoluteString
                 print("섬네일 업로드 끝")
             } else {
@@ -607,6 +681,7 @@ class CameraViewController: UIViewController {
         dictionary[photoKey] = url.absoluteString
         
         print("정보 업로드 시작....")
+        LottieUIViews.shared.label.text = "정보 업로드 중..."
         try await FirebaseManager.shared.updateValue(collectionPath: "photos", documentId: todayPhoto.id, dictionary: dictionary)
         print("정보 업로드 끝")
     }
@@ -675,10 +750,8 @@ class CameraViewController: UIViewController {
     }
     
     func toggleTorch(forceOff: Bool = false) {
-        guard let device = AVCaptureDevice.default(for: .video) else {
-            return
-        }
-        guard device.hasTorch else {
+        guard let device = AVCaptureDevice.default(for: .video), device.hasTorch else {
+            btnFlash.setImage(.init(named: "imgFlashButtonOff"), for: .normal)
             return
         }
         
@@ -686,13 +759,18 @@ class CameraViewController: UIViewController {
             try device.lockForConfiguration()
             
             if device.torchMode == AVCaptureDevice.TorchMode.on || forceOff {
+                // Off
                 device.torchMode = .off
+                btnFlash.setImage(.init(named: "imgFlashButtonOff"), for: .normal)
             } else {
+                // On
                 try device.setTorchModeOn(level: 1.0)
+                btnFlash.setImage(.init(named: "imgFlashButton"), for: .normal)
             }
             
             device.unlockForConfiguration()
         } catch {
+            btnFlash.setImage(.init(named: "imgFlashButtonOff"), for: .normal)
             print(#function, error.localizedDescription)
         }
     }

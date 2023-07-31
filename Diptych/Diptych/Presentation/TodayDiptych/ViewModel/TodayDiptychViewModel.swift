@@ -202,6 +202,16 @@ final class TodayDiptychViewModel: ObservableObject {
 
     // MARK: - Custom Methods
 
+    func setTodayDate() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd"
+        let todayDateString = formatter.string(from: Date())
+
+        return todayDateString
+    }
+
+    // TODO: - 커스텀 함수들 정리하기!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+
     func calculateThisMondayDate() -> Date {
         let (todayDate, calendar, daysAfterMonday) = setTodayCalendar()
         guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return Date() }

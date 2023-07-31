@@ -11,9 +11,14 @@ import Lottie
 class LottieUIViews {
     static let shared = LottieUIViews()
     
+    var label: UILabel!
+    
     private init() {}
     
-    func lottieView(name: String = "LoadingLottie", frame: CGRect, lottieFrame: CGRect = .init(x: 0, y: 0, width: 200, height: 200), backgroundColor: UIColor? = .offWhite) -> UIView {
+    func lottieView(name: String = "LoadingLottie", frame: CGRect,
+                    lottieFrame: CGRect = .init(x: 0, y: 0, width: 200, height: 200),
+                    backgroundColor: UIColor? = .offWhite,
+                    text: String? = nil) -> UIView {
         let view = UIView(frame: frame)
         
         view.backgroundColor = backgroundColor
@@ -24,15 +29,20 @@ class LottieUIViews {
         animationView.contentMode = .scaleAspectFit
         animationView.loopMode = .loop
         
-        // animationView.translatesAutoresizingMaskIntoConstraints = false
-        
         view.addSubview(animationView)
-        // NSLayoutConstraint.activate([
-        //     animationView.heightAnchor.constraint(equalTo: view.heightAnchor),
-        //     animationView.widthAnchor.constraint(equalTo: view.widthAnchor)
-        // ])
         
-        animationView.play()
+        if let text {
+            label = UILabel(frame: .init(x: 0, y: 0, width: view.frame.width, height: 30))
+            label.center = .init(x: view.center.x, y: view.center.y + 67)
+            label.textAlignment = .center
+            view.addSubview(label)
+            
+            label.text = text
+            label.textColor = .black
+            label.font = UIFont(name: "Pretendard-Light", size: 16)
+            
+            animationView.play()
+        }
         
         return view
     }
