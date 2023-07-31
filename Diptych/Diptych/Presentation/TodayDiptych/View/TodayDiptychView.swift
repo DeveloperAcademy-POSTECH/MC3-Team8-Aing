@@ -50,9 +50,9 @@ struct TodayDiptychView: View {
             await viewModel.setTodayPhoto()
             await viewModel.setUserCameraLoactionState()
             await viewModel.fetchTodayImage()
+            await viewModel.setDiptychNumber()
             await viewModel.fetchWeeklyCalender()
             await viewModel.fetchContents()
-            await viewModel.setDiptychNumber()
         }
     }
 }
