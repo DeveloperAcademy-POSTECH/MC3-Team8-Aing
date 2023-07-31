@@ -184,6 +184,18 @@ class CameraViewController: UIViewController {
         return arrowView
     }()
     
+    private lazy var popupContainer: UIView = {
+        let containerFrame = CGRect(x: blurPopupView.frame.minX,
+                                    y: arrowView.frame.minY,
+                                    width: blurPopupView.frame.width,
+                                    height: blurPopupView.frame.maxY - arrowView.frame.minY)
+        let popupContainer = UIView()
+        popupContainer.addSubview(blurPopupView)
+        popupContainer.addSubview(arrowView)
+        
+        return popupContainer
+    }()
+    
     // MARK: - Lifecycles
     
     override func viewDidLoad() {
@@ -384,32 +396,24 @@ class CameraViewController: UIViewController {
         let DURATION: CGFloat = 0.25
         
         if isShow {
-            blurPopupView.alpha = 0
-            arrowView.alpha = 0
-            
-            view.addSubview(blurPopupView)
-            view.addSubview(arrowView)
-            
+            popupContainer.alpha = 0
+            view.addSubview(popupContainer)
             
             // fade-in
             UIView.animate(withDuration: DURATION) { [unowned self] in
-                blurPopupView.alpha = 1.0
-                arrowView.alpha = 1.0
+                popupContainer.alpha = 1.0
             }
             
             if currentMode == .camera {
                 btnShutter.isEnabled = false
             }
         } else {
-            blurPopupView.alpha = 1
-            arrowView.alpha = 1
+            popupContainer.alpha = 1.0
             
             UIView.animate(withDuration: DURATION) { [unowned self] in
-                blurPopupView.alpha = 0
-                arrowView.alpha = 0
+                popupContainer.alpha = 0.0
             } completion: { [unowned self] _ in
-                blurPopupView.removeFromSuperview()
-                arrowView.removeFromSuperview()
+                popupContainer.removeFromSuperview()
                 btnShutter.isEnabled = true
             }
         }
