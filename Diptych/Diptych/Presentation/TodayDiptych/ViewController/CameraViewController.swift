@@ -221,7 +221,8 @@ class CameraViewController: UIViewController {
         guard let viewModel else {
             return
         }
-        lblTopic.text = "오늘 발견한 동그라미는?" //viewModel.question
+        
+        lblTopic.text = !viewModel.question.isEmpty ? viewModel.question : "오늘 본 동그라미는?"
         DispatchQueue.main.async { [unowned self] in
             print("isFirst?", viewModel.isFirst)
             currentAxis = viewModel.isFirst ? .verticalLeft : .verticalRight

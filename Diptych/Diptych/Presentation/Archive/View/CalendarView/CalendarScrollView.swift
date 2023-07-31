@@ -23,10 +23,11 @@ struct CalendarScrollView: View {
                     }
                     .padding(.bottom,40)
                 }//】 Scroll
-                .background(Color.gray.opacity(0.1))
+                .background(Color.offWhite)
                 .onAppear{
                     scrollViewProxy.scrollTo(scrollToID, anchor: .bottom)
                 }
+                .padding(.bottom,15)
             }//】 ScrollViewReader
 
     }//】 Body

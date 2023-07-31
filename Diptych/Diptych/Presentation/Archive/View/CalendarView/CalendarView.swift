@@ -41,18 +41,22 @@ struct CalendarView: View {
     return VStack(spacing: 0) {
             
     /// [1] Month
-        HStack(spacing: 0) {
-            Text(date, formatter: Self.monthFormatter)
-                .font(.system(size:36, weight: .light))
-                .padding(.leading,15)
-            Spacer()
-            Text(date, formatter: Self.yearFormatter)
-                .font(.title2)
-                .fontWeight(.light)
-                .foregroundColor(.gray)
-                .padding(.trailing,15)
-        }//】 HStack
-            .padding(.bottom,30)
+        VStack(spacing:0){
+            HStack(spacing:0) {
+                Text(date, formatter: Self.monthFormatter)
+                    .font(.system(size:36, weight: .light))
+                Spacer()
+                Text(date, formatter: Self.yearFormatter)
+                    .font(.system(size:20, weight: .light))
+                    .foregroundColor(.gray)
+            }//】 HStack
+            .padding(.bottom,13)
+            RoundedRectangle(cornerRadius: 0)
+                .foregroundColor(Color.darkGray)
+                .frame(height: 1)
+        }//】 VStack
+        .padding(.horizontal,13)
+        .padding(.bottom,15)
                 
                     
     /// [2] Week
@@ -132,7 +136,7 @@ struct CalendarView: View {
                 }//】 Loop
             }//】 Grid
             .padding(.horizontal,15)
-            .padding(.bottom, 30)
+            .padding(.bottom, 20)
         }
             
     }//】 VStack

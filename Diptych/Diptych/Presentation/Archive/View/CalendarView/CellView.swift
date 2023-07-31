@@ -37,7 +37,7 @@ struct CellView: View {
                     Color.offBlack.opacity(0.1)
                         .clipShape(RoundedRectangle(cornerRadius: 18))
                 }//】 ZStack
-                .frame(width: 44, height: 50)
+                .frame(width: 44, height: 44)
             } else {
                 EmptyView()
             }
@@ -45,17 +45,17 @@ struct CellView: View {
             /// 오늘 날짜일때 빨간 테두리
             RoundedRectangle(cornerRadius: 18)
                 .stroke(Color.systemSalmon, lineWidth: isToday ? 2 : 0)
-                .frame(width: 44, height: 50)
+                .frame(width: 44, height: 44)
                 .overlay{}
                 
             /// 날짜 표시
             Text("\(day)")
-                .font(.pretendard(isThisMonth && isCompleted ? .extraBold : .bold, size: 16))
+                .font(.pretendard(isThisMonth && isCompleted ? .bold : .bold, size: 16))
                 .shadow(color: .black,
                         radius: isThisMonth && isCompleted  ? 1 : 0,
                         y: isThisMonth && isCompleted  ? 1 : 0)
                 .foregroundColor(isThisMonth && isCompleted  ? .offWhite : .offBlack)
-                .offset(y: -10)
+                .offset(y: -8)
             
         }//】 ZStack
         .padding(.bottom, 10)

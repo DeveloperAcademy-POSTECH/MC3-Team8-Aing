@@ -66,7 +66,6 @@ final class TodayDiptychViewModel: ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
-//        print(self.weeklyData)
     }
 
     func fetchTodayImage() async {

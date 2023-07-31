@@ -39,7 +39,7 @@ struct QuestionListView: View {
             }//】 VStack
             .padding(.top, 20)
         }//】 Scroll
-        .background(Color.gray.opacity(0.1))
+        .background(Color.offWhite)
     }//】 Body
 }
 
@@ -52,31 +52,34 @@ struct QuestionCellView: View {
     var body: some View {
         HStack(spacing: 0){
             /// [1] n번째
-            ZStack{
-                Rectangle()
-                    .fill(Color.lightGray)
-                    .frame(width: 60, height: 27)
+            HStack(spacing: 0){
                 Text("\(questionIndex + 1)번째")
+                    .font(.system(size:16, weight: .medium))
+                    .foregroundColor(.black)
+                    .padding(.leading, 15)
             }
-            .padding(.leading, 15)
-            
+            .frame(width: 60,alignment: .trailing)
             /// [2] 질문
             HStack(spacing: 0){
                 Text(questionText)
+                    .foregroundColor(.offBlack)
                     .lineLimit(1)
                 Spacer()
             }
-            .padding(.leading, 10)
+            .frame(alignment: .leading)
+            .padding(.leading, 20)
             
             /// [3] 화살표
             Image(systemName: "chevron.right")
-                .foregroundColor(.offBlack)
+                .foregroundColor(.darkGray)
+                .font(.footnote)
+                .fontWeight(.light)
                 .padding(.trailing, 15)
             
         }//】 HStack
+        .frame(height: 25)
         .font(.custom(PretendardType.light.rawValue, size: 16))
-        .foregroundColor(.offBlack)
-        .padding(.bottom, 25)
+        .padding(.bottom, 21)
         
         
         
