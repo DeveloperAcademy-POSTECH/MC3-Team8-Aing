@@ -8,6 +8,8 @@
 import SwiftUI
 import FirebaseStorage
 
+
+
 struct TodayDiptychView: View {
 
     let thumbSize: CGSize = .init(width: THUMB_SIZE / 2.0, height: THUMB_SIZE)
@@ -92,10 +94,11 @@ extension TodayDiptychView {
                         .foregroundColor(.offBlack)
                         .padding(.top, 29)
                         .padding(.horizontal, 15)
-                        .padding(.bottom, 35)
+                        .padding(.bottom, 15)
                     Spacer()
                 }
 
+                //MARK: - 사진
                 HStack(spacing: 0) {
                     switch viewModel.isFirst {
                     case true:
@@ -113,6 +116,7 @@ extension TodayDiptychView {
                 .foregroundColor(.offWhite)
                 .multilineTextAlignment(.center)
 
+                //MARK: - Weekly 캘린더
                 HStack(spacing: 9) {
                     if viewModel.isLoading {
                         ProgressView()
@@ -133,22 +137,17 @@ extension TodayDiptychView {
 
                             switch diptychState {
                             case .complete:
-                                NavigationLink {
-                                    PhotoDetailView(date: "더미더미더미",
-                                                    questionNum: 3,
-                                                    question: "더미더미더미더미더미더미",
-                                                    imageUrl1: "",
-                                                    imageUrl2: "")
-                                } label: {
                                         weeklyCalenderView
-                                }
                             default:
                                 weeklyCalenderView
                             }
                         }
                     }
-                }
-            }
+                }//】 HStack
+                .padding(.bottom,30)
+                
+                
+            }//】 VStack
         }
     }
 

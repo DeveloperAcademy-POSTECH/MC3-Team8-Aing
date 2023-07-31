@@ -26,10 +26,7 @@ struct DiptychApp: App {
     
     var body: some Scene {
         WindowGroup {
-
-//            DiptychTabView()
-
-//            DiptychTabView2()
+            
 
             if isSplashCompleted {
                 if userViewModel.flow == .initialized {
@@ -45,68 +42,16 @@ struct DiptychApp: App {
                     ProfileSettingView()
                         .environmentObject(userViewModel)
                 } else {
-                    DiptychTabView()
+                    DiptychTabView2()
                         .environmentObject(userViewModel)
                 }
             } else {
-                LottieView() { isSplashCompleted in
+                LottieView() {isSplashCompleted in
                     self.isSplashCompleted = true
                 }
             }
             
-//            if userViewModel.flow == .initialized {
-//                OnBoardingView()
-//                    .environmentObject(userViewModel)
-//            } else if userViewModel.flow == .signedUp {
-//                LoadingVerificationView()
-//                    .environmentObject(userViewModel)
-//            } else if userViewModel.flow == .emailVerified {
-//                CouplingView()
-//                    .environmentObject(userViewModel)
-//            } else if userViewModel.flow == .coupled {
-//                ProfileSettingView()
-//                    .environmentObject(userViewModel)
-//            } else {
-//                DiptychTabView()
-//                    .environmentObject(userViewModel)
-//            }
-            
-            
-//            if userViewModel.flow == .completed {
-//                DiptychTabView()
-//            } else {
-//                OnBoardingView()
-//                    .environmentObject(userViewModel)
-//            }
-            
-//            switch userViewModel.flow {
-//            case .initialized :
-//                OnBoardingView()
-////                    .environmentObject(authViewModel)
-//                    .environmentObject(userViewModel)
-//            case .emailVerified :
-//                SignUpView()
-////                    .environmentObject(authViewModel)
-//                    .environmentObject(userViewModel)
-//            case .emailVerified:
-//                CouplingView()
-////                    .environmentObject(authViewModel)
-//                    .environmentObject(userViewModel)
-
-//            switch authViewModel.flow {
-//            case .isInitialized :
-//                OnBoardingView()
-//                    .environmentObject(authViewModel)
-//            case .isSignedUp :
-//                EmailVerificationView()
-//                    .environmentObject(authViewModel)
-//            case .isEmailVerified:
-//                CouplingView()
-//                    .environmentObject(authViewModel)
-
-//            default:
-//                DiptychTabView()
-//            }
+ 
         }
     }
 }
