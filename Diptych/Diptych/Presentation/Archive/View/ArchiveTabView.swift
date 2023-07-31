@@ -12,13 +12,13 @@ struct ArchiveTabView: View {
     ///Property
     @State var currentTab : Int = 0
     @Namespace var namespace
-    var tabBarOptions: [String] = ["캘린더", "앨범"] //"질문함"(보류)
+    var tabBarOptions: [String] = ["캘린더", "앨범","질문함"]
     
     var body: some View {
         NavigationView{
         VStack(spacing: 0){
                 /// 상단 탭바
-                HStack(spacing: 90) {
+                HStack(spacing: 40) {
                     ForEach(tabBarOptions.indices, id: \.self) { index in
                         let title = tabBarOptions[index]
                         Button {
@@ -33,23 +33,21 @@ struct ArchiveTabView: View {
                 }//】 HStack
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal,30)
-                .background(Color.gray.opacity(0.1))
-                //            .ignoresSafeArea()
                 
-                Divider()
+                Rectangle()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 1.5)
                     .foregroundColor(.lightGray)
-                    .frame(height: 1)
-                
+
                 
                 /// 각 뷰로 이동
                 if currentTab == 0 {
                     CalendarScrollView()
                 } else if currentTab == 1 {
                     AlbumListView()
+                } else if currentTab == 2 {
+                    QuestionListView()
                 }
-                //            else if currentTab == 2 {
-                //               QuestionListView()
-                //            } // 질문함
         }//】 VStack
         }//】 Navigation
     }//】 Body
@@ -67,32 +65,22 @@ struct ArchiveTabBarItem: View {
         
             VStack(spacing: 0) {
                
-                
-                VStack(spacing: 0){
                     /// 탭바 텍스트
-                    if isSelected{
-                        Text(title)
-                            .font(.system(size:24, weight: .light))
-                            
-                    } else {
-                        Text(title)
-                            .font(.system(size:24, weight: .light))
-                            .foregroundColor(.gray.opacity(0.5))
-                    }
-                }//】 VStack
-                .padding(.top, 30)
-                .padding(.bottom,18)
+                    Text(title)
+                        .font(.system(size:24, weight: .light))
+                        .foregroundColor(isSelected ? .offBlack : .offBlack.opacity(0.8))
+                        .padding(.top, 30)
+                        .padding(.bottom,18)
                 
-                VStack(spacing: 0){
                     /// 탭바 밑줄
                     if isSelected{
                         Color.black
-                            .frame(width: 76, height: 2)
+                            .frame(width: 76, height: 3)
                             .matchedGeometryEffect(id: "underline", in: namespace) //→애니메이션
                     } else {
-                        Color.clear.frame(width: 76, height: 2)
+                        Color.clear
+                            .frame(width: 76, height: 2)
                     }
-                }
                 
             }//】 VStack
             .animation(.spring(), value: isSelected) // 애니메이션 타입

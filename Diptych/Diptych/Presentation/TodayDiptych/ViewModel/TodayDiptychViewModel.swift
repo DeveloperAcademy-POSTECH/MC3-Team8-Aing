@@ -4,7 +4,6 @@
 //
 //  Created by 김민 on 2023/07/19.
 //
-
 import Foundation
 import Firebase
 import FirebaseFirestore
@@ -67,6 +66,7 @@ final class TodayDiptychViewModel: ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
+//        print(self.weeklyData)
     }
 
     func fetchTodayImage() async {
