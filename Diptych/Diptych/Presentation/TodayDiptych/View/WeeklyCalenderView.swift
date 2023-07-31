@@ -21,23 +21,9 @@ struct WeeklyCalenderView: View {
     @State var isToday: Bool
     @State var thumbnail: String?
     @State var thumbnailURL: URL?
-    var diptychState = DiptychState.half
+    var diptychState = DiptychState.complete
 
     var body: some View {
-<<<<<<< HEAD
-        ZStack {
-            RoundedRectangle(cornerRadius: 18)
-                .stroke(Color.systemSalmon, lineWidth: isToday ? 2 : 0)
-                .frame(width: 44, height: 44)
-                .overlay {
-                    switch diptychState {
-                    case .incomplete: // TODO: - 오늘 이후에는 그냥 빈 뷰가 나가야 하는디 ...
-                        if isToday {
-                            EmptyView()
-                        } else {
-                            Color.lightGray
-                                .clipShape(RoundedRectangle(cornerRadius: 18))
-=======
         VStack(spacing: 9) {
             Text(day)
                 .font(.pretendard(.medium, size: 14))
@@ -79,26 +65,13 @@ struct WeeklyCalenderView: View {
                             default:
                                 EmptyView()
                             }
->>>>>>> 55c92765793ad4e954e7403f7a56dae88b04a3e3
                         }
-                    case .half:
-                        if isToday {
-                            switch diptychState {
-                            RoundedRectangle(cornerRadius: 18)
-                                .trim(from: 0.25, to: 0.75)
-                                .fill(Color.systemSalmon)
-                        } else {
-                            Color.lightGray
-                                .clipShape(RoundedRectangle(cornerRadius: 18))
-                        }
-                    case .complete:
-                        RoundedRectangle(cornerRadius: 18)
-                            .fill(Color.systemSalmon)
                     }
-                }
-            Text(day)
-                .font(.pretendard(.bold, size: 16))
-                .foregroundColor(.offBlack)
+                Text(date)
+                    .font(.pretendard(.bold, size: 16))
+                    .foregroundColor(!isToday && diptychState == .complete ? .offWhite : .offBlack)
+                    .padding(.top, 7)
+            }
         }
         .onAppear {
             Task {
