@@ -14,6 +14,9 @@ struct TodayDiptychView: View {
     @State var isShowCamera = false
     @State private var firstUIImage: UIImage?
     @State private var secondUIImage: UIImage?
+    
+    @State private var timer: Timer?
+    
     @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
     @EnvironmentObject private var viewModel: TodayDiptychViewModel
     @State private var isAllTasksCompleted = false
@@ -25,6 +28,7 @@ struct TodayDiptychView: View {
             .ignoresSafeArea(edges: .top)
             .onAppear {
                 print("viewModel.weeklyData: \(viewModel.weeklyData)")
+                fetchDataWhenMidnight()
 //                fetchData()
             }
             .onDisappear {
@@ -203,6 +207,17 @@ struct TodayDiptychView: View {
             await viewModel.fetchTodayImage()
             await viewModel.fetchWeeklyCalender()
             await viewModel.fetchContents()
+        }
+    }
+    
+    private func fetchDataWhenMidnight() {
+        let calendar = Calendar.current
+        let now = Date()
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
+        let secondsUntilMidnight = (24 * 60 * 60) - (components.hour! * 60 * 60 + components.minute! * 60 + components.second!)
+        print("[DEBUG] (called) fetchDataWhenMidnight\n\t secondsUntilMidnight: \(secondsUntilMidnight)")
+        timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsUntilMidnight), repeats: false) { _ in
+            fetchData()
         }
     }
 }
