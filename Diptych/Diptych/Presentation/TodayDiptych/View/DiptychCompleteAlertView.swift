@@ -12,7 +12,7 @@ struct DiptychCompleteAlertView: View {
     var body: some View {
         ZStack {
             Color.offWhite
-            
+
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Image("icnXMark")
@@ -50,6 +50,7 @@ struct DiptychCompleteAlertView: View {
                         .background(Color.offBlack)
                 }
                 .padding(.top, 57)
+                .padding(.bottom, 15)
             }
         }
     }
@@ -58,5 +59,6 @@ struct DiptychCompleteAlertView: View {
 struct DiptychCompleteAlertView_Previews: PreviewProvider {
     static var previews: some View {
         DiptychCompleteAlertView()
+            .frame(width: 300, height: 360)
     }
 }
