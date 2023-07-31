@@ -30,6 +30,8 @@ class UserViewModel: ObservableObject {
     @Published var coupleAlbum: DiptychAlbum?
 //    @Published var isCompleted: Bool = false
     
+//    @EnvironmentObject var todayDiptychViewModel
+    
     var listenerAboutAuth: AuthStateDidChangeListenerHandle?
     var listenerAboutUserData: ListenerRegistration?
     
