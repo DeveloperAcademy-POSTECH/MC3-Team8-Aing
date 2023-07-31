@@ -20,7 +20,7 @@ struct LogInView: View {
     @FocusState var isPasswordFocused: Bool
     
     @EnvironmentObject var userViewModel: UserViewModel
-//    @EnvironmentObject var todayDiptychViewModel: TodayDiptychViewModel
+    @EnvironmentObject var todayDiptychViewModel: TodayDiptychViewModel
     
     var body: some View {
         ZStack {
@@ -110,6 +110,7 @@ struct LogInView: View {
                             alertMessage = result
                             isAlertShown = true
                         }
+                        await todayDiptychViewModel.setUserCameraLoactionState()
                     }
                 } label: {
                     Text("로그인하기")

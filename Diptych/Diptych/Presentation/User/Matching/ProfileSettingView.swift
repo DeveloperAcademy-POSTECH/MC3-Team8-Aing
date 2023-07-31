@@ -18,7 +18,7 @@ struct ProfileSettingView: View {
     @FocusState var isNameInputFocused: Bool
     
     @EnvironmentObject var userViewModel: UserViewModel
-//    @EnvironmentObject var todayDiptychViewModel: TodayDiptychViewModel
+    @EnvironmentObject var todayDiptychViewModel: TodayDiptychViewModel
     
     var format = "yyyy년 MM월 dd일"
     var body: some View {
@@ -93,6 +93,7 @@ struct ProfileSettingView: View {
                         if checkName(input: name) == false {
                             nameWarning = "닉네임은 최대 5글자의 한글이나 최대 6글자의 영어로 만들어주세요."
                         }
+                        await todayDiptychViewModel.setUserCameraLoactionState()
                     }
                 } label: {
                     Text("딥틱 시작하기")
