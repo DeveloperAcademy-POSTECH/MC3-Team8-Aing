@@ -74,9 +74,9 @@ extension TodayDiptychView {
                 .padding(.horizontal, 15)
                 .padding(.top, 31)
 
-                Rectangle()
+                Divider()
                     .frame(height: 1)
-                    .background(Color.darkGray)
+                    .overlay(Color.darkGray)
                     .padding(.top, 10)
                     .padding(.horizontal, 15)
 
