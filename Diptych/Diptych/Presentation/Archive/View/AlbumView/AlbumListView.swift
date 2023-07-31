@@ -18,7 +18,7 @@ struct AlbumListView: View {
             let data = VM.truePhotos
             let data2 = VM.trueQuestions
             
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()),count: 3),spacing: 7) {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible()),count: 3),spacing: 4) {
                 ForEach(0..<VM.truePhotos.count, id: \.self) { index in
                     
                         /// 사진 디테일 뷰
@@ -40,7 +40,7 @@ struct AlbumListView: View {
             }//】 Grid
             
         }//】 Scroll
-        .background(Color.gray.opacity(0.1))
+        .background(Color.offWhite)
     }//】 Body
     private func indexOfCompleted(_ index: Int) -> Int {
         guard let completedPhoto = VM.photos[index].thumbnail else { return 0 }
@@ -64,13 +64,15 @@ struct AlbumImageView: View {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 126, height: 126)
+                    .frame(width: 128, height: 128)
+//                    .frame(maxWidth: .infinity)
                     .clipped()
             } else {
                 ProgressView()
             }
         }//】 VStack
-        .frame(width: 126, height: 126)
+        .frame(width: 128, height: 128)
+//        .frame(maxWidth: .infinity)
     }//】 Body
 }
 
