@@ -9,6 +9,12 @@ import Firebase
 import FirebaseFirestore
 import FirebaseStorage
 
+enum TodayDiptychState {
+    case incomplete
+    case upload
+    case complete
+}
+
 final class TodayDiptychViewModel: ObservableObject {
 
     // MARK: - Properties
@@ -23,6 +29,8 @@ final class TodayDiptychViewModel: ObservableObject {
     @Published var photoFirstURL = ""
     @Published var photoSecondURL = ""
     @Published var isCompleted = false
+    @Published var photoFirstState = TodayDiptychState.incomplete
+    @Published var photoSecondState = TodayDiptychState.incomplete
     private let db = Firestore.firestore()
 
     // MARK: - Network
@@ -82,8 +90,20 @@ final class TodayDiptychViewModel: ObservableObject {
             for document in querySnapshot.documents {
                 self.todayPhoto = try document.data(as: Photo.self)
             }
+
             await downloadImage()
-            await fetchCompleteState()
+
+            if !photoFirstURL.isEmpty && !photoSecondURL.isEmpty {
+                photoFirstState = .complete
+                photoSecondState = .complete
+            } else if !photoFirstURL.isEmpty || !photoSecondURL.isEmpty {
+                photoFirstState = photoFirstURL.isEmpty ? .incomplete : .upload
+                photoSecondState = photoSecondURL.isEmpty ? .incomplete : .upload
+            } else {
+                photoFirstState = .incomplete
+                photoSecondState = .incomplete
+            }
+//            await fetchCompleteState()
         } catch {
             print(error.localizedDescription)
         }
@@ -97,21 +117,16 @@ final class TodayDiptychViewModel: ObservableObject {
     func downloadImage() async {
         guard let todayPhoto = todayPhoto else { return }
         if todayPhoto.photoFirst != "" {
-            do {
-                let url = try await Storage.storage().reference(forURL: todayPhoto.photoFirst).downloadURL()
-                photoFirstURL = url.absoluteString
-            } catch {
-                print(error.localizedDescription)
-            }
+//            do {
+//                photoFirstURL = todayPhoto.photoFirst
+//            } catch {
+//                print(error.localizedDescription)
+//            }
+            photoFirstURL = todayPhoto.photoFirst
         }
 
         if todayPhoto.photoSecond != "" {
-            do {
-                let url = try await Storage.storage().reference(forURL: todayPhoto.photoSecond).downloadURL()
-                photoSecondURL = url.absoluteString
-            } catch {
-                print(error.localizedDescription)
-            }
+            photoSecondURL = todayPhoto.photoSecond
         }
     }
 
