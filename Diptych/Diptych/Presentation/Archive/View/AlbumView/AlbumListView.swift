@@ -15,37 +15,32 @@ struct AlbumListView: View {
     var body: some View {
         ScrollView {
             
+            let data = VM.truePhotos
+            let data2 = VM.trueQuestions
             
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()),count: 3),spacing: 7) {
-                ForEach(0..<VM.photos.count, id: \.self) { index in
+                ForEach(0..<VM.truePhotos.count, id: \.self) { index in
                     
-                    let data = VM.photos
-                    let data2 = VM.questions
-                    let currentIndex = indexOfCompleted(index)
-                    
-                    if !data.isEmpty && data[index].isCompleted {
                         /// 사진 디테일 뷰
                         NavigationLink {
                             PhotoDetailView(
                                 VM: VM,
-                                date: !data.isEmpty ? data[index].date : Date(),
-                                image1: !data.isEmpty ? data[index].photoFirstURL : "",
-                                image2: !data.isEmpty ? data[index].photoSecondURL : "",
-                                question: !data2.isEmpty ? data2[index].question : "",
-                                currentIndex: !data.isEmpty ? currentIndex : 0
+                                date: data[index].date,
+                                image1: data[index].photoFirstURL,
+                                image2: data[index].photoSecondURL,
+                                question: data2[index].question,
+                                currentIndex: index
                             )
                         } label: {
                             AlbumImageView(imageURL: data[index].thumbnail!)
                                 .aspectRatio(1.0, contentMode: .fit)
                         }
                         .navigationTitle("")
-                    }else {
-                        EmptyView()
-                    }
                 }//】 Loop
             }//】 Grid
             
         }//】 Scroll
+        .background(Color.gray.opacity(0.1))
     }//】 Body
     private func indexOfCompleted(_ index: Int) -> Int {
         guard let completedPhoto = VM.photos[index].thumbnail else { return 0 }

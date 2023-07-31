@@ -42,7 +42,6 @@ final class ArchiveViewModel: ObservableObject {
     
     @Published var startDay = 0
     @Published var startDate: Timestamp? //fetchMonthlyCalender에서 사용
-//    @Published var content: Content?
     @Published var todayPhoto: Photo?
     @Published var isCompleted = false
     private let db = Firestore.firestore()

@@ -16,27 +16,30 @@ struct QuestionListView: View {
         let data = VM.truePhotos
         let data2 = VM.trueQuestions
         
-        VStack(spacing: 0){
-            ForEach(0..<VM.trueQuestions.count, id: \.self) { index in
+        ScrollView {
+            VStack(spacing: 0){
+                ForEach(0..<VM.trueQuestions.count, id: \.self) { index in
+                    
+                    NavigationLink {
+                        PhotoDetailView(
+                            VM: VM,
+                            date: data[index].date,
+                            image1: data[index].photoFirstURL,
+                            image2: data[index].photoSecondURL,
+                            question: data2[index].question,
+                            currentIndex: index
+                        )
+                    } label: {
+                        QuestionCellView(questionIndex: index,
+                                         questionText: VM.trueQuestions[index].question!)
+                    }
+                }//】 Loop
+                Spacer()
                 
-                NavigationLink {
-                    PhotoDetailView(
-                        VM: VM,
-                        date: data[index].date,
-                        image1: data[index].photoFirstURL,
-                        image2: data[index].photoSecondURL,
-                        question: data2[index].question,
-                        currentIndex: index
-                    )
-                } label: {
-                    QuestionCellView(questionIndex: index,
-                                     questionText: VM.trueQuestions[index].question!)
-                }
-            }//】 Loop
-            Spacer()
-            
-        }//】 VStack
-        .padding(.top, 30)
+            }//】 VStack
+            .padding(.top, 20)
+        }//】 Scroll
+        .background(Color.gray.opacity(0.1))
     }//】 Body
 }
 

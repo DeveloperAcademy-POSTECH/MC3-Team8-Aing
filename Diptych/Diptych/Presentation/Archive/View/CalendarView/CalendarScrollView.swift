@@ -21,9 +21,9 @@ struct CalendarScrollView: View {
                             CalendarView(date: Date.now, changeMonthInt: index-1)
                         }
                     }
-                    .padding(.bottom,20)
-                    .background(Color.gray.opacity(0.1))
+                    .padding(.bottom,40)
                 }//】 Scroll
+                .background(Color.gray.opacity(0.1))
                 .onAppear{
                     scrollViewProxy.scrollTo(scrollToID, anchor: .bottom)
                 }

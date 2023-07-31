@@ -58,34 +58,38 @@ extension PhotoDetailView: View {
                 .padding(.horizontal,13)
                 
                 
-                
-                /// [2] 질문
-                HStack(spacing: 0){
-                    Text("\(question ?? "")")
-                        .font(.custom(PretendardType.light.rawValue, size: 24))
-                        .foregroundColor(.offBlack)
-                        .multilineTextAlignment(.leading)
-                        .padding(.leading, 17)
+                    /// [2] 질문
+                VStack(spacing: 0){
+                    HStack(spacing: 0){
+                        Text("\(question ?? "")")
+                            .font(.custom(PretendardType.light.rawValue, size: 24))
+                            .foregroundColor(.offBlack)
+                            .multilineTextAlignment(.leading)
+                            .padding(.leading, 17)
+                        Spacer()
+                    }//】 HStack
+                    .padding(.top,23)
                     Spacer()
-                }//】 HStack
-                .frame(height: 120)
-
+                }//】 VStack
+                    .frame(height: 120)
+                    
                 
-                /// [3] 사진 프레임
-                ZStack{
-                    RoundedRectangle(cornerRadius: 0)
-                        .foregroundColor(Color.darkGray)
-//                        .stroke(Color.lightGray, lineWidth: 1)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    
+                    /// [3] 사진 프레임
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 0)
+                            .foregroundColor(Color.darkGray)
+                        //                        .stroke(Color.lightGray, lineWidth: 1)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                         
-                    HStack(spacing: 0) {
+                        HStack(spacing: 0) {
                             ///왼쪽 사진
                             AsyncImage(url: imageUrl1) { image in
                                 image
                                     .resizable()
                                     .frame(width: 196.5, height: 393)
                             } placeholder: {
-                                    ProgressView()
+                                ProgressView()
                             }
                             .frame(width: 196.5)
                             
@@ -95,24 +99,26 @@ extension PhotoDetailView: View {
                                     .resizable()
                                     .frame(width: 196.5, height: 393)
                             } placeholder: {
-                                    ProgressView()
+                                ProgressView()
                             }
                             .frame(width: 196.5)
-                    }//】 HStack
-                    
-                    HStack(spacing: 0){
-                        if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
-                        Spacer()
-                        if currentIndex < VM.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
+                        }//】 HStack
                         
-                    }
-                    .padding(.horizontal,18)
-                   
+                        HStack(spacing: 0){
+                            if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
+                            Spacer()
+                            if currentIndex < VM.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
+                            
+                        }
+                        .padding(.horizontal,18)
+                        
                     
+                        
                 }//】 ZStack
-                .frame(height: 393, alignment: .center)
-                .frame(maxWidth: .infinity)
-                .aspectRatio(1, contentMode: .fit)
+                    .frame(height: 393, alignment: .center)
+                    .frame(maxWidth: .infinity)
+                    .aspectRatio(1, contentMode: .fit)
+                    .transition(.move(edge: .leading)) // 슬라이드 애니메이션을 적용합니다.
                 
                 /// [4]버튼
                 HStack(spacing: 0){
@@ -173,6 +179,7 @@ extension PhotoDetailView {
         } label: {
             indexButton(icon: "chevron.left")
         }//】 Button
+        .onTapGesture { withAnimation(.easeInOut) {showPrevDetail()} }
     }// 이전 버튼
     
     /// 다음 버튼
@@ -182,39 +189,36 @@ extension PhotoDetailView {
                 showNextDetail()
                 await downloadImage()
             }
-            
         } label: {
             indexButton(icon: "chevron.right")
         }//】 Button
+        .onTapGesture { withAnimation(.easeInOut) {showNextDetail()} }
     }// 다음 버튼
     
     
     /// 이전 버튼 로직
     func showPrevDetail() {
             if currentIndex > 0{
-                self.currentIndex = currentIndex - 1
-                self.date = VM.truePhotos[currentIndex].date
-                self.image1 = VM.truePhotos[currentIndex].photoFirstURL
-                self.image2 = VM.truePhotos[currentIndex].photoSecondURL
-                self.question = VM.trueQuestions[currentIndex].question
-            } else {
-                currentIndex = currentIndex
+                self.currentIndex -= 1
+                updateViewWithCurrentIndex()
             }
     }
     
     /// 다음 버튼 로직
     func showNextDetail() {
             if currentIndex < VM.truePhotos.count - 1{
-                self.currentIndex = currentIndex + 1
-                self.date = VM.truePhotos[currentIndex].date
-                self.image1 = VM.truePhotos[currentIndex].photoFirstURL
-                self.image2 = VM.truePhotos[currentIndex].photoSecondURL
-                self.question = VM.trueQuestions[currentIndex].question
-            } else{
-                currentIndex = currentIndex
+                self.currentIndex += 1
+                updateViewWithCurrentIndex()
             }
     }
     
+    /// 사진 상세뷰 업데이트
+        private func updateViewWithCurrentIndex() {
+            self.date = VM.truePhotos[currentIndex].date
+            self.image1 = VM.truePhotos[currentIndex].photoFirstURL
+            self.image2 = VM.truePhotos[currentIndex].photoSecondURL
+            self.question = VM.trueQuestions[currentIndex].question
+        }
     
     /// 이미지 불러오기
     func downloadImage() async {
