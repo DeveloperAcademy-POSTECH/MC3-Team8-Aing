@@ -28,10 +28,12 @@ struct TodayDiptychView: View {
             .ignoresSafeArea(edges: .top)
             .onAppear {
                 print("viewModel.weeklyData: \(viewModel.weeklyData)")
+//                timerTest()
                 fetchDataWhenMidnight()
 //                fetchData()
             }
             .onDisappear {
+//                fetchDataWhenMidnight()
 //                viewModel.weeklyData.removeAll()
             }
             .fullScreenCover(isPresented: $isShowCamera) {
@@ -216,10 +218,17 @@ struct TodayDiptychView: View {
         let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
         let secondsUntilMidnight = (24 * 60 * 60) - (components.hour! * 60 * 60 + components.minute! * 60 + components.second!)
         print("[DEBUG] (called) fetchDataWhenMidnight\n\t secondsUntilMidnight: \(secondsUntilMidnight)")
-        timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsUntilMidnight), repeats: false) { _ in
+        self.timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsUntilMidnight), repeats: false) { _ in
             fetchData()
         }
+        print("[DEBUG] (called) fetchDataWhenMidnight\n\t timer: \(self.timer)")
     }
+    
+//    private func timerTest() {
+//        self.timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(10), repeats: false) { _ in
+//            print("count 10s done")
+//        }
+//    }
 }
 
 struct TodayDiptychView_Previews: PreviewProvider {
