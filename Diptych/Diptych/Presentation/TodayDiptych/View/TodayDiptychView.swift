@@ -44,6 +44,9 @@ struct TodayDiptychView: View {
                              Task {
                                  await viewModel.fetchTodayImage()
                                  await viewModel.fetchWeeklyCalender()
+
+                                 guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
+                                 isDiptychCompleted = isCompleted
                              }
                          }
                 }
