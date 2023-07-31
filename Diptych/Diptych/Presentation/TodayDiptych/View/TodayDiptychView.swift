@@ -8,8 +8,6 @@
 import SwiftUI
 import FirebaseStorage
 
-
-
 struct TodayDiptychView: View {
 
     let thumbSize: CGSize = .init(width: THUMB_SIZE / 2.0, height: THUMB_SIZE)
