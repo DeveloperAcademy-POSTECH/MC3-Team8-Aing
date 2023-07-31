@@ -281,6 +281,11 @@ extension UserViewModel {
             } while codes.contains(where: { element in return String(describing: element) == code})
             
             self.couplingCode = code
+            if var currentUser = self.currentUser {
+                currentUser.couplingCode = code
+                let encodedCurrentUser = try Firestore.Encoder().encode(currentUser)
+                try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedCurrentUser, merge: true)
+            }
         }
     }
     

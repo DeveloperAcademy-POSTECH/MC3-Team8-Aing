@@ -17,11 +17,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 //        FirebaseApp.configure(name: <#T##String#>, options: <#T##FirebaseOptions#>)
 //        FirebaseOptions(contentsOfFile: <#T##String#>)
         
-        if let path = Bundle.main.path(forResource: "GoogleService-Info-2", ofType: "plist") {
-            guard let options = FirebaseOptions(contentsOfFile: path) else { return false }
-            FirebaseApp.configure(options: options)
-        }
-//        FirebaseApp.configure()
+//        if let path = Bundle.main.path(forResource: "GoogleService-Info-2", ofType: "plist") {
+//            guard let options = FirebaseOptions(contentsOfFile: path) else { return false }
+//            FirebaseApp.configure(options: options)
+//        }
+        FirebaseApp.configure()
 
         return true
     }

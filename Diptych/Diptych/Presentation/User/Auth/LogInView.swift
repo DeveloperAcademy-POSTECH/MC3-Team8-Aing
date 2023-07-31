@@ -133,6 +133,7 @@ struct LogInView: View {
             .ignoresSafeArea()
         }
         .onTapGesture {
+            isEmailFocused = false
             isPasswordFocused = false
         }
         .navigationViewStyle(.stack)

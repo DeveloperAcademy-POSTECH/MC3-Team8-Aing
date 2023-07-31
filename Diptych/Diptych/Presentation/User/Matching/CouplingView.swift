@@ -48,7 +48,7 @@ struct CouplingView: View {
                         }
                         Divider()
                             .frame(height: 1)
-                            .foregroundColor(.darkGray)
+                            .overlay(Color.darkGray)
                     }
                     VStack(alignment: .leading) {
                         Text("상대방 코드를 전달받으셨나요?")

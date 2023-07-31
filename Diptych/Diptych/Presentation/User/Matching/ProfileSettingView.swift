@@ -25,84 +25,91 @@ struct ProfileSettingView: View {
         ZStack {
             Color.offWhite
             VStack {
-                Spacer()
-                    .frame(height: 124)
-                Text("연결에 성공했어요\n닉네임과 우리의 시작일을\n설정해주세요")
-                    .font(.pretendard(.light, size: 28))
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(6)
-                Spacer()
-                    .frame(height: 86)
-                VStack(spacing: 37) {
-                    VStack(alignment: .leading) {
-                        TextField("", text: $name, prompt: Text("닉네임")
+                Group {
+                    Spacer()
+                        .frame(height: 124)
+                    Text("연결에 성공했어요")
+                        .font(.pretendard(.light, size: 28))
+                    Spacer()
+                        .frame(height: 20)
+                    Text("닉네임과 우리의 시작일을 입력해주세요")
+                        .font(.pretendard(.light, size: 18))
+                    Spacer()
+                        .frame(height: 119)
+                }
+                Group {
+                    VStack(spacing: 37) {
+                        VStack(alignment: .leading) {
+                            TextField("", text: $name, prompt: Text("닉네임")
+                                .font(.pretendard(.light, size: 18))
+                                .foregroundColor(.darkGray))
                             .font(.pretendard(.light, size: 18))
-                            .foregroundColor(.darkGray))
+                            .foregroundColor(.darkGray)
+                            .textInputAutocapitalization(.never)
+                            .disableAutocorrection(true)
+                            .focused($isNameInputFocused)
+                            Divider()
+                                .frame(height: 1)
+                                .overlay(nameWarning == "" ? Color.darkGray : Color.systemRed)
+                            Text(nameWarning)
+                                .font(.pretendard(.light, size: 12))
+                                .foregroundColor(.systemRed)
+                        }
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text(formattedDateString)
+                                    .font(.pretendard(.light, size: 18))
+                                    .foregroundColor(.darkGray)
+                                    .onTapGesture(perform: {
+                                        isDatePickerShown.toggle()
+                                    })
+                                    .sheet(isPresented: $isDatePickerShown, onDismiss: { formattedDateString = formattedDate(selectedDate, format: format) }, content: {
+                                        datePicker
+                                            .presentationDetents([.fraction(0.5)])
+                                    })
+                                
+                            }
+                            Divider()
+                                .frame(height: 1)
+                                .overlay(selectedDateWarning == "" ? Color.darkGray : Color.systemRed)
+                            Text(selectedDateWarning)
+                                .font(.pretendard(.light, size: 12))
+                                .foregroundColor(.systemRed)
+                        }
+                    }
+                    Spacer()
+                    Text("내 초대코드: \(userViewModel.couplingCode ?? "문제가 생겼어요 :(")")
                         .font(.pretendard(.light, size: 18))
                         .foregroundColor(.darkGray)
-                        .textInputAutocapitalization(.never)
-                        .disableAutocorrection(true)
-                        .focused($isNameInputFocused)
-                        Divider()
-                            .frame(height: 1)
-                            .overlay(nameWarning == "" ? Color.darkGray : Color.systemRed)
-                        Text(nameWarning)
-                            .font(.pretendard(.light, size: 12))
-                            .foregroundColor(.systemRed)
-                    }
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text(formattedDateString)
-                                .font(.pretendard(.light, size: 18))
-                                .foregroundColor(.darkGray)
-                                .onTapGesture(perform: {
-                                    isDatePickerShown.toggle()
-                                })
-                                .sheet(isPresented: $isDatePickerShown, onDismiss: { formattedDateString = formattedDate(selectedDate, format: format) }, content: {
-                                    datePicker
-                                        .presentationDetents([.fraction(0.5)])
-                                })
-                            
-                        }
-                        Divider()
-                            .frame(height: 1)
-                            .overlay(selectedDateWarning == "" ? Color.darkGray : Color.systemRed)
-                        Text(selectedDateWarning)
-                            .font(.pretendard(.light, size: 12))
-                            .foregroundColor(.systemRed)
-                    }
                 }
-                Spacer()
-                Text("내 초대코드: \(userViewModel.couplingCode ?? "문제가 생겼어요 :(")")
-                    .font(.pretendard(.light, size: 18))
-                    .foregroundColor(.darkGray)
-                Spacer()
-                    .frame(height: 20)
-                Button {
-                    selectedDateWarning = ""
-                    nameWarning = ""
-                    Task {
-                        print("selectedDate: \(selectedDate)")
-                        if try await userViewModel.checkStartDate(startDate: selectedDate) && checkName(input: name) {
-                            try await userViewModel.setProfileData(name: name, startDate: selectedDate)
-//                            await todayDiptychViewModel.setUserCameraLoactionState()
+                Group {
+                    Spacer()
+                        .frame(height: 20)
+                    Button {
+                        selectedDateWarning = ""
+                        nameWarning = ""
+                        Task {
+                            print("selectedDate: \(selectedDate)")
+                            if try await userViewModel.checkStartDate(startDate: selectedDate) && checkName(input: name) {
+                                try await userViewModel.setProfileData(name: name, startDate: selectedDate)
+                                await todayDiptychViewModel.setUserCameraLoactionState()
+                            }
+                            if try await userViewModel.checkStartDate(startDate: selectedDate) == false {
+                                selectedDateWarning = "상대가 설정한 시작일과 다릅니다."
+                            }
+                            if checkName(input: name) == false {
+                                nameWarning = "닉네임은 최대 5글자의 한글이나 최대 6글자의 영어로 만들어주세요."
+                            }
                         }
-                        if try await userViewModel.checkStartDate(startDate: selectedDate) == false {
-                            selectedDateWarning = "상대가 설정한 시작일과 다릅니다."
-                        }
-                        if checkName(input: name) == false {
-                            nameWarning = "닉네임은 최대 5글자의 한글이나 최대 6글자의 영어로 만들어주세요."
-                        }
-                        await todayDiptychViewModel.setUserCameraLoactionState()
+                    } label: {
+                        Text("딥틱 시작하기")
+                            .frame(width: UIScreen.main.bounds.width-30, height:  60)
+                            .background(Color.offBlack)
+                            .foregroundColor(.offWhite)
                     }
-                } label: {
-                    Text("딥틱 시작하기")
-                        .frame(width: UIScreen.main.bounds.width-30, height:  60)
-                        .background(Color.offBlack)
-                        .foregroundColor(.offWhite)
+                    Spacer()
+                        .frame(height: 47)
                 }
-                Spacer()
-                    .frame(height: 47)
             }
             .padding([.leading, .trailing], 15)
         }
