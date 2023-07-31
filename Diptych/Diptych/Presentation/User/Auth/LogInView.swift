@@ -45,6 +45,7 @@ struct LogInView: View {
                         .keyboardType(.emailAddress)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
+                        .focused($isEmailFocused)
                         .onTapGesture {
                             isEmailFocused = true
                         }

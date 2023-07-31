@@ -57,6 +57,7 @@ struct DiptychApp: App {
                 } else if userViewModel.flow == .coupled {
                     ProfileSettingView()
                         .environmentObject(userViewModel)
+                        .environmentObject(todayDiptychViewModel)
                 } else {
                     DiptychTabView()
                         .environmentObject(userViewModel)

@@ -30,10 +30,12 @@ struct ProfileSettingView: View {
                         .frame(height: 124)
                     Text("연결에 성공했어요")
                         .font(.pretendard(.light, size: 28))
+                        .foregroundColor(Color.offBlack)
                     Spacer()
                         .frame(height: 20)
                     Text("닉네임과 우리의 시작일을 입력해주세요")
                         .font(.pretendard(.light, size: 18))
+                        .foregroundColor(Color.darkGray)
                     Spacer()
                         .frame(height: 119)
                 }

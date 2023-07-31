@@ -46,6 +46,9 @@ struct ProfileView: View {
                 // 여전히.. 유저의 닉네임 글자수가 서로 다르면 하트 아이콘과의 간격이 일정해지지 않는 문제점이 있음
                 
                 Divider()
+                    .frame(height: 1)
+                    .overlay(Color.darkGray)
+//                    .background(Color.darkGray)
                     .padding(.top, 80) // 임의로 조정했음
                     .padding(.bottom, 103)
                 
