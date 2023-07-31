@@ -56,7 +56,6 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var scrollViewImageContainer: UIScrollView!
     @IBOutlet weak var imgViewGuideOverlay: UIImageView!
     @IBOutlet weak var btnCloseBack: UIButton!
-    @IBOutlet weak var lblRetake: UILabel!
     @IBOutlet weak var btnFlash: UIButton!
     @IBOutlet weak var btnChangePosition: UIButton!
     @IBOutlet weak var btnPhotoLibrary: UIButton!
@@ -534,7 +533,7 @@ class CameraViewController: UIViewController {
 
         btnShutter.isEnabled = true
         isShowHelpPopup = false
-        lblRetake.isHidden = false
+        btnCloseBack.setTitle("다시 찍기", for: .normal)
     }
     
     func changeCameraMode() {
@@ -549,7 +548,7 @@ class CameraViewController: UIViewController {
         btnShutter.setImage(UIImage(named: "imgShutterButton"), for: .normal)
         
         previewLayer?.isHidden = false
-        lblRetake.isHidden = true
+        btnCloseBack.setTitle("", for: .normal)
     }
     
     func resetImageViewTransform() {
@@ -649,7 +648,9 @@ class CameraViewController: UIViewController {
         // TODO: - print는 로딩 인디케이터 또는 작업상황 구분점임
         print("파일 업로드 시작....")
         LottieUIViews.shared.label.text = "이미지 파일 업로드 중..."
-        let url = try await FirebaseManager.shared.upload(data: data!, withName: "image_\(viewModel?.todayPhoto?.id ?? Date().formatted())")
+        // let url = try await FirebaseManager.shared.upload(data: data!, withName: "image_\(viewModel?.todayPhoto?.id ?? Date().formatted())")
+        let url = try await FirebaseManager.shared.upload(data: data!, withName: "image_\(isFirst ? "first" : "second")_\(viewModel?.todayPhoto?.id ?? Date().formatted())")
+        
         print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
         
         guard let url else {
