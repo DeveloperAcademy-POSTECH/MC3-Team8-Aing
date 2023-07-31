@@ -21,7 +21,7 @@ struct OnBoardingView: View {
                     .ignoresSafeArea()
                 Image("OnBoardingViewImage3")
                     .resizable()
-                    .scaledToFit()
+                    .ignoresSafeArea()
                     // 임시로 누르면 카메라 뜨도록 했고 나중에 다 지우겠습니다 (Cliff)
 //                    .onTapGesture {
 //                        isShowCamera = true
