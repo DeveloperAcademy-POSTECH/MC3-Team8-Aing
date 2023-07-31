@@ -659,6 +659,7 @@ class CameraViewController: UIViewController {
         let isCompleted = isFirst ? !todayPhoto.photoSecond.isEmpty : !todayPhoto.photoFirst.isEmpty
         var dictionary: [String: Any] = [
             "isCompleted": isCompleted,
+            "contentId": viewModel?.content?.id ?? "",
         ]
         
         if isCompleted {
