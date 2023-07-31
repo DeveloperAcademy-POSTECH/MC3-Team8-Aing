@@ -228,7 +228,7 @@ class CameraViewController: UIViewController {
         
         lblTopic.text = !viewModel.question.isEmpty ? viewModel.question : "오늘 본 동그라미는?"
         DispatchQueue.main.async { [unowned self] in
-            print("isFirst?", viewModel.isFirst)
+            print("[DEBUG] isFirst?", viewModel.isFirst)
             currentAxis = viewModel.isFirst ? .verticalLeft : .verticalRight
         }
         
@@ -353,6 +353,15 @@ class CameraViewController: UIViewController {
             originalOverlayFrame = viewOverlay.frame
             
             shrinkOverlayByAxis(.verticalLeft)
+            
+            guard let content = viewModel?.content else {
+                print("[DEBUG] viewModel.content is nil.")
+                return
+            }
+            
+            // imgGuidelineDashed.image = UIImage(named: "GUIDELINE-\(content.guideline)") ?? UIImage(named: "GUIDELINE-circle")
+            
+            imgGuidelineDashed.image = UIImage(named: "GUIDELINE-couple_standing")
         }
     }
     
@@ -607,7 +616,6 @@ class CameraViewController: UIViewController {
                     self.btnPhotoLibrary.layer.cornerRadius = 16.5
                 }
             }
-            
         }
     }
     
@@ -650,7 +658,6 @@ class CameraViewController: UIViewController {
             print("url이 존재하지 않습니다.")
             return
         }
-        
         
         guard let todayPhoto = viewModel?.todayPhoto else {
             print("todayPhoto is nil.")
