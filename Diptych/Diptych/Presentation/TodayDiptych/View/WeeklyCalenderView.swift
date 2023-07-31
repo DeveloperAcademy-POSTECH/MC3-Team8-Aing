@@ -68,6 +68,7 @@ struct WeeklyCalenderView: View {
                         }
                     case .half:
                         if isToday {
+                            switch diptychState {
                             RoundedRectangle(cornerRadius: 18)
                                 .trim(from: 0.25, to: 0.75)
                                 .fill(Color.systemSalmon)
