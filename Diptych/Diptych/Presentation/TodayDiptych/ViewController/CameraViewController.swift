@@ -206,6 +206,10 @@ class CameraViewController: UIViewController {
         displayGuideAndOverlay(false)
         setupLottieLoading()
         setLastImageFromLibraryToButtonImage()
+        
+        if let viewModel, let currentUser = viewModel.currentUser, let todayPhoto = viewModel.todayPhoto, let content = viewModel.content {
+            print("[DEBUG] userID:", currentUser.id, "todayPhotoID:", todayPhoto.id, "contentID:", content.id, "contentGuideline:", content.guideline)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -653,9 +657,7 @@ class CameraViewController: UIViewController {
             return
         }
         
-        print("todayPhoto!:", todayPhoto.photoFirst, todayPhoto.photoSecond, isFirst, todayPhoto.photoSecond.isEmpty,  todayPhoto.photoFirst.isEmpty)
-        
-        // TODO: - thumbnail은 isComplete가 true될 경우에만
+        // thumbnail은 isComplete가 true될 경우에만
         let isCompleted = isFirst ? !todayPhoto.photoSecond.isEmpty : !todayPhoto.photoFirst.isEmpty
         var dictionary: [String: Any] = [
             "isCompleted": isCompleted,
