@@ -56,12 +56,12 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var scrollViewImageContainer: UIScrollView!
     @IBOutlet weak var imgViewGuideOverlay: UIImageView!
     @IBOutlet weak var btnCloseBack: UIButton!
-    @IBOutlet weak var lblRetake: UILabel!
     @IBOutlet weak var btnFlash: UIButton!
     @IBOutlet weak var btnChangePosition: UIButton!
     @IBOutlet weak var btnPhotoLibrary: UIButton!
     @IBOutlet weak var btnShutter: UIButton!
     @IBOutlet weak var btnQuestionMark: UIButton!
+    @IBOutlet weak var lblYouCantEditImage: UILabel!
     
     @IBOutlet weak var viewOverlay: UIView!
     @IBOutlet weak var tempSegDirection: UISegmentedControl!
@@ -137,20 +137,22 @@ class CameraViewController: UIViewController {
         let frame = CGRect(x: scrollViewImageContainer.frame.minX + xMargin,
                            y: scrollViewImageContainer.frame.minY - yMargin,
                            width: scrollViewImageContainer.frame.width - xMargin * 2,
-                           height: scrollViewImageContainer.frame.height + yMargin * 2 + 20)
+                           height: scrollViewImageContainer.frame.height + yMargin * 2)
         let popupView = BlurPopupUIView(frame: frame)
         
         // 설명 레이블
-        let descLabel = UILabel(frame: .init(x: 10, y: 10, width: popupView.frame.width - 20, height: 50))
+        let labelPaddingX: CGFloat = 42
+        let labelPaddingY: CGFloat = 24
+        let descLabel = UILabel(frame: .init(x: labelPaddingX, y: labelPaddingY, width: popupView.frame.width - (labelPaddingX * 2), height: 50))
         descLabel.text = "얼굴 가이드라인에 맞춰 최대한 정면을 보고 찍어보세요!\n완성된 사진은 두 손가락을 이용해 움직일 수 있어요"
-        descLabel.font = .init(name: "Pretendard-Light", size: 15)
+        descLabel.font = .init(name: "Pretendard-Light", size: 16)
         descLabel.numberOfLines = 0
         descLabel.textAlignment = .center
         descLabel.textColor = .offWhite
         
         // 사각형 (또는 이미지)
-        let squareWidth: CGFloat = 284
-        let squareView = UIView(frame: .init(x: descLabel.frame.midX - (squareWidth / 2.0), y: descLabel.frame.height + 25, width: squareWidth, height: squareWidth))
+        let squareWidth: CGFloat = 246
+        let squareView = UIView(frame: .init(x: descLabel.frame.midX - (squareWidth / 2.0), y: descLabel.frame.maxY + 28, width: squareWidth, height: squareWidth))
         squareView.backgroundColor = .diptychDarkGray
         
         popupView.addSubview(descLabel)
@@ -183,6 +185,18 @@ class CameraViewController: UIViewController {
         return arrowView
     }()
     
+    private lazy var popupContainer: UIView = {
+        let containerFrame = CGRect(x: blurPopupView.frame.minX,
+                                    y: arrowView.frame.minY,
+                                    width: blurPopupView.frame.width,
+                                    height: blurPopupView.frame.maxY - arrowView.frame.minY)
+        let popupContainer = UIView()
+        popupContainer.addSubview(blurPopupView)
+        popupContainer.addSubview(arrowView)
+        
+        return popupContainer
+    }()
+    
     // MARK: - Lifecycles
     
     override func viewDidLoad() {
@@ -206,6 +220,10 @@ class CameraViewController: UIViewController {
         displayGuideAndOverlay(false)
         setupLottieLoading()
         setLastImageFromLibraryToButtonImage()
+        
+        if let viewModel, let currentUser = viewModel.currentUser, let todayPhoto = viewModel.todayPhoto, let content = viewModel.content {
+            print("[DEBUG] userID:", currentUser.id, "todayPhotoID:", todayPhoto.id, "contentID:", content.id, "contentGuideline:", content.guideline)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -224,7 +242,7 @@ class CameraViewController: UIViewController {
         
         lblTopic.text = !viewModel.question.isEmpty ? viewModel.question : "오늘 본 동그라미는?"
         DispatchQueue.main.async { [unowned self] in
-            print("isFirst?", viewModel.isFirst)
+            print("[DEBUG] isFirst?", viewModel.isFirst)
             currentAxis = viewModel.isFirst ? .verticalLeft : .verticalRight
         }
         
@@ -349,6 +367,13 @@ class CameraViewController: UIViewController {
             originalOverlayFrame = viewOverlay.frame
             
             shrinkOverlayByAxis(.verticalLeft)
+            
+            guard let content = viewModel?.content else {
+                print("[DEBUG] viewModel.content is nil.")
+                return
+            }
+            
+            imgGuidelineDashed.image = UIImage(named: "GUIDELINE-\(content.guideline)") ?? UIImage(named: "GUIDELINE-circle")
         }
     }
     
@@ -369,16 +394,29 @@ class CameraViewController: UIViewController {
     }
     
     private func showHelpPopup(_ isShow: Bool) {
+        let DURATION: CGFloat = 0.25
+        
         if isShow {
-            view.addSubview(blurPopupView)
-            view.addSubview(arrowView)
+            popupContainer.alpha = 0
+            view.addSubview(popupContainer)
+            
+            // fade-in
+            UIView.animate(withDuration: DURATION) { [unowned self] in
+                popupContainer.alpha = 1.0
+            }
+            
             if currentMode == .camera {
                 btnShutter.isEnabled = false
             }
         } else {
-            blurPopupView.removeFromSuperview()
-            arrowView.removeFromSuperview()
-            btnShutter.isEnabled = true
+            popupContainer.alpha = 1.0
+            
+            UIView.animate(withDuration: DURATION) { [unowned self] in
+                popupContainer.alpha = 0.0
+            } completion: { [unowned self] _ in
+                popupContainer.removeFromSuperview()
+                btnShutter.isEnabled = true
+            }
         }
     }
     
@@ -519,11 +557,13 @@ class CameraViewController: UIViewController {
         btnQuestionMark.isHidden = true // ??
         
         btnCloseBack.setImage(UIImage(named: "imgBackButton"), for: .normal)
-        btnShutter.setImage(UIImage(named: "imgCircleCheckButton"), for: .normal)
+        btnShutter.setImage(UIImage(named: "imgCircleUploadButton"), for: .normal)
 
         btnShutter.isEnabled = true
         isShowHelpPopup = false
-        lblRetake.isHidden = false
+        btnCloseBack.setTitle("다시 찍기", for: .normal)
+        
+        lblYouCantEditImage.isHidden = false
     }
     
     func changeCameraMode() {
@@ -538,7 +578,9 @@ class CameraViewController: UIViewController {
         btnShutter.setImage(UIImage(named: "imgShutterButton"), for: .normal)
         
         previewLayer?.isHidden = false
-        lblRetake.isHidden = true
+        btnCloseBack.setTitle("", for: .normal)
+        
+        lblYouCantEditImage.isHidden = true
     }
     
     func resetImageViewTransform() {
@@ -603,7 +645,6 @@ class CameraViewController: UIViewController {
                     self.btnPhotoLibrary.layer.cornerRadius = 16.5
                 }
             }
-            
         }
     }
     
@@ -646,19 +687,17 @@ class CameraViewController: UIViewController {
             print("url이 존재하지 않습니다.")
             return
         }
-        
-
+      
         guard let todayPhoto = viewModel?.todayPhoto else {
             print("todayPhoto is nil.")
             return
         }
         
-        print("todayPhoto!:", todayPhoto.photoFirst, todayPhoto.photoSecond, isFirst, todayPhoto.photoSecond.isEmpty,  todayPhoto.photoFirst.isEmpty)
-        
-        // TODO: - thumbnail은 isComplete가 true될 경우에만
+        // thumbnail은 isComplete가 true될 경우에만
         let isCompleted = isFirst ? !todayPhoto.photoSecond.isEmpty : !todayPhoto.photoFirst.isEmpty
         var dictionary: [String: Any] = [
             "isCompleted": isCompleted,
+            "contentId": viewModel?.content?.id ?? "",
         ]
         
         if isCompleted {
