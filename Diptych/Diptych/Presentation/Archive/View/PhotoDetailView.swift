@@ -28,10 +28,8 @@ struct PhotoDetailView {
         return formatter
     }()
     
-    
-    private let transaction: Transaction = .init(animation: .linear)
-    @State var isFirstLoaded: Bool = false
-    @State var isSecondLoaded: Bool = false
+    @State var image1Image: UIImage?
+    @State var image2Image: UIImage?
 }
 
 // MARK: - View
@@ -83,67 +81,29 @@ extension PhotoDetailView: View {
                     
                     
                     /// [3] 사진 프레임
-                    
                     ZStack{
                         RoundedRectangle(cornerRadius: 0)
                             .foregroundColor(Color.darkGray)
-                        //                        .stroke(Color.lightGray, lineWidth: 1)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            // .stroke(Color.lightGray, lineWidth: 1)
+                            // .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .frame(width: 393, height: 393)
                         
                         HStack(spacing: 0) {
-                            
-                            AsyncImage(url: imageUrl1) { phase in
-                                switch phase {
-                                case .success(let image):
-                                    image
+                            if let image1Image, let image2Image {
+                                HStack(spacing: 0) {
+                                    Image(uiImage: image1Image)
                                         .resizable()
                                         .frame(width: 196.5, height: 393)
-                                        .onAppear {
-                                            print("image1 appeared:", Date().timeIntervalSince1970)
-                                            isFirstLoaded = true
-                                            print("all loaded?", isFirstLoaded && isSecondLoaded)
-                                        }
-                                        .opacity(isFirstLoaded && isSecondLoaded ? 1 : 0)
-                                    // Text("loaded")
-                                    
-                                case .failure(_):
-                                    Text("error")
-                                case .empty:
-                                    // placeholder
-                                    ProgressView()
-                                @unknown default:
-                                    Text("unknown")
+                                    Image(uiImage: image2Image)
+                                        .resizable()
+                                        .frame(width: 196.5, height: 393)
                                 }
-                            }.onAppear {
-                                print("onAppear: \(Date().timeIntervalSince1970)")
-                            }.onChange(of: isFirstLoaded) { newValue in
-                                print("isFirstLoaded changed:", isFirstLoaded)
+                                // .transition(isShouldShowPrevOrNext ? .slide : .identity)
+                                // .transition(.opacity)
+                                // .animation(.linear)
                             }
-                            
-                            AsyncImage(url: imageUrl2) { phase in
-                                switch phase {
-                                case .success(let image):
-                                    image
-                                        .resizable()
-                                        .frame(width: 196.5, height: 393)
-                                        .onAppear {
-                                            print("image2 appeared:", Date().timeIntervalSince1970)
-                                            isSecondLoaded = true
-                                            print("all loaded?", isFirstLoaded && isSecondLoaded)
-                                        }
-                                        .opacity(isFirstLoaded && isSecondLoaded ? 1 : 0)
-                                    // Text("loaded")
-                                    
-                                case .failure(_):
-                                    Text("error")
-                                case .empty:
-                                    // placeholder
-                                    ProgressView()
-                                @unknown default:
-                                    Text("unknown")
-                                }
-                            }.onAppear {
-                                print("onAppear: \(Date().timeIntervalSince1970)")
+                            else {
+                                ProgressView()
                             }
                             ///왼쪽 사진
                             // AsyncImage(url: imageUrl1) { image in
@@ -183,7 +143,6 @@ extension PhotoDetailView: View {
                     .frame(height: 393, alignment: .center)
                     .frame(maxWidth: .infinity)
                     .aspectRatio(1, contentMode: .fit)
-              
                 
                 //MARK: - [4] 공유/ 좋아요 버튼
                 HStack(spacing: 0){
@@ -208,13 +167,12 @@ extension PhotoDetailView: View {
             
         } // ZStack
         .onAppear {
-            Task {
-                await downloadImage()
-            }
+            // Task {
+            //     await downloadImage()
+            // }
+            downloadImageWithCache()
         }
     }//】 Body
-    
-    
 }
 
 // MARK: - 이미지 셀
@@ -284,7 +242,8 @@ extension PhotoDetailView {
         return Button {
             Task {
                 showPrevDetail()
-                await downloadImage()
+                // await downloadImage()
+                downloadImageWithCache()
             }
         } label: {
             IndexButton(icon: "chevron.left")
@@ -297,7 +256,8 @@ extension PhotoDetailView {
         return Button {
             Task {
                 showNextDetail()
-                await downloadImage()
+                // await downloadImage()
+                downloadImageWithCache()
             }
         } label: {
             IndexButton(icon: "chevron.right")
@@ -308,18 +268,18 @@ extension PhotoDetailView {
     
     /// 이전 버튼 로직
     func showPrevDetail() {
-            if currentIndex > 0{
-                self.currentIndex -= 1
-                updateViewWithCurrentIndex()
-            }
+        if currentIndex > 0{
+            self.currentIndex -= 1
+            updateViewWithCurrentIndex()
+        }
     }
     
     /// 다음 버튼 로직
     func showNextDetail() {
-            if currentIndex < VM.truePhotos.count - 1{
-                self.currentIndex += 1
-                updateViewWithCurrentIndex()
-            }
+        if currentIndex < VM.truePhotos.count - 1{
+            self.currentIndex += 1
+            updateViewWithCurrentIndex()
+        }
     }
     
     /// 사진 상세뷰 업데이트
@@ -328,9 +288,6 @@ extension PhotoDetailView {
             self.image1 = VM.truePhotos[currentIndex].photoFirstURL
             self.image2 = VM.truePhotos[currentIndex].photoSecondURL
             self.question = VM.trueQuestions[currentIndex].question
-            
-            // isFirstLoaded = false
-            // isSecondLoaded = false
         }
     
     /// 이미지 불러오기
@@ -349,10 +306,46 @@ extension PhotoDetailView {
             } catch { print(error.localizedDescription)}
         }
     }
-
     
-    
-    
+    /// 이미지 불러오기 (메모리 캐싱)
+    func downloadImageWithCache() {
+        guard let image1, let image2 else {
+            return
+        }
+        
+        image1Image = nil
+        image2Image = nil
+        
+        Task {
+            if let cachedImageFirst = ImageCacheManager.shared.loadImageFromCache(urlAbsoluteString: image1) {
+                image1Image = cachedImageFirst
+                print("[DEBUG] image1: loaded from cache")
+                return
+            }
+            
+            image1Image = UIImage(data: try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image1))
+            
+            if let image1Image {
+                ImageCacheManager.shared.saveImageToCache(image: image1Image, urlAbsoluteString: image1)
+                print("[DEBUG] image1 saved to cache.")
+            }
+        }
+        
+        Task {
+            if let cachedImageSecond = ImageCacheManager.shared.loadImageFromCache(urlAbsoluteString: image2) {
+                image2Image = cachedImageSecond
+                print("i[DEBUG] mage2: loaded from cache")
+                return
+            }
+            
+            image2Image = UIImage(data: try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image2))
+            
+            if let image2Image {
+                ImageCacheManager.shared.saveImageToCache(image: image2Image, urlAbsoluteString: image2)
+                print("[DEBUG] image2 saved to cache.")
+            }
+        }
+    }
     
     func textLabel(text: String) -> some View {
         return Text(text)
