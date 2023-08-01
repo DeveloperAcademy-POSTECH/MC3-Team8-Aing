@@ -46,6 +46,7 @@ struct DiptychApp: App {
                 } else {
                     DiptychTabView2()
                         .environmentObject(userViewModel)
+                        .environmentObject(DiptychCompleteAlertObject())
                         .environmentObject(VM)
                 }
             } else {

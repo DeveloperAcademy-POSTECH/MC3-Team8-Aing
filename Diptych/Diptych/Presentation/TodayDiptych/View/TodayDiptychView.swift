@@ -14,43 +14,35 @@ struct TodayDiptychView: View {
     @State var isShowCamera = false
     @State private var firstUIImage: UIImage?
     @State private var secondUIImage: UIImage?
-    @State private var isDiptychCompleted = false
-    @State private var isDiptychCompleteAlertShown = false
     @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
     @StateObject private var viewModel = TodayDiptychViewModel()
+    @EnvironmentObject var diptychCompleteAlertObject: DiptychCompleteAlertObject
     let days = ["월", "화", "수", "목", "금", "토", "일"]
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                MainDiptychView()
-                if isDiptychCompleted && !isDiptychCompleteAlertShown {
-                    Color.black.opacity(0.54)
-                    DiptychCompleteAlertView(isDiptychCompleteAlertShown: $isDiptychCompleteAlertShown)
-                        .frame(width: 300, height: 360)
+            MainDiptychView()
+                .ignoresSafeArea(edges: .vertical)
+                .onAppear {
+                    fetchData()
                 }
-            }
-            .ignoresSafeArea(edges: .top)
-            .onAppear {
-                fetchData()
-            }
-            .fullScreenCover(isPresented: $isShowCamera) {
-                ZStack {
-                    Color.offWhite.ignoresSafeArea()
-                    CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
-                         .toolbar(.hidden, for: .tabBar)
-                         .onDisappear {
-                             viewModel.weeklyData.removeAll()
-                             Task {
-                                 await viewModel.fetchTodayImage()
-                                 await viewModel.fetchWeeklyCalender()
+                .fullScreenCover(isPresented: $isShowCamera) {
+                    ZStack {
+                        Color.offWhite.ignoresSafeArea()
+                        CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
+                            .toolbar(.hidden, for: .tabBar)
+                            .onDisappear {
+                                viewModel.weeklyData.removeAll()
+                                Task {
+                                    await viewModel.fetchTodayImage()
+                                    await viewModel.fetchWeeklyCalender()
 
-                                 guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
-                                 isDiptychCompleted = isCompleted
-                             }
-                         }
+                                    guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
+                                    diptychCompleteAlertObject.isDiptychCompleted = isCompleted
+                                }
+                            }
+                    }
                 }
-            }
         }
     }
 
@@ -59,15 +51,15 @@ struct TodayDiptychView: View {
     private func fetchData() {
         Task {
             await viewModel.fetchUser()
-            await viewModel.setTodayPhoto()
             await viewModel.setUserCameraLoactionState()
+            await viewModel.setTodayPhoto()
+            await viewModel.fetchContents()
             await viewModel.fetchTodayImage()
             await viewModel.setDiptychNumber()
             await viewModel.fetchWeeklyCalender()
-            await viewModel.fetchContents()
 
             guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
-            isDiptychCompleted = isCompleted
+            diptychCompleteAlertObject.isDiptychCompleted = isCompleted
         }
     }
 }
@@ -77,7 +69,7 @@ struct TodayDiptychView: View {
 extension TodayDiptychView {
 
     private func MainDiptychView() -> some View {
-        ZStack {
+        ZStack(alignment: .top) {
             Color.offWhite
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
@@ -88,7 +80,7 @@ extension TodayDiptychView {
                 .font(.pretendard(.medium, size: 16))
                 .foregroundColor(.darkGray)
                 .padding(.horizontal, 15)
-                .padding(.top, 31)
+                .padding(.top, 75)
 
                 Divider()
                     .frame(height: 1)
@@ -104,7 +96,7 @@ extension TodayDiptychView {
                         .foregroundColor(.offBlack)
                         .padding(.top, 29)
                         .padding(.horizontal, 15)
-                        .padding(.bottom, 15)
+                        .padding(.bottom, 42)
                     Spacer()
                 }
 
@@ -120,7 +112,7 @@ extension TodayDiptychView {
                 }
                 .frame(maxWidth: .infinity)
                 .aspectRatio(1.0, contentMode: .fit)
-                .padding(.bottom, 20)
+                .padding(.bottom, 28)
                 .font(.pretendard(.light, size: 14))
                 .foregroundColor(.offWhite)
                 .multilineTextAlignment(.center)
@@ -132,7 +124,7 @@ extension TodayDiptychView {
                                            ? viewModel.weeklyData[index] : .none)
                     }
                 }
-                .padding(.bottom, 30)
+                .padding(.bottom, 28)
             }
         }
     }

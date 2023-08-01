@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DiptychCompleteAlertView: View {
-    @Binding var isDiptychCompleteAlertShown: Bool
+    @EnvironmentObject var diptychCompleteAlertObject: DiptychCompleteAlertObject
 
     var body: some View {
         ZStack {
@@ -17,7 +17,7 @@ struct DiptychCompleteAlertView: View {
                 HStack(spacing: 0) {
                     Image("icnXMark")
                         .onTapGesture {
-                            isDiptychCompleteAlertShown = true
+                            diptychCompleteAlertObject.isDiptychCompleteAlertShown = true
                         }
                     Spacer()
                 }
@@ -35,14 +35,15 @@ struct DiptychCompleteAlertView: View {
                 Text("오늘 딥틱 완성!")
                     .font(.pretendard(.light, size: 24))
                     .padding(.top, 34)
-                Text("오늘의 딥틱이 완성되었어요\n확인해 보세요")
+                Text("오늘의 딥틱이 완성되었어요\n확인해보세요")
+                    .lineSpacing(3)
                     .font(.pretendard(.light, size: 16))
                     .foregroundColor(.darkGray)
                     .multilineTextAlignment(.center)
                     .padding(.top, 9)
 
                 Button {
-                    isDiptychCompleteAlertShown = true
+                    diptychCompleteAlertObject.isDiptychCompleteAlertShown = true
                 } label: {
                     Text("확인하기")
                         .font(.pretendard(.light, size: 20))
@@ -60,8 +61,10 @@ struct DiptychCompleteAlertView: View {
 }
 
 struct DiptychCompleteAlertView_Previews: PreviewProvider {
+    static let object = DiptychCompleteAlertObject()
     static var previews: some View {
-        DiptychCompleteAlertView(isDiptychCompleteAlertShown: .constant(false))
+        DiptychCompleteAlertView()
+            .environmentObject(object)
             .frame(width: 300, height: 360)
     }
 }
