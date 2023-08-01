@@ -89,6 +89,7 @@ struct DiptychTabBarItem: View {
                         Image(selectedIcon)
                     } else {
                         Image(UnselectedIcon)
+                            .opacity(0.5)
                     }
                     
                 }//】 VStack

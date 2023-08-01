@@ -788,7 +788,7 @@ class CameraViewController: UIViewController {
     
     func toggleTorch(forceOff: Bool = false) {
         guard let device = AVCaptureDevice.default(for: .video), device.hasTorch else {
-            btnFlash.setImage(.init(named: "imgFlashButtonOff"), for: .normal)
+            btnFlash.setImage(.init(named: "imgFlashButtonOff_"), for: .normal)
             return
         }
         
@@ -798,7 +798,7 @@ class CameraViewController: UIViewController {
             if device.torchMode == AVCaptureDevice.TorchMode.on || forceOff {
                 // Off
                 device.torchMode = .off
-                btnFlash.setImage(.init(named: "imgFlashButtonOff"), for: .normal)
+                btnFlash.setImage(.init(named: "imgFlashButtonOff_"), for: .normal)
             } else {
                 // On
                 try device.setTorchModeOn(level: 1.0)
@@ -807,7 +807,7 @@ class CameraViewController: UIViewController {
             
             device.unlockForConfiguration()
         } catch {
-            btnFlash.setImage(.init(named: "imgFlashButtonOff"), for: .normal)
+            btnFlash.setImage(.init(named: "imgFlashButtonOff_"), for: .normal)
             print(#function, error.localizedDescription)
         }
     }

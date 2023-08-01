@@ -42,7 +42,7 @@ struct CalendarView: View {
             
     /// [1] Month
         VStack(spacing:0){
-            HStack(spacing:0) {
+            HStack(alignment: .bottom, spacing:0) {
                 Text(date, formatter: Self.monthFormatter)
                     .font(.system(size:36, weight: .light))
                 Spacer()
@@ -51,6 +51,8 @@ struct CalendarView: View {
                     .foregroundColor(.gray)
             }//】 HStack
             .padding(.bottom,13)
+//            .frame(alignment: .bottom)
+            
             RoundedRectangle(cornerRadius: 0)
                 .foregroundColor(Color.darkGray)
                 .frame(height: 1)
