@@ -59,4 +59,18 @@ class FirebaseManager {
         let url = try await reference.downloadURL()
         return try Data(contentsOf: url)
     }
+    
+    func md5HashOfImageURL(from urlAbsoluteString: String) async throws -> String? {
+        let reference = Storage.storage().reference(forURL: urlAbsoluteString)
+        
+        let storageMetadata = try await reference.getMetadata()
+        return storageMetadata.md5Hash
+    }
+    
+    func uploadDateOfImageURL(from urlAbsoluteString: String) async throws -> Date? {
+        let reference = Storage.storage().reference(forURL: urlAbsoluteString)
+        
+        let storageMetadata = try await reference.getMetadata()
+        return storageMetadata.updated
+    }
 }

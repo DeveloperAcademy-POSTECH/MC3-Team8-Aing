@@ -681,7 +681,7 @@ class CameraViewController: UIViewController {
         print("파일 업로드 시작....")
 
         LottieUIViews.shared.label.text = "이미지 파일 업로드 중..."
-        let url = try await FirebaseManager.shared.upload(data: data!, withName: "image_\(isFirst ? "first" : "second")_\(viewModel?.todayPhoto?.id ?? Date().formatted())")
+        let url = try await FirebaseManager.shared.upload(data: data!, withName: "image_\(isFirst ? "first" : "second")_\(viewModel?.todayPhoto?.id ?? Date().timestampString)")
         print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
         
         guard let url else {

@@ -66,6 +66,8 @@ final class TodayDiptychViewModel: ObservableObject {
                 .getDocuments()
 
             for document in querySnapshot.documents {
+                // TODO: - startDate가 2016년일때 배열 범위 벗어남 에러
+                // FIXME:
                 let photo = try document.data(as: Photo.self)
                 let isCompleted = photo.isCompleted
 
@@ -100,6 +102,8 @@ final class TodayDiptychViewModel: ObservableObject {
                 .getDocuments()
 
             for document in querySnapshot.documents {
+                // TODO: - startDate가 2016년일때 배열 범위 벗어남 에러
+                // FIXME:
                 self.todayPhoto = try document.data(as: Photo.self)
             }
 
@@ -140,6 +144,8 @@ final class TodayDiptychViewModel: ObservableObject {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         do {
             let snapshot = try await Firestore.firestore().collection("users").document(uid).getDocument()
+            // TODO: - startDate가 2016년일때 배열 범위 벗어남 에러
+            // FIXME:
             self.currentUser = try? snapshot.data(as: DiptychUser.self)
         } catch {
             print(error.localizedDescription)
@@ -171,6 +177,8 @@ final class TodayDiptychViewModel: ObservableObject {
                 .whereField("order", isEqualTo: order) 
                 .getDocuments()
 
+            // TODO: - startDate가 2016년일때 배열 범위 벗어남 에러
+            // FIXME:
             self.content = try contentSnapshot.documents[0].data(as: Content.self)
             guard let question = content?.question else { return }
             self.question = question.replacingOccurrences(of: "\\n", with: "\n")

@@ -28,7 +28,6 @@ struct PhotoDetailView {
         return formatter
     }()
     
-    
     private let transaction: Transaction = .init(animation: .linear)
     @State var isFirstLoaded: Bool = false
     @State var isSecondLoaded: Bool = false
@@ -107,8 +106,8 @@ extension PhotoDetailView: View {
                                         .frame(width: 196.5, height: 393)
                                 }
                                 // .transition(isShouldShowPrevOrNext ? .slide : .identity)
-                                .transition(.slide)
-                                .animation(.linear)
+                                // .transition(.opacity)
+                                // .animation(.linear)
                             }
                             else {
                                 ProgressView()
@@ -325,37 +324,35 @@ extension PhotoDetailView {
         image1Image = nil
         image2Image = nil
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-            print("image1", image1)
-            Task {
-                if let cachedImageFirst = ImageCacheManager.shared.loadImageFromCache(urlAbsoluteString: image1) {
-                    image1Image = cachedImageFirst
-                    print("image1: loaded from cache")
-                    return
-                }
-                
-                image1Image = UIImage(data: try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image1))
-                
-                if let image1Image {
-                    ImageCacheManager.shared.saveImageToCache(image: image1Image, urlAbsoluteString: image1)
-                    print("image1 saved to cache.")
-                }
+        print("image1", image1)
+        Task {
+            if let cachedImageFirst = ImageCacheManager.shared.loadImageFromCache(urlAbsoluteString: image1) {
+                image1Image = cachedImageFirst
+                print("image1: loaded from cache")
+                return
             }
             
-            Task {
-                print("image2", image1)
-                if let cachedImageSecond = ImageCacheManager.shared.loadImageFromCache(urlAbsoluteString: image2) {
-                    image2Image = cachedImageSecond
-                    print("image2: loaded from cache")
-                    return
-                }
-                
-                image2Image = UIImage(data: try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image2))
-                
-                if let image2Image {
-                    ImageCacheManager.shared.saveImageToCache(image: image2Image, urlAbsoluteString: image2)
-                    print("image2 saved to cache.")
-                }
+            image1Image = UIImage(data: try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image1))
+            
+            if let image1Image {
+                ImageCacheManager.shared.saveImageToCache(image: image1Image, urlAbsoluteString: image1)
+                print("image1 saved to cache.")
+            }
+        }
+        
+        Task {
+            print("image2", image1)
+            if let cachedImageSecond = ImageCacheManager.shared.loadImageFromCache(urlAbsoluteString: image2) {
+                image2Image = cachedImageSecond
+                print("image2: loaded from cache")
+                return
+            }
+            
+            image2Image = UIImage(data: try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image2))
+            
+            if let image2Image {
+                ImageCacheManager.shared.saveImageToCache(image: image2Image, urlAbsoluteString: image2)
+                print("image2 saved to cache.")
             }
         }
         
