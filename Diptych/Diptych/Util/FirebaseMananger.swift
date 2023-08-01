@@ -44,4 +44,34 @@ class FirebaseManager {
         let document = collectionReference.document(documentId)
         try await document.updateData(dictionary)
     }
+    
+    /// 이미지 데이터 다운로드(Firebase 캐시 사용)
+    func downloadImageDataFromFirebase(childPath: String) async throws -> Data {
+        let reference = Storage.storage().reference().child(childPath)
+        
+        let url = try await reference.downloadURL()
+        return try Data(contentsOf: url)
+    }
+    
+    func downloadImageDataFromFirebaseImageURL(urlAbsoluteString: String) async throws -> Data {
+        let reference = Storage.storage().reference(forURL: urlAbsoluteString)
+        
+        let url = try await reference.downloadURL()
+        return try Data(contentsOf: url)
+    }
+    
+    func md5HashOfImageURL(from urlAbsoluteString: String) async throws -> String? {
+        let reference = Storage.storage().reference(forURL: urlAbsoluteString)
+        
+        let storageMetadata = try await reference.getMetadata()
+        return storageMetadata.md5Hash
+    }
+    
+    func uploadDateOfImageURL(from urlAbsoluteString: String) async throws -> Date? {
+        let reference = Storage.storage().reference(forURL: urlAbsoluteString)
+        
+        let storageMetadata = try await reference.getMetadata()
+        return storageMetadata.updated
+    }
 }
+
