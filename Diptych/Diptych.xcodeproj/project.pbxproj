@@ -27,6 +27,7 @@
 		9846144B2A69075E0043EAE9 /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */; };
 		9854E6F62A73B3DA009442B0 /* GoogleService-Info-2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9854E6F52A73B3D9009442B0 /* GoogleService-Info-2.plist */; };
 		9854E6F82A78DA46009442B0 /* UploadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854E6F72A78DA46009442B0 /* UploadData.swift */; };
+		9854E6FA2A78E184009442B0 /* contentsDatas.json in Resources */ = {isa = PBXBuildFile; fileRef = 9854E6F92A78E183009442B0 /* contentsDatas.json */; };
 		985DBC1E2A699DAA006C64FC /* LoadingVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */; };
 		987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E425B2A5FE17F00C682D9 /* LogInView.swift */; };
 		988A277F2A72351900A9B5C0 /* SecureInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A277E2A72351900A9B5C0 /* SecureInputView.swift */; };
@@ -151,6 +152,7 @@
 		9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
 		9854E6F52A73B3D9009442B0 /* GoogleService-Info-2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-2.plist"; sourceTree = "<group>"; };
 		9854E6F72A78DA46009442B0 /* UploadData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadData.swift; sourceTree = "<group>"; };
+		9854E6F92A78E183009442B0 /* contentsDatas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = contentsDatas.json; sourceTree = "<group>"; };
 		985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingVerificationView.swift; sourceTree = "<group>"; };
 		987E425B2A5FE17F00C682D9 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		987E425F2A627A2B00C682D9 /* Diptych.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Diptych.entitlements; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 		98A8E8292A69192D005DF658 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				9854E6F92A78E183009442B0 /* contentsDatas.json */,
 				98A8E82A2A691938005DF658 /* UserViewModel.swift */,
 				ABFD3E842A5EDA55008678D0 /* Auth */,
 				ABFD3E852A5EDA73008678D0 /* Matching */,
@@ -764,6 +767,7 @@
 				AB2A9EAB2A5EC46200D70C33 /* Preview Assets.xcassets in Resources */,
 				AB2AC2152A5F280000B162E1 /* Pretendard-Medium.otf in Resources */,
 				ABFA53B62A5F95FE00298F3B /* Colors.xcassets in Resources */,
+				9854E6FA2A78E184009442B0 /* contentsDatas.json in Resources */,
 				AB2AC20F2A5F280000B162E1 /* Pretendard-Light.otf in Resources */,
 				AB2A9EA82A5EC46200D70C33 /* Assets.xcassets in Resources */,
 				98EEBEC82A6FA87100F575ED /* DiptychSplashLogo3sec.json in Resources */,

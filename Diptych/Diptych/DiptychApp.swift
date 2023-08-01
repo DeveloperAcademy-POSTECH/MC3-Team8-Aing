@@ -61,10 +61,10 @@ struct DiptychApp: App {
                         .environmentObject(todayDiptychViewModel)
                 }
             } else {
-                UploadData()
-//                LottieView() {
-//                    self.isSplashCompleted = true
-//                }
+//                UploadData()
+                LottieView() {
+                    self.isSplashCompleted = true
+                }
             }
             
  
