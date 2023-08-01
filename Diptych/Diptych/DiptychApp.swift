@@ -44,6 +44,7 @@ struct DiptychApp: App {
                 } else {
                     DiptychTabView2()
                         .environmentObject(userViewModel)
+                        .environmentObject(DiptychCompleteAlertObject())
                 }
             } else {
                 LottieView() {isSplashCompleted in

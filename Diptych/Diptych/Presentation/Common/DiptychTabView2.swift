@@ -11,6 +11,7 @@ struct DiptychTabView2: View {
     ///Property
     @State var currentTab : Int = 0
     @Namespace var namespace
+    @EnvironmentObject var diptychCompleteAlertObject: DiptychCompleteAlertObject
     var tabBarTitle: [String] = ["오늘의 딥틱", "보관함", "프로필"]
     var selectedIcons: [String] = ["imgTodayDiptychTabSelected", "imgArchiveTabSelected", "imgProfileTabSelected"]
     var UnselectedIcons: [String] = ["imgTodayDiptychTab", "imgArchiveTab", "imgProfileTab"]
@@ -18,7 +19,6 @@ struct DiptychTabView2: View {
     var body: some View {
         NavigationView{
             ZStack{
-                
                 /// 각 뷰로 이동
                 VStack(spacing: 0){
                     if currentTab == 0 {
@@ -58,6 +58,12 @@ struct DiptychTabView2: View {
                     .frame(maxWidth: .infinity)
                     .background(Color.white)
                 }//】 VStack
+
+                if !diptychCompleteAlertObject.isDiptychCompleteAlertShown && diptychCompleteAlertObject.isDiptychCompleted {
+                    Color.black.opacity(0.54)
+                    DiptychCompleteAlertView()
+                        .frame(width: 300, height: 360)
+                }
                 
             }//】 ZStack
             .ignoresSafeArea()

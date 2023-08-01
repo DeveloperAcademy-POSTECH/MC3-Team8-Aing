@@ -94,6 +94,7 @@
 		AB96A0AB2A66E4DF004C01FF /* TodayDiptychViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */; };
 		ABB613252A77D5A90063107E /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB613242A77D5A90063107E /* VisualEffectView.swift */; };
 		ABC6DAFB2A784E0E000FE73A /* DiptychCompleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC6DAFA2A784E0E000FE73A /* DiptychCompleteAlertView.swift */; };
+		ABC6DAFD2A797465000FE73A /* DiptychCompleteAlertObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC6DAFC2A797465000FE73A /* DiptychCompleteAlertObject.swift */; };
 		ABCB300B2A6D366A007724DC /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB300A2A6D366A007724DC /* Content.swift */; };
 		ABCB300D2A6D367F007724DC /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB300C2A6D367F007724DC /* Photo.swift */; };
 		ABCB300F2A6D368D007724DC /* WeeklyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB300E2A6D368D007724DC /* WeeklyData.swift */; };
@@ -192,6 +193,7 @@
 		AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDiptychViewModel.swift; sourceTree = "<group>"; };
 		ABB613242A77D5A90063107E /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		ABC6DAFA2A784E0E000FE73A /* DiptychCompleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychCompleteAlertView.swift; sourceTree = "<group>"; };
+		ABC6DAFC2A797465000FE73A /* DiptychCompleteAlertObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychCompleteAlertObject.swift; sourceTree = "<group>"; };
 		ABCB300A2A6D366A007724DC /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
 		ABCB300C2A6D367F007724DC /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		ABCB300E2A6D368D007724DC /* WeeklyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyData.swift; sourceTree = "<group>"; };
@@ -442,6 +444,7 @@
 			children = (
 				AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */,
 				4498B2352A6D37E00069F54A /* CameraViewModel.swift */,
+				ABC6DAFC2A797465000FE73A /* DiptychCompleteAlertObject.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -863,6 +866,7 @@
 				ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */,
 				AB6C7B7D2A6DD56600CD5D68 /* CalendarManager.swift in Sources */,
 				AB2AC1F52A5F15A100B162E1 /* Color+.swift in Sources */,
+				ABC6DAFD2A797465000FE73A /* DiptychCompleteAlertObject.swift in Sources */,
 				985DBC1E2A699DAA006C64FC /* LoadingVerificationView.swift in Sources */,
 				989B449A2A65BB9200D99439 /* DiptychUser.swift in Sources */,
 				ABCB300F2A6D368D007724DC /* WeeklyData.swift in Sources */,

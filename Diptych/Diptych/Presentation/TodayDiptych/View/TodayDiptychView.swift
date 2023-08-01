@@ -14,21 +14,22 @@ struct TodayDiptychView: View {
     @State var isShowCamera = false
     @State private var firstUIImage: UIImage?
     @State private var secondUIImage: UIImage?
-    @State private var isDiptychCompleted = false
-    @State private var isDiptychCompleteAlertShown = false
+//    @State private var isDiptychCompleted = false
+//    @State private var isDiptychCompleteAlertShown = false
     @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
     @StateObject private var viewModel = TodayDiptychViewModel()
+    @EnvironmentObject var diptychCompleteAlertObject: DiptychCompleteAlertObject
     let days = ["월", "화", "수", "목", "금", "토", "일"]
 
     var body: some View {
         NavigationStack {
             ZStack {
                 MainDiptychView()
-                if isDiptychCompleted && !isDiptychCompleteAlertShown {
-                    Color.black.opacity(0.54)
-                    DiptychCompleteAlertView(isDiptychCompleteAlertShown: $isDiptychCompleteAlertShown)
-                        .frame(width: 300, height: 360)
-                }
+//                if isDiptychCompleted && !isDiptychCompleteAlertShown {
+//                    Color.black.opacity(0.54)
+//                    DiptychCompleteAlertView(isDiptychCompleteAlertShown: $isDiptychCompleteAlertShown)
+//                        .frame(width: 300, height: 360)
+//                }
             }
             .ignoresSafeArea(edges: .vertical)
             .onAppear {
@@ -46,7 +47,7 @@ struct TodayDiptychView: View {
                                  await viewModel.fetchWeeklyCalender()
 
                                  guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
-                                 isDiptychCompleted = isCompleted
+                                 diptychCompleteAlertObject.isDiptychCompleted = isCompleted
                              }
                          }
                 }
@@ -67,7 +68,7 @@ struct TodayDiptychView: View {
             await viewModel.fetchContents()
 
             guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
-            isDiptychCompleted = isCompleted
+            diptychCompleteAlertObject.isDiptychCompleted = isCompleted
         }
     }
 }
