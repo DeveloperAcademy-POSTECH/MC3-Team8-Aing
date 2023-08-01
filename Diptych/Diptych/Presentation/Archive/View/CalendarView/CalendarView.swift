@@ -24,6 +24,7 @@ struct CalendarView: View {
         }//】 VStack
         .onAppear{
             changeMonth(by: changeMonthInt)
+            print("changeMonthInt:", changeMonthInt)
         }
 
     }//】 body
@@ -174,6 +175,7 @@ extension CalendarView {
   
     /// Month 변경 로직
     func changeMonth(by data: Int) {
+        self.date = Date()
         if let newMonth = Calendar.current.date(byAdding: .month, value: data, to: date) {
             self.date = newMonth
         }
