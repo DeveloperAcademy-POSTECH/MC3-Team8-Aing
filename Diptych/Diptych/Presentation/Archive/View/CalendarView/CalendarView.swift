@@ -13,7 +13,7 @@ import Foundation
 struct CalendarView: View {
     
     ///Property
-    @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
+    @EnvironmentObject var VM : ArchiveViewModel
     @State var date: Date
     let changeMonthInt : Int
     
@@ -115,15 +115,14 @@ struct CalendarView: View {
                         /// 날짜 표기 시작
                         if isMatched {
                             NavigationLink {
-                                PhotoDetailView(
-                                    VM: VM,
-                                    date: isSafe ? data[safeIndex].date : today,
-                                    image1: isSafe ? data[safeIndex].photoFirstURL : "",
-                                    image2: isSafe ? data[safeIndex].photoSecondURL : "",
-                                    question: isSafe ? data2[safeIndex].question : "",
-                                    currentIndex: isSafe ? currentIndex : 0
-                                )
-                                    
+                                    PhotoDetailView(
+                                        date: isSafe ? data[safeIndex].date : today,
+                                        image1: isSafe ? data[safeIndex].photoFirstURL : "",
+                                        image2: isSafe ? data[safeIndex].photoSecondURL : "",
+                                        question: isSafe ? data2[safeIndex].question : "",
+                                        currentIndex: isSafe ? currentIndex : 0
+                                    )
+                                    .environmentObject(VM)
                             } label: {
                                 CVTrue
                             }

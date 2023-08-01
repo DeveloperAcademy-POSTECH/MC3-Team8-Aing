@@ -10,37 +10,43 @@ import SwiftUI
 struct AlbumListView: View {
     
     ///Property
-    @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
+    @EnvironmentObject var VM : ArchiveViewModel
+    var scrollToID : Int = 18 // 스크롤뷰 시작 위치 지정
   
     var body: some View {
-        ScrollView {
-            
-            let data = VM.truePhotos
-            let data2 = VM.trueQuestions
-            
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()),count: 3),spacing: 4) {
-                ForEach(0..<VM.truePhotos.count, id: \.self) { index in
-                    
+        ScrollViewReader { scrollViewProxy in
+            ScrollView {
+                
+                let data = VM.truePhotos
+                let data2 = VM.trueQuestions
+                
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible()),count: 3),spacing: 4) {
+                    ForEach((0..<VM.truePhotos.count), id: \.self) { index in
+                        
                         /// 사진 디테일 뷰
                         NavigationLink {
                             PhotoDetailView(
-                                VM: VM,
                                 date: data[index].date,
                                 image1: data[index].photoFirstURL,
                                 image2: data[index].photoSecondURL,
                                 question: data2[index].question,
                                 currentIndex: index
                             )
+                            .environmentObject(VM)
                         } label: {
                             AlbumImageView(imageURL: data[index].thumbnail!)
                                 .aspectRatio(1.0, contentMode: .fit)
                         }
                         .navigationTitle("")
-                }//】 Loop
-            }//】 Grid
-            
-        }//】 Scroll
-        .background(Color.offWhite)
+                    }//】 Loop
+                }//】 Grid
+                
+            }//】 Scroll
+            .background(Color.offWhite)
+            .onChange(of: scrollToID) { newValue in
+                scrollViewProxy.scrollTo(newValue, anchor: .bottom)
+            }
+        }//】 ScrollViewReader
     }//】 Body
     private func indexOfCompleted(_ index: Int) -> Int {
         guard let completedPhoto = VM.photos[index].thumbnail else { return 0 }

@@ -12,7 +12,7 @@ import FirebaseStorage
 
 struct PhotoDetailView {
     
-    @ObservedObject var VM : ArchiveViewModel
+    @EnvironmentObject var VM : ArchiveViewModel
     @State var date: Date = Date()
     @State var image1: String?
     @State var image2: String?
@@ -40,42 +40,46 @@ extension PhotoDetailView: View {
 
             VStack(spacing: 0) {
                 
-                /// [1] 해더
+                //MARK: - [1] 해더
                 VStack(spacing: 0){
-                    HStack(spacing: 8) {
+                    HStack(spacing: 0) {
                         Text(dateFormatter.string(from: date))
                         Spacer()
-                        Text("#\(currentIndex + 1)번째 딥틱")
+                        
+                        Text("\(currentIndex + 1)")
+                            .italic()
+                            .font(.custom(PretendardType.medium.rawValue, size: 16))
+//                            .foregroundColor(.systemSalmon)
+                        Text("번째 딥틱")
                     }//: HStack
-                    .font(.custom(PretendardType.medium.rawValue, size: 16))
                     .padding(.bottom,10)
                     
                     RoundedRectangle(cornerRadius: 0)
                         .frame(height: 1)
-                }
+                }//】 VStack
+                .font(.custom(PretendardType.medium.rawValue, size: 16))
                 .foregroundColor(Color.darkGray)
                 .padding(.top,32)
                 .padding(.horizontal,13)
                 
                 
-                    /// [2] 질문
-                VStack(spacing: 0){
-                    HStack(spacing: 0){
-                        Text("\(question ?? "")")
-                            .font(.custom(PretendardType.light.rawValue, size: 24))
-                            .foregroundColor(.offBlack)
-                            .multilineTextAlignment(.leading)
-                            .padding(.leading, 17)
+                    //MARK: - [2] 질문
+                    VStack(spacing: 0){
+                        HStack(spacing: 0){
+                            Text("\(question ?? "")")
+                                .font(.custom(PretendardType.light.rawValue, size: 24))
+                                .foregroundColor(.offBlack)
+                                .multilineTextAlignment(.leading)
+                                .padding(.leading, 17)
+                            Spacer()
+                        }//】 HStack
+                        .padding(.top,23)
                         Spacer()
-                    }//】 HStack
-                    .padding(.top,23)
-                    Spacer()
-                }//】 VStack
+                    }//】 VStack
                     .frame(height: 120)
                     
-                
                     
-                    /// [3] 사진 프레임
+                    //MARK: - [3] 사진 프레임
                     ZStack{
                         RoundedRectangle(cornerRadius: 0)
                             .foregroundColor(Color.darkGray)
@@ -83,8 +87,8 @@ extension PhotoDetailView: View {
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                         
                         HStack(spacing: 0) {
-                            ///왼쪽 사진
-                            AsyncImage(url: imageUrl1) { image in
+                        ///왼쪽 사진
+                            AsyncImage(url:imageUrl1) { image in
                                 image
                                     .resizable()
                                     .frame(width: 196.5, height: 393)
@@ -93,7 +97,7 @@ extension PhotoDetailView: View {
                             }
                             .frame(width: 196.5)
                             
-                            /// 오른쪽 사진
+                        /// 오른쪽 사진
                             AsyncImage(url: imageUrl2) { image in
                                 image
                                     .resizable()
@@ -104,23 +108,24 @@ extension PhotoDetailView: View {
                             .frame(width: 196.5)
                         }//】 HStack
                         
+//                        ImageCell(imageUrl1: imageUrl1, imageUrl2: imageUrl2)
+//                            .environmentObject(VM)
+//                            .frame(maxWidth: .infinity)
+                        
                         HStack(spacing: 0){
                             if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
                             Spacer()
                             if currentIndex < VM.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
-                            
                         }
                         .padding(.horizontal,18)
                         
-                    
-                        
-                }//】 ZStack
+                    }//】 ZStack
                     .frame(height: 393, alignment: .center)
                     .frame(maxWidth: .infinity)
                     .aspectRatio(1, contentMode: .fit)
-                    .transition(.move(edge: .leading)) // 슬라이드 애니메이션을 적용합니다.
+              
                 
-                /// [4]버튼
+                //MARK: - [4] 공유/ 좋아요 버튼
                 HStack(spacing: 0){
                     ShareSheetView()
                         .foregroundColor(.offBlack)
@@ -137,6 +142,7 @@ extension PhotoDetailView: View {
                 }//】 HStack
                 .frame(height: 100)
                 .padding(.bottom,100)
+                
             } // VStack
             
         } // ZStack
@@ -150,8 +156,51 @@ extension PhotoDetailView: View {
     
 }
 
+// MARK: - 이미지 셀
+//struct ImageCell: View {
+//
+//    @StateObject private var imageLoader: ImageLoader
+//    @EnvironmentObject var VM : ArchiveViewModel
+//    private let image1: String
+//    private let image2: String
+//
+//
+//    init(imageURL: String) {
+//        self.image1 = imageURL
+//        _imageLoader = StateObject(wrappedValue: ImageLoader(imageURL: imageURL))
+//        self.image2 = imageURL
+//        _imageLoader = StateObject(wrappedValue: ImageLoader(imageURL: imageURL))
+//    }
+//
+//    var body: some View {
+//
+//        if let image = imageLoader.image {
+//            Image(uiImage: image)
+//                .resizable()
+//                .scaledToFill()
+//                .clipped()
+//        } else {
+//            ProgressView()
+//        }
+//
+//        TabView(){
+//            ForEach((0..<VM.truePhotos.count), id: \.self) { index in
+//
+//                let data = VM.truePhotos
+//
+//
+//            }//】 Loop
+//        }//TabView
+//        .frame(maxWidth: .infinity)
+//        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+//        .animation(.easeInOut)
+//    }//】 Body
+//
+//}
+
+
 // MARK: - 버튼 디자인
-struct indexButton: View {
+struct IndexButton: View {
     let icon : String
     var body: some View {
         ZStack{
@@ -177,7 +226,7 @@ extension PhotoDetailView {
                 await downloadImage()
             }
         } label: {
-            indexButton(icon: "chevron.left")
+            IndexButton(icon: "chevron.left")
         }//】 Button
         .onTapGesture { withAnimation(.easeInOut) {showPrevDetail()} }
     }// 이전 버튼
@@ -190,7 +239,7 @@ extension PhotoDetailView {
                 await downloadImage()
             }
         } label: {
-            indexButton(icon: "chevron.right")
+            IndexButton(icon: "chevron.right")
         }//】 Button
         .onTapGesture { withAnimation(.easeInOut) {showNextDetail()} }
     }// 다음 버튼
@@ -229,13 +278,16 @@ extension PhotoDetailView {
             } catch { print(error.localizedDescription)}
         }
         
-        if let image2 = image2, !image2.isEmpty {
+        if let image2 = image2 {
             do {
                 let url = try await Storage.storage().reference(forURL: image2).downloadURL()
                 imageUrl2 = url
             } catch { print(error.localizedDescription)}
         }
     }
+
+    
+    
     
     
     func textLabel(text: String) -> some View {
