@@ -30,7 +30,7 @@ struct TodayDiptychView: View {
                         .frame(width: 300, height: 360)
                 }
             }
-            .ignoresSafeArea(edges: .top)
+            .ignoresSafeArea(edges: .vertical)
             .onAppear {
                 fetchData()
             }
@@ -77,7 +77,7 @@ struct TodayDiptychView: View {
 extension TodayDiptychView {
 
     private func MainDiptychView() -> some View {
-        ZStack {
+        ZStack(alignment: .top) {
             Color.offWhite
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
@@ -88,7 +88,7 @@ extension TodayDiptychView {
                 .font(.pretendard(.medium, size: 16))
                 .foregroundColor(.darkGray)
                 .padding(.horizontal, 15)
-                .padding(.top, 31)
+                .padding(.top, 75)
 
                 Divider()
                     .frame(height: 1)
@@ -104,7 +104,7 @@ extension TodayDiptychView {
                         .foregroundColor(.offBlack)
                         .padding(.top, 29)
                         .padding(.horizontal, 15)
-                        .padding(.bottom, 15)
+                        .padding(.bottom, 42)
                     Spacer()
                 }
 
@@ -120,7 +120,7 @@ extension TodayDiptychView {
                 }
                 .frame(maxWidth: .infinity)
                 .aspectRatio(1.0, contentMode: .fit)
-                .padding(.bottom, 20)
+                .padding(.bottom, 28)
                 .font(.pretendard(.light, size: 14))
                 .foregroundColor(.offWhite)
                 .multilineTextAlignment(.center)
@@ -132,7 +132,7 @@ extension TodayDiptychView {
                                            ? viewModel.weeklyData[index] : .none)
                     }
                 }
-                .padding(.bottom, 30)
+                .padding(.bottom, 28)
             }
         }
     }
@@ -171,7 +171,7 @@ extension TodayDiptychView {
                 rectangleOverlayImage(Color.offBlack, url)
                 Color.black
                     .opacity(0.54)
-                    .background(VisualEffectView(effect: UIBlurEffect(style: .regular)))
+                    .background(VisualEffectView(effect: UIBlurEffect(style: .light)))
                 VStack(spacing: 17) {
                     Image("icnCheck")
                     Text("상대방이 오늘 딥틱을\n완성했어요")
