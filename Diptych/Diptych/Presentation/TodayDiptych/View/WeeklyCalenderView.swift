@@ -8,68 +8,64 @@
 import SwiftUI
 import FirebaseStorage
 
-enum DiptychState {
-    case incomplete
-    case half
-    case complete
-}
-
 struct WeeklyCalenderView: View {
 
     @State var day: String
-    @State var date: String
-    @State var isToday: Bool
-    @State var thumbnail: String?
-    @State var thumbnailURL: URL?
-    var diptychState = DiptychState.half
+    var diptychState = DiptychState.todaySecond
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 18)
-                .stroke(Color.systemSalmon, lineWidth: isToday ? 2 : 0)
-                .frame(width: 44, height: 44)
-                .overlay {
-                    switch diptychState {
-                    case .incomplete: // TODO: - 오늘 이후에는 그냥 빈 뷰가 나가야 하는디 ...
-                        if isToday {
-                            EmptyView()
-                        } else {
-                            Color.lightGray
-                                .clipShape(RoundedRectangle(cornerRadius: 18))
-                        }
-                    case .half:
-                        if isToday {
-                            RoundedRectangle(cornerRadius: 18)
-                                .trim(from: 0.25, to: 0.75)
-                                .fill(Color.systemSalmon)
-                        } else {
-                            Color.lightGray
-                                .clipShape(RoundedRectangle(cornerRadius: 18))
-                        }
-                    case .complete:
-                        RoundedRectangle(cornerRadius: 18)
-                            .fill(Color.systemSalmon)
-                    }
-                }
+            calenderWithDiptychState()
             Text(day)
                 .font(.pretendard(.bold, size: 16))
                 .foregroundColor(.offBlack)
         }
-        .onAppear {
-            Task {
-                await downloadImage()
-            }
-        }
+    }
+}
+
+// MARK: - UI Components
+
+extension WeeklyCalenderView {
+
+    private func calendarItem(trimFrom: CGFloat, trimTo: CGFloat, color: Color) -> some View {
+        RoundedRectangle(cornerRadius: 18)
+            .trim(from: trimFrom, to: trimTo)
+            .fill(color)
+            .frame(width: 44, height: 44)
     }
 
-    func downloadImage() async {
-        if let thumbnail = thumbnail, !thumbnail.isEmpty {
-            do {
-                let url = try await Storage.storage().reference(forURL: thumbnail).downloadURL()
-                   thumbnailURL = url
-            } catch {
-                print(error.localizedDescription)
-            }
+    private func strokeCalenderItem(_ lineWidth: CGFloat) -> some View {
+        RoundedRectangle(cornerRadius: 18)
+            .stroke(Color.systemSalmon, lineWidth: lineWidth)
+    }
+
+    @ViewBuilder
+    private func calenderWithDiptychState() -> some View {
+        switch diptychState {
+        case .none:
+            calendarItem(trimFrom: 0, trimTo: 0, color: .clear)
+        case .incomplete:
+            calendarItem(trimFrom: 0, trimTo: 1, color: .lightGray)
+        case .todayIncomplete:
+            calendarItem(trimFrom: 0, trimTo: 1, color: .offWhite)
+                .overlay {
+                    strokeCalenderItem(2)
+                }
+        case .todayfirst:
+            calendarItem(trimFrom: 0.25, trimTo: 0.75, color: .systemSalmon)
+                .overlay(
+                    strokeCalenderItem(2)
+                )
+        case .todaySecond:
+            calendarItem(trimFrom: 0, trimTo: 1, color: .systemSalmon)
+                .overlay(
+                    calendarItem(trimFrom: 0.25, trimTo: 0.75, color: .offWhite)
+                )
+                .overlay {
+                    strokeCalenderItem(2)
+                }
+        case .complete:
+            calendarItem(trimFrom: 0, trimTo: 1, color: .systemSalmon)
         }
     }
 }
@@ -77,8 +73,8 @@ struct WeeklyCalenderView: View {
 struct WeeklyCalenderView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            WeeklyCalenderView(day: "월", date: "07", isToday: true)
-            WeeklyCalenderView(day: "월", date: "08", isToday: false)
+            WeeklyCalenderView(day: "월")
+            WeeklyCalenderView(day: "월")
         }
         .previewLayout(.sizeThatFits)
     }

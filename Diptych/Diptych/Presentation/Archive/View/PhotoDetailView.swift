@@ -28,7 +28,10 @@ struct PhotoDetailView {
         return formatter
     }()
     
-
+    
+    private let transaction: Transaction = .init(animation: .linear)
+    @State var isFirstLoaded: Bool = false
+    @State var isSecondLoaded: Bool = false
 }
 
 // MARK: - View
@@ -79,7 +82,8 @@ extension PhotoDetailView: View {
                     .frame(height: 120)
                     
                     
-                    //MARK: - [3] 사진 프레임
+                    /// [3] 사진 프레임
+                    
                     ZStack{
                         RoundedRectangle(cornerRadius: 0)
                             .foregroundColor(Color.darkGray)
@@ -87,25 +91,81 @@ extension PhotoDetailView: View {
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                         
                         HStack(spacing: 0) {
-                        ///왼쪽 사진
-                            AsyncImage(url:imageUrl1) { image in
-                                image
-                                    .resizable()
-                                    .frame(width: 196.5, height: 393)
-                            } placeholder: {
-                                ProgressView()
-                            }
-                            .frame(width: 196.5)
                             
-                        /// 오른쪽 사진
-                            AsyncImage(url: imageUrl2) { image in
-                                image
-                                    .resizable()
-                                    .frame(width: 196.5, height: 393)
-                            } placeholder: {
-                                ProgressView()
+                            AsyncImage(url: imageUrl1) { phase in
+                                switch phase {
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .frame(width: 196.5, height: 393)
+                                        .onAppear {
+                                            print("image1 appeared:", Date().timeIntervalSince1970)
+                                            isFirstLoaded = true
+                                            print("all loaded?", isFirstLoaded && isSecondLoaded)
+                                        }
+                                        .opacity(isFirstLoaded && isSecondLoaded ? 1 : 0)
+                                    // Text("loaded")
+                                    
+                                case .failure(_):
+                                    Text("error")
+                                case .empty:
+                                    // placeholder
+                                    ProgressView()
+                                @unknown default:
+                                    Text("unknown")
+                                }
+                            }.onAppear {
+                                print("onAppear: \(Date().timeIntervalSince1970)")
+                            }.onChange(of: isFirstLoaded) { newValue in
+                                print("isFirstLoaded changed:", isFirstLoaded)
                             }
-                            .frame(width: 196.5)
+                            
+                            AsyncImage(url: imageUrl2) { phase in
+                                switch phase {
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .frame(width: 196.5, height: 393)
+                                        .onAppear {
+                                            print("image2 appeared:", Date().timeIntervalSince1970)
+                                            isSecondLoaded = true
+                                            print("all loaded?", isFirstLoaded && isSecondLoaded)
+                                        }
+                                        .opacity(isFirstLoaded && isSecondLoaded ? 1 : 0)
+                                    // Text("loaded")
+                                    
+                                case .failure(_):
+                                    Text("error")
+                                case .empty:
+                                    // placeholder
+                                    ProgressView()
+                                @unknown default:
+                                    Text("unknown")
+                                }
+                            }.onAppear {
+                                print("onAppear: \(Date().timeIntervalSince1970)")
+                            }
+                            ///왼쪽 사진
+                            // AsyncImage(url: imageUrl1) { image in
+                            //
+                            //     image
+                            //         .resizable()
+                            //         .frame(width: 196.5, height: 393)
+                            // } placeholder: {
+                            //     ProgressView()
+                            // }
+                            // .frame(width: 196.5)
+                            
+                            
+                            /// 오른쪽 사진
+                            // AsyncImage(url: imageUrl2) { image in
+                            //     image
+                            //         .resizable()
+                            //         .frame(width: 196.5, height: 393)
+                            // } placeholder: {
+                            //     ProgressView()
+                            // }
+                            // .frame(width: 196.5)
                         }//】 HStack
                         
 //                        ImageCell(imageUrl1: imageUrl1, imageUrl2: imageUrl2)
@@ -128,14 +188,15 @@ extension PhotoDetailView: View {
                 //MARK: - [4] 공유/ 좋아요 버튼
                 HStack(spacing: 0){
                     ShareSheetView()
+//                    Image("imgShareBox")
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
                         .padding(.leading, 70)
-                    Image("whiteHeart")
+                    Image("imgWhiteHeart")
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
                         .padding(.horizontal, 80)
-                    Image("comment")
+                    Image("imgComment")
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
                         .padding(.trailing, 70)
@@ -267,6 +328,9 @@ extension PhotoDetailView {
             self.image1 = VM.truePhotos[currentIndex].photoFirstURL
             self.image2 = VM.truePhotos[currentIndex].photoSecondURL
             self.question = VM.trueQuestions[currentIndex].question
+            
+            // isFirstLoaded = false
+            // isSecondLoaded = false
         }
     
     /// 이미지 불러오기
