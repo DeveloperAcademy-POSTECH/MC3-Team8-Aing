@@ -36,6 +36,7 @@ struct DiptychCompleteAlertView: View {
                     .font(.pretendard(.light, size: 24))
                     .padding(.top, 34)
                 Text("오늘의 딥틱이 완성되었어요\n확인해 보세요")
+                    .lineSpacing(4)
                     .font(.pretendard(.light, size: 16))
                     .foregroundColor(.darkGray)
                     .multilineTextAlignment(.center)
