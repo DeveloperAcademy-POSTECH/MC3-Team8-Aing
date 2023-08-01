@@ -199,5 +199,6 @@ extension TodayDiptychView {
 struct TodayDiptychView_Previews: PreviewProvider {
     static var previews: some View {
         TodayDiptychView()
+            .environmentObject(DiptychCompleteAlertObject())
     }
 }

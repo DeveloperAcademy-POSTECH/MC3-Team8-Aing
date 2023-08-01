@@ -126,5 +126,6 @@ struct DiptychTabBarItem: View {
 struct DiptychTabView2_Previews: PreviewProvider {
     static var previews: some View {
         DiptychTabView2()
+            .environmentObject(DiptychCompleteAlertObject())
     }
 }

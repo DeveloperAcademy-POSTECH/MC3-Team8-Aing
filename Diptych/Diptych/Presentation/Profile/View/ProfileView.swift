@@ -31,7 +31,7 @@ struct ProfileView: View {
     var body: some View {
         ZStack {
             Color.offWhite.edgesIgnoringSafeArea(.top)
-            
+
             // 유저 닉네임 표시 부분
             VStack {
                 LazyVGrid(columns: columns) {
@@ -44,14 +44,14 @@ struct ProfileView: View {
                     }
                 }
                 .padding(.top, 60)
-                
+
                 Divider()
                     .frame(height: 1)
                     .overlay(Color.darkGray)
                     .padding(.horizontal, 15)
                     .padding(.top, 80) // 임의로 조정했음
                     .padding(.bottom, 43)
-                
+
                 // 디데이, 몇번째 딥틱인지 정보 표시 부분
                 HStack {
                     VStack {
@@ -78,7 +78,7 @@ struct ProfileView: View {
                     }
                     .padding(.trailing, 50)
                 }
-                
+
                 ZStack {
                     Color.lightGray.edgesIgnoringSafeArea(.top)
                     VStack {
@@ -91,14 +91,14 @@ struct ProfileView: View {
                             .font(.pretendard(.light, size: 24))
                             .foregroundColor(.offBlack)
                             .padding(.bottom, 89)
-                        
+
                         Text("버전 정보 1.0.0.0")
                             .font(.pretendard(.light, size: 18))
                             .foregroundColor(.darkGray)
                             .padding(.bottom, 10)
-                        
-                        
-                        
+
+
+
                         // == 충돌 부분 시작 ==
                         HStack {
                             Button{
@@ -138,7 +138,7 @@ struct ProfileView: View {
                         } // HStack
                     } // VStack
                 } // darkGray ZStack
-                
+
                 // == 충돌 부분 끝 ==
             }
         } // offWhite ZStack
