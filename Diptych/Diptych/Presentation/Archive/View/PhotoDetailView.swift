@@ -33,11 +33,10 @@ struct PhotoDetailView {
     @State var isFirstLoaded: Bool = false
     @State var isSecondLoaded: Bool = false
     
-    @State var image1Data: Data?
-    @State var image2Data: Data?
-    
     @State var image1Image: UIImage?
     @State var image2Image: UIImage?
+    @State var isShouldShowPrevOrNext: Bool = false
+    
 }
 
 // MARK: - View
@@ -87,21 +86,33 @@ extension PhotoDetailView: View {
                 /// [3] 사진 프레임
                 
                 ZStack{
+                    
                     RoundedRectangle(cornerRadius: 0)
                         .foregroundColor(Color.darkGray)
                     //                        .stroke(Color.lightGray, lineWidth: 1)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        // .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .frame(width: 393, height: 393)
+                    
+                    
                     
                     HStack(spacing: 0) {
-                        if let image1Image, let image2Image {
-                            Image(uiImage: image1Image)
-                                .resizable()
-                                .frame(width: 196.5, height: 393)
-                            Image(uiImage: image2Image)
-                                .resizable()
-                                .frame(width: 196.5, height: 393)
-                        } else {
-                            ProgressView()
+                        HStack(spacing: 0) {
+                            if let image1Image, let image2Image {
+                                HStack(spacing: 0) {
+                                    Image(uiImage: image1Image)
+                                        .resizable()
+                                        .frame(width: 196.5, height: 393)
+                                    Image(uiImage: image2Image)
+                                        .resizable()
+                                        .frame(width: 196.5, height: 393)
+                                }
+                                // .transition(isShouldShowPrevOrNext ? .slide : .identity)
+                                .transition(.slide)
+                                .animation(.linear)
+                            }
+                            else {
+                                ProgressView()
+                            }
                         }
                         
                         // AsyncImage(url: imageUrl1) { phase in
@@ -194,7 +205,7 @@ extension PhotoDetailView: View {
                 .frame(height: 393, alignment: .center)
                 .frame(maxWidth: .infinity)
                 .aspectRatio(1, contentMode: .fit)
-                .transition(.move(edge: .leading)) // 슬라이드 애니메이션을 적용합니다.
+                // .transition(.move(edge: .leading)) // 슬라이드 애니메이션을 적용합니다.
                 // .opacity(isFirstLoaded && isSecondLoaded ? 1 : 0)
                 
                 /// [4]버튼
@@ -224,6 +235,7 @@ extension PhotoDetailView: View {
             // }
             downloadImageWithCache()
         }
+        .transition(.slide)
     }//】 Body
     
     
@@ -309,82 +321,83 @@ extension PhotoDetailView {
             return
         }
         
+        
         image1Image = nil
         image2Image = nil
         
-        print("image1", image1)
-        Task {
-            if let cachedImageFirst = ImageCacheManager.shared.loadImageFromCache(urlAbsoluteString: image1) {
-                image1Image = cachedImageFirst
-                print("image1: loaded from cache")
-                return
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            print("image1", image1)
+            Task {
+                if let cachedImageFirst = ImageCacheManager.shared.loadImageFromCache(urlAbsoluteString: image1) {
+                    image1Image = cachedImageFirst
+                    print("image1: loaded from cache")
+                    return
+                }
+                
+                image1Image = UIImage(data: try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image1))
+                
+                if let image1Image {
+                    ImageCacheManager.shared.saveImageToCache(image: image1Image, urlAbsoluteString: image1)
+                    print("image1 saved to cache.")
+                }
             }
             
-            image1Image = UIImage(data: try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image1))
-            
-            if let image1Image {
-                ImageCacheManager.shared.saveImageToCache(image: image1Image, urlAbsoluteString: image1)
-                print("image1 saved to cache.")
+            Task {
+                print("image2", image1)
+                if let cachedImageSecond = ImageCacheManager.shared.loadImageFromCache(urlAbsoluteString: image2) {
+                    image2Image = cachedImageSecond
+                    print("image2: loaded from cache")
+                    return
+                }
+                
+                image2Image = UIImage(data: try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image2))
+                
+                if let image2Image {
+                    ImageCacheManager.shared.saveImageToCache(image: image2Image, urlAbsoluteString: image2)
+                    print("image2 saved to cache.")
+                }
             }
         }
         
-        Task {
-            print("image2", image1)
-            if let cachedImageSecond = ImageCacheManager.shared.loadImageFromCache(urlAbsoluteString: image2) {
-                image2Image = cachedImageSecond
-                print("image2: loaded from cache")
-                return
-            }
-            
-            image2Image = UIImage(data: try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image2))
-            
-            if let image2Image {
-                ImageCacheManager.shared.saveImageToCache(image: image2Image, urlAbsoluteString: image2)
-                print("image2 saved to cache.")
-            }
-        }
     }
     
     /// 이미지 불러오기
-    func downloadImage() async {
-        if let image1 = image1 {
-            do {
-                // print(VM.todayPhoto?.id, image1)
-                // let url = try await Storage.storage().reference(forURL: image1).downloadURL()
-                // imageUrl1 = url
-                
-                let startTime = Date()
-                
-                
-                
-                print("image1: download startTime:", startTime.timeIntervalSince1970)
-                
-                image1Data = try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image1)
-                let endTime = Date()
-                
-                print("image1: download endTime:", endTime.timeIntervalSince1970)
-                print("image1: elapsed duration:", endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970)
-                
-            } catch { print(error.localizedDescription)}
-        }
-        
-        if let image2 = image2, !image2.isEmpty {
-            do {
-                // let url = try await Storage.storage().reference(forURL: image2).downloadURL()
-                // imageUrl2 = url
-                
-                let startTime = Date()
-                
-                print("image2: download startTime:", startTime.timeIntervalSince1970)
-                
-                image2Data = try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image2)
-                let endTime = Date()
-                
-                print("image2: download endTime:", endTime.timeIntervalSince1970)
-                print("image2: elapsed duration:", endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970)
-            } catch { print(error.localizedDescription)}
-        }
-    }
+    // func downloadImage() async {
+    //     if let image1 = image1 {
+    //         do {
+    //             // print(VM.todayPhoto?.id, image1)
+    //             // let url = try await Storage.storage().reference(forURL: image1).downloadURL()
+    //             // imageUrl1 = url
+    //
+    //             let startTime = Date()
+    //             print("image1: download startTime:", startTime.timeIntervalSince1970)
+    //
+    //             image1Data = try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image1)
+    //             let endTime = Date()
+    //
+    //             print("image1: download endTime:", endTime.timeIntervalSince1970)
+    //             print("image1: elapsed duration:", endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970)
+    //
+    //         } catch { print(error.localizedDescription)}
+    //     }
+    //
+    //     if let image2 = image2, !image2.isEmpty {
+    //         do {
+    //             // let url = try await Storage.storage().reference(forURL: image2).downloadURL()
+    //             // imageUrl2 = url
+    //
+    //             let startTime = Date()
+    //
+    //             print("image2: download startTime:", startTime.timeIntervalSince1970)
+    //
+    //             image2Data = try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image2)
+    //             let endTime = Date()
+    //
+    //             print("image2: download endTime:", endTime.timeIntervalSince1970)
+    //             print("image2: elapsed duration:", endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970)
+    //         } catch { print(error.localizedDescription)}
+    //     }
+    // }
     
     
     func textLabel(text: String) -> some View {
