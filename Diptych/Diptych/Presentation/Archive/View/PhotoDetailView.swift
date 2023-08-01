@@ -123,14 +123,15 @@ extension PhotoDetailView: View {
                 /// [4]버튼
                 HStack(spacing: 0){
                     ShareSheetView()
+//                    Image("imgShareBox")
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
                         .padding(.leading, 70)
-                    Image("whiteHeart")
+                    Image("imgWhiteHeart")
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
                         .padding(.horizontal, 80)
-                    Image("comment")
+                    Image("imgComment")
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
                         .padding(.trailing, 70)
