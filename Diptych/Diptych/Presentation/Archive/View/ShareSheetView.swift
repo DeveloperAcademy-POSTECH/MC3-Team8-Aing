@@ -33,7 +33,7 @@ struct ShareSheetView: View {
                 self.isSharePresented = true
             }
         } label: {
-            Image("upload")
+            Image("imgShareBox")
                 .foregroundColor(.offBlack)
                 .frame(width: 30, height: 30)
         }

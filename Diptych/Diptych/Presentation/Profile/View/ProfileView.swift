@@ -32,83 +32,116 @@ struct ProfileView: View {
         ZStack {
             Color.offWhite.edgesIgnoringSafeArea(.top)
             
+            // 유저 닉네임 표시 부분
             VStack {
                 LazyVGrid(columns: columns) {
                     ForEach(0 ..< 1) { _ in
-                            userNameLabel(text: userViewModel.currentUser?.name ?? "...") // 로딩중일때 "..."로 표현
-                                .padding(.leading, 20)
-                            Image("heart")
-                            userNameLabel(text: userViewModel.lover?.name ?? "...")
-                                .padding(.trailing, 20)
+                        userNameLabel(text: userViewModel.currentUser?.name ?? "...") // 로딩중일때 "..."로 표현
+                            .padding(.leading, 20)
+                        Image("imgHeart")
+                        userNameLabel(text: userViewModel.lover?.name ?? "...")
+                            .padding(.trailing, 20)
                     }
                 }
-                // 하트 아이콘은 중앙에 고정되었으나,
-                // 여전히.. 유저의 닉네임 글자수가 서로 다르면 하트 아이콘과의 간격이 일정해지지 않는 문제점이 있음
+                .padding(.top, 60)
                 
                 Divider()
                     .frame(height: 1)
                     .overlay(Color.darkGray)
-//                    .background(Color.darkGray)
+                    .padding(.horizontal, 15)
                     .padding(.top, 80) // 임의로 조정했음
-                    .padding(.bottom, 103)
+                    .padding(.bottom, 43)
                 
-                Text("D+\(setDdayCount())")
-                    .font(.pretendard(.light, size: 28))
-                    .foregroundColor(.offBlack)
-                    .padding(.bottom, 30)
-                
-                Text("5번째 딥틱 중")
-                    .font(.pretendard(.light, size: 28))
-                    .foregroundColor(.offBlack)
-                    .padding(.bottom, 179)
-                
-                Text("버전 정보 1.0.0.0")
-                    .font(.pretendard(.light, size: 18))
-                    .foregroundColor(.darkGray)
-                    .padding(.bottom, 22)
-                
-                // == 충돌 부분 시작 ==
+                // 디데이, 몇번째 딥틱인지 정보 표시 부분
                 HStack {
-                    Button{
-                        userViewModel.signOut()
-                    } label: {
-                        Text("로그아웃")
-                            .font(.pretendard(.light, size: 18))
-                            .padding()
-//                            .background(Color.offBlack)
+                    VStack {
+                        Text("우리 시작한지")
+                            .font(.pretendard(.medium, size: 14))
                             .foregroundColor(.darkGray)
+                            .padding(.bottom, 15)
+                        Text("D+\(setDdayCount())")
+                            .font(.pretendard(.light, size: 28))
+                            .foregroundColor(.offBlack)
+                            .padding(.bottom, 47)
                     }
-                    Button{
-                        isShowingAlert = true
-                    } label: {
-                        Text("회원탈퇴")
-                            .font(.pretendard(.light, size: 18))
-                            .padding()
-//                            .background(Color.offBlack)
+                    .padding(.leading, 50)
+                    Spacer()
+                    VStack {
+                        Text("딥틱 중")
+                            .font(.pretendard(.medium, size: 14))
                             .foregroundColor(.darkGray)
+                            .padding(.bottom, 15)
+                        Text("222번째")
+                            .font(.pretendard(.light, size: 28))
+                            .foregroundColor(.offBlack)
+                            .padding(.bottom, 47)
                     }
-                    .alert("회원 탈퇴", isPresented: $isShowingAlert, actions: {
-                        SecureField("", text: $password)
-                        Button(role: .destructive){
-                            print("DEBUG: 탈퇴 버튼 눌림")
-                            Task{
-                                try await userViewModel.deleteAccount(password: password)
-                            }
-                        } label: {
-                            Text("탈퇴")
-                        }
-                        Button(role: .cancel) {
-                            print("DEBUG: 취소 버튼 눌림")
-                        } label: {
-                            Text("취소")
-                        }
-                    }, message: {
-                        Text("비밀번호를 입력해주세요.")
-                    })
+                    .padding(.trailing, 50)
                 }
+                
+                ZStack {
+                    Color.lightGray.edgesIgnoringSafeArea(.top)
+                    VStack {
+                        Text("내 초대코드")
+                            .font(.pretendard(.medium, size: 14))
+                            .foregroundColor(.darkGray)
+//                            .padding(.top, 20)
+                            .padding(.bottom, 11)
+                        Text(userViewModel.currentUser?.couplingCode ?? "")
+                            .font(.pretendard(.light, size: 24))
+                            .foregroundColor(.offBlack)
+                            .padding(.bottom, 89)
+                        
+                        Text("버전 정보 1.0.0.0")
+                            .font(.pretendard(.light, size: 18))
+                            .foregroundColor(.darkGray)
+                            .padding(.bottom, 10)
+                        
+                        
+                        
+                        // == 충돌 부분 시작 ==
+                        HStack {
+                            Button{
+                                userViewModel.signOut()
+                            } label: {
+                                Text("로그아웃")
+                                    .font(.pretendard(.light, size: 18))
+                                    .padding(.bottom, 32)
+                                    .foregroundColor(.darkGray)
+                            }
+                            Button{
+                                isShowingAlert = true
+                            } label: {
+                                Text("회원탈퇴")
+                                    .font(.pretendard(.light, size: 18))
+                                    .padding(.bottom, 32)
+                                    .foregroundColor(.darkGray)
+                            }
+                            .alert("회원 탈퇴", isPresented: $isShowingAlert, actions: {
+                                SecureField("", text: $password)
+                                Button(role: .destructive){
+                                    print("DEBUG: 탈퇴 버튼 눌림")
+                                    Task{
+                                        try await userViewModel.deleteAccount(password: password)
+                                    }
+                                } label: {
+                                    Text("탈퇴")
+                                }
+                                Button(role: .cancel) {
+                                    print("DEBUG: 취소 버튼 눌림")
+                                } label: {
+                                    Text("취소")
+                                }
+                            }, message: {
+                                Text("비밀번호를 입력해주세요.")
+                            })
+                        } // HStack
+                    } // VStack
+                } // darkGray ZStack
+                
                 // == 충돌 부분 끝 ==
-            } // VStack
-        } // ZStack
+            }
+        } // offWhite ZStack
     }
 }
 

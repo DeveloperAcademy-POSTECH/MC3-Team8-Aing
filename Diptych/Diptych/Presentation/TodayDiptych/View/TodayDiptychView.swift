@@ -16,15 +16,24 @@ struct TodayDiptychView: View {
     @State private var secondUIImage: UIImage?
     
     @State private var timer: Timer?
-    
-    @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
-    @EnvironmentObject private var viewModel: TodayDiptychViewModel
+
     @State private var isAllTasksCompleted = false
+    @State private var isDiptychCompleted = false
+    @State private var isDiptychCompleteAlertShown = false
+    @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
+    @StateObject private var viewModel = TodayDiptychViewModel()
     let days = ["월", "화", "수", "목", "금", "토", "일"]
 
     var body: some View {
         NavigationStack {
-            MainDiptychView()
+            ZStack {
+                MainDiptychView()
+                if isDiptychCompleted && !isDiptychCompleteAlertShown {
+                    Color.black.opacity(0.54)
+                    DiptychCompleteAlertView(isDiptychCompleteAlertShown: $isDiptychCompleteAlertShown)
+                        .frame(width: 300, height: 360)
+                }
+            }
             .ignoresSafeArea(edges: .top)
             .onAppear {
                 print("viewModel.weeklyData: \(viewModel.weeklyData)")
@@ -45,7 +54,10 @@ struct TodayDiptychView: View {
                              viewModel.weeklyData.removeAll()
                              Task {
                                  await viewModel.fetchTodayImage()
-//                                 await viewModel.fetchWeeklyCalender()
+                                 await viewModel.fetchWeeklyCalender()
+
+                                 guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
+                                 isDiptychCompleted = isCompleted
                              }
                          }
                 }
@@ -61,8 +73,12 @@ struct TodayDiptychView: View {
             await viewModel.setTodayPhoto()
             await viewModel.setUserCameraLoactionState()
             await viewModel.fetchTodayImage()
-//            await viewModel.fetchWeeklyCalender()
+            await viewModel.setDiptychNumber()
+            await viewModel.fetchWeeklyCalender()
             await viewModel.fetchContents()
+
+            guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
+            isDiptychCompleted = isCompleted
         }
     }
 }
@@ -76,18 +92,18 @@ extension TodayDiptychView {
             Color.offWhite
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    Text("\(viewModel.setTodayDate()) 오늘의 주제")
+                    Text("\(viewModel.setTodayDate())")
                     Spacer()
-                    Text("#999번째 딥틱") // TODO: - 완료 딥틱 개수 세기
+                    Text("#\(viewModel.diptychNumber)번째 딥틱")
                 }
                 .font(.pretendard(.medium, size: 16))
                 .foregroundColor(.darkGray)
                 .padding(.horizontal, 15)
                 .padding(.top, 31)
 
-                Rectangle()
+                Divider()
                     .frame(height: 1)
-                    .background(Color.darkGray)
+                    .overlay(Color.darkGray)
                     .padding(.top, 10)
                     .padding(.horizontal, 15)
 
@@ -103,7 +119,6 @@ extension TodayDiptychView {
                     Spacer()
                 }
 
-                //MARK: - 사진
                 HStack(spacing: 0) {
                     switch viewModel.isFirst {
                     case true:
@@ -121,38 +136,15 @@ extension TodayDiptychView {
                 .foregroundColor(.offWhite)
                 .multilineTextAlignment(.center)
 
-                //MARK: - Weekly 캘린더
                 HStack(spacing: 9) {
-                    if viewModel.isLoading {
-                        ProgressView()
-                    } else {
-                        let weeklyDates = viewModel.setWeeklyDates()
-
-                        ForEach(0..<7) { index in
-                            let date = weeklyDates[index]
-                            let data = viewModel.weeklyData.filter { $0.date == date }
-                            let formattedDate = String(format: "%02d", date)
-                            let isToday = date == viewModel.setTodayDate()
-                            let diptychState = data.isEmpty ? .incomplete : data[0].diptychState
-                            let weeklyCalenderView = WeeklyCalenderView(day: days[index],
-                                                                        date: formattedDate,
-                                                                        isToday: isToday,
-                                                                        thumbnail: data.isEmpty ? "" : data[0].thumbnail,
-                                                                        diptychState: data.isEmpty ? .incomplete : data[0].diptychState)
-
-                            switch diptychState {
-                            case .complete:
-                                        weeklyCalenderView
-                            default:
-                                weeklyCalenderView
-                            }
-                        }
+                    ForEach(0..<7) { index in
+                        WeeklyCalenderView(day: days[index],
+                                           diptychState: index <= viewModel.weeklyData.count - 1
+                                           ? viewModel.weeklyData[index] : .none)
                     }
-                }//】 HStack
-                .padding(.bottom,30)
-                
-                
-            }//】 VStack
+                }
+                .padding(.bottom, 30)
+            }
         }
     }
 
