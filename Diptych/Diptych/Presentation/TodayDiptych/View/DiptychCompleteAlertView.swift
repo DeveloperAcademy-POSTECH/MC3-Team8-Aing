@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct DiptychCompleteAlertView: View {
-//    @Binding var isDiptychCompleteAlertShown: Bool
     @EnvironmentObject var diptychCompleteAlertObject: DiptychCompleteAlertObject
 
     var body: some View {
@@ -18,7 +17,6 @@ struct DiptychCompleteAlertView: View {
                 HStack(spacing: 0) {
                     Image("icnXMark")
                         .onTapGesture {
-//                            isDiptychCompleteAlertShown = true
                             diptychCompleteAlertObject.isDiptychCompleteAlertShown = true
                         }
                     Spacer()

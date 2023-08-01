@@ -14,8 +14,6 @@ struct TodayDiptychView: View {
     @State var isShowCamera = false
     @State private var firstUIImage: UIImage?
     @State private var secondUIImage: UIImage?
-//    @State private var isDiptychCompleted = false
-//    @State private var isDiptychCompleteAlertShown = false
     @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
     @StateObject private var viewModel = TodayDiptychViewModel()
     @EnvironmentObject var diptychCompleteAlertObject: DiptychCompleteAlertObject
@@ -23,35 +21,28 @@ struct TodayDiptychView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                MainDiptychView()
-//                if isDiptychCompleted && !isDiptychCompleteAlertShown {
-//                    Color.black.opacity(0.54)
-//                    DiptychCompleteAlertView(isDiptychCompleteAlertShown: $isDiptychCompleteAlertShown)
-//                        .frame(width: 300, height: 360)
-//                }
-            }
-            .ignoresSafeArea(edges: .vertical)
-            .onAppear {
-                fetchData()
-            }
-            .fullScreenCover(isPresented: $isShowCamera) {
-                ZStack {
-                    Color.offWhite.ignoresSafeArea()
-                    CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
-                         .toolbar(.hidden, for: .tabBar)
-                         .onDisappear {
-                             viewModel.weeklyData.removeAll()
-                             Task {
-                                 await viewModel.fetchTodayImage()
-                                 await viewModel.fetchWeeklyCalender()
-
-                                 guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
-                                 diptychCompleteAlertObject.isDiptychCompleted = isCompleted
-                             }
-                         }
+            MainDiptychView()
+                .ignoresSafeArea(edges: .vertical)
+                .onAppear {
+                    fetchData()
                 }
-            }
+                .fullScreenCover(isPresented: $isShowCamera) {
+                    ZStack {
+                        Color.offWhite.ignoresSafeArea()
+                        CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
+                            .toolbar(.hidden, for: .tabBar)
+                            .onDisappear {
+                                viewModel.weeklyData.removeAll()
+                                Task {
+                                    await viewModel.fetchTodayImage()
+                                    await viewModel.fetchWeeklyCalender()
+
+                                    guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
+                                    diptychCompleteAlertObject.isDiptychCompleted = isCompleted
+                                }
+                            }
+                    }
+                }
         }
     }
 
