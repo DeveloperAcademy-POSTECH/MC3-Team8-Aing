@@ -28,14 +28,9 @@ struct PhotoDetailView {
         return formatter
     }()
     
-    private let transaction: Transaction = .init(animation: .linear)
-    @State var isFirstLoaded: Bool = false
-    @State var isSecondLoaded: Bool = false
-    
     @State var image1Image: UIImage?
     @State var image2Image: UIImage?
     @State var isShouldShowPrevOrNext: Bool = false
-    
 }
 
 // MARK: - View
@@ -314,21 +309,19 @@ extension PhotoDetailView {
         // isSecondLoaded = false
     }
     
-    /// 이미지 불러오기 (캐싱)
+    /// 이미지 불러오기 (메모리 캐싱)
     func downloadImageWithCache() {
         guard let image1, let image2 else {
             return
         }
         
-        
         image1Image = nil
         image2Image = nil
         
-        print("image1", image1)
         Task {
             if let cachedImageFirst = ImageCacheManager.shared.loadImageFromCache(urlAbsoluteString: image1) {
                 image1Image = cachedImageFirst
-                print("image1: loaded from cache")
+                print("[DEBUG] image1: loaded from cache")
                 return
             }
             
@@ -336,15 +329,14 @@ extension PhotoDetailView {
             
             if let image1Image {
                 ImageCacheManager.shared.saveImageToCache(image: image1Image, urlAbsoluteString: image1)
-                print("image1 saved to cache.")
+                print("[DEBUG] image1 saved to cache.")
             }
         }
         
         Task {
-            print("image2", image1)
             if let cachedImageSecond = ImageCacheManager.shared.loadImageFromCache(urlAbsoluteString: image2) {
                 image2Image = cachedImageSecond
-                print("image2: loaded from cache")
+                print("i[DEBUG] mage2: loaded from cache")
                 return
             }
             
@@ -352,50 +344,10 @@ extension PhotoDetailView {
             
             if let image2Image {
                 ImageCacheManager.shared.saveImageToCache(image: image2Image, urlAbsoluteString: image2)
-                print("image2 saved to cache.")
+                print("[DEBUG] image2 saved to cache.")
             }
         }
-        
     }
-    
-    /// 이미지 불러오기
-    // func downloadImage() async {
-    //     if let image1 = image1 {
-    //         do {
-    //             // print(VM.todayPhoto?.id, image1)
-    //             // let url = try await Storage.storage().reference(forURL: image1).downloadURL()
-    //             // imageUrl1 = url
-    //
-    //             let startTime = Date()
-    //             print("image1: download startTime:", startTime.timeIntervalSince1970)
-    //
-    //             image1Data = try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image1)
-    //             let endTime = Date()
-    //
-    //             print("image1: download endTime:", endTime.timeIntervalSince1970)
-    //             print("image1: elapsed duration:", endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970)
-    //
-    //         } catch { print(error.localizedDescription)}
-    //     }
-    //
-    //     if let image2 = image2, !image2.isEmpty {
-    //         do {
-    //             // let url = try await Storage.storage().reference(forURL: image2).downloadURL()
-    //             // imageUrl2 = url
-    //
-    //             let startTime = Date()
-    //
-    //             print("image2: download startTime:", startTime.timeIntervalSince1970)
-    //
-    //             image2Data = try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image2)
-    //             let endTime = Date()
-    //
-    //             print("image2: download endTime:", endTime.timeIntervalSince1970)
-    //             print("image2: elapsed duration:", endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970)
-    //         } catch { print(error.localizedDescription)}
-    //     }
-    // }
-    
     
     func textLabel(text: String) -> some View {
         return Text(text)
