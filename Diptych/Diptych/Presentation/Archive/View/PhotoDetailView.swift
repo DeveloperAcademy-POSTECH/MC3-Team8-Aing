@@ -6,15 +6,29 @@
 //
 
 import SwiftUI
+import FirebaseStorage
 
 // MARK: - Property
 
 struct PhotoDetailView {
-    var date: String
-    var questionNum: Int
-    var question: String
-    var imageUrl1: String
-    var imageUrl2: String
+    
+    @ObservedObject var VM : ArchiveViewModel
+    @State var date: Date = Date()
+    @State var image1: String?
+    @State var image2: String?
+    @State var imageUrl1: URL?
+    @State var imageUrl2: URL?
+    @State var question: String?
+    @State var currentIndex: Int
+    @State private var isImageLoaded = false
+    
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 M월 d일"
+        return formatter
+    }()
+    
+
 }
 
 // MARK: - View
@@ -23,72 +37,91 @@ extension PhotoDetailView: View {
     var body: some View {
         ZStack {
             Color.offWhite.edgesIgnoringSafeArea(.top)
-            // 이렇게 안 하면 탭바까지 offWhite가 덮어져버려서 해두었습니다
 
             VStack(spacing: 0) {
                 
                 /// [1] 해더
-                HStack(spacing: 8) {
-                    textLabel(text: date)
-                    textLabel(text: "\(questionNum)번째 질문")
+                VStack(spacing: 0){
+                    HStack(spacing: 8) {
+                        Text(dateFormatter.string(from: date))
+                        Spacer()
+                        Text("#\(currentIndex + 1)번째 딥틱")
+                    }//: HStack
+                    .font(.custom(PretendardType.medium.rawValue, size: 16))
+                    .padding(.bottom,10)
+                    
+                    RoundedRectangle(cornerRadius: 0)
+                        .frame(height: 1)
+                }
+                .foregroundColor(Color.darkGray)
+                .padding(.top,32)
+                .padding(.horizontal,13)
+                
+                
+                    /// [2] 질문
+                VStack(spacing: 0){
+                    HStack(spacing: 0){
+                        Text("\(question ?? "")")
+                            .font(.custom(PretendardType.light.rawValue, size: 24))
+                            .foregroundColor(.offBlack)
+                            .multilineTextAlignment(.leading)
+                            .padding(.leading, 17)
+                        Spacer()
+                    }//】 HStack
+                    .padding(.top,23)
                     Spacer()
-                }//: HStack
-                .padding(.leading, 15)
-                .padding(.top,20)
-                .padding(.bottom, 15)
-                // 이슈 1. NavigationLink가 들어가면 위에 그 공간만큼 밑으로 밀리기 때문에 정확한 픽셀 값 맞추기 어려움. 눈 대중으로 맞춰둠.
+                }//】 VStack
+                    .frame(height: 120)
+                    
                 
-                /// [2] 질문
-                HStack(spacing: 0) {
-                    Text(question)
-                        // 이슈 2. 자간이 약간 다름
-                        // 이슈 3. 문장마다 자동 줄바꿈은 어떻게 할 수 있을까?
-                        // 이슈 4. padding 값에 따라 글자 짤릴 수 있음
-                        .font(.custom(PretendardType.light.rawValue, size: 24))
-                        .foregroundColor(.offBlack)
-                        .multilineTextAlignment(.leading)
-                        .padding(.leading, 15)
-                    Spacer()
-                }//: HStack
-
-                
-                /// [3] 사진 프레임
-                // photoA와 photoB가 각각 따로 띄워져야 함, 저장할 때 합쳐져서 저장됨
-                // 일단 인터넷에서 url 이미지 임시로 넣어둔 상태
-                HStack(spacing: 0) {
-                    AsyncImage(
-                        url: URL(string: imageUrl1),
-                        content: { image in
-                            image
-                                .resizable()
-                                .frame(width: 196.5, height: 393)
-//                                .padding(.top, 20)
-//                                .padding(.bottom, 44)
-                        },
-                        placeholder: { ProgressView() }
-                    )
-                    AsyncImage(
-                        url: URL(string: imageUrl2),
-                        content: { image in
-                            image
-                                .resizable()
-                                .frame(height: 393)
-                                .frame(width: 196.5, height: 393)
-//                                .padding(.top, 20)
-//                                .padding(.bottom, 44)
-                        },
-                        placeholder: { ProgressView() }
-                    )
-                }//: HStack
-//                .frame(height: 393, alignment: .center)
-                .frame(maxWidth: .infinity)
-                .aspectRatio(1, contentMode: .fit)
-                .padding(.top, 20)
-                .padding(.bottom,44)
-                
+                    
+                    /// [3] 사진 프레임
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 0)
+                            .foregroundColor(Color.darkGray)
+                        //                        .stroke(Color.lightGray, lineWidth: 1)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        
+                        HStack(spacing: 0) {
+                            ///왼쪽 사진
+                            AsyncImage(url: imageUrl1) { image in
+                                image
+                                    .resizable()
+                                    .frame(width: 196.5, height: 393)
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 196.5)
+                            
+                            /// 오른쪽 사진
+                            AsyncImage(url: imageUrl2) { image in
+                                image
+                                    .resizable()
+                                    .frame(width: 196.5, height: 393)
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 196.5)
+                        }//】 HStack
+                        
+                        HStack(spacing: 0){
+                            if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
+                            Spacer()
+                            if currentIndex < VM.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
+                            
+                        }
+                        .padding(.horizontal,18)
+                        
+                    
+                        
+                }//】 ZStack
+                    .frame(height: 393, alignment: .center)
+                    .frame(maxWidth: .infinity)
+                    .aspectRatio(1, contentMode: .fit)
+                    .transition(.move(edge: .leading)) // 슬라이드 애니메이션을 적용합니다.
                 
                 /// [4]버튼
-                HStack {
+                HStack(spacing: 0){
                     ShareSheetView()
 //                    Image("imgShareBox")
                         .foregroundColor(.offBlack)
@@ -102,42 +135,119 @@ extension PhotoDetailView: View {
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
                         .padding(.trailing, 70)
-                }
-                .padding(.bottom,48)
-                
-                Spacer()
+                }//】 HStack
+                .frame(height: 100)
+                .padding(.bottom,100)
             } // VStack
             
         } // ZStack
+        .onAppear {
+            Task {
+                await downloadImage()
+            }
+        }
+    }//】 Body
+    
+    
+}
+
+// MARK: - 버튼 디자인
+struct indexButton: View {
+    let icon : String
+    var body: some View {
+        ZStack{
+            Circle()
+                .frame(width: 28, height: 28)
+                .foregroundColor(.offBlack.opacity(0.5))
+            
+            Image(systemName: icon)
+                .foregroundColor(.white)
+                .font(.headline)
+                .fontWeight(.bold)
+        }
     }
 }
 
 // MARK: - Component
-
 extension PhotoDetailView {
+    /// 이전 버튼
+    private var previousButton: some View {
+        return Button {
+            Task {
+                showPrevDetail()
+                await downloadImage()
+            }
+        } label: {
+            indexButton(icon: "chevron.left")
+        }//】 Button
+        .onTapGesture { withAnimation(.easeInOut) {showPrevDetail()} }
+    }// 이전 버튼
+    
+    /// 다음 버튼
+    private var nextButton: some View {
+        return Button {
+            Task {
+                showNextDetail()
+                await downloadImage()
+            }
+        } label: {
+            indexButton(icon: "chevron.right")
+        }//】 Button
+        .onTapGesture { withAnimation(.easeInOut) {showNextDetail()} }
+    }// 다음 버튼
+    
+    
+    /// 이전 버튼 로직
+    func showPrevDetail() {
+            if currentIndex > 0{
+                self.currentIndex -= 1
+                updateViewWithCurrentIndex()
+            }
+    }
+    
+    /// 다음 버튼 로직
+    func showNextDetail() {
+            if currentIndex < VM.truePhotos.count - 1{
+                self.currentIndex += 1
+                updateViewWithCurrentIndex()
+            }
+    }
+    
+    /// 사진 상세뷰 업데이트
+        private func updateViewWithCurrentIndex() {
+            self.date = VM.truePhotos[currentIndex].date
+            self.image1 = VM.truePhotos[currentIndex].photoFirstURL
+            self.image2 = VM.truePhotos[currentIndex].photoSecondURL
+            self.question = VM.trueQuestions[currentIndex].question
+        }
+    
+    /// 이미지 불러오기
+    func downloadImage() async {
+        if let image1 = image1 {
+            do {
+                let url = try await Storage.storage().reference(forURL: image1).downloadURL()
+                imageUrl1 = url
+            } catch { print(error.localizedDescription)}
+        }
+        
+        if let image2 = image2, !image2.isEmpty {
+            do {
+                let url = try await Storage.storage().reference(forURL: image2).downloadURL()
+                imageUrl2 = url
+            } catch { print(error.localizedDescription)}
+        }
+    }
+    
+    
     func textLabel(text: String) -> some View {
         return Text(text)
             .font(.custom(PretendardType.medium.rawValue, size: 16))
             .foregroundColor(.offBlack)
             .padding(.vertical, 7)
             .padding(.horizontal, 8)
-            .background(
-                Rectangle()
-                    .fill(Color.lightGray)
+            .background(Rectangle()
+                        .fill(Color.lightGray)
             )
     }
 }
 
-// MARK: - Preview
-
-struct PhotoDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        PhotoDetailView(
-            date: "2023년 7월 30일",
-            questionNum: 20,
-            question: "\"상대방의 표정 중 당신이\n 가장 좋아하는 표정은?\"",
-            imageUrl1: "https://file.notion.so/f/s/1ed8775d-60cc-4907-b8f2-edf0acfb484f/%E1%84%89%E1%85%A6%E1%84%85%E1%85%A9_3_copy_5_%E1%84%87%E1%85%A9%E1%86%A8%E1%84%89%E1%85%A1%E1%84%87%E1%85%A9%E1%86%AB_2.jpg?id=8dc957fa-bf1e-4daf-a72a-6be8e69213d6&table=block&spaceId=794074b4-a62e-40a9-9a73-2dc5a7035226&expirationTimestamp=1689933600000&signature=-ZApnHNSBN05IfP5KQJWDd_MUXwXBrAUPvTwjjdI-40&downloadName=%E1%84%89%E1%85%A6%E1%84%85%E1%85%A9+3+copy+5+%E1%84%87%E1%85%A9%E1%86%A8%E1%84%89%E1%85%A1%E1%84%87%E1%85%A9%E1%86%AB+2.jpg",
-            imageUrl2: "https://file.notion.so/f/s/19b32819-43e4-446d-bcb8-917b17cfe2cd/%E1%84%89%E1%85%A6%E1%84%85%E1%85%A9_3_copy_5_%E1%84%87%E1%85%A9%E1%86%A8%E1%84%89%E1%85%A1%E1%84%87%E1%85%A9%E1%86%AB.jpg?id=7fddf6e5-976e-4ed6-af14-be1ff9662108&table=block&spaceId=794074b4-a62e-40a9-9a73-2dc5a7035226&expirationTimestamp=1689933600000&signature=QECxg7nvN5ew0ajmMq5oCJmCV0SqyR7e7n8SwOAI804&downloadName=%E1%84%89%E1%85%A6%E1%84%85%E1%85%A9+3+copy+5+%E1%84%87%E1%85%A9%E1%86%A8%E1%84%89%E1%85%A1%E1%84%87%E1%85%A9%E1%86%AB.jpg"
-        )
-    }
-}

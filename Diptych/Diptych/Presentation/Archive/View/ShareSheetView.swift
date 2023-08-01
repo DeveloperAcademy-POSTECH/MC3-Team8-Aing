@@ -39,7 +39,7 @@ struct ShareSheetView: View {
         }
         .sheet(isPresented: $isSharePresented) {
             ActivityViewController(activityItems: [UIImage(named: "heart")!])
-            // TODO: - 여기에 이미지 url 연결해야 함
+            //TODO: - 다운로드 되는 이미지 변경해야함
         }
     }
 
