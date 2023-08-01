@@ -43,7 +43,7 @@ struct ProfileView: View {
                             .padding(.trailing, 20)
                     }
                 }
-                .padding(.top, 50)
+                .padding(.top, 60)
                 
                 Divider()
                     .frame(height: 1)
@@ -85,9 +85,9 @@ struct ProfileView: View {
                         Text("내 초대코드")
                             .font(.pretendard(.medium, size: 14))
                             .foregroundColor(.darkGray)
-                            .padding(.top, 50)
+//                            .padding(.top, 20)
                             .padding(.bottom, 11)
-                        Text("2222 2222")
+                        Text(userViewModel.currentUser?.couplingCode ?? "")
                             .font(.pretendard(.light, size: 24))
                             .foregroundColor(.offBlack)
                             .padding(.bottom, 89)
@@ -106,7 +106,7 @@ struct ProfileView: View {
                             } label: {
                                 Text("로그아웃")
                                     .font(.pretendard(.light, size: 18))
-                                    .padding()
+                                    .padding(.bottom, 32)
                                     .foregroundColor(.darkGray)
                             }
                             Button{
@@ -114,7 +114,7 @@ struct ProfileView: View {
                             } label: {
                                 Text("회원탈퇴")
                                     .font(.pretendard(.light, size: 18))
-                                    .padding()
+                                    .padding(.bottom, 32)
                                     .foregroundColor(.darkGray)
                             }
                             .alert("회원 탈퇴", isPresented: $isShowingAlert, actions: {
