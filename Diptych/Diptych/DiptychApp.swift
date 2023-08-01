@@ -45,7 +45,6 @@ struct DiptychApp: App {
                 if userViewModel.flow == .initialized {
                     OnBoardingView()
                         .environmentObject(userViewModel)
-                        .environmentObject(todayDiptychViewModel)
                 } else if userViewModel.flow == .signedUp {
                     LoadingVerificationView()
                         .environmentObject(userViewModel)
@@ -55,7 +54,6 @@ struct DiptychApp: App {
                 } else if userViewModel.flow == .coupled {
                     ProfileSettingView()
                         .environmentObject(userViewModel)
-                        .environmentObject(todayDiptychViewModel)
                 } else {
                     DiptychTabView2()
                         .environmentObject(userViewModel)
