@@ -9,7 +9,7 @@ import SwiftUI
 
 struct QuestionListView: View {
     
-    @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
+    @EnvironmentObject var VM : ArchiveViewModel
     
     var body: some View {
         
@@ -18,19 +18,19 @@ struct QuestionListView: View {
         
         ScrollView {
             VStack(spacing: 0){
-                ForEach(0..<VM.trueQuestions.count, id: \.self) { index in
+                ForEach((0..<VM.trueQuestions.count).reversed(), id: \.self) { index in
                     
                     NavigationLink {
                         PhotoDetailView(
-                            VM: VM,
                             date: data[index].date,
                             image1: data[index].photoFirstURL,
                             image2: data[index].photoSecondURL,
                             question: data2[index].question,
                             currentIndex: index
                         )
+                        .environmentObject(VM)
                     } label: {
-                        QuestionCellView(questionIndex: index,
+                        QuestionCellView(questionIndex: String(format: "%02d", index + 1),
                                          questionText: VM.trueQuestions[index].question!)
                     }
                 }//】 Loop
@@ -46,19 +46,31 @@ struct QuestionListView: View {
 
 struct QuestionCellView: View {
     
-    let questionIndex: Int
+    let questionIndex: String
     let questionText: String
     
     var body: some View {
         HStack(spacing: 0){
+//            Image(systemName: "highlighter")
+//                .foregroundColor(.darkGray)
+//                .font(.footnote)
+//                .fontWeight(.medium)
+//                .padding(.leading, 10)
+            
             /// [1] n번째
             HStack(spacing: 0){
-                Text("\(questionIndex + 1)번째")
+//                Text("#")
+//                    .font(.system(size:11, weight: .medium))
+//                    .foregroundColor(Color.systemSalmon)
+                
+                Text("\(questionIndex)번째")
                     .font(.system(size:16, weight: .medium))
-                    .foregroundColor(.black)
-                    .padding(.leading, 15)
+                    .foregroundColor(Color.offBlack)
+                    .italic()
             }
-            .frame(width: 60,alignment: .trailing)
+            .frame(width: 50,alignment: .trailing)
+            .padding(.leading, 5)
+            
             /// [2] 질문
             HStack(spacing: 0){
                 Text(questionText)
@@ -67,19 +79,19 @@ struct QuestionCellView: View {
                 Spacer()
             }
             .frame(alignment: .leading)
-            .padding(.leading, 20)
+            .padding(.leading, 12)
             
             /// [3] 화살표
-            Image(systemName: "chevron.right")
-                .foregroundColor(.darkGray)
-                .font(.footnote)
-                .fontWeight(.light)
-                .padding(.trailing, 15)
+//            Image(systemName: "chevron.right")
+//                .foregroundColor(.darkGray)
+//                .font(.footnote)
+//                .fontWeight(.light)
+//                .padding(.trailing, 15)
             
         }//】 HStack
         .frame(height: 25)
         .font(.custom(PretendardType.light.rawValue, size: 16))
-        .padding(.bottom, 21)
+        .padding(.bottom, 30)
         
         
         

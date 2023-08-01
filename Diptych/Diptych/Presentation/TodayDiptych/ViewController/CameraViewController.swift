@@ -681,7 +681,7 @@ class CameraViewController: UIViewController {
         print("파일 업로드 시작....")
 
         LottieUIViews.shared.label.text = "이미지 파일 업로드 중..."
-        let url = try await FirebaseManager.shared.upload(data: data!, withName: "image_\(isFirst ? "first" : "second")_\(viewModel?.todayPhoto?.id ?? Date().timestampString)")
+        let url = try await FirebaseManager.shared.upload(data: data!, withName: "image_\(isFirst ? "first" : "second")_\(viewModel?.todayPhoto?.id ?? UUID().uuidString)")
         print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
         
         guard let url else {
@@ -707,7 +707,7 @@ class CameraViewController: UIViewController {
                let uploadThumb = mergedThumb.jpegData(compressionQuality: THUMB_COMPRESSION_QUALITY) {
                 LottieUIViews.shared.label.text = "섬네일 업로드 중..."
                 print("섬네일 업로드 시작....", halfAnotherThumb.size)
-                let thumbURL = try await FirebaseManager.shared.upload(data: uploadThumb, withName: "thumb_\(viewModel?.todayPhoto?.id ?? Date().formatted())")
+                let thumbURL = try await FirebaseManager.shared.upload(data: uploadThumb, withName: "thumb_\(viewModel?.todayPhoto?.id ?? UUID().uuidString)")
                 dictionary["thumbnail"] = thumbURL?.absoluteString
                 print("섬네일 업로드 끝")
             } else {
@@ -789,7 +789,7 @@ class CameraViewController: UIViewController {
     
     func toggleTorch(forceOff: Bool = false) {
         guard let device = AVCaptureDevice.default(for: .video), device.hasTorch else {
-            btnFlash.setImage(.init(named: "imgFlashButtonOff"), for: .normal)
+            btnFlash.setImage(.init(named: "imgFlashButtonOff_"), for: .normal)
             return
         }
         
@@ -799,7 +799,7 @@ class CameraViewController: UIViewController {
             if device.torchMode == AVCaptureDevice.TorchMode.on || forceOff {
                 // Off
                 device.torchMode = .off
-                btnFlash.setImage(.init(named: "imgFlashButtonOff"), for: .normal)
+                btnFlash.setImage(.init(named: "imgFlashButtonOff_"), for: .normal)
             } else {
                 // On
                 try device.setTorchModeOn(level: 1.0)
@@ -808,7 +808,7 @@ class CameraViewController: UIViewController {
             
             device.unlockForConfiguration()
         } catch {
-            btnFlash.setImage(.init(named: "imgFlashButtonOff"), for: .normal)
+            btnFlash.setImage(.init(named: "imgFlashButtonOff_"), for: .normal)
             print(#function, error.localizedDescription)
         }
     }

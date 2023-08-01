@@ -34,7 +34,8 @@ struct DiptychApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var userViewModel: UserViewModel = UserViewModel()
-    @StateObject private var todayDiptychViewModel = TodayDiptychViewModel()
+    @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
+    
     
     var body: some Scene {
         WindowGroup {
@@ -58,7 +59,7 @@ struct DiptychApp: App {
                 } else {
                     DiptychTabView2()
                         .environmentObject(userViewModel)
-                        .environmentObject(todayDiptychViewModel)
+                        .environmentObject(VM)
                 }
             } else {
 //                UploadData()

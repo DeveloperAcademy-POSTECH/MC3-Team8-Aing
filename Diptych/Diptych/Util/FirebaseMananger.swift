@@ -74,3 +74,4 @@ class FirebaseManager {
         return storageMetadata.updated
     }
 }
+
