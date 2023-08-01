@@ -51,7 +51,7 @@ extension PhotoDetailView: View {
                         Text("\(currentIndex + 1)")
                             .italic()
                             .font(.custom(PretendardType.medium.rawValue, size: 16))
-//                            .foregroundColor(.systemSalmon)
+                        //                            .foregroundColor(.systemSalmon)
                         Text("번째 딥틱")
                     }//: HStack
                     .padding(.bottom,10)
@@ -64,172 +64,89 @@ extension PhotoDetailView: View {
                 .padding(.top,32)
                 .padding(.horizontal,13)
                 
-                
-                    //MARK: - [2] 질문
-                    VStack(spacing: 0){
-                        HStack(spacing: 0){
-                            Text("\(question ?? "")")
-                                .font(.custom(PretendardType.light.rawValue, size: 24))
-                                .foregroundColor(.offBlack)
-                                .multilineTextAlignment(.leading)
-                                .padding(.leading, 17)
-                            Spacer()
-                        }//】 HStack
-                        .padding(.top,23)
+                //MARK: - [2] 질문
+                VStack(spacing: 0){
+                    HStack(spacing: 0){
+                        Text("\(question ?? "")")
+                            .font(.custom(PretendardType.light.rawValue, size: 24))
+                            .foregroundColor(.offBlack)
+                            .multilineTextAlignment(.leading)
+                            .padding(.leading, 17)
                         Spacer()
                     }//】 HStack
                     .padding(.top,23)
                     Spacer()
-                }//】 VStack
-                .frame(height: 120)
-                
-                
-                
-                /// [3] 사진 프레임
-                
-                ZStack{
-                    
-                    RoundedRectangle(cornerRadius: 0)
-                        .foregroundColor(Color.darkGray)
-                    //                        .stroke(Color.lightGray, lineWidth: 1)
-                        // .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .frame(width: 393, height: 393)
-                    
-                    
-                    
-                    HStack(spacing: 0) {
-                        HStack(spacing: 0) {
-                            if let image1Image, let image2Image {
-                                HStack(spacing: 0) {
-                                    Image(uiImage: image1Image)
-                                        .resizable()
-                                        .frame(width: 196.5, height: 393)
-                                    Image(uiImage: image2Image)
-                                        .resizable()
-                                        .frame(width: 196.5, height: 393)
-                                }
-                                // .transition(isShouldShowPrevOrNext ? .slide : .identity)
-                                // .transition(.opacity)
-                                // .animation(.linear)
-                            }
-                            else {
-                                ProgressView()
-                            }
-                        }
-                        
-                        // AsyncImage(url: imageUrl1) { phase in
-                        //     switch phase {
-                        //     case .success(let image):
-                        //         image
-                        //             .resizable()
-                        //             .frame(width: 196.5, height: 393)
-                        //             .onAppear {
-                        //                 print("image1 appeared:", Date().timeIntervalSince1970)
-                        //                 isFirstLoaded = true
-                        //                 print("all loaded?", isFirstLoaded && isSecondLoaded)
-                        //             }
-                        //             .opacity(isFirstLoaded && isSecondLoaded ? 1 : 0)
-                        //         // Text("loaded")
-                        //
-                        //     case .failure(_):
-                        //         Text("error")
-                        //     case .empty:
-                        //         // placeholder
-                        //         ProgressView()
-                        //     @unknown default:
-                        //         Text("unknown")
-                        //     }
-                        // }.onAppear {
-                        //     print("onAppear: \(Date().timeIntervalSince1970)")
-                        // }.onChange(of: isFirstLoaded) { newValue in
-                        //     print("isFirstLoaded changed:", isFirstLoaded)
-                        // }
-                        //
-                        // AsyncImage(url: imageUrl2) { phase in
-                        //     switch phase {
-                        //     case .success(let image):
-                        //         image
-                        //             .resizable()
-                        //             .frame(width: 196.5, height: 393)
-                        //             .onAppear {
-                        //                 print("image2 appeared:", Date().timeIntervalSince1970)
-                        //                 isSecondLoaded = true
-                        //                 print("all loaded?", isFirstLoaded && isSecondLoaded)
-                        //             }
-                        //             .opacity(isFirstLoaded && isSecondLoaded ? 1 : 0)
-                        //         // Text("loaded")
-                        //
-                        //     case .failure(_):
-                        //         Text("error")
-                        //     case .empty:
-                        //         // placeholder
-                        //         ProgressView()
-                        //     @unknown default:
-                        //         Text("unknown")
-                        //     }
-                        // }.onAppear {
-                        //     print("onAppear: \(Date().timeIntervalSince1970)")
-                        // }
-                        ///왼쪽 사진
-                        // AsyncImage(url: imageUrl1) { image in
-                        //
-                        //     image
-                        //         .resizable()
-                        //         .frame(width: 196.5, height: 393)
-                        // } placeholder: {
-                        //     ProgressView()
-                        // }
-                        // .frame(width: 196.5)
-                        
-                        
-                        /// 오른쪽 사진
-                        // AsyncImage(url: imageUrl2) { image in
-                        //     image
-                        //         .resizable()
-                        //         .frame(width: 196.5, height: 393)
-                        // } placeholder: {
-                        //     ProgressView()
-                        // }
-                        // .frame(width: 196.5)
-                    }//】 HStack
-                    
-                    HStack(spacing: 0){
-                        if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
-                        Spacer()
-                        if currentIndex < VM.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
-                        
-                    }
-                    .padding(.horizontal,18)
-                    
-                    
-                    
-                }//】 ZStack
-                .frame(height: 393, alignment: .center)
-                .frame(maxWidth: .infinity)
-                .aspectRatio(1, contentMode: .fit)
-                // .transition(.move(edge: .leading)) // 슬라이드 애니메이션을 적용합니다.
-                // .opacity(isFirstLoaded && isSecondLoaded ? 1 : 0)
-                
-                //MARK: - [4] 공유/ 좋아요 버튼
-                HStack(spacing: 0){
-                    ShareSheetView()
-                    //                    Image("imgShareBox")
-                        .foregroundColor(.offBlack)
-                        .frame(width: 30, height: 30)
-                        .padding(.leading, 70)
-                    Image("imgWhiteHeart")
-                        .foregroundColor(.offBlack)
-                        .frame(width: 30, height: 30)
-                        .padding(.horizontal, 80)
-                    Image("imgComment")
-                        .foregroundColor(.offBlack)
-                        .frame(width: 30, height: 30)
-                        .padding(.trailing, 70)
                 }//】 HStack
-                .frame(height: 100)
-                .padding(.bottom,100)
+                .padding(.top,23)
+                Spacer()
+            }//】 VStack
+            .frame(height: 120)
+            
+            /// [3] 사진 프레임
+            ZStack{
+                RoundedRectangle(cornerRadius: 0)
+                    .foregroundColor(Color.darkGray)
+                //                        .stroke(Color.lightGray, lineWidth: 1)
+                // .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .frame(width: 393, height: 393)
                 
-            } // VStack
+                HStack(spacing: 0) {
+                    HStack(spacing: 0) {
+                        if let image1Image, let image2Image {
+                            HStack(spacing: 0) {
+                                Image(uiImage: image1Image)
+                                    .resizable()
+                                    .frame(width: 196.5, height: 393)
+                                Image(uiImage: image2Image)
+                                    .resizable()
+                                    .frame(width: 196.5, height: 393)
+                            }
+                            // .transition(isShouldShowPrevOrNext ? .slide : .identity)
+                            // .transition(.opacity)
+                            // .animation(.linear)
+                        }
+                        else {
+                            ProgressView()
+                        }
+                    }
+                    
+                }//】 HStack
+                
+                HStack(spacing: 0){
+                    if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
+                    Spacer()
+                    if currentIndex < VM.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
+                    
+                }
+                .padding(.horizontal,18)
+                
+                
+                
+            }//】 ZStack
+            .frame(height: 393, alignment: .center)
+            .frame(maxWidth: .infinity)
+            .aspectRatio(1, contentMode: .fit)
+            // .transition(.move(edge: .leading)) // 슬라이드 애니메이션을 적용합니다.
+            // .opacity(isFirstLoaded && isSecondLoaded ? 1 : 0)
+            
+            //MARK: - [4] 공유/ 좋아요 버튼
+            HStack(spacing: 0){
+                ShareSheetView()
+                //                    Image("imgShareBox")
+                    .foregroundColor(.offBlack)
+                    .frame(width: 30, height: 30)
+                    .padding(.leading, 70)
+                Image("imgWhiteHeart")
+                    .foregroundColor(.offBlack)
+                    .frame(width: 30, height: 30)
+                    .padding(.horizontal, 80)
+                Image("imgComment")
+                    .foregroundColor(.offBlack)
+                    .frame(width: 30, height: 30)
+                    .padding(.trailing, 70)
+            }//】 HStack
+            .frame(height: 100)
+            .padding(.bottom,100)
             
         } // ZStack
         .onAppear {
@@ -238,11 +155,9 @@ extension PhotoDetailView: View {
             // }
             downloadImageWithCache()
         }
-        .transition(.slide)
     }//】 Body
-    
-    
 }
+
 
 // MARK: - 이미지 셀
 //struct ImageCell: View {
@@ -401,10 +316,6 @@ extension PhotoDetailView {
         }
     }
 
-    
-    
-    
-    
     func textLabel(text: String) -> some View {
         return Text(text)
             .font(.custom(PretendardType.medium.rawValue, size: 16))
