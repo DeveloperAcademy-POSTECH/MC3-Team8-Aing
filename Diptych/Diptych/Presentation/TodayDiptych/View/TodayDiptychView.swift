@@ -60,12 +60,12 @@ struct TodayDiptychView: View {
     private func fetchData() {
         Task {
             await viewModel.fetchUser()
-            await viewModel.setTodayPhoto()
             await viewModel.setUserCameraLoactionState()
+            await viewModel.setTodayPhoto()
+            await viewModel.fetchContents()
             await viewModel.fetchTodayImage()
             await viewModel.setDiptychNumber()
             await viewModel.fetchWeeklyCalender()
-            await viewModel.fetchContents()
 
             guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
             diptychCompleteAlertObject.isDiptychCompleted = isCompleted
