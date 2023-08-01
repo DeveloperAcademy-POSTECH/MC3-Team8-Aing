@@ -118,10 +118,12 @@ extension TodayDiptychView {
                 .multilineTextAlignment(.center)
 
                 HStack(spacing: 9) {
+                    let weeklyDates = viewModel.setWeeklyDates()
                     ForEach(0..<7) { index in
+                        let date = weeklyDates[index]
+                        let data = viewModel.weeklyData.filter { $0.date == date }
                         WeeklyCalenderView(day: days[index],
-                                           diptychState: index <= viewModel.weeklyData.count - 1
-                                           ? viewModel.weeklyData[index] : .none)
+                                           diptychState: data.isEmpty ? .none : data[0].diptychState)
                     }
                 }
                 .padding(.bottom, 28)

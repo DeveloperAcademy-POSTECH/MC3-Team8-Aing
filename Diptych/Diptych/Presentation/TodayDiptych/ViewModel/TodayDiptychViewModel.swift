@@ -31,7 +31,7 @@ final class TodayDiptychViewModel: ObservableObject {
     @Published var question = ""
     @Published var currentUser: DiptychUser?
     @Published var isFirst = true
-    @Published var weeklyData = [DiptychState]()
+    @Published var weeklyData = [WeeklyData]()
     @Published var content: Content?
     @Published var todayPhoto: Photo?
     @Published var photoFirstURL = ""
@@ -57,20 +57,24 @@ final class TodayDiptychViewModel: ObservableObject {
             for document in querySnapshot.documents {
                 let photo = try document.data(as: Photo.self)
                 let isCompleted = photo.isCompleted
+                let date = Date(timeIntervalSince1970: TimeInterval(photo.date.seconds))
+                guard let day = Calendar.current.dateComponents([.day], from: date).day else { return }
 
-                weeklyData.append(isCompleted ? DiptychState.complete : DiptychState.incomplete)
+                weeklyData.append(WeeklyData(date: day, diptychState: isCompleted ? DiptychState.complete : DiptychState.incomplete))
             }
 
             guard let todayPhoto = self.todayPhoto else { return }
+            let date = Date(timeIntervalSince1970: TimeInterval(todayPhoto.date.seconds))
+            guard let day = Calendar.current.dateComponents([.day], from: date).day else { return }
 
             if todayPhoto.isCompleted {
-                weeklyData.append(.complete)
+                weeklyData.append(WeeklyData(date: day, diptychState: .complete))
             } else if !todayPhoto.photoFirst.isEmpty && todayPhoto.photoSecond.isEmpty {
-                weeklyData.append(.todayfirst)
+                weeklyData.append(WeeklyData(date: day, diptychState: .todayfirst))
             } else if todayPhoto.photoFirst.isEmpty && !todayPhoto.photoSecond.isEmpty {
-                weeklyData.append(.todaySecond)
+                weeklyData.append(WeeklyData(date: day, diptychState: .todaySecond))
             } else {
-                weeklyData.append(.todayIncomplete)
+                weeklyData.append(WeeklyData(date: day, diptychState: .todayIncomplete))
             }
         } catch {
             print(error.localizedDescription)
@@ -236,7 +240,7 @@ final class TodayDiptychViewModel: ObservableObject {
     }
 
     func calculateThisTodayTimestamp() -> Timestamp {
-        let (todayDate, calendar, daysAfterMonday) = setTodayCalendar()
+        let (todayDate, _, _) = setTodayCalendar()
         let timestamp = Timestamp(date: todayDate)
         return timestamp
     }
@@ -270,4 +274,15 @@ final class TodayDiptychViewModel: ObservableObject {
 
         return (todayDate, calendar, daysAfterMonday)
     }
+
+    func setWeeklyDates() -> [Int] {
+         let calendar = Calendar.current
+         let weekday = calendar.component(.weekday, from: calculateThisMondayDate())
+         let daysToAdd = (2...8).map { $0 - weekday }
+         let weeklyDates = daysToAdd.map { calendar.date(byAdding: .day,
+                                                         value: $0,
+                                                         to: calculateThisMondayDate())! }
+                                     .map { calendar.component(.day, from: $0) }
+         return weeklyDates
+     }
 }
