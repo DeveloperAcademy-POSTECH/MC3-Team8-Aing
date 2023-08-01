@@ -171,7 +171,7 @@ extension TodayDiptychView {
                 rectangleOverlayImage(Color.offBlack, url)
                 Color.black
                     .opacity(0.54)
-                    .background(VisualEffectView(effect: UIBlurEffect(style: .light)))
+                    .background(VisualEffectView(effect: UIBlurEffect(style: .regular)))
                 VStack(spacing: 17) {
                     Image("icnCheck")
                     Text("상대방이 오늘 딥틱을\n완성했어요")
