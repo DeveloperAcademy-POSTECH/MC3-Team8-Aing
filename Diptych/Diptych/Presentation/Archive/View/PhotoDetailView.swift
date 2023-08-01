@@ -30,7 +30,6 @@ struct PhotoDetailView {
     
     @State var image1Image: UIImage?
     @State var image2Image: UIImage?
-    @State var isShouldShowPrevOrNext: Bool = false
 }
 
 // MARK: - View
@@ -39,7 +38,7 @@ extension PhotoDetailView: View {
     var body: some View {
         ZStack {
             Color.offWhite.edgesIgnoringSafeArea(.top)
-            
+
             VStack(spacing: 0) {
                 
                 //MARK: - [1] 해더
@@ -51,7 +50,7 @@ extension PhotoDetailView: View {
                         Text("\(currentIndex + 1)")
                             .italic()
                             .font(.custom(PretendardType.medium.rawValue, size: 16))
-                        //                            .foregroundColor(.systemSalmon)
+//                            .foregroundColor(.systemSalmon)
                         Text("번째 딥틱")
                     }//: HStack
                     .padding(.bottom,10)
@@ -64,89 +63,107 @@ extension PhotoDetailView: View {
                 .padding(.top,32)
                 .padding(.horizontal,13)
                 
-                //MARK: - [2] 질문
-                VStack(spacing: 0){
-                    HStack(spacing: 0){
-                        Text("\(question ?? "")")
-                            .font(.custom(PretendardType.light.rawValue, size: 24))
-                            .foregroundColor(.offBlack)
-                            .multilineTextAlignment(.leading)
-                            .padding(.leading, 17)
+                
+                    //MARK: - [2] 질문
+                    VStack(spacing: 0){
+                        HStack(spacing: 0){
+                            Text("\(question ?? "")")
+                                .font(.custom(PretendardType.light.rawValue, size: 24))
+                                .foregroundColor(.offBlack)
+                                .multilineTextAlignment(.leading)
+                                .padding(.leading, 17)
+                            Spacer()
+                        }//】 HStack
+                        .padding(.top,23)
                         Spacer()
-                    }//】 HStack
-                    .padding(.top,23)
-                    Spacer()
-                }//】 HStack
-                .padding(.top,23)
-                Spacer()
-            }//】 VStack
-            .frame(height: 120)
-            
-            /// [3] 사진 프레임
-            ZStack{
-                RoundedRectangle(cornerRadius: 0)
-                    .foregroundColor(Color.darkGray)
-                //                        .stroke(Color.lightGray, lineWidth: 1)
-                // .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .frame(width: 393, height: 393)
-                
-                HStack(spacing: 0) {
-                    HStack(spacing: 0) {
-                        if let image1Image, let image2Image {
-                            HStack(spacing: 0) {
-                                Image(uiImage: image1Image)
-                                    .resizable()
-                                    .frame(width: 196.5, height: 393)
-                                Image(uiImage: image2Image)
-                                    .resizable()
-                                    .frame(width: 196.5, height: 393)
+                    }//】 VStack
+                    .frame(height: 120)
+                    
+                    
+                    /// [3] 사진 프레임
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 0)
+                            .foregroundColor(Color.darkGray)
+                            // .stroke(Color.lightGray, lineWidth: 1)
+                            // .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .frame(width: 393, height: 393)
+                        
+                        HStack(spacing: 0) {
+                            if let image1Image, let image2Image {
+                                HStack(spacing: 0) {
+                                    Image(uiImage: image1Image)
+                                        .resizable()
+                                        .frame(width: 196.5, height: 393)
+                                    Image(uiImage: image2Image)
+                                        .resizable()
+                                        .frame(width: 196.5, height: 393)
+                                }
+                                // .transition(isShouldShowPrevOrNext ? .slide : .identity)
+                                // .transition(.opacity)
+                                // .animation(.linear)
                             }
-                            // .transition(isShouldShowPrevOrNext ? .slide : .identity)
-                            // .transition(.opacity)
-                            // .animation(.linear)
+                            else {
+                                ProgressView()
+                            }
+                            ///왼쪽 사진
+                            // AsyncImage(url: imageUrl1) { image in
+                            //
+                            //     image
+                            //         .resizable()
+                            //         .frame(width: 196.5, height: 393)
+                            // } placeholder: {
+                            //     ProgressView()
+                            // }
+                            // .frame(width: 196.5)
+                            
+                            
+                            /// 오른쪽 사진
+                            // AsyncImage(url: imageUrl2) { image in
+                            //     image
+                            //         .resizable()
+                            //         .frame(width: 196.5, height: 393)
+                            // } placeholder: {
+                            //     ProgressView()
+                            // }
+                            // .frame(width: 196.5)
+                        }//】 HStack
+                        
+//                        ImageCell(imageUrl1: imageUrl1, imageUrl2: imageUrl2)
+//                            .environmentObject(VM)
+//                            .frame(maxWidth: .infinity)
+                        
+                        HStack(spacing: 0){
+                            if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
+                            Spacer()
+                            if currentIndex < VM.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
                         }
-                        else {
-                            ProgressView()
-                        }
-                    }
-                    
-                }//】 HStack
+                        .padding(.horizontal,18)
+                        
+                    }//】 ZStack
+                    .frame(height: 393, alignment: .center)
+                    .frame(maxWidth: .infinity)
+                    .aspectRatio(1, contentMode: .fit)
                 
+                //MARK: - [4] 공유/ 좋아요 버튼
                 HStack(spacing: 0){
-                    if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
-                    Spacer()
-                    if currentIndex < VM.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
-                    
-                }
-                .padding(.horizontal,18)
+                    ShareSheetView()
+//                    Image("imgShareBox")
+                        .foregroundColor(.offBlack)
+                        .frame(width: 30, height: 30)
+                        .padding(.leading, 70)
+                    Image("imgWhiteHeart")
+                        .foregroundColor(.offBlack)
+                        .frame(width: 30, height: 30)
+                        .padding(.horizontal, 80)
+                    Image("imgComment")
+                        .foregroundColor(.offBlack)
+                        .frame(width: 30, height: 30)
+                        .padding(.trailing, 70)
+                }//】 HStack
+                .frame(height: 100)
+                .padding(.bottom,100)
                 
-                
-                
-            }//】 ZStack
-            .frame(height: 393, alignment: .center)
-            .frame(maxWidth: .infinity)
-            .aspectRatio(1, contentMode: .fit)
-            // .transition(.move(edge: .leading)) // 슬라이드 애니메이션을 적용합니다.
-            // .opacity(isFirstLoaded && isSecondLoaded ? 1 : 0)
-            
-            //MARK: - [4] 공유/ 좋아요 버튼
-            HStack(spacing: 0){
-                ShareSheetView()
-                //                    Image("imgShareBox")
-                    .foregroundColor(.offBlack)
-                    .frame(width: 30, height: 30)
-                    .padding(.leading, 70)
-                Image("imgWhiteHeart")
-                    .foregroundColor(.offBlack)
-                    .frame(width: 30, height: 30)
-                    .padding(.horizontal, 80)
-                Image("imgComment")
-                    .foregroundColor(.offBlack)
-                    .frame(width: 30, height: 30)
-                    .padding(.trailing, 70)
-            }//】 HStack
-            .frame(height: 100)
-            .padding(.bottom,100)
+            } // VStack
             
         } // ZStack
         .onAppear {
@@ -157,7 +174,6 @@ extension PhotoDetailView: View {
         }
     }//】 Body
 }
-
 
 // MARK: - 이미지 셀
 //struct ImageCell: View {
@@ -267,13 +283,28 @@ extension PhotoDetailView {
     }
     
     /// 사진 상세뷰 업데이트
-    private func updateViewWithCurrentIndex() {
-        self.date = VM.truePhotos[currentIndex].date
-        self.image1 = VM.truePhotos[currentIndex].photoFirstURL
-        self.image2 = VM.truePhotos[currentIndex].photoSecondURL
-        self.question = VM.trueQuestions[currentIndex].question
-        // isFirstLoaded = false
-        // isSecondLoaded = false
+        private func updateViewWithCurrentIndex() {
+            self.date = VM.truePhotos[currentIndex].date
+            self.image1 = VM.truePhotos[currentIndex].photoFirstURL
+            self.image2 = VM.truePhotos[currentIndex].photoSecondURL
+            self.question = VM.trueQuestions[currentIndex].question
+        }
+    
+    /// 이미지 불러오기
+    func downloadImage() async {
+        if let image1 = image1 {
+            do {
+                let url = try await Storage.storage().reference(forURL: image1).downloadURL()
+                imageUrl1 = url
+            } catch { print(error.localizedDescription)}
+        }
+        
+        if let image2 = image2 {
+            do {
+                let url = try await Storage.storage().reference(forURL: image2).downloadURL()
+                imageUrl2 = url
+            } catch { print(error.localizedDescription)}
+        }
     }
     
     /// 이미지 불러오기 (메모리 캐싱)
@@ -315,7 +346,7 @@ extension PhotoDetailView {
             }
         }
     }
-
+    
     func textLabel(text: String) -> some View {
         return Text(text)
             .font(.custom(PretendardType.medium.rawValue, size: 16))
@@ -323,7 +354,7 @@ extension PhotoDetailView {
             .padding(.vertical, 7)
             .padding(.horizontal, 8)
             .background(Rectangle()
-                .fill(Color.lightGray)
+                        .fill(Color.lightGray)
             )
     }
 }
