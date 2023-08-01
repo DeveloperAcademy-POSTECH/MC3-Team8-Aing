@@ -14,6 +14,10 @@ struct TodayDiptychView: View {
     @State var isShowCamera = false
     @State private var firstUIImage: UIImage?
     @State private var secondUIImage: UIImage?
+    
+    @State private var timer: Timer?
+
+    @State private var isAllTasksCompleted = false
     @State private var isDiptychCompleted = false
     @State private var isDiptychCompleteAlertShown = false
     @StateObject private var imageCacheViewModel = ImageCacheViewModel(firstImage: nil, secondImage: nil)
@@ -32,7 +36,14 @@ struct TodayDiptychView: View {
             }
             .ignoresSafeArea(edges: .top)
             .onAppear {
-                fetchData()
+                print("viewModel.weeklyData: \(viewModel.weeklyData)")
+//                timerTest()
+                fetchDataWhenMidnight()
+//                fetchData()
+            }
+            .onDisappear {
+//                fetchDataWhenMidnight()
+//                viewModel.weeklyData.removeAll()
             }
             .fullScreenCover(isPresented: $isShowCamera) {
                 ZStack {
@@ -153,6 +164,24 @@ extension TodayDiptychView {
             rectangleOverlayImage(Color.lightGray, url)
         }
     }
+    
+    private func fetchDataWhenMidnight() {
+        let calendar = Calendar.current
+        let now = Date()
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
+        let secondsUntilMidnight = (24 * 60 * 60) - (components.hour! * 60 * 60 + components.minute! * 60 + components.second!)
+        print("[DEBUG] (called) fetchDataWhenMidnight\n\t secondsUntilMidnight: \(secondsUntilMidnight)")
+        self.timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsUntilMidnight), repeats: false) { _ in
+            fetchData()
+        }
+        print("[DEBUG] (called) fetchDataWhenMidnight\n\t timer: \(self.timer)")
+    }
+    
+//    private func timerTest() {
+//        self.timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(10), repeats: false) { _ in
+//            print("count 10s done")
+//        }
+//    }
 
     @ViewBuilder
     private func loverDiptychImageView(_ todayDiptychState: TodayDiptychState, _ url: String) -> some View {

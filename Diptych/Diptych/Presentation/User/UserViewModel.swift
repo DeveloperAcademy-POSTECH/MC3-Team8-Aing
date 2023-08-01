@@ -30,6 +30,8 @@ class UserViewModel: ObservableObject {
     @Published var coupleAlbum: DiptychAlbum?
 //    @Published var isCompleted: Bool = false
     
+//    @EnvironmentObject var todayDiptychViewModel: TodayDiptychViewModel
+    
     var listenerAboutAuth: AuthStateDidChangeListenerHandle?
     var listenerAboutUserData: ListenerRegistration?
     
@@ -43,6 +45,7 @@ class UserViewModel: ObservableObject {
                     await self.fetchLoverData()
                 }
             }
+//            listenerAboutUserData
             try await generatedCouplingCode()
         }
     }
@@ -54,6 +57,7 @@ class UserViewModel: ObservableObject {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             print("[DEBUG] signInWithEmailPassword -> result:  \(result)")
             await fetchUserData()
+            await fetchLoverData()
             return ""
         }
         catch {
@@ -220,7 +224,7 @@ class UserViewModel: ObservableObject {
             self.currentUser = currentUser
             self.flow = UserFlow(rawValue: currentUser.flow) ?? .initialized
         }
-        print("DEBUG : fetchLoverData self.currentUser : \(self.currentUser)\n")
+        print("DEBUG : fetchUserData self.currentUser : \(self.currentUser)\n")
         print("[DEBUG] flow : \(self.flow)")
     }
     
@@ -277,6 +281,11 @@ extension UserViewModel {
             } while codes.contains(where: { element in return String(describing: element) == code})
             
             self.couplingCode = code
+            if var currentUser = self.currentUser {
+                currentUser.couplingCode = code
+                let encodedCurrentUser = try Firestore.Encoder().encode(currentUser)
+                try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedCurrentUser, merge: true)
+            }
         }
     }
     
@@ -362,7 +371,7 @@ extension UserViewModel {
         }
     }
     
-    func addCoupleAlbumData(startDate: Date) async throws {
+    func addCoupleAlbumData() async throws {
         do {
             print("[DEBUG] addCoupleAlbumData start!!!")
             var data = DiptychAlbum(id: "")
@@ -370,7 +379,7 @@ extension UserViewModel {
             var encodedData = try Firestore.Encoder().encode(data)
             ref = try await Firestore.firestore().collection("albums").addDocument(data: encodedData)
             data.id = ref!.documentID
-            data.startDate = startDate
+            data.startDate = Date()
             encodedData = try Firestore.Encoder().encode(data)
             try await ref?.setData(encodedData, merge: true)
             self.coupleAlbum = data
@@ -386,7 +395,7 @@ extension UserViewModel {
             if var currentUser = self.currentUser, var lover = self.lover {
                 currentUser.name = name
                 currentUser.startDate = startDate
-                try await addCoupleAlbumData(startDate: startDate)
+                try await addCoupleAlbumData()
                 if let coupleAlbum = self.coupleAlbum {
                     print("[DEBUG] check!!!! coupleAlbumId: \(coupleAlbum.id)")
                     currentUser.coupleAlbumId = coupleAlbum.id

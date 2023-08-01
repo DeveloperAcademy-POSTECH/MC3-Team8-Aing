@@ -55,6 +55,7 @@ struct SignUpView: View {
                             isEmailFocused = true
                         }
                         Divider()
+                            .frame(height: 1)
                             .overlay(emailWarning == "" ? Color.darkGray : Color.systemRed)
                         Text(emailWarning)
                             .font(.pretendard(.light, size: 12))
@@ -69,11 +70,12 @@ struct SignUpView: View {
                             Button {
                                 isPasswordHidden.toggle()
                             } label: {
-                                Image(systemName: isPasswordHidden ? "eye" : "eye.slash")
+                                Image(systemName: isPasswordHidden ? "eye.slash" : "eye")
                                     .foregroundColor(.darkGray)
                             }
                         }
                         Divider()
+                            .frame(height: 1)
                             .overlay(passwordWarning == "" ? Color.darkGray : Color.systemRed)
                         Text(passwordWarning)
                             .font(.pretendard(.light, size: 12))
@@ -88,11 +90,12 @@ struct SignUpView: View {
                             Button {
                                 isPasswordConfirmHidden.toggle()
                             } label: {
-                                Image(systemName: isPasswordConfirmHidden ? "eye" : "eye.slash")
+                                Image(systemName: isPasswordConfirmHidden ? "eye.slash" : "eye")
                                     .foregroundColor(.darkGray)
                             }
                         }
                         Divider()
+                            .frame(height: 1)
                             .overlay(passwordConfirmWarning == "" ? Color.darkGray : Color.systemRed)
                         Text(passwordConfirmWarning)
                             .font(.pretendard(.light, size: 12))

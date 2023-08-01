@@ -19,6 +19,13 @@ struct OnBoardingView: View {
             ZStack {
                 Color.offWhite
                     .ignoresSafeArea()
+                Image("OnBoardingViewImage3")
+                    .resizable()
+                    .ignoresSafeArea()
+                    // 임시로 누르면 카메라 뜨도록 했고 나중에 다 지우겠습니다 (Cliff)
+//                    .onTapGesture {
+//                        isShowCamera = true
+//                    }
                 VStack() {
                     Spacer()
                         .frame(height: 124)
@@ -29,16 +36,6 @@ struct OnBoardingView: View {
                         .padding(.trailing, 40)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
-                    Spacer()
-                        .frame(height: 28)
-                    Image("OnBoardingViewImage2")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 393, height: 393)
-                        // 임시로 누르면 카메라 뜨도록 했고 나중에 다 지우겠습니다 (Cliff)
-                        .onTapGesture {
-                            isShowCamera = true
-                        }
                     Spacer()
                     VStack(spacing: 10) { // (S) LogIn, SignUp
                         NavigationLink(destination: LogInView()) {
@@ -73,7 +70,7 @@ struct NavigationBackItem: View {
             dismiss()
         } label: {
             Image(systemName: "chevron.backward")
-                .foregroundColor(Color.darkGray)
+                .foregroundColor(Color.offBlack)
         }
     }
 }

@@ -20,6 +20,12 @@ struct WeeklyCalenderView: View {
                 .font(.pretendard(.bold, size: 16))
                 .foregroundColor(.offBlack)
         }
+//        .onAppear {
+//            print("thumbnail: \(thumbnail)")
+//            Task {
+//                await downloadImage()
+//            }
+//        }
     }
 }
 

@@ -16,10 +16,11 @@ struct LogInView: View {
     @State private var dividerColor: Color = .darkGray
     @State private var isPasswordHidden: Bool = true
     
+    @FocusState var isEmailFocused: Bool
     @FocusState var isPasswordFocused: Bool
     
     @EnvironmentObject var userViewModel: UserViewModel
-//    @EnvironmentObject var todayDiptychViewModel: TodayDiptychViewModel
+    @EnvironmentObject var todayDiptychViewModel: TodayDiptychViewModel
     
     var body: some View {
         ZStack {
@@ -44,7 +45,12 @@ struct LogInView: View {
                         .keyboardType(.emailAddress)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
+                        .focused($isEmailFocused)
+                        .onTapGesture {
+                            isEmailFocused = true
+                        }
                         Divider()
+                            .frame(height: 1)
                             .overlay(dividerColor)
                     }
                     VStack(alignment: .leading) {
@@ -56,11 +62,12 @@ struct LogInView: View {
                             Button {
                                 isPasswordHidden.toggle()
                             } label: {
-                                Image(systemName: isPasswordHidden ? "eye" : "eye.slash")
+                                Image(systemName: isPasswordHidden ? "eye.slash" : "eye")
                                     .foregroundColor(.darkGray)
                             }
                         }
                         Divider()
+                            .frame(height: 1)
                             .overlay(passwordWarning == "" ? Color.darkGray : Color.systemRed)
 //                        SecureField("", text: $password, prompt: Text("비밀번호")
 //                            .font(.pretendard(.light, size: 18))
@@ -104,6 +111,7 @@ struct LogInView: View {
                             alertMessage = result
                             isAlertShown = true
                         }
+                        await todayDiptychViewModel.setUserCameraLoactionState()
                     }
                 } label: {
                     Text("로그인하기")
@@ -126,6 +134,7 @@ struct LogInView: View {
             .ignoresSafeArea()
         }
         .onTapGesture {
+            isEmailFocused = false
             isPasswordFocused = false
         }
         .navigationViewStyle(.stack)
