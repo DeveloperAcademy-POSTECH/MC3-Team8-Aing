@@ -28,10 +28,9 @@ struct PhotoDetailView {
         return formatter
     }()
     
-    
-    private let transaction: Transaction = .init(animation: .linear)
-    @State var isFirstLoaded: Bool = false
-    @State var isSecondLoaded: Bool = false
+    @State var image1Image: UIImage?
+    @State var image2Image: UIImage?
+    @State var isShouldShowPrevOrNext: Bool = false
 }
 
 // MARK: - View
@@ -40,7 +39,7 @@ extension PhotoDetailView: View {
     var body: some View {
         ZStack {
             Color.offWhite.edgesIgnoringSafeArea(.top)
-
+            
             VStack(spacing: 0) {
                 
                 //MARK: - [1] 해더
@@ -78,117 +77,143 @@ extension PhotoDetailView: View {
                         }//】 HStack
                         .padding(.top,23)
                         Spacer()
-                    }//】 VStack
-                    .frame(height: 120)
+                    }//】 HStack
+                    .padding(.top,23)
+                    Spacer()
+                }//】 VStack
+                .frame(height: 120)
+                
+                
+                
+                /// [3] 사진 프레임
+                
+                ZStack{
+                    
+                    RoundedRectangle(cornerRadius: 0)
+                        .foregroundColor(Color.darkGray)
+                    //                        .stroke(Color.lightGray, lineWidth: 1)
+                        // .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .frame(width: 393, height: 393)
                     
                     
-                    /// [3] 사진 프레임
                     
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 0)
-                            .foregroundColor(Color.darkGray)
-                        //                        .stroke(Color.lightGray, lineWidth: 1)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        
+                    HStack(spacing: 0) {
                         HStack(spacing: 0) {
-                            
-                            AsyncImage(url: imageUrl1) { phase in
-                                switch phase {
-                                case .success(let image):
-                                    image
+                            if let image1Image, let image2Image {
+                                HStack(spacing: 0) {
+                                    Image(uiImage: image1Image)
                                         .resizable()
                                         .frame(width: 196.5, height: 393)
-                                        .onAppear {
-                                            print("image1 appeared:", Date().timeIntervalSince1970)
-                                            isFirstLoaded = true
-                                            print("all loaded?", isFirstLoaded && isSecondLoaded)
-                                        }
-                                        .opacity(isFirstLoaded && isSecondLoaded ? 1 : 0)
-                                    // Text("loaded")
-                                    
-                                case .failure(_):
-                                    Text("error")
-                                case .empty:
-                                    // placeholder
-                                    ProgressView()
-                                @unknown default:
-                                    Text("unknown")
-                                }
-                            }.onAppear {
-                                print("onAppear: \(Date().timeIntervalSince1970)")
-                            }.onChange(of: isFirstLoaded) { newValue in
-                                print("isFirstLoaded changed:", isFirstLoaded)
-                            }
-                            
-                            AsyncImage(url: imageUrl2) { phase in
-                                switch phase {
-                                case .success(let image):
-                                    image
+                                    Image(uiImage: image2Image)
                                         .resizable()
                                         .frame(width: 196.5, height: 393)
-                                        .onAppear {
-                                            print("image2 appeared:", Date().timeIntervalSince1970)
-                                            isSecondLoaded = true
-                                            print("all loaded?", isFirstLoaded && isSecondLoaded)
-                                        }
-                                        .opacity(isFirstLoaded && isSecondLoaded ? 1 : 0)
-                                    // Text("loaded")
-                                    
-                                case .failure(_):
-                                    Text("error")
-                                case .empty:
-                                    // placeholder
-                                    ProgressView()
-                                @unknown default:
-                                    Text("unknown")
                                 }
-                            }.onAppear {
-                                print("onAppear: \(Date().timeIntervalSince1970)")
+                                // .transition(isShouldShowPrevOrNext ? .slide : .identity)
+                                // .transition(.opacity)
+                                // .animation(.linear)
                             }
-                            ///왼쪽 사진
-                            // AsyncImage(url: imageUrl1) { image in
-                            //
-                            //     image
-                            //         .resizable()
-                            //         .frame(width: 196.5, height: 393)
-                            // } placeholder: {
-                            //     ProgressView()
-                            // }
-                            // .frame(width: 196.5)
-                            
-                            
-                            /// 오른쪽 사진
-                            // AsyncImage(url: imageUrl2) { image in
-                            //     image
-                            //         .resizable()
-                            //         .frame(width: 196.5, height: 393)
-                            // } placeholder: {
-                            //     ProgressView()
-                            // }
-                            // .frame(width: 196.5)
-                        }//】 HStack
-                        
-//                        ImageCell(imageUrl1: imageUrl1, imageUrl2: imageUrl2)
-//                            .environmentObject(VM)
-//                            .frame(maxWidth: .infinity)
-                        
-                        HStack(spacing: 0){
-                            if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
-                            Spacer()
-                            if currentIndex < VM.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
+                            else {
+                                ProgressView()
+                            }
                         }
-                        .padding(.horizontal,18)
                         
-                    }//】 ZStack
-                    .frame(height: 393, alignment: .center)
-                    .frame(maxWidth: .infinity)
-                    .aspectRatio(1, contentMode: .fit)
-              
+                        // AsyncImage(url: imageUrl1) { phase in
+                        //     switch phase {
+                        //     case .success(let image):
+                        //         image
+                        //             .resizable()
+                        //             .frame(width: 196.5, height: 393)
+                        //             .onAppear {
+                        //                 print("image1 appeared:", Date().timeIntervalSince1970)
+                        //                 isFirstLoaded = true
+                        //                 print("all loaded?", isFirstLoaded && isSecondLoaded)
+                        //             }
+                        //             .opacity(isFirstLoaded && isSecondLoaded ? 1 : 0)
+                        //         // Text("loaded")
+                        //
+                        //     case .failure(_):
+                        //         Text("error")
+                        //     case .empty:
+                        //         // placeholder
+                        //         ProgressView()
+                        //     @unknown default:
+                        //         Text("unknown")
+                        //     }
+                        // }.onAppear {
+                        //     print("onAppear: \(Date().timeIntervalSince1970)")
+                        // }.onChange(of: isFirstLoaded) { newValue in
+                        //     print("isFirstLoaded changed:", isFirstLoaded)
+                        // }
+                        //
+                        // AsyncImage(url: imageUrl2) { phase in
+                        //     switch phase {
+                        //     case .success(let image):
+                        //         image
+                        //             .resizable()
+                        //             .frame(width: 196.5, height: 393)
+                        //             .onAppear {
+                        //                 print("image2 appeared:", Date().timeIntervalSince1970)
+                        //                 isSecondLoaded = true
+                        //                 print("all loaded?", isFirstLoaded && isSecondLoaded)
+                        //             }
+                        //             .opacity(isFirstLoaded && isSecondLoaded ? 1 : 0)
+                        //         // Text("loaded")
+                        //
+                        //     case .failure(_):
+                        //         Text("error")
+                        //     case .empty:
+                        //         // placeholder
+                        //         ProgressView()
+                        //     @unknown default:
+                        //         Text("unknown")
+                        //     }
+                        // }.onAppear {
+                        //     print("onAppear: \(Date().timeIntervalSince1970)")
+                        // }
+                        ///왼쪽 사진
+                        // AsyncImage(url: imageUrl1) { image in
+                        //
+                        //     image
+                        //         .resizable()
+                        //         .frame(width: 196.5, height: 393)
+                        // } placeholder: {
+                        //     ProgressView()
+                        // }
+                        // .frame(width: 196.5)
+                        
+                        
+                        /// 오른쪽 사진
+                        // AsyncImage(url: imageUrl2) { image in
+                        //     image
+                        //         .resizable()
+                        //         .frame(width: 196.5, height: 393)
+                        // } placeholder: {
+                        //     ProgressView()
+                        // }
+                        // .frame(width: 196.5)
+                    }//】 HStack
+                    
+                    HStack(spacing: 0){
+                        if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
+                        Spacer()
+                        if currentIndex < VM.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
+                        
+                    }
+                    .padding(.horizontal,18)
+                    
+                    
+                    
+                }//】 ZStack
+                .frame(height: 393, alignment: .center)
+                .frame(maxWidth: .infinity)
+                .aspectRatio(1, contentMode: .fit)
+                // .transition(.move(edge: .leading)) // 슬라이드 애니메이션을 적용합니다.
+                // .opacity(isFirstLoaded && isSecondLoaded ? 1 : 0)
                 
                 //MARK: - [4] 공유/ 좋아요 버튼
                 HStack(spacing: 0){
                     ShareSheetView()
-//                    Image("imgShareBox")
+                    //                    Image("imgShareBox")
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
                         .padding(.leading, 70)
@@ -208,10 +233,12 @@ extension PhotoDetailView: View {
             
         } // ZStack
         .onAppear {
-            Task {
-                await downloadImage()
-            }
+            // Task {
+            //     await downloadImage()
+            // }
+            downloadImageWithCache()
         }
+        .transition(.slide)
     }//】 Body
     
     
@@ -284,7 +311,8 @@ extension PhotoDetailView {
         return Button {
             Task {
                 showPrevDetail()
-                await downloadImage()
+                // await downloadImage()
+                downloadImageWithCache()
             }
         } label: {
             IndexButton(icon: "chevron.left")
@@ -297,7 +325,8 @@ extension PhotoDetailView {
         return Button {
             Task {
                 showNextDetail()
-                await downloadImage()
+                // await downloadImage()
+                downloadImageWithCache()
             }
         } label: {
             IndexButton(icon: "chevron.right")
@@ -308,45 +337,67 @@ extension PhotoDetailView {
     
     /// 이전 버튼 로직
     func showPrevDetail() {
-            if currentIndex > 0{
-                self.currentIndex -= 1
-                updateViewWithCurrentIndex()
-            }
+        if currentIndex > 0{
+            self.currentIndex -= 1
+            updateViewWithCurrentIndex()
+        }
     }
     
     /// 다음 버튼 로직
     func showNextDetail() {
-            if currentIndex < VM.truePhotos.count - 1{
-                self.currentIndex += 1
-                updateViewWithCurrentIndex()
-            }
+        if currentIndex < VM.truePhotos.count - 1{
+            self.currentIndex += 1
+            updateViewWithCurrentIndex()
+        }
     }
     
     /// 사진 상세뷰 업데이트
-        private func updateViewWithCurrentIndex() {
-            self.date = VM.truePhotos[currentIndex].date
-            self.image1 = VM.truePhotos[currentIndex].photoFirstURL
-            self.image2 = VM.truePhotos[currentIndex].photoSecondURL
-            self.question = VM.trueQuestions[currentIndex].question
-            
-            // isFirstLoaded = false
-            // isSecondLoaded = false
-        }
+    private func updateViewWithCurrentIndex() {
+        self.date = VM.truePhotos[currentIndex].date
+        self.image1 = VM.truePhotos[currentIndex].photoFirstURL
+        self.image2 = VM.truePhotos[currentIndex].photoSecondURL
+        self.question = VM.trueQuestions[currentIndex].question
+        // isFirstLoaded = false
+        // isSecondLoaded = false
+    }
     
-    /// 이미지 불러오기
-    func downloadImage() async {
-        if let image1 = image1 {
-            do {
-                let url = try await Storage.storage().reference(forURL: image1).downloadURL()
-                imageUrl1 = url
-            } catch { print(error.localizedDescription)}
+    /// 이미지 불러오기 (메모리 캐싱)
+    func downloadImageWithCache() {
+        guard let image1, let image2 else {
+            return
         }
         
-        if let image2 = image2 {
-            do {
-                let url = try await Storage.storage().reference(forURL: image2).downloadURL()
-                imageUrl2 = url
-            } catch { print(error.localizedDescription)}
+        image1Image = nil
+        image2Image = nil
+        
+        Task {
+            if let cachedImageFirst = ImageCacheManager.shared.loadImageFromCache(urlAbsoluteString: image1) {
+                image1Image = cachedImageFirst
+                print("[DEBUG] image1: loaded from cache")
+                return
+            }
+            
+            image1Image = UIImage(data: try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image1))
+            
+            if let image1Image {
+                ImageCacheManager.shared.saveImageToCache(image: image1Image, urlAbsoluteString: image1)
+                print("[DEBUG] image1 saved to cache.")
+            }
+        }
+        
+        Task {
+            if let cachedImageSecond = ImageCacheManager.shared.loadImageFromCache(urlAbsoluteString: image2) {
+                image2Image = cachedImageSecond
+                print("i[DEBUG] mage2: loaded from cache")
+                return
+            }
+            
+            image2Image = UIImage(data: try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image2))
+            
+            if let image2Image {
+                ImageCacheManager.shared.saveImageToCache(image: image2Image, urlAbsoluteString: image2)
+                print("[DEBUG] image2 saved to cache.")
+            }
         }
     }
 
@@ -361,7 +412,7 @@ extension PhotoDetailView {
             .padding(.vertical, 7)
             .padding(.horizontal, 8)
             .background(Rectangle()
-                        .fill(Color.lightGray)
+                .fill(Color.lightGray)
             )
     }
 }
