@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DiptychTabView2: View {
     ///Property
+    @EnvironmentObject var VM : ArchiveViewModel
     @State var currentTab : Int = 0
     @Namespace var namespace
     @EnvironmentObject var diptychCompleteAlertObject: DiptychCompleteAlertObject
@@ -23,9 +24,11 @@ struct DiptychTabView2: View {
                 VStack(spacing: 0){
                     if currentTab == 0 {
                         TodayDiptychView()
+                        
                     }
                     else if currentTab == 1 {
                         ArchiveTabView(currentTab: 0)
+                            .environmentObject(VM)
                     }
                     else if currentTab == 2 {
                         ProfileView()
@@ -92,6 +95,7 @@ struct DiptychTabBarItem: View {
                         Image(selectedIcon)
                     } else {
                         Image(UnselectedIcon)
+                            .opacity(0.5)
                     }
                     
                 }//】 VStack

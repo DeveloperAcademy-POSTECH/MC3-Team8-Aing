@@ -56,8 +56,7 @@ final class ArchiveViewModel: ObservableObject {
             await fetchQuestion()
             _ = await makeTruePhotos()
             _ = await makeTrueQuestions()
-            // print("🍠",truePhotos)
-            // print("🥦",trueQuestions)
+            print("🥦:ArchiveViewModel")
         }
     }
 
