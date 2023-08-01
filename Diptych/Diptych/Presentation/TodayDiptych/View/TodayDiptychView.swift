@@ -24,6 +24,7 @@ struct TodayDiptychView: View {
             MainDiptychView()
                 .ignoresSafeArea(edges: .vertical)
                 .onAppear {
+                    diptychCompleteAlertObject.checkDateAndResetAlertIfNeeded()
                     fetchData()
                 }
                 .fullScreenCover(isPresented: $isShowCamera) {
@@ -46,17 +47,15 @@ struct TodayDiptychView: View {
         }
     }
 
-    // MARK: - Custom Methods
-
     private func fetchData() {
         Task {
             await viewModel.fetchUser()
             await viewModel.setUserCameraLoactionState()
-            await viewModel.setTodayPhoto()
             await viewModel.fetchContents()
+            await viewModel.setTodayPhoto()
             await viewModel.fetchTodayImage()
-            await viewModel.setDiptychNumber()
             await viewModel.fetchWeeklyCalender()
+            await viewModel.setDiptychNumber()
 
             guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
             diptychCompleteAlertObject.isDiptychCompleted = isCompleted
