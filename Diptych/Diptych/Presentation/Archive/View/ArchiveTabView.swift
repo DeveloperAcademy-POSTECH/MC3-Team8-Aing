@@ -10,15 +10,16 @@ import SwiftUI
 struct ArchiveTabView: View {
     
     ///Property
+    @EnvironmentObject var VM : ArchiveViewModel
     @State var currentTab : Int = 0
     @Namespace var namespace
-    var tabBarOptions: [String] = ["캘린더", "앨범","질문함"]
+    var tabBarOptions: [String] = ["캘린더", "앨범"] //"질문함"
     
     var body: some View {
         NavigationView{
         VStack(spacing: 0){
                 /// 상단 탭바
-                HStack(spacing: 40) {
+                HStack(spacing: 70) {
                     ForEach(tabBarOptions.indices, id: \.self) { index in
                         let title = tabBarOptions[index]
                         Button {
@@ -44,11 +45,15 @@ struct ArchiveTabView: View {
                 /// 각 뷰로 이동
                 if currentTab == 0 {
                     CalendarScrollView()
+                        .environmentObject(VM)
                 } else if currentTab == 1 {
                     AlbumListView()
-                } else if currentTab == 2 {
-                    QuestionListView()
+                        .environmentObject(VM)
                 }
+//                else if currentTab == 2 {
+//                    QuestionListView()
+//                        .environmentObject(VM)
+//                }
         }//】 VStack
         }//】 Navigation
     }//】 Body
