@@ -143,7 +143,7 @@ extension TodayDiptychView {
                         }
                 }
         default:
-            rectangleOverlayImage(Color.lightGray, url)
+            rectangleOverlayImage(color: Color.lightGray, url: url, isBlurred: false)
         }
     }
 
@@ -161,21 +161,20 @@ extension TodayDiptychView {
                 }
         case .upload:
             ZStack {
-                rectangleOverlayImage(Color.offBlack, url)
+                rectangleOverlayImage(color: Color.offBlack, url: url, isBlurred: true)
                 Color.black
                     .opacity(0.54)
-                    .background(VisualEffectView(effect: UIBlurEffect(style: .regular)))
                 VStack(spacing: 17) {
                     Image("icnCheck")
                     Text("상대방이 오늘 딥틱을\n완성했어요")
                 }
             }
         case .complete:
-            rectangleOverlayImage(Color.offBlack, url)
+            rectangleOverlayImage(color: Color.offBlack, url: url, isBlurred: false)
         }
     }
 
-    private func rectangleOverlayImage(_ color: Color, _ url: String) -> some View {
+    private func rectangleOverlayImage(color: Color, url: String, isBlurred: Bool) -> some View {
         Rectangle()
             .fill(color)
             .overlay {
@@ -189,6 +188,8 @@ extension TodayDiptychView {
                                 imageCacheViewModel.secondImage = image.getUIImage(newSize: thumbSize)
                             }
                         }
+                        .blur(radius: isBlurred ? 7 : 0, opaque: true)
+                        .clipped()
                 } placeholder: {
                     ProgressView()
                 }
