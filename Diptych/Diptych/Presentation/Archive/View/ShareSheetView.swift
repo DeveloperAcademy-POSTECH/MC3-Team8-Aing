@@ -38,7 +38,7 @@ struct ShareSheetView: View {
                 .frame(width: 30, height: 30)
         }
         .sheet(isPresented: $isSharePresented) {
-            ActivityViewController(activityItems: [UIImage(named: "heart")!])
+            ActivityViewController(activityItems: [UIImage(named: "imgHeart")!])
             //TODO: - 다운로드 되는 이미지 변경해야함
         }
     }
