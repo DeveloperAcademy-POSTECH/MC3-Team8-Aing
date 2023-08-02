@@ -137,6 +137,18 @@
                                 <color key="textColor" name="SystemSalmon"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aie-Pl-Ngf">
+                                <rect key="frame" x="15" y="126" width="359" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" name="DarkGray"/>
+                            </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="완성된 사진은 두 손가락을 이용해 수정할 수 있어요" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C63-KC-Sla">
+                                <rect key="frame" x="21" y="146" width="350" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="16"/>
+                                <color key="textColor" name="DarkGray"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" name="OffWhite"/>
@@ -152,9 +164,11 @@
                         <outlet property="imgGuidelineDashed" destination="I88-A6-6t0" id="rnQ-Od-wCv"/>
                         <outlet property="imgViewGuideOverlay" destination="KEx-jB-uim" id="BST-4G-w4p"/>
                         <outlet property="lblTopic" destination="PzM-kO-bXw" id="5bn-QX-nhh"/>
+                        <outlet property="lblYouCanManipulatePhoto" destination="C63-KC-Sla" id="u2W-Q5-94O"/>
                         <outlet property="lblYouCantEditImage" destination="JPp-pK-WQS" id="NPE-RR-qEM"/>
                         <outlet property="scrollViewImageContainer" destination="wNV-bx-VUt" id="YH7-XM-RXn"/>
                         <outlet property="tempSegDirection" destination="FCk-u2-lzr" id="55L-qe-VlC"/>
+                        <outlet property="viewDarkGrayLine1px" destination="Aie-Pl-Ngf" id="iho-l2-XVk"/>
                         <outlet property="viewLottieLoading" destination="lTr-Lb-rDZ" id="YhL-qV-cpC"/>
                         <outlet property="viewOverlay" destination="rTr-yx-Hmc" id="rf3-PI-eWk"/>
                     </connections>
@@ -173,6 +187,9 @@
         <image name="imgQuestionMarkButtonOff" width="28" height="28"/>
         <image name="imgShutterButton" width="92.333335876464844" height="92.333335876464844"/>
         <image name="imgToggleButton" width="45" height="45"/>
+        <namedColor name="DarkGray">
+            <color red="0.46700000762939453" green="0.46700000762939453" blue="0.46700000762939453" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="OffBlack">
             <color red="0.11800000071525574" green="0.11800000071525574" blue="0.11800000071525574" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
