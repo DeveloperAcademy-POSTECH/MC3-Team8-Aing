@@ -10,5 +10,4 @@ import Foundation
 struct WeeklyData {
     let date: Int
     let diptychState: DiptychState
-    let thumbnail: String?
 }
