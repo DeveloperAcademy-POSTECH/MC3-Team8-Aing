@@ -68,6 +68,9 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var imgGuidelineDashed: UIImageView!
     @IBOutlet weak var viewLottieLoading: UIView!
     
+    @IBOutlet weak var lblYouCanManipulatePhoto: UILabel!
+    @IBOutlet weak var viewDarkGrayLine1px: UIView!
+    
     // MARK: - Vars
     var viewModel: TodayDiptychViewModel?
     var imageCacheViewModel: ImageCacheViewModel?
@@ -564,6 +567,8 @@ class CameraViewController: UIViewController {
         btnCloseBack.setTitle("다시 찍기", for: .normal)
         
         lblYouCantEditImage.isHidden = false
+        lblYouCanManipulatePhoto.isHidden = false
+        viewDarkGrayLine1px.isHidden = false
     }
     
     func changeCameraMode() {
@@ -581,6 +586,8 @@ class CameraViewController: UIViewController {
         btnCloseBack.setTitle("", for: .normal)
         
         lblYouCantEditImage.isHidden = true
+        lblYouCanManipulatePhoto.isHidden = true
+        viewDarkGrayLine1px.isHidden = true
     }
     
     func resetImageViewTransform() {
