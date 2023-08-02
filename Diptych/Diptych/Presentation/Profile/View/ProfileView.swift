@@ -20,7 +20,6 @@ struct ProfileView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            Color.offWhite
             VStack(spacing: 0) {
                 LazyVGrid(columns: columns) {
                     ForEach(0 ..< 1) { _ in
@@ -87,7 +86,6 @@ struct ProfileView: View {
                         }
                     }
                 }
-                .padding(.bottom, 100)
             }
         }
         .ignoresSafeArea()
