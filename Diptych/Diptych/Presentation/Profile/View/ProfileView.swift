@@ -66,7 +66,7 @@ struct ProfileView: View {
                         Text("딥틱 중")
                             .font(.pretendard(.medium, size: 14))
                             .foregroundColor(.darkGray)
-                        Text("\(todayDiptychViewModel.diptychNumber)번째")
+                        Text("15번째")
                             .font(.pretendard(.light, size: 28))
                             .foregroundColor(.offBlack)
                     }
