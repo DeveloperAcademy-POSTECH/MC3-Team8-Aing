@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct QuestionListView: View {
-    
     @EnvironmentObject var VM : ArchiveViewModel
     
     var body: some View {

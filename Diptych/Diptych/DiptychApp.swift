@@ -11,7 +11,11 @@ import FirebaseCore
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        FirebaseApp.configure()
+        if let path = Bundle.main.path(forResource: "GoogleService-Info-2", ofType: "plist") {
+            guard let options = FirebaseOptions(contentsOfFile: path) else { return false }
+            FirebaseApp.configure(options: options)
+        }
+//        FirebaseApp.configure()
         return true
     }
 }
@@ -24,7 +28,6 @@ struct DiptychApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var userViewModel: UserViewModel = UserViewModel()
     @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
-    
     
     var body: some Scene {
         WindowGroup {

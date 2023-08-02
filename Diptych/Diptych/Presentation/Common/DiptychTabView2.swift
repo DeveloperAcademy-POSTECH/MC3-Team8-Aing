@@ -11,6 +11,8 @@ struct DiptychTabView2: View {
     ///Property
     @EnvironmentObject var VM : ArchiveViewModel
     @State var currentTab : Int = 0
+    
+    
     @Namespace var namespace
     @EnvironmentObject var diptychCompleteAlertObject: DiptychCompleteAlertObject
     var tabBarTitle: [String] = ["오늘의 딥틱", "보관함", "프로필"]
