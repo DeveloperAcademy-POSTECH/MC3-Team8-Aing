@@ -31,11 +31,14 @@ struct TodayDiptychView: View {
                             await viewModel.fetchTodayImage()
                             await viewModel.fetchWeeklyCalender()
                         }
+
+                        guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
+                        diptychCompleteAlertObject.isDiptychCompleted = isCompleted
                     }
             }
             .ignoresSafeArea(edges: .vertical)
             .onAppear {
-                diptychCompleteAlertObject.checkDateAndResetAlertIfNeeded()
+//                diptychCompleteAlertObject.checkDateAndResetAlertIfNeeded()
                 fetchData()
             }
             .fullScreenCover(isPresented: $isShowCamera) {
