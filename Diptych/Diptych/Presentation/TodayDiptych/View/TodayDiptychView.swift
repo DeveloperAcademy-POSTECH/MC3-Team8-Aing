@@ -27,6 +27,7 @@ struct TodayDiptychView: View {
                     .opacity(0.0001)
                     .frame(width: 150, height: 150)
                     .onTapGesture {
+                        print("탭됨~")
                         Task {
                             await viewModel.fetchTodayImage()
                             await viewModel.fetchWeeklyCalender()
