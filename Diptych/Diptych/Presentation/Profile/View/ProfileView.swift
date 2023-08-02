@@ -16,6 +16,7 @@ struct ProfileView: View {
     @State private var isPasswordHidden: Bool = true
     @FocusState var isPasswordFocused: Bool
     @EnvironmentObject var userViewModel: UserViewModel
+    @StateObject private var todayDiptychViewModel = TodayDiptychViewModel()
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -45,8 +46,7 @@ struct ProfileView: View {
                         Text("우리 시작한지")
                             .font(.pretendard(.medium, size: 14))
                             .foregroundColor(.darkGray)
-//                        Text("D+\(setDdayCount())")
-                        Text("D+999")
+                        Text("D+\(setDdayCount())")
                             .font(.pretendard(.light, size: 28))
                             .foregroundColor(.offBlack)
                     }
@@ -57,7 +57,7 @@ struct ProfileView: View {
                         Text("딥틱 중")
                             .font(.pretendard(.medium, size: 14))
                             .foregroundColor(.darkGray)
-                        Text("222번째")
+                        Text("\(todayDiptychViewModel.diptychNumber)번째")
                             .font(.pretendard(.light, size: 28))
                             .foregroundColor(.offBlack)
                     }
