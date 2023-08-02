@@ -24,6 +24,7 @@ struct TodayDiptychView: View {
             MainDiptychView()
                 .ignoresSafeArea(edges: .vertical)
                 .onAppear {
+                    diptychCompleteAlertObject.checkDateAndResetAlertIfNeeded()
                     fetchData()
                 }
                 .fullScreenCover(isPresented: $isShowCamera) {
@@ -46,17 +47,15 @@ struct TodayDiptychView: View {
         }
     }
 
-    // MARK: - Custom Methods
-
     private func fetchData() {
         Task {
             await viewModel.fetchUser()
             await viewModel.setUserCameraLoactionState()
-            await viewModel.setTodayPhoto()
             await viewModel.fetchContents()
+            await viewModel.setTodayPhoto()
             await viewModel.fetchTodayImage()
-            await viewModel.setDiptychNumber()
             await viewModel.fetchWeeklyCalender()
+            await viewModel.setDiptychNumber()
 
             guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
             diptychCompleteAlertObject.isDiptychCompleted = isCompleted
@@ -118,10 +117,12 @@ extension TodayDiptychView {
                 .multilineTextAlignment(.center)
 
                 HStack(spacing: 9) {
+                    let weeklyDates = viewModel.setWeeklyDates()
                     ForEach(0..<7) { index in
+                        let date = weeklyDates[index]
+                        let data = viewModel.weeklyData.filter { $0.date == date }
                         WeeklyCalenderView(day: days[index],
-                                           diptychState: index <= viewModel.weeklyData.count - 1
-                                           ? viewModel.weeklyData[index] : .none)
+                                           diptychState: data.isEmpty ? .none : data[0].diptychState)
                     }
                 }
                 .padding(.bottom, 28)
@@ -198,5 +199,6 @@ extension TodayDiptychView {
 struct TodayDiptychView_Previews: PreviewProvider {
     static var previews: some View {
         TodayDiptychView()
+            .environmentObject(DiptychCompleteAlertObject())
     }
 }
