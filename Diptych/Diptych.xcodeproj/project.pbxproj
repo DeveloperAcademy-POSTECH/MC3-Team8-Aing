@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A47AE2A5FD6B6005573DC /* AlbumListView.swift */; };
 		44671A212A6BE3D000C9C99A /* FirebaseMananger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44671A202A6BE3D000C9C99A /* FirebaseMananger.swift */; };
+		447E05012A79549F005AACE7 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447E05002A79549E005AACE7 /* ImageCacheManager.swift */; };
 		44852D2F2A6FBA430074D3D4 /* LottieUIViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44852D2E2A6FBA430074D3D4 /* LottieUIViews.swift */; };
 		44852D312A6FBC120074D3D4 /* LoadingLottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 44852D302A6FBC120074D3D4 /* LoadingLottie.json */; };
 		44852D332A7012590074D3D4 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44852D322A7012590074D3D4 /* UIColor+.swift */; };
@@ -92,6 +93,9 @@
 		AB2AC22A2A5F922F00B162E1 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC2272A5F922F00B162E1 /* Font+.swift */; };
 		AB6C7B7D2A6DD56600CD5D68 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C7B7C2A6DD56600CD5D68 /* CalendarManager.swift */; };
 		AB96A0AB2A66E4DF004C01FF /* TodayDiptychViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */; };
+		ABB613252A77D5A90063107E /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB613242A77D5A90063107E /* VisualEffectView.swift */; };
+		ABC6DAFB2A784E0E000FE73A /* DiptychCompleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC6DAFA2A784E0E000FE73A /* DiptychCompleteAlertView.swift */; };
+		ABC6DAFD2A797465000FE73A /* DiptychCompleteAlertObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC6DAFC2A797465000FE73A /* DiptychCompleteAlertObject.swift */; };
 		ABCB300B2A6D366A007724DC /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB300A2A6D366A007724DC /* Content.swift */; };
 		ABCB300D2A6D367F007724DC /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB300C2A6D367F007724DC /* Photo.swift */; };
 		ABCB300F2A6D368D007724DC /* WeeklyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB300E2A6D368D007724DC /* WeeklyData.swift */; };
@@ -130,6 +134,7 @@
 /* Begin PBXFileReference section */
 		445A47AE2A5FD6B6005573DC /* AlbumListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListView.swift; sourceTree = "<group>"; };
 		44671A202A6BE3D000C9C99A /* FirebaseMananger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMananger.swift; sourceTree = "<group>"; };
+		447E05002A79549E005AACE7 /* ImageCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		44852D2E2A6FBA430074D3D4 /* LottieUIViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieUIViews.swift; sourceTree = "<group>"; };
 		44852D302A6FBC120074D3D4 /* LoadingLottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LoadingLottie.json; sourceTree = "<group>"; };
 		44852D322A7012590074D3D4 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
@@ -188,6 +193,9 @@
 		AB2AC2272A5F922F00B162E1 /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
 		AB6C7B7C2A6DD56600CD5D68 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
 		AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDiptychViewModel.swift; sourceTree = "<group>"; };
+		ABB613242A77D5A90063107E /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
+		ABC6DAFA2A784E0E000FE73A /* DiptychCompleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychCompleteAlertView.swift; sourceTree = "<group>"; };
+		ABC6DAFC2A797465000FE73A /* DiptychCompleteAlertObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychCompleteAlertObject.swift; sourceTree = "<group>"; };
 		ABCB300A2A6D366A007724DC /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
 		ABCB300C2A6D367F007724DC /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		ABCB300E2A6D368D007724DC /* WeeklyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyData.swift; sourceTree = "<group>"; };
@@ -365,6 +373,7 @@
 				AB2AC1EC2A5F093B00B162E1 /* TodayDiptychView.swift */,
 				ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */,
 				44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */,
+				ABC6DAFA2A784E0E000FE73A /* DiptychCompleteAlertView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -411,6 +420,7 @@
 			children = (
 				AB2AC21D2A5F28E900B162E1 /* NameSpace */,
 				44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */,
+				447E05002A79549E005AACE7 /* ImageCacheManager.swift */,
 				44671A202A6BE3D000C9C99A /* FirebaseMananger.swift */,
 			);
 			path = Util;
@@ -437,6 +447,7 @@
 			children = (
 				AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */,
 				4498B2352A6D37E00069F54A /* CameraViewModel.swift */,
+				ABC6DAFC2A797465000FE73A /* DiptychCompleteAlertObject.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -523,6 +534,7 @@
 				AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */,
 				F3263AB52A691C4400B4581C /* DiptychTabView2.swift */,
 				44852D2E2A6FBA430074D3D4 /* LottieUIViews.swift */,
+				ABB613242A77D5A90063107E /* VisualEffectView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -825,7 +837,6 @@
 				F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */,
 				98D4A0862A6E3E7D00EB8C94 /* DiptychAlbum.swift in Sources */,
 				445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */,
-				F3263AA62A667D7700B4581C /* AlbumModel.swift in Sources */,
 				44CE81972A7430A800D1420E /* BlurPopupUIView.swift in Sources */,
 				44852D332A7012590074D3D4 /* UIColor+.swift in Sources */,
 				AB2AC2232A5F8E8700B162E1 /* PretendardType.swift in Sources */,
@@ -834,6 +845,7 @@
 				F35ADA542A6DA53C00A510E7 /* CellView.swift in Sources */,
 				989B44942A65752100D99439 /* CouplingView.swift in Sources */,
 				98A8E82B2A691938005DF658 /* UserViewModel.swift in Sources */,
+				ABC6DAFB2A784E0E000FE73A /* DiptychCompleteAlertView.swift in Sources */,
 				44EE2BF92A6E6436003B5C1F /* UIView+.swift in Sources */,
 				987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */,
 				ABCB300B2A6D366A007724DC /* Content.swift in Sources */,
@@ -843,9 +855,11 @@
 				988A277F2A72351900A9B5C0 /* SecureInputView.swift in Sources */,
 				ABCB300D2A6D367F007724DC /* Photo.swift in Sources */,
 				44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */,
+				447E05012A79549F005AACE7 /* ImageCacheManager.swift in Sources */,
 				AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */,
 				4498B2362A6D37E00069F54A /* CameraViewModel.swift in Sources */,
 				9846144B2A69075E0043EAE9 /* ProfileSettingView.swift in Sources */,
+				ABB613252A77D5A90063107E /* VisualEffectView.swift in Sources */,
 				AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */,
 				44DE9B902A67DC3B00E6615B /* UIImage+.swift in Sources */,
 				AB2AC1ED2A5F093B00B162E1 /* TodayDiptychView.swift in Sources */,
@@ -856,6 +870,7 @@
 				ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */,
 				AB6C7B7D2A6DD56600CD5D68 /* CalendarManager.swift in Sources */,
 				AB2AC1F52A5F15A100B162E1 /* Color+.swift in Sources */,
+				ABC6DAFD2A797465000FE73A /* DiptychCompleteAlertObject.swift in Sources */,
 				985DBC1E2A699DAA006C64FC /* LoadingVerificationView.swift in Sources */,
 				989B449A2A65BB9200D99439 /* DiptychUser.swift in Sources */,
 				ABCB300F2A6D368D007724DC /* WeeklyData.swift in Sources */,
@@ -1047,6 +1062,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych.fifi;
 				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych22;
+				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych.fifi2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1086,6 +1102,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych.fifi;
 				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych22;
+				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych.fifi2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

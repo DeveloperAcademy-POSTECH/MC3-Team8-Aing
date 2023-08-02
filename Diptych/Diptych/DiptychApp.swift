@@ -23,7 +23,12 @@ struct DiptychApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var userViewModel: UserViewModel = UserViewModel()
+<<<<<<< HEAD
     @StateObject var VM: ArchiveViewModel = ArchiveViewModel()
+=======
+    @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
+    
+>>>>>>> 71493ca065ef8f3f8ce6a1c2a8c499f99dab4a8f
     
     var body: some Scene {
         WindowGroup {
@@ -45,6 +50,10 @@ struct DiptychApp: App {
                 } else {
                     DiptychTabView2()
                         .environmentObject(userViewModel)
+<<<<<<< HEAD
+=======
+                        .environmentObject(DiptychCompleteAlertObject())
+>>>>>>> 71493ca065ef8f3f8ce6a1c2a8c499f99dab4a8f
                         .environmentObject(VM)
                 }
             } else {

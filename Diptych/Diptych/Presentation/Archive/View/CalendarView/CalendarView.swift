@@ -13,8 +13,7 @@ import Foundation
 struct CalendarView: View {
     
     ///Property
-//    @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
-    @EnvironmentObject var VM: ArchiveViewModel
+    @EnvironmentObject var VM : ArchiveViewModel
     @State var date: Date
     let changeMonthInt : Int
     
@@ -43,7 +42,7 @@ struct CalendarView: View {
             
     /// [1] Month
         VStack(spacing:0){
-            HStack(spacing:0) {
+            HStack(alignment: .bottom, spacing:0) {
                 Text(date, formatter: Self.monthFormatter)
                     .font(.system(size:36, weight: .light))
                 Spacer()
@@ -52,6 +51,8 @@ struct CalendarView: View {
                     .foregroundColor(.gray)
             }//】 HStack
             .padding(.bottom,13)
+//            .frame(alignment: .bottom)
+            
             RoundedRectangle(cornerRadius: 0)
                 .foregroundColor(Color.darkGray)
                 .frame(height: 1)
@@ -116,15 +117,14 @@ struct CalendarView: View {
                         /// 날짜 표기 시작
                         if isMatched {
                             NavigationLink {
-                                PhotoDetailView(
-//                                    VM: VM,
-                                    date: isSafe ? data[safeIndex].date : today,
-                                    image1: isSafe ? data[safeIndex].photoFirstURL : "",
-                                    image2: isSafe ? data[safeIndex].photoSecondURL : "",
-                                    question: isSafe ? data2[safeIndex].question : "",
-                                    currentIndex: isSafe ? currentIndex : 0
-                                )
-                                    
+                                    PhotoDetailView(
+                                        date: isSafe ? data[safeIndex].date : today,
+                                        image1: isSafe ? data[safeIndex].photoFirstURL : "",
+                                        image2: isSafe ? data[safeIndex].photoSecondURL : "",
+                                        question: isSafe ? data2[safeIndex].question : "",
+                                        currentIndex: isSafe ? currentIndex : 0
+                                    )
+                                    .environmentObject(VM)
                             } label: {
                                 CVTrue
                             }
