@@ -54,6 +54,7 @@ class UserViewModel: ObservableObject {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             print("[DEBUG] signInWithEmailPassword -> result:  \(result)")
             await fetchUserData()
+            await fetchLoverData()
             return ""
         }
         catch {
@@ -220,7 +221,7 @@ class UserViewModel: ObservableObject {
             self.currentUser = currentUser
             self.flow = UserFlow(rawValue: currentUser.flow) ?? .initialized
         }
-        print("DEBUG : fetchLoverData self.currentUser : \(self.currentUser)\n")
+        print("DEBUG : fetchUserData self.currentUser : \(self.currentUser)\n")
         print("[DEBUG] flow : \(self.flow)")
     }
     

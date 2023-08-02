@@ -24,11 +24,21 @@ struct ProfileView: View {
             VStack(spacing: 0) {
                 LazyVGrid(columns: columns) {
                     ForEach(0 ..< 1) { _ in
-                        userNameLabel(text: userViewModel.currentUser?.name ?? "...")
-                            .padding(.leading, 20)
-                        Image("imgHeart")
-                        userNameLabel(text: userViewModel.lover?.name ?? "...")
-                            .padding(.trailing, 20)
+                        if let isFirst = userViewModel.currentUser?.isFirst {
+                            if isFirst {
+                                userNameLabel(text: userViewModel.currentUser?.name ?? "...") // 로딩중일때 "..."로 표현
+                                    .padding(.leading, 20)
+                                Image("imgHeart")
+                                userNameLabel(text: userViewModel.lover?.name ?? "...")
+                                    .padding(.trailing, 20)
+                            } else {
+                                userNameLabel(text: userViewModel.lover?.name ?? "...")
+                                    .padding(.leading, 20)
+                                Image("imgHeart")
+                                userNameLabel(text: userViewModel.currentUser?.name ?? "...") // 로딩중일때 "..."로 표현
+                                    .padding(.trailing, 20)
+                            }
+                        }
                     }
                 }
                 .font(.pretendard(.light, size: 24))
