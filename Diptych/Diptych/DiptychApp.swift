@@ -11,7 +11,11 @@ import FirebaseCore
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        FirebaseApp.configure()
+        if let path = Bundle.main.path(forResource: "GoogleService-Info-2", ofType: "plist") {
+            guard let options = FirebaseOptions(contentsOfFile: path) else { return false }
+            FirebaseApp.configure(options: options)
+        }
+//        FirebaseApp.configure()
         return true
     }
 }
@@ -45,10 +49,7 @@ struct DiptychApp: App {
                 } else {
                     DiptychTabView2()
                         .environmentObject(userViewModel)
-<<<<<<< HEAD
-=======
                         .environmentObject(DiptychCompleteAlertObject())
->>>>>>> 71493ca065ef8f3f8ce6a1c2a8c499f99dab4a8f
                         .environmentObject(VM)
                 }
             } else {
