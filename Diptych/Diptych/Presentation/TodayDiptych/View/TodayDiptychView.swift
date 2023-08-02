@@ -26,6 +26,7 @@ struct TodayDiptychView: View {
                 .onAppear {
                     diptychCompleteAlertObject.checkDateAndResetAlertIfNeeded()
                     fetchData()
+                    // FirebaseManager.shared.데모에쓰기_끝나면삭제해라()
                 }
                 .fullScreenCover(isPresented: $isShowCamera) {
                     ZStack {
@@ -48,14 +49,17 @@ struct TodayDiptychView: View {
     }
 
     private func fetchData() {
+        
         Task {
             await viewModel.fetchUser()
             await viewModel.setUserCameraLoactionState()
             await viewModel.setDiptychNumber()
             await viewModel.fetchContents()
             await viewModel.setTodayPhoto()
-            await viewModel.fetchTodayImage()
-            await viewModel.fetchWeeklyCalender()
+            // await viewModel.fetchTodayImage()
+            viewModel.fetchTodayImageNotAsync()
+            // await viewModel.fetchWeeklyCalender()
+            viewModel.fetchWeeklyCalendarNotAsync()
 
             guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
             diptychCompleteAlertObject.isDiptychCompleted = isCompleted

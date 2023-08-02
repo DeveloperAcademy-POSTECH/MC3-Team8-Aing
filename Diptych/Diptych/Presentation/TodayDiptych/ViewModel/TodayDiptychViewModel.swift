@@ -8,6 +8,7 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 import FirebaseStorage
+import FirebaseFirestoreSwift
 
 enum TodayDiptychState {
     case incomplete
@@ -46,27 +47,34 @@ final class TodayDiptychViewModel: ObservableObject {
 
     func fetchWeeklyCalender() async {
         guard let albumId = currentUser?.coupleAlbumId else { return }
-
+        
         do {
             let querySnapshot = try await db.collection("photos")
                 .whereField("albumId", isEqualTo: albumId) // TODO: - 유저의 앨범과 연결
-                .whereField("date", isGreaterThanOrEqualTo: calculateThisMondayTimestamp())
-                .whereField("date", isLessThan: calculateThisTodayTimestamp())
+                // .whereField("date", isGreaterThanOrEqualTo: calculateThisMondayTimestamp())
+                // .whereField("date", isLessThan: calculateThisTodayTimestamp())
                 .getDocuments()
-
+        
+            print(querySnapshot.count)
             for document in querySnapshot.documents {
+                print("aaaafdffdfaaaa:", document.data())
+            }
+        
+            for (index, document) in querySnapshot.documents.enumerated() {
+                print("aaaerfvefe:", index, document.documentID)
+        
                 let photo = try document.data(as: Photo.self)
                 let isCompleted = photo.isCompleted
                 let date = Date(timeIntervalSince1970: TimeInterval(photo.date.seconds))
                 guard let day = Calendar.current.dateComponents([.day], from: date).day else { return }
-
+        
                 weeklyData.append(WeeklyData(date: day, diptychState: isCompleted ? DiptychState.complete : DiptychState.incomplete))
             }
-
+        
             guard let todayPhoto = self.todayPhoto else { return }
             let date = Date(timeIntervalSince1970: TimeInterval(todayPhoto.date.seconds))
             guard let day = Calendar.current.dateComponents([.day], from: date).day else { return }
-
+        
             if todayPhoto.isCompleted {
                 weeklyData.append(WeeklyData(date: day, diptychState: .complete))
             } else if !todayPhoto.photoFirst.isEmpty && todayPhoto.photoSecond.isEmpty {
@@ -77,7 +85,102 @@ final class TodayDiptychViewModel: ObservableObject {
                 weeklyData.append(WeeklyData(date: day, diptychState: .todayIncomplete))
             }
         } catch {
-            print(error.localizedDescription)
+            print(error, error.localizedDescription)
+        }
+    }
+    
+    func fetchWeeklyCalendarNotAsync() {
+        
+        guard let albumId = currentUser?.coupleAlbumId else { return }
+        
+        // Photo Listener
+        _ = db.collection("photos")
+            .whereField("albumId", isEqualTo: albumId) // TODO: - 유저의 앨범과 연결
+            .whereField("date", isGreaterThanOrEqualTo: calculateThisMondayTimestamp())
+            .whereField("date", isLessThan: calculateThisTodayTimestamp())
+            .addSnapshotListener { [self] snapshot, error in
+                
+                print(#function, "listening....")
+            guard let documents = snapshot?.documents else {
+                return
+            }
+            
+            for document in documents {
+                do {
+                    let photo = try document.data(as: Photo.self)
+                    let isCompleted = photo.isCompleted
+                    let date = Date(timeIntervalSince1970: TimeInterval(photo.date.seconds))
+                    guard let day = Calendar.current.dateComponents([.day], from: date).day else { return }
+
+                    weeklyData.append(WeeklyData(date: day, diptychState: isCompleted ? DiptychState.complete : DiptychState.incomplete))
+                    
+                    
+                } catch {
+                    print(error, error.localizedDescription)
+                }
+                
+            }
+        }
+        
+        let (todayDate, _, _) = setTodayCalendar()
+        let timestamp = Timestamp(date: todayDate)
+        
+        // TodayListener
+        _ = db.collection("photos")
+            .whereField("albumId", isEqualTo: albumId)
+            .whereField("date", isGreaterThanOrEqualTo: timestamp)
+            .addSnapshotListener { [self] snapshot, error in
+                print("todayListener is listening...")
+                
+                guard let documents = snapshot?.documents else {
+                    print("return 0")
+                    return
+                }
+                print(snapshot?.count)
+                for document in documents {
+                    print(document.data())
+                }
+                for (index, document) in documents.enumerated() {
+                    do {
+                        let todayPhoto = try document.data(as: Photo.self)
+                        let date = Date(timeIntervalSince1970: TimeInterval(todayPhoto.date.seconds))
+                        guard let day = Calendar.current.dateComponents([.day], from: date).day else {
+                            print("return 1")
+                            return
+                            
+                        }
+                        if todayPhoto.isCompleted {
+                            if let targetOffset = weeklyData.firstIndex(where: { $0.date == day }) {
+                                weeklyData.remove(at: targetOffset)
+                            }
+                            weeklyData.append(WeeklyData(date: day, diptychState: .complete))
+                        } else if !todayPhoto.photoFirst.isEmpty && todayPhoto.photoSecond.isEmpty {
+                            weeklyData.append(WeeklyData(date: day, diptychState: .todayfirst))
+                        } else if todayPhoto.photoFirst.isEmpty && !todayPhoto.photoSecond.isEmpty {
+                            weeklyData.append(WeeklyData(date: day, diptychState: .todaySecond))
+                        } else {
+                            weeklyData.append(WeeklyData(date: day, diptychState: .todayIncomplete))
+                        }
+                        
+                    } catch {
+                        print(error, error.localizedDescription)
+                    }
+                    
+                }
+                print(weeklyData)
+                // guard let todayPhoto = self.todayPhoto else { return }
+                // let date = Date(timeIntervalSince1970: TimeInterval(todayPhoto.date.seconds))
+                // guard let day = Calendar.current.dateComponents([.day], from: date).day else { return }
+                //
+                // if todayPhoto.isCompleted {
+                //     weeklyData.append(WeeklyData(date: day, diptychState: .complete))
+                // } else if !todayPhoto.photoFirst.isEmpty && todayPhoto.photoSecond.isEmpty {
+                //     weeklyData.append(WeeklyData(date: day, diptychState: .todayfirst))
+                // } else if todayPhoto.photoFirst.isEmpty && !todayPhoto.photoSecond.isEmpty {
+                //     weeklyData.append(WeeklyData(date: day, diptychState: .todaySecond))
+                // } else {
+                //     weeklyData.append(WeeklyData(date: day, diptychState: .todayIncomplete))
+                // }
         }
     }
 
@@ -111,6 +214,54 @@ final class TodayDiptychViewModel: ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
+    }
+    
+    func fetchTodayImageNotAsync() {
+        let (todayDate, _, _) = setTodayCalendar()
+        let timestamp = Timestamp(date: todayDate)
+        guard let albumId = currentUser?.coupleAlbumId else { return }
+        
+        
+            let querySnapshot = db.collection("photos")
+                .whereField("albumId", isEqualTo: albumId)
+                .whereField("date", isGreaterThanOrEqualTo: timestamp)
+                .addSnapshotListener { [self] snapshot, error in
+                    
+                    guard let documents = snapshot?.documents else {
+                        return
+                    }
+                    
+                    for document in documents {
+                        do {
+                            self.todayPhoto = try document.data(as: Photo.self)
+                        } catch {
+                            print(#function, error)
+                        }
+                    }
+                    
+                    // Image Download
+                    guard let todayPhoto = todayPhoto else { return }
+                    if todayPhoto.photoFirst != "" {
+                        photoFirstURL = todayPhoto.photoFirst
+                    }
+
+                    if todayPhoto.photoSecond != "" {
+                        photoSecondURL = todayPhoto.photoSecond
+                    }
+                    // ==
+                    
+                    if !photoFirstURL.isEmpty && !photoSecondURL.isEmpty {
+                        photoFirstState = .complete
+                        photoSecondState = .complete
+                    } else if !photoFirstURL.isEmpty || !photoSecondURL.isEmpty {
+                        photoFirstState = photoFirstURL.isEmpty ? .incomplete : .upload
+                        photoSecondState = photoSecondURL.isEmpty ? .incomplete : .upload
+                    } else {
+                        photoFirstState = .incomplete
+                        photoSecondState = .incomplete
+                    }
+                    
+                }
     }
 
     func fetchCompleteState() async {
