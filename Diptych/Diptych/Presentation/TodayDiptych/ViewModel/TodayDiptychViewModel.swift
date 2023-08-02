@@ -45,6 +45,7 @@ final class TodayDiptychViewModel: ObservableObject {
     // MARK: - Network
 
     func fetchWeeklyCalender() async {
+        weeklyData = []
         guard let albumId = currentUser?.coupleAlbumId else { return }
 
         do {
@@ -76,6 +77,8 @@ final class TodayDiptychViewModel: ObservableObject {
             } else {
                 weeklyData.append(WeeklyData(date: day, diptychState: .todayIncomplete))
             }
+
+            print("🥳🥳🥳🥳🥳", weeklyData)
         } catch {
             print(error.localizedDescription)
         }

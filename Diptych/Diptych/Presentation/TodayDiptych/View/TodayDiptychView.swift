@@ -21,29 +21,40 @@ struct TodayDiptychView: View {
 
     var body: some View {
         NavigationStack {
-            MainDiptychView()
-                .ignoresSafeArea(edges: .vertical)
-                .onAppear {
-                    diptychCompleteAlertObject.checkDateAndResetAlertIfNeeded()
-                    fetchData()
-                }
-                .fullScreenCover(isPresented: $isShowCamera) {
-                    ZStack {
-                        Color.offWhite.ignoresSafeArea()
-                        CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
-                            .toolbar(.hidden, for: .tabBar)
-                            .onDisappear {
-                                viewModel.weeklyData.removeAll()
-                                Task {
-                                    await viewModel.fetchTodayImage()
-                                    await viewModel.fetchWeeklyCalender()
-
-                                    guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
-                                    diptychCompleteAlertObject.isDiptychCompleted = isCompleted
-                                }
-                            }
+            ZStack {
+                MainDiptychView()
+                Rectangle()
+                    .opacity(0.0001)
+                    .frame(width: 150, height: 150)
+                    .onTapGesture {
+                        Task {
+                            await viewModel.fetchTodayImage()
+                            await viewModel.fetchWeeklyCalender()
+                        }
                     }
+            }
+            .ignoresSafeArea(edges: .vertical)
+            .onAppear {
+                diptychCompleteAlertObject.checkDateAndResetAlertIfNeeded()
+                fetchData()
+            }
+            .fullScreenCover(isPresented: $isShowCamera) {
+                ZStack {
+                    Color.offWhite.ignoresSafeArea()
+                    CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
+                        .toolbar(.hidden, for: .tabBar)
+                        .onDisappear {
+                            viewModel.weeklyData.removeAll()
+                            Task {
+                                await viewModel.fetchTodayImage()
+                                await viewModel.fetchWeeklyCalender()
+
+                                guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
+                                diptychCompleteAlertObject.isDiptychCompleted = isCompleted
+                            }
+                        }
                 }
+            }
         }
     }
 

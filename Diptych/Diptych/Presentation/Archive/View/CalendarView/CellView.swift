@@ -46,7 +46,12 @@ struct CellView: View {
             RoundedRectangle(cornerRadius: 18)
                 .stroke(Color.systemSalmon, lineWidth: isToday ? 2 : 0)
                 .frame(width: 44, height: 44)
-                .overlay{}
+                .overlay{
+                    if isToday { // ... 하드코딩 .. ㅎ
+                        RoundedRectangle(cornerRadius: 18)
+                            .fill(Color.systemSalmon)
+                    }
+                }
                 
             /// 날짜 표시
             Text("\(day)")
