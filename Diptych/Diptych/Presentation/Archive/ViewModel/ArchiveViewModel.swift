@@ -77,11 +77,21 @@ final class ArchiveViewModel: ObservableObject {
     
     // MARK: - 컨텐츠 컬랙션에서 완성된 질문만 배열 만들기
     func makeTrueQuestions() async -> [Questions] {
-        photos.forEach { photo in
-              if photo.isCompleted, let contentID = photo.contentID {
-                  let data = questions.filter { $0.id == contentID }
-                  trueQuestions.append(contentsOf: data)
+//        photos.forEach { photo in
+//              if photo.isCompleted, let contentID = photo.contentID {
+//                  let data = questions.filter { $0.id == contentID }
+//                  trueQuestions.append(contentsOf: data)
+//              }
+//          }
+        trueQuestions = photos.map { photo in
+              if let contentId = photo.contentID,
+                 let question = questions.first(where: { $0.id == contentId }),
+                 photo.isCompleted {
+                  return question
+              } else {
+                  return Questions(id: UUID().uuidString, question: "오늘 나에게 감명깊은 에러는?")
               }
+
           }
         return trueQuestions
     }
