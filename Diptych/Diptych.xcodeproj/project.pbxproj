@@ -50,7 +50,6 @@
 		98D4A08D2A6E6EF100EB8C94 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */; };
 		98EEBEC82A6FA87100F575ED /* DiptychSplashLogo3sec.json in Resources */ = {isa = PBXBuildFile; fileRef = 98EEBEC72A6FA87100F575ED /* DiptychSplashLogo3sec.json */; };
 		AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */; };
-		AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */; };
 		AB2A9EA82A5EC46200D70C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */; };
 		AB2A9EAB2A5EC46200D70C33 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2A9EAA2A5EC46200D70C33 /* Preview Assets.xcassets */; };
 		AB2A9EB52A5EC46300D70C33 /* DiptychTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EB42A5EC46300D70C33 /* DiptychTests.swift */; };
@@ -110,7 +109,7 @@
 		F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A982A6544AA00B4581C /* CalendarScrollView.swift */; };
 		F3263A9E2A65B6AE00B4581C /* QuestionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263A9D2A65B6AE00B4581C /* QuestionListView.swift */; };
 		F3263AA22A667AA200B4581C /* PhotoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AA12A667AA200B4581C /* PhotoDetailView.swift */; };
-		F3263AB62A691C4400B4581C /* DiptychTabView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AB52A691C4400B4581C /* DiptychTabView2.swift */; };
+		F3263AB62A691C4400B4581C /* DiptychTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3263AB52A691C4400B4581C /* DiptychTabView.swift */; };
 		F33434F12A70393100389FF3 /* ArchiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33434F02A70393100389FF3 /* ArchiveViewModel.swift */; };
 		F35ADA542A6DA53C00A510E7 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35ADA532A6DA53C00A510E7 /* CellView.swift */; };
 /* End PBXBuildFile section */
@@ -158,7 +157,7 @@
 		987E425F2A627A2B00C682D9 /* Diptych.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Diptych.entitlements; sourceTree = "<group>"; };
 		988A277E2A72351900A9B5C0 /* SecureInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputView.swift; sourceTree = "<group>"; };
 		989B44932A65752100D99439 /* CouplingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplingView.swift; sourceTree = "<group>"; };
-		989B44992A65BB9200D99439 /* DiptychUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychUser.swift; sourceTree = "<group>"; };
+		989B44992A65BB9200D99439 /* DiptychUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DiptychUser.swift; path = ../../User/Model/DiptychUser.swift; sourceTree = "<group>"; };
 		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
@@ -170,7 +169,6 @@
 		98EEBEC72A6FA87100F575ED /* DiptychSplashLogo3sec.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DiptychSplashLogo3sec.json; sourceTree = "<group>"; };
 		AB2A9EA02A5EC46100D70C33 /* Diptych.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diptych.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychApp.swift; sourceTree = "<group>"; };
-		AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychTabView.swift; sourceTree = "<group>"; };
 		AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB2A9EAA2A5EC46200D70C33 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AB2A9EB02A5EC46200D70C33 /* DiptychTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiptychTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -211,7 +209,7 @@
 		F3263A982A6544AA00B4581C /* CalendarScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScrollView.swift; sourceTree = "<group>"; };
 		F3263A9D2A65B6AE00B4581C /* QuestionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionListView.swift; sourceTree = "<group>"; };
 		F3263AA12A667AA200B4581C /* PhotoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailView.swift; sourceTree = "<group>"; };
-		F3263AB52A691C4400B4581C /* DiptychTabView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychTabView2.swift; sourceTree = "<group>"; };
+		F3263AB52A691C4400B4581C /* DiptychTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychTabView.swift; sourceTree = "<group>"; };
 		F33434F02A70393100389FF3 /* ArchiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveViewModel.swift; sourceTree = "<group>"; };
 		F35ADA532A6DA53C00A510E7 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -259,14 +257,6 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		988A277D2A7234EE00A9B5C0 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				988A277E2A72351900A9B5C0 /* SecureInputView.swift */,
-			);
-			path = Components;
-			sourceTree = "<group>";
-		};
 		989B44952A65977200D99439 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,31 +264,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		989B44982A659F1A00D99439 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				989B44992A65BB9200D99439 /* DiptychUser.swift */,
-				98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		989DFFE32A5FDC3A00EBBC12 /* OnBoarding */ = {
 			isa = PBXGroup;
 			children = (
-				989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */,
+				AB96FE662A89648900382FD9 /* View */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";
 		};
-		98A8E8292A69192D005DF658 /* User */ = {
+		98A8E8292A69192D005DF658 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				98A8E82A2A691938005DF658 /* UserViewModel.swift */,
-				ABFD3E842A5EDA55008678D0 /* Auth */,
-				ABFD3E852A5EDA73008678D0 /* Matching */,
+				AB96FE652A89646000382FD9 /* Model */,
+				AB96FE642A89642D00382FD9 /* View */,
+				AB96FE632A89640B00382FD9 /* ViewModel */,
 			);
-			path = User;
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		AB2A9E972A5EC46100D70C33 = {
@@ -327,19 +308,14 @@
 		AB2A9EA22A5EC46100D70C33 /* Diptych */ = {
 			isa = PBXGroup;
 			children = (
-				988A277D2A7234EE00A9B5C0 /* Components */,
-				98EEBEC72A6FA87100F575ED /* DiptychSplashLogo3sec.json */,
-				98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */,
-				989B44982A659F1A00D99439 /* Model */,
-				987E425F2A627A2B00C682D9 /* Diptych.entitlements */,
 				ABFD3E7C2A5ED26E008678D0 /* Global */,
 				ABFD3E8A2A5EDADB008678D0 /* Data */,
 				ABFD3E7F2A5ED280008678D0 /* Resources */,
 				ABFD3E822A5EDA35008678D0 /* Presentation */,
 				AB2AC21C2A5F28DB00B162E1 /* Util */,
-				AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */,
-				98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */,
 				AB2A9EA92A5EC46200D70C33 /* Preview Content */,
+				987E425F2A627A2B00C682D9 /* Diptych.entitlements */,
+				AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */,
 				AB2AC21B2A5F282A00B162E1 /* Info.plist */,
 			);
 			path = Diptych;
@@ -375,7 +351,6 @@
 			children = (
 				AB2AC1EC2A5F093B00B162E1 /* TodayDiptychView.swift */,
 				ABFF9D9F2A60482E008BF1BC /* WeeklyCalenderView.swift */,
-				44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */,
 				ABC6DAFA2A784E0E000FE73A /* DiptychCompleteAlertView.swift */,
 			);
 			path = View;
@@ -422,9 +397,6 @@
 			isa = PBXGroup;
 			children = (
 				AB2AC21D2A5F28E900B162E1 /* NameSpace */,
-				44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */,
-				447E05002A79549E005AACE7 /* ImageCacheManager.swift */,
-				44671A202A6BE3D000C9C99A /* FirebaseMananger.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -441,6 +413,8 @@
 			isa = PBXGroup;
 			children = (
 				AB6C7B7C2A6DD56600CD5D68 /* CalendarManager.swift */,
+				447E05002A79549E005AACE7 /* ImageCacheManager.swift */,
+				44671A202A6BE3D000C9C99A /* FirebaseMananger.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -449,8 +423,72 @@
 			isa = PBXGroup;
 			children = (
 				AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */,
-				4498B2352A6D37E00069F54A /* CameraViewModel.swift */,
 				ABC6DAFC2A797465000FE73A /* DiptychCompleteAlertObject.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AB96FE632A89640B00382FD9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				98A8E82A2A691938005DF658 /* UserViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AB96FE642A89642D00382FD9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				988A277E2A72351900A9B5C0 /* SecureInputView.swift */,
+				985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */,
+				987E425B2A5FE17F00C682D9 /* LogInView.swift */,
+				989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */,
+				989B44932A65752100D99439 /* CouplingView.swift */,
+				9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AB96FE652A89646000382FD9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				989B44992A65BB9200D99439 /* DiptychUser.swift */,
+				98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AB96FE662A89648900382FD9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AB96FE672A8964D900382FD9 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				AB96FE692A8964E500382FD9 /* View */,
+				AB96FE6A2A8964E900382FD9 /* ViewModel */,
+				44DE9B932A67DC8100E6615B /* ViewController */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		AB96FE692A8964E500382FD9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				44DE9B912A67DC6500E6615B /* CameraRepresentableView.swift */,
+				44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AB96FE6A2A8964E900382FD9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4498B2352A6D37E00069F54A /* CameraViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -487,6 +525,8 @@
 		ABFD3E7F2A5ED280008678D0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				98EEBEC72A6FA87100F575ED /* DiptychSplashLogo3sec.json */,
+				98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */,
 				44852D302A6FBC120074D3D4 /* LoadingLottie.json */,
 				ABFA53B22A5F95BB00298F3B /* AssetCatalog */,
 				AB2AC1F62A5F277000B162E1 /* Font */,
@@ -521,10 +561,11 @@
 		ABFD3E822A5EDA35008678D0 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				98A8E8292A69192D005DF658 /* User */,
-				989DFFE32A5FDC3A00EBBC12 /* OnBoarding */,
 				ABFD3E832A5EDA4E008678D0 /* Common */,
+				989DFFE32A5FDC3A00EBBC12 /* OnBoarding */,
+				98A8E8292A69192D005DF658 /* Auth */,
 				ABFD3E862A5EDA79008678D0 /* TodayDiptych */,
+				AB96FE672A8964D900382FD9 /* Camera */,
 				ABFD3E882A5EDAA4008678D0 /* Archive */,
 				ABFD3E892A5EDAC0008678D0 /* Profile */,
 			);
@@ -534,38 +575,18 @@
 		ABFD3E832A5EDA4E008678D0 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				AB2A9EA52A5EC46100D70C33 /* DiptychTabView.swift */,
-				F3263AB52A691C4400B4581C /* DiptychTabView2.swift */,
+				F3263AB52A691C4400B4581C /* DiptychTabView.swift */,
 				44852D2E2A6FBA430074D3D4 /* LottieUIViews.swift */,
 				ABB613242A77D5A90063107E /* VisualEffectView.swift */,
+				98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */,
 			);
 			path = Common;
-			sourceTree = "<group>";
-		};
-		ABFD3E842A5EDA55008678D0 /* Auth */ = {
-			isa = PBXGroup;
-			children = (
-				989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */,
-				987E425B2A5FE17F00C682D9 /* LogInView.swift */,
-				985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */,
-			);
-			path = Auth;
-			sourceTree = "<group>";
-		};
-		ABFD3E852A5EDA73008678D0 /* Matching */ = {
-			isa = PBXGroup;
-			children = (
-				989B44932A65752100D99439 /* CouplingView.swift */,
-				9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */,
-			);
-			path = Matching;
 			sourceTree = "<group>";
 		};
 		ABFD3E862A5EDA79008678D0 /* TodayDiptych */ = {
 			isa = PBXGroup;
 			children = (
 				ABCB30092A6D3661007724DC /* Model */,
-				44DE9B932A67DC8100E6615B /* ViewController */,
 				AB2AC1E92A5F091700B162E1 /* View */,
 				AB96A0A92A66E4C8004C01FF /* ViewModel */,
 			);
@@ -575,7 +596,6 @@
 		ABFD3E882A5EDAA4008678D0 /* Archive */ = {
 			isa = PBXGroup;
 			children = (
-				F3263AA42A667D5D00B4581C /* Model */,
 				F3263AA32A667D4F00B4581C /* ViewModel */,
 				AB2AC1EE2A5F094600B162E1 /* View */,
 			);
@@ -639,13 +659,6 @@
 				F33434F02A70393100389FF3 /* ArchiveViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		F3263AA42A667D5D00B4581C /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -836,8 +849,7 @@
 				98D4A0842A6A625200EB8C94 /* Date+.swift in Sources */,
 				44DE9B972A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift in Sources */,
 				44852D2F2A6FBA430074D3D4 /* LottieUIViews.swift in Sources */,
-				AB2A9EA62A5EC46100D70C33 /* DiptychTabView.swift in Sources */,
-				F3263AB62A691C4400B4581C /* DiptychTabView2.swift in Sources */,
+				F3263AB62A691C4400B4581C /* DiptychTabView.swift in Sources */,
 				F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */,
 				98D4A0862A6E3E7D00EB8C94 /* DiptychAlbum.swift in Sources */,
 				445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */,
@@ -1045,7 +1057,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Diptych/Preview Content\"";
-				DEVELOPMENT_TEAM = 6S2SA26VAN;
+				DEVELOPMENT_TEAM = 578Q9VP5B4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diptych/Info.plist;
@@ -1063,7 +1075,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych.cliff;
+				PRODUCT_BUNDLE_IDENTIFIER = min.Diptych.min;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

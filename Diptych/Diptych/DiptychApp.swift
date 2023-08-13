@@ -47,7 +47,7 @@ struct DiptychApp: App {
                     ProfileSettingView()
                         .environmentObject(userViewModel)
                 } else {
-                    DiptychTabView2()
+                    DiptychTabView()
                         .environmentObject(userViewModel)
                         .environmentObject(DiptychCompleteAlertObject())
                         .environmentObject(VM)
