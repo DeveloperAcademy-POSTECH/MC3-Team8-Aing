@@ -493,6 +493,16 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		AB96FE712A89682400382FD9 /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				98EEBEC72A6FA87100F575ED /* DiptychSplashLogo3sec.json */,
+				98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */,
+				44852D302A6FBC120074D3D4 /* LoadingLottie.json */,
+			);
+			path = Lottie;
+			sourceTree = "<group>";
+		};
 		ABCB30092A6D3661007724DC /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -525,9 +535,7 @@
 		ABFD3E7F2A5ED280008678D0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				98EEBEC72A6FA87100F575ED /* DiptychSplashLogo3sec.json */,
-				98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */,
-				44852D302A6FBC120074D3D4 /* LoadingLottie.json */,
+				AB96FE712A89682400382FD9 /* Lottie */,
 				ABFA53B22A5F95BB00298F3B /* AssetCatalog */,
 				AB2AC1F62A5F277000B162E1 /* Font */,
 			);
