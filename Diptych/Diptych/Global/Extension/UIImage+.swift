@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIImage {
+
     func resize(width: CGFloat, height: CGFloat) -> UIImage {
         let image = self
         

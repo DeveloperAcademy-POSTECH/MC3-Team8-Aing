@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIColor {
-    // MARK: - Custom Color for UIKit
+
     static let offWhite: UIColor? = .init(named: "OffWhite")
     static let diptychDarkGray: UIColor? = .init(named: "DarkGray")
     static let diptychLightGray: UIColor? = .init(named: "LightGray")

@@ -8,6 +8,7 @@
 import SwiftUI
 
 extension Image {
+    
     @MainActor
     func getUIImage(newSize: CGSize) -> UIImage? {
         let image = resizable()
