@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseCore
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         if let path = Bundle.main.path(forResource: "GoogleService-Info-2", ofType: "plist") {
@@ -22,17 +23,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct DiptychApp: App {
+
     @State var isSplashCompleted: Bool = false
-    
-    // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var userViewModel: UserViewModel = UserViewModel()
     @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
     
     var body: some Scene {
         WindowGroup {
-            
-
             if isSplashCompleted {
                 if userViewModel.flow == .initialized {
                     OnBoardingView()
@@ -53,12 +51,10 @@ struct DiptychApp: App {
                         .environmentObject(VM)
                 }
             } else {
-                LottieView() {isSplashCompleted in
+                LottieView() { isSplashCompleted in
                     self.isSplashCompleted = true
                 }
             }
-            
- 
         }
     }
 }

@@ -355,12 +355,9 @@
 		AB2AC1EE2A5F094600B162E1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				F3263A922A6543F700B4581C /* ArchiveTabView.swift */,
-				F3263AA12A667AA200B4581C /* PhotoDetailView.swift */,
-				C1F79A4D2A700E9500A1D63A /* ShareSheetView.swift */,
-				F3263A942A65441B00B4581C /* CalendarView */,
-				F3263A952A65442700B4581C /* AlbumView */,
-				F3263A9C2A65B66F00B4581C /* QuestionListView */,
+				F3263A942A65441B00B4581C /* Calendar */,
+				F3263A952A65442700B4581C /* Album */,
+				F3263A9C2A65B66F00B4581C /* QuestionList */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -515,6 +512,23 @@
 			path = Matching;
 			sourceTree = "<group>";
 		};
+		AB96FE7B2A8A4C4700382FD9 /* PhotoDetail */ = {
+			isa = PBXGroup;
+			children = (
+				AB96FE7C2A8A4C5000382FD9 /* View */,
+			);
+			path = PhotoDetail;
+			sourceTree = "<group>";
+		};
+		AB96FE7C2A8A4C5000382FD9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C1F79A4D2A700E9500A1D63A /* ShareSheetView.swift */,
+				F3263AA12A667AA200B4581C /* PhotoDetailView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		ABCB30092A6D3661007724DC /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -585,6 +599,7 @@
 				ABFD3E862A5EDA79008678D0 /* TodayDiptych */,
 				AB96FE672A8964D900382FD9 /* Camera */,
 				ABFD3E882A5EDAA4008678D0 /* Archive */,
+				AB96FE7B2A8A4C4700382FD9 /* PhotoDetail */,
 				ABFD3E892A5EDAC0008678D0 /* Profile */,
 			);
 			path = Presentation;
@@ -597,6 +612,7 @@
 				44852D2E2A6FBA430074D3D4 /* LottieUIViews.swift */,
 				ABB613242A77D5A90063107E /* VisualEffectView.swift */,
 				98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */,
+				F3263A922A6543F700B4581C /* ArchiveTabView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -644,7 +660,7 @@
 			path = CalendarTest;
 			sourceTree = "<group>";
 		};
-		F3263A942A65441B00B4581C /* CalendarView */ = {
+		F3263A942A65441B00B4581C /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
 				F316E8C62A6DBA41003CBD4D /* CalendarTest */,
@@ -652,23 +668,23 @@
 				F3263A962A65448400B4581C /* CalendarView.swift */,
 				F3263A982A6544AA00B4581C /* CalendarScrollView.swift */,
 			);
-			path = CalendarView;
+			path = Calendar;
 			sourceTree = "<group>";
 		};
-		F3263A952A65442700B4581C /* AlbumView */ = {
+		F3263A952A65442700B4581C /* Album */ = {
 			isa = PBXGroup;
 			children = (
 				445A47AE2A5FD6B6005573DC /* AlbumListView.swift */,
 			);
-			path = AlbumView;
+			path = Album;
 			sourceTree = "<group>";
 		};
-		F3263A9C2A65B66F00B4581C /* QuestionListView */ = {
+		F3263A9C2A65B66F00B4581C /* QuestionList */ = {
 			isa = PBXGroup;
 			children = (
 				F3263A9D2A65B6AE00B4581C /* QuestionListView.swift */,
 			);
-			path = QuestionListView;
+			path = QuestionList;
 			sourceTree = "<group>";
 		};
 		F3263AA32A667D4F00B4581C /* ViewModel */ = {
