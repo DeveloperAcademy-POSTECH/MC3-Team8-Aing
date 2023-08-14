@@ -29,7 +29,6 @@
 		987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E425B2A5FE17F00C682D9 /* LogInView.swift */; };
 		988A277F2A72351900A9B5C0 /* SecureInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A277E2A72351900A9B5C0 /* SecureInputView.swift */; };
 		989B44942A65752100D99439 /* CouplingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44932A65752100D99439 /* CouplingView.swift */; };
-		989B449A2A65BB9200D99439 /* DiptychUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44992A65BB9200D99439 /* DiptychUser.swift */; };
 		989DFFDE2A5FD65F00EBBC12 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */; };
 		989DFFE02A5FD75A00EBBC12 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */; };
 		989DFFE52A5FDC4B00EBBC12 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */; };
@@ -47,6 +46,7 @@
 		98D4A08B2A6E6E1E00EB8C94 /* DiptychSplashLogo.json in Resources */ = {isa = PBXBuildFile; fileRef = 98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */; };
 		98D4A08D2A6E6EF100EB8C94 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */; };
 		98EEBEC82A6FA87100F575ED /* DiptychSplashLogo3sec.json in Resources */ = {isa = PBXBuildFile; fileRef = 98EEBEC72A6FA87100F575ED /* DiptychSplashLogo3sec.json */; };
+		AB0974432A8A944300E4DAAA /* DiptychUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0974422A8A944300E4DAAA /* DiptychUser.swift */; };
 		AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */; };
 		AB2A9EA82A5EC46200D70C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */; };
 		AB2A9EAB2A5EC46200D70C33 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2A9EAA2A5EC46200D70C33 /* Preview Assets.xcassets */; };
@@ -153,7 +153,6 @@
 		987E425F2A627A2B00C682D9 /* Diptych.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Diptych.entitlements; sourceTree = "<group>"; };
 		988A277E2A72351900A9B5C0 /* SecureInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputView.swift; sourceTree = "<group>"; };
 		989B44932A65752100D99439 /* CouplingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplingView.swift; sourceTree = "<group>"; };
-		989B44992A65BB9200D99439 /* DiptychUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DiptychUser.swift; path = ../../User/Model/DiptychUser.swift; sourceTree = "<group>"; };
 		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
@@ -163,6 +162,7 @@
 		98D4A08A2A6E6E1E00EB8C94 /* DiptychSplashLogo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DiptychSplashLogo.json; sourceTree = "<group>"; };
 		98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		98EEBEC72A6FA87100F575ED /* DiptychSplashLogo3sec.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DiptychSplashLogo3sec.json; sourceTree = "<group>"; };
+		AB0974422A8A944300E4DAAA /* DiptychUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiptychUser.swift; sourceTree = "<group>"; };
 		AB2A9EA02A5EC46100D70C33 /* Diptych.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diptych.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2A9EA32A5EC46100D70C33 /* DiptychApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychApp.swift; sourceTree = "<group>"; };
 		AB2A9EA72A5EC46200D70C33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -268,14 +268,14 @@
 			path = OnBoarding;
 			sourceTree = "<group>";
 		};
-		98A8E8292A69192D005DF658 /* Auth */ = {
+		98A8E8292A69192D005DF658 /* User */ = {
 			isa = PBXGroup;
 			children = (
 				AB96FE652A89646000382FD9 /* Model */,
 				AB96FE642A89642D00382FD9 /* View */,
 				AB96FE632A89640B00382FD9 /* ViewModel */,
 			);
-			path = Auth;
+			path = User;
 			sourceTree = "<group>";
 		};
 		AB2A9E972A5EC46100D70C33 = {
@@ -441,7 +441,7 @@
 		AB96FE652A89646000382FD9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				989B44992A65BB9200D99439 /* DiptychUser.swift */,
+				AB0974422A8A944300E4DAAA /* DiptychUser.swift */,
 				98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */,
 			);
 			path = Model;
@@ -595,7 +595,7 @@
 			children = (
 				ABFD3E832A5EDA4E008678D0 /* Common */,
 				989DFFE32A5FDC3A00EBBC12 /* OnBoarding */,
-				98A8E8292A69192D005DF658 /* Auth */,
+				98A8E8292A69192D005DF658 /* User */,
 				ABFD3E862A5EDA79008678D0 /* TodayDiptych */,
 				AB96FE672A8964D900382FD9 /* Camera */,
 				ABFD3E882A5EDAA4008678D0 /* Archive */,
@@ -890,6 +890,7 @@
 				44852D332A7012590074D3D4 /* UIColor+.swift in Sources */,
 				AB2AC2232A5F8E8700B162E1 /* PretendardType.swift in Sources */,
 				989DFFE52A5FDC4B00EBBC12 /* OnBoardingView.swift in Sources */,
+				AB0974432A8A944300E4DAAA /* DiptychUser.swift in Sources */,
 				AB96A0AB2A66E4DF004C01FF /* TodayDiptychViewModel.swift in Sources */,
 				F35ADA542A6DA53C00A510E7 /* CellView.swift in Sources */,
 				989B44942A65752100D99439 /* CouplingView.swift in Sources */,
@@ -920,7 +921,6 @@
 				AB2AC1F52A5F15A100B162E1 /* Color+.swift in Sources */,
 				ABC6DAFD2A797465000FE73A /* DiptychCompleteAlertObject.swift in Sources */,
 				985DBC1E2A699DAA006C64FC /* LoadingVerificationView.swift in Sources */,
-				989B449A2A65BB9200D99439 /* DiptychUser.swift in Sources */,
 				ABCB300F2A6D368D007724DC /* WeeklyData.swift in Sources */,
 				F3263AA22A667AA200B4581C /* PhotoDetailView.swift in Sources */,
 				F33434F12A70393100389FF3 /* ArchiveViewModel.swift in Sources */,
