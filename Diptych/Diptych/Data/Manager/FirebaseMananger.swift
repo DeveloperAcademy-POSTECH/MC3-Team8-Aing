@@ -73,5 +73,29 @@ class FirebaseManager {
         let storageMetadata = try await reference.getMetadata()
         return storageMetadata.updated
     }
+    
+    func 데모에쓰기_끝나면삭제해라() {
+        Task {
+            for i in 1...13 {
+                let ref = firestore.collection("photos")
+                let document = ref.document("demo\(i)")
+                
+                let fileNameIndex = i < 10 ? "0\(i)" : "\(i)"
+                let dict: [String: Any] = [
+                    "albumId": "3ZtcHka4I3loqa7Xopc4",
+                    "id": "demo\(i)",
+                    "contentId": "FQmWBOl68GLCPeHmhtQ7",
+                    "date": Date(timeIntervalSince1970: 1688982720 + (Double(i) * 86400)),
+                    "isCompleted": true,
+                    "photoFirst": "gs://diptych2-a8726.appspot.com/demo/sliced/\(fileNameIndex)_first.png",
+                    "photoSecond":"gs://diptych2-a8726.appspot.com/demo/sliced/\(fileNameIndex)_second.png",
+                    "thumbnail": "gs://diptych2-a8726.appspot.com/demo/\(fileNameIndex)_thumbnail.jpg",
+                ]
+                try await document.updateData(dict)
+            }
+        }
+        
+        
+    }
 }
 

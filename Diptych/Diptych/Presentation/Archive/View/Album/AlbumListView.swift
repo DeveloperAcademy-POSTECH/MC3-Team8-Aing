@@ -29,7 +29,7 @@ struct AlbumListView: View {
                                 date: data[index].date,
                                 image1: data[index].photoFirstURL,
                                 image2: data[index].photoSecondURL,
-                                question: data2[index].question,
+                                question: (data2[index].question),
                                 currentIndex: index
                             )
                             .environmentObject(VM)

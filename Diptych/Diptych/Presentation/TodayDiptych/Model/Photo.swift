@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import FirebaseFirestoreSwift
 
 struct Photo: Identifiable, Codable {
     let id: String
@@ -14,6 +15,7 @@ struct Photo: Identifiable, Codable {
     let photoSecond: String
     let thumbnail: String
     let date: Timestamp
+    // @ServerTimestamp var date: Timestamp?
     let contentId: String
     let albumId: String
     let isCompleted: Bool

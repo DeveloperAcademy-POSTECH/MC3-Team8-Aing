@@ -50,10 +50,10 @@ final class ArchiveViewModel: ObservableObject {
     
     init() {
         Task {
+            await fetchQuestion()
             await fetchUser()
             await fetchStartDate()
             await fetchPhotosData()
-            await fetchQuestion()
             _ = await makeTruePhotos()
             _ = await makeTrueQuestions()
             print("🥦:ArchiveViewModel")
@@ -64,25 +64,41 @@ final class ArchiveViewModel: ObservableObject {
     func fetchQuestion() async {
         do {
             let contentSnapshot = try await db.collection("contents")
-                .whereField("order", isGreaterThanOrEqualTo: 0)
+                // .whereField("order", isGreaterThanOrEqualTo: 0)
                 .getDocuments()
-            self.questions = contentSnapshot.documents.compactMap { document in
-                guard let question = document.data()["question"] as? String,
-                      let id = document.data()["id"] as? String
-                else {return nil}
-                return Questions(id: id, question: question)
+            // self.questions = contentSnapshot.documents.compactMap { document in
+            //     guard let question = document.data()["question"] as? String,
+            //           let id = document.data()["id"] as? String
+            //     else {return nil}
+            //     return Questions(id: id, question: question)
+            // }
+            self.questions = contentSnapshot.documents.map { document in
+                Questions(id: document.data()["id"] as? String ?? "", question: document.data()["question"] as? String ?? "")
             }
         } catch { print(error.localizedDescription) }
     }
     
     // MARK: - 컨텐츠 컬랙션에서 완성된 질문만 배열 만들기
     func makeTrueQuestions() async -> [Questions] {
-        photos.forEach { photo in
-              if photo.isCompleted, let contentID = photo.contentID {
-                  let data = questions.filter { $0.id == contentID }
-                  trueQuestions.append(contentsOf: data)
-              }
-          }
+        // photos.forEach { photo in
+        //       // if photo.isCompleted, let contentID = photo.contentID {
+        //       //     let data = questions.filter { $0.id == contentID  }
+        //       //     trueQuestions.append(contentsOf: data)
+        //       // }
+        //
+        //   }
+        print(questions)
+        trueQuestions = photos.map { photo in
+            print(photo.contentID)
+            if let contentId = photo.contentID,
+               let question = questions.first(where: { $0.id == contentId }),
+               photo.isCompleted {
+                return question
+            } else {
+                return Questions(id: UUID().uuidString, question: "오늘 나에게 감명깊은 에러는?")
+            }
+        }
+        // print("count: \(trueQuestions.count)")
         return trueQuestions
     }
     
@@ -100,9 +116,11 @@ final class ArchiveViewModel: ObservableObject {
     func fetchStartDate() async {
         guard let albumId = currentUser?.coupleAlbumId else { return }
         do {
+            print("albumId:", albumId)
             let startDaySnapshot = try await db.collection("albums")
                 .whereField("id", isEqualTo: albumId)
                 .getDocuments()
+            print("startdaysnapshot count:" ,startDaySnapshot.count)
             let data = startDaySnapshot.documents[0].data()
             guard let startDate = data["startDate"] as? Timestamp else { return }
             let startDay = startDate.dateValue().get(.day)
