@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4421D7732A8BDA40003299BD /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4421D7722A8BDA3F003299BD /* CalendarHelper.swift */; };
 		445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A47AE2A5FD6B6005573DC /* AlbumListView.swift */; };
 		44671A212A6BE3D000C9C99A /* FirebaseMananger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44671A202A6BE3D000C9C99A /* FirebaseMananger.swift */; };
 		447E05012A79549F005AACE7 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447E05002A79549E005AACE7 /* ImageCacheManager.swift */; };
@@ -18,6 +19,7 @@
 		44852D312A6FBC120074D3D4 /* LoadingLottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 44852D302A6FBC120074D3D4 /* LoadingLottie.json */; };
 		44852D332A7012590074D3D4 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44852D322A7012590074D3D4 /* UIColor+.swift */; };
 		4498B2362A6D37E00069F54A /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4498B2352A6D37E00069F54A /* CameraViewModel.swift */; };
+		44C0C3352A8D20BF0072A0B8 /* MonthlyCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C0C3342A8D20BF0072A0B8 /* MonthlyCalendarView.swift */; };
 		44CE81972A7430A800D1420E /* BlurPopupUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CE81962A7430A800D1420E /* BlurPopupUIView.swift */; };
 		44DE9B8E2A67DC2100E6615B /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B8D2A67DC2100E6615B /* UIDevice+.swift */; };
 		44DE9B902A67DC3B00E6615B /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B8F2A67DC3B00E6615B /* UIImage+.swift */; };
@@ -32,8 +34,6 @@
 		987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E425B2A5FE17F00C682D9 /* LogInView.swift */; };
 		988A277F2A72351900A9B5C0 /* SecureInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A277E2A72351900A9B5C0 /* SecureInputView.swift */; };
 		989B44942A65752100D99439 /* CouplingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44932A65752100D99439 /* CouplingView.swift */; };
-		989DFFDE2A5FD65F00EBBC12 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */; };
-		989B449A2A65BB9200D99439 /* DiptychUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44992A65BB9200D99439 /* DiptychUser.swift */; };
 		989DFFE02A5FD75A00EBBC12 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */; };
 		989DFFE52A5FDC4B00EBBC12 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */; };
 		98A8E82B2A691938005DF658 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A8E82A2A691938005DF658 /* UserViewModel.swift */; };
@@ -132,6 +132,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4421D7722A8BDA3F003299BD /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
 		445A47AE2A5FD6B6005573DC /* AlbumListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListView.swift; sourceTree = "<group>"; };
 		44671A202A6BE3D000C9C99A /* FirebaseMananger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMananger.swift; sourceTree = "<group>"; };
 		447E05002A79549E005AACE7 /* ImageCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
@@ -140,6 +141,7 @@
 		44852D302A6FBC120074D3D4 /* LoadingLottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LoadingLottie.json; sourceTree = "<group>"; };
 		44852D322A7012590074D3D4 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		4498B2352A6D37E00069F54A /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
+		44C0C3342A8D20BF0072A0B8 /* MonthlyCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCalendarView.swift; sourceTree = "<group>"; };
 		44CE81962A7430A800D1420E /* BlurPopupUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurPopupUIView.swift; sourceTree = "<group>"; };
 		44DE9B8D2A67DC2100E6615B /* UIDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
 		44DE9B8F2A67DC3B00E6615B /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
@@ -155,8 +157,6 @@
 		987E425F2A627A2B00C682D9 /* Diptych.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Diptych.entitlements; sourceTree = "<group>"; };
 		988A277E2A72351900A9B5C0 /* SecureInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputView.swift; sourceTree = "<group>"; };
 		989B44932A65752100D99439 /* CouplingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplingView.swift; sourceTree = "<group>"; };
-		989DFFDD2A5FD65F00EBBC12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		989B44992A65BB9200D99439 /* DiptychUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychUser.swift; sourceTree = "<group>"; };
 		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		98A8E82A2A691938005DF658 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
@@ -393,6 +393,7 @@
 			isa = PBXGroup;
 			children = (
 				AB2AC21D2A5F28E900B162E1 /* NameSpace */,
+				4421D7722A8BDA3F003299BD /* CalendarHelper.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -669,6 +670,7 @@
 				F316E8C62A6DBA41003CBD4D /* CalendarTest */,
 				F35ADA532A6DA53C00A510E7 /* CellView.swift */,
 				F3263A962A65448400B4581C /* CalendarView.swift */,
+				44C0C3342A8D20BF0072A0B8 /* MonthlyCalendarView.swift */,
 				F3263A982A6544AA00B4581C /* CalendarScrollView.swift */,
 			);
 			path = Calendar;
@@ -910,6 +912,7 @@
 				447E05012A79549F005AACE7 /* ImageCacheManager.swift in Sources */,
 				AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */,
 				4498B2362A6D37E00069F54A /* CameraViewModel.swift in Sources */,
+				4421D7732A8BDA40003299BD /* CalendarHelper.swift in Sources */,
 				9846144B2A69075E0043EAE9 /* ProfileSettingView.swift in Sources */,
 				ABB613252A77D5A90063107E /* VisualEffectView.swift in Sources */,
 				AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */,
@@ -917,6 +920,7 @@
 				AB2AC1ED2A5F093B00B162E1 /* TodayDiptychView.swift in Sources */,
 				44EE2BFD2A6E8AAB003B5C1F /* ImageSize.swift in Sources */,
 				F316E8CA2A6DBA98003CBD4D /* ExampleCode.swift in Sources */,
+				44C0C3352A8D20BF0072A0B8 /* MonthlyCalendarView.swift in Sources */,
 				989DFFE02A5FD75A00EBBC12 /* SignUpView.swift in Sources */,
 				44671A212A6BE3D000C9C99A /* FirebaseMananger.swift in Sources */,
 				ABFF9DA02A60482E008BF1BC /* WeeklyCalenderView.swift in Sources */,
