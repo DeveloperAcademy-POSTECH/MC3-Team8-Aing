@@ -7,10 +7,10 @@
 
 import SwiftUI
 
+/// 월별 캘린더 뷰
 struct MonthlyCalendarView: View {
     var date: Date {
         if let newMonth = Calendar.current.date(byAdding: .month, value: changeMonthInt, to: today) {
-            print("newMonth:", changeMonthInt, newMonth)
             return newMonth
         } else {
             return today
@@ -47,7 +47,6 @@ struct MonthlyCalendarView: View {
             }//】 VStack
             .padding(.horizontal,13)
             .padding(.bottom,15)
-        
         
             /// [2] Week
             HStack(spacing: 0) {
@@ -103,8 +102,6 @@ struct MonthlyCalendarView: View {
                                     isCompleted: false,
                                     thumbnail: "")
         
-        
-        
                                 /// 날짜 표기 시작
                                 if isMatched {
                                     NavigationLink {
@@ -131,6 +128,7 @@ struct MonthlyCalendarView: View {
                 }//】 Grid
                 .padding(.horizontal,15)
                 .padding(.bottom, 20)
+                .onAppear {}
             } // if: VM.isLoading
         
         }//】 VStack
@@ -155,7 +153,7 @@ extension MonthlyCalendarView {
     func firstWeekdayOfMonth(in data: Date) -> Int {
         let components = Calendar.current.dateComponents([.year, .month], from: data)
         let firstDayOfMonth = Calendar.current.date(from: components)!
-        print(#function, data, Calendar.current.component(.weekday, from: firstDayOfMonth))
+        // print(#function, data, Calendar.current.component(.weekday, from: firstDayOfMonth))
         return Calendar.current.component(.weekday, from: firstDayOfMonth)
     }
 
