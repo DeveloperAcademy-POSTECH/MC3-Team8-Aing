@@ -158,10 +158,9 @@ final class TodayDiptychViewModel: ObservableObject {
             let dateComponents = Calendar.current.dateComponents([.day], from: startDate.dateValue(), to: Date())
             guard var order = dateComponents.day else { return }
 
-            if order >= 24 { order -= 24 } // TODO: - 질문 개수에 따라 초기화
-
+            let contentsCount = try await db.collection("contents").getDocuments().count
             let contentSnapshot = try await db.collection("contents")
-                .whereField("order", isEqualTo: order) 
+                .whereField("order", isEqualTo: order % contentsCount)
                 .getDocuments()
 
             self.content = try contentSnapshot.documents[0].data(as: Content.self)
