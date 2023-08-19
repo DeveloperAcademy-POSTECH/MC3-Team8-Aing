@@ -72,7 +72,7 @@ extension TodayDiptychView {
             Color.offWhite
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    Text("\(viewModel.setTodayDate())")
+                    Text("\(viewModel.setTodayDateString())")
                     Spacer()
                     Text("#\(viewModel.diptychNumber)번째 딥틱")
                 }
