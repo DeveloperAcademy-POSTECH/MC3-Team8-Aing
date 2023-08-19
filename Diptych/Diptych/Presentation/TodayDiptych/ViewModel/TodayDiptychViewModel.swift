@@ -39,7 +39,7 @@ final class TodayDiptychViewModel: ObservableObject {
     @Published var isCompleted = false
     @Published var photoFirstState = TodayDiptychState.incomplete
     @Published var photoSecondState = TodayDiptychState.incomplete
-    @Published var diptychNumber = 1
+    @Published var diptychNumber = 0
     private let db = Firestore.firestore()
 
     // MARK: - Network

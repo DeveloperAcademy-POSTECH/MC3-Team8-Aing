@@ -51,7 +51,7 @@ struct TodayDiptychView: View {
         Task {
             await viewModel.fetchUser()
             await viewModel.setUserCameraLoactionState()
-            await viewModel.setDiptychNumber()
+            _ = await viewModel.setDiptychNumber()
             await viewModel.fetchContents()
             await viewModel.setTodayPhoto()
             await viewModel.fetchTodayImage()
