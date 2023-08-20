@@ -10,11 +10,7 @@ import SwiftUI
 /// 월별 캘린더 뷰
 struct MonthlyCalendarView: View {
     var date: Date {
-        if let newMonth = Calendar.current.date(byAdding: .month, value: changeMonthInt, to: today) {
-            return newMonth
-        } else {
-            return today
-        }
+        changeMonth(by: changeMonthInt)
     }
     let changeMonthInt: Int
     @StateObject var VM: ArchiveViewModel
@@ -27,7 +23,6 @@ struct MonthlyCalendarView: View {
         let firstWeekday: Int = firstWeekdayOfMonth(in: date) - 2
         
         VStack(spacing: 0) {
-        
             /// [1] Month
             VStack(spacing:0){
                 HStack(alignment: .bottom, spacing:0) {
@@ -65,17 +60,13 @@ struct MonthlyCalendarView: View {
             if VM.isLoading {
                 ProgressView()
             } else {
-                // Text("FirstWeekDay: \(firstWeekday), self.date: \(self.date)")
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7),spacing: 0) {
                     ForEach(0 ..< daysInMonth + firstWeekday, id: \.self) { index in
-                        // let _ = print("daysInMonth + firstWeekday:", daysInMonth + firstWeekday, daysInMonth, firstWeekday)
                         VStack {
-                            // Text("\(index)").font(.system(size: 5))
                             if index < firstWeekday {
                                 Color.clear /// 빈칸 표시
                             } else {
                                 let day = index - firstWeekday + 1
-                                // let _ = print("day:", daysInMonth, firstWeekday, day, self.date)
                                 let data = VM.photos
                                 let data2 = VM.questions
                                 let start = VM.startDay // 18(일)
@@ -123,7 +114,6 @@ struct MonthlyCalendarView: View {
         
                             }//:if isMatched
                         }
-        
                     }//】 Loop
                 }//】 Grid
                 .padding(.horizontal,15)
@@ -153,16 +143,16 @@ extension MonthlyCalendarView {
     func firstWeekdayOfMonth(in data: Date) -> Int {
         let components = Calendar.current.dateComponents([.year, .month], from: data)
         let firstDayOfMonth = Calendar.current.date(from: components)!
-        // print(#function, data, Calendar.current.component(.weekday, from: firstDayOfMonth))
         return Calendar.current.component(.weekday, from: firstDayOfMonth)
     }
 
     /// Month 변경 로직
-    func changeMonth(by data: Int) {
-        // if let newMonth = Calendar.current.date(byAdding: .month, value: data, to: today) {
-        //     self.date = newMonth
-        //     print("newMonth:", data, newMonth)
-        // }
+    private func changeMonth(by date: Int) -> Date {
+        if let newMonth = Calendar.current.date(byAdding: .month, value: date, to: today) {
+            return newMonth
+        } else {
+            return today
+        }
     }
 
     /// 월 표기
