@@ -9,14 +9,10 @@ import SwiftUI
 import Firebase
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-
+    
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        // if let path = Bundle.main.path(forResource: "GoogleService-Info-2", ofType: "plist") {
-        //     guard let options = FirebaseOptions(contentsOfFile: path) else { return false }
-        //     FirebaseApp.configure(options: options)
-        // }
-       FirebaseApp.configure()
+        FirebaseApp.configure()
         return true
     }
 }
