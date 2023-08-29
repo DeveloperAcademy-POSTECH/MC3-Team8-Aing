@@ -49,9 +49,9 @@ final class TodayDiptychViewModel: ObservableObject {
 
         do {
             let querySnapshot = try await db.collection("photos")
-                .whereField("albumId", isEqualTo: albumId) // TODO: - 유저의 앨범과 연결
-                .whereField("date", isGreaterThanOrEqualTo: calculateThisMondayTimestamp())
-                .whereField("date", isLessThan: calculateThisTodayTimestamp())
+                .whereField("albumId", isEqualTo: albumId)
+                .whereField("date", isGreaterThanOrEqualTo: Timestamp(date: calculateThisMondayDate()))
+                .whereField("date", isLessThan: calculateTodayTimestamp())
                 .getDocuments()
 
             for document in querySnapshot.documents {
@@ -158,10 +158,9 @@ final class TodayDiptychViewModel: ObservableObject {
             let dateComponents = Calendar.current.dateComponents([.day], from: startDate.dateValue(), to: Date())
             guard var order = dateComponents.day else { return }
 
-            if order >= 24 { order -= 24 } // TODO: - 질문 개수에 따라 초기화
-
+            let contentsCount = try await db.collection("contents").getDocuments().count
             let contentSnapshot = try await db.collection("contents")
-                .whereField("order", isEqualTo: order) 
+                .whereField("order", isEqualTo: order % contentsCount)
                 .getDocuments()
 
             self.content = try contentSnapshot.documents[0].data(as: Content.self)
@@ -223,43 +222,7 @@ final class TodayDiptychViewModel: ObservableObject {
 
     // MARK: - Custom Methods
 
-    func setTodayDate() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy년 M월 d일"
-        let todayDateString = formatter.string(from: Date())
-
-        return todayDateString
-    }
-
-    // TODO: - 커스텀 함수들 정리하기!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-
-    func calculateThisMondayDate() -> Date {
-        let (todayDate, calendar, daysAfterMonday) = setTodayCalendar()
-        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return Date() }
-        return thisMonday
-    }
-
-    func calculateThisTodayTimestamp() -> Timestamp {
-        let (todayDate, _, _) = setTodayCalendar()
-        let timestamp = Timestamp(date: todayDate)
-        return timestamp
-    }
-
-    func calculateThisMondayTimestamp() -> Timestamp {
-        let (todayDate, calendar, daysAfterMonday) = setTodayCalendar()
-        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return Timestamp() }
-        let timestamp = Timestamp(date: thisMonday)
-        return timestamp
-    }
-
-    func setTodayDate() -> Int {
-        let (todayDate, calendar, _) = setTodayCalendar()
-        guard let day = calendar.dateComponents([.day], from: todayDate).day else { return 0 }
-        return day
-    }
-
     func setTodayCalendar() -> (Date, Calendar, Int) {
-        let currentDate = Date()
         var calendar = Calendar.current
         calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
 
@@ -267,12 +230,33 @@ final class TodayDiptychViewModel: ObservableObject {
         formatter.dateFormat = "yyyy-MM-dd 00:00:00"
         formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
 
-        let todayDateString = formatter.string(from: currentDate)
+        let todayDateString = formatter.string(from: Date())
         let todayDate = formatter.date(from: todayDateString)!
+
         let currentWeekday = calendar.component(.weekday, from: todayDate)
         let daysAfterMonday = (currentWeekday + 5) % 7
 
         return (todayDate, calendar, daysAfterMonday)
+    }
+
+    func setTodayDateString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 M월 d일"
+        let todayDateString = formatter.string(from: Date())
+
+        return todayDateString
+    }
+
+    func calculateThisMondayDate() -> Date {
+        let (todayDate, calendar, daysAfterMonday) = setTodayCalendar()
+        guard let thisMonday = calendar.date(byAdding: .day, value: -daysAfterMonday, to: todayDate) else { return Date() }
+        return thisMonday
+    }
+
+    func calculateTodayTimestamp() -> Timestamp {
+        let (todayDate, _, _) = setTodayCalendar()
+        let timestamp = Timestamp(date: todayDate)
+        return timestamp
     }
 
     func setWeeklyDates() -> [Int] {

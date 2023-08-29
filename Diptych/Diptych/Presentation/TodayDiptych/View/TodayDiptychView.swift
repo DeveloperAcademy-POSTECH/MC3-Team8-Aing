@@ -51,7 +51,7 @@ struct TodayDiptychView: View {
         Task {
             await viewModel.fetchUser()
             await viewModel.setUserCameraLoactionState()
-            await viewModel.setDiptychNumber()
+            _ = await viewModel.setDiptychNumber()
             await viewModel.fetchContents()
             await viewModel.setTodayPhoto()
             await viewModel.fetchTodayImage()
@@ -72,7 +72,7 @@ extension TodayDiptychView {
             Color.offWhite
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    Text("\(viewModel.setTodayDate())")
+                    Text("\(viewModel.setTodayDateString())")
                     Spacer()
                     Text("#\(viewModel.diptychNumber)번째 딥틱")
                 }

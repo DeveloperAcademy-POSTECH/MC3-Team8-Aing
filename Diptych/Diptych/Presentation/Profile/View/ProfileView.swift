@@ -99,6 +99,12 @@ struct ProfileView: View {
             }
         }
         .ignoresSafeArea()
+        .onAppear {
+            Task {
+                await todayDiptychViewModel.fetchUser()
+                await todayDiptychViewModel.setDiptychNumber()
+            }
+        }
     }
 }
 
