@@ -6,17 +6,13 @@
 //
 
 import SwiftUI
-import FirebaseCore
+import Firebase
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-
+    
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        if let path = Bundle.main.path(forResource: "GoogleService-Info-2", ofType: "plist") {
-            guard let options = FirebaseOptions(contentsOfFile: path) else { return false }
-            FirebaseApp.configure(options: options)
-        }
-//        FirebaseApp.configure()
+        FirebaseApp.configure()
         return true
     }
 }
@@ -50,6 +46,8 @@ struct DiptychApp: App {
                         .environmentObject(DiptychCompleteAlertObject())
                         .environmentObject(VM)
                 }
+                
+                // OnBoardingView().environmentObject(userViewModel)
             } else {
                 LottieView() { isSplashCompleted in
                     self.isSplashCompleted = true

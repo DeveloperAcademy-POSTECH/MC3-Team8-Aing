@@ -18,12 +18,8 @@ struct CellView: View {
     @State var thumbnail: String?
     @State var thumbnailURL: URL?
     
-    
     var body: some View {
-
         ZStack{
-            
-                    
             /// 썸네일 사진 불러오기
             if isThisMonth && isCompleted {
                 ZStack {
@@ -66,7 +62,6 @@ struct CellView: View {
         }
     }//】 Body
     
-    
     /// 이미지 불러오기
     func downloadImage() async {
         if let thumbnail = thumbnail, !thumbnail.isEmpty {
@@ -78,11 +73,7 @@ struct CellView: View {
             }
         }
     }
-
-    
-    
 }
-
 
 struct CellView_Previews: PreviewProvider {
     static var previews: some View {
