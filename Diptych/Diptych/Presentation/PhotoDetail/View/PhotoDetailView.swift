@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import FirebaseStorage
 
 // MARK: - Property
 
@@ -50,7 +49,6 @@ extension PhotoDetailView: View {
                         Text("\(currentIndex + 1)")
                             .italic()
                             .font(.custom(PretendardType.medium.rawValue, size: 16))
-//                            .foregroundColor(.systemSalmon)
                         Text("번째 딥틱")
                     }//: HStack
                     .padding(.bottom,10)
@@ -84,8 +82,6 @@ extension PhotoDetailView: View {
                     ZStack{
                         RoundedRectangle(cornerRadius: 0)
                             .foregroundColor(Color.darkGray)
-                            // .stroke(Color.lightGray, lineWidth: 1)
-                            // .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .frame(width: 393, height: 393)
                         
                         HStack(spacing: 0) {
@@ -98,40 +94,11 @@ extension PhotoDetailView: View {
                                         .resizable()
                                         .frame(width: 196.5, height: 393)
                                 }
-                                // .transition(isShouldShowPrevOrNext ? .slide : .identity)
-                                // .transition(.opacity)
-                                // .animation(.linear)
                             }
                             else {
                                 ProgressView()
                             }
-                            ///왼쪽 사진
-                            // AsyncImage(url: imageUrl1) { image in
-                            //
-                            //     image
-                            //         .resizable()
-                            //         .frame(width: 196.5, height: 393)
-                            // } placeholder: {
-                            //     ProgressView()
-                            // }
-                            // .frame(width: 196.5)
-                            
-                            
-                            /// 오른쪽 사진
-                            // AsyncImage(url: imageUrl2) { image in
-                            //     image
-                            //         .resizable()
-                            //         .frame(width: 196.5, height: 393)
-                            // } placeholder: {
-                            //     ProgressView()
-                            // }
-                            // .frame(width: 196.5)
-                        }//】 HStack
-                        
-//                        ImageCell(imageUrl1: imageUrl1, imageUrl2: imageUrl2)
-//                            .environmentObject(VM)
-//                            .frame(maxWidth: .infinity)
-                        
+                        }
                         HStack(spacing: 0){
                             if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
                             Spacer()
@@ -147,7 +114,6 @@ extension PhotoDetailView: View {
                 //MARK: - [4] 공유/ 좋아요 버튼
                 HStack(spacing: 0){
                     ShareSheetView()
-//                    Image("imgShareBox")
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
                         .padding(.leading, 70)
@@ -176,47 +142,6 @@ extension PhotoDetailView: View {
 }
 
 // MARK: - 이미지 셀
-//struct ImageCell: View {
-//
-//    @StateObject private var imageLoader: ImageLoader
-//    @EnvironmentObject var VM : ArchiveViewModel
-//    private let image1: String
-//    private let image2: String
-//
-//
-//    init(imageURL: String) {
-//        self.image1 = imageURL
-//        _imageLoader = StateObject(wrappedValue: ImageLoader(imageURL: imageURL))
-//        self.image2 = imageURL
-//        _imageLoader = StateObject(wrappedValue: ImageLoader(imageURL: imageURL))
-//    }
-//
-//    var body: some View {
-//
-//        if let image = imageLoader.image {
-//            Image(uiImage: image)
-//                .resizable()
-//                .scaledToFill()
-//                .clipped()
-//        } else {
-//            ProgressView()
-//        }
-//
-//        TabView(){
-//            ForEach((0..<VM.truePhotos.count), id: \.self) { index in
-//
-//                let data = VM.truePhotos
-//
-//
-//            }//】 Loop
-//        }//TabView
-//        .frame(maxWidth: .infinity)
-//        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-//        .animation(.easeInOut)
-//    }//】 Body
-//
-//}
-
 
 // MARK: - 버튼 디자인
 struct IndexButton: View {
@@ -242,7 +167,6 @@ extension PhotoDetailView {
         return Button {
             Task {
                 showPrevDetail()
-                // await downloadImage()
                 downloadImageWithCache()
             }
         } label: {
@@ -256,7 +180,6 @@ extension PhotoDetailView {
         return Button {
             Task {
                 showNextDetail()
-                // await downloadImage()
                 downloadImageWithCache()
             }
         } label: {
@@ -264,7 +187,6 @@ extension PhotoDetailView {
         }//】 Button
         .onTapGesture { withAnimation(.easeInOut) {showNextDetail()} }
     }// 다음 버튼
-    
     
     /// 이전 버튼 로직
     func showPrevDetail() {
@@ -292,18 +214,14 @@ extension PhotoDetailView {
     
     /// 이미지 불러오기
     func downloadImage() async {
-        if let image1 = image1 {
-            do {
-                let url = try await Storage.storage().reference(forURL: image1).downloadURL()
-                imageUrl1 = url
-            } catch { print(error.localizedDescription)}
+        if let image1 {
+            // TODO: - [Backend] 이미지 1
+            imageUrl1 = URL(string: "image1")
         }
         
-        if let image2 = image2 {
-            do {
-                let url = try await Storage.storage().reference(forURL: image2).downloadURL()
-                imageUrl2 = url
-            } catch { print(error.localizedDescription)}
+        if let image2 {
+            // TODO: - [Backend] 이미지 2
+            imageUrl2 = URL(string: "image2")
         }
     }
     
@@ -323,7 +241,8 @@ extension PhotoDetailView {
                 return
             }
             
-            image1Image = UIImage(data: try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image1))
+            // TODO: - [Backend] 서버로부터 이미지1 불러오기
+            image1Image = UIImage()
             
             if let image1Image {
                 ImageCacheManager.shared.saveImageToCache(image: image1Image, urlAbsoluteString: image1)
@@ -334,11 +253,12 @@ extension PhotoDetailView {
         Task {
             if let cachedImageSecond = ImageCacheManager.shared.loadImageFromCache(urlAbsoluteString: image2) {
                 image2Image = cachedImageSecond
-                print("i[DEBUG] mage2: loaded from cache")
+                print("[DEBUG] mage2: loaded from cache")
                 return
             }
             
-            image2Image = UIImage(data: try await FirebaseManager.shared.downloadImageDataFromFirebaseImageURL(urlAbsoluteString: image2))
+            // TODO: - [Backend] 서버로부터 이미지2 불러오기
+            image2Image = UIImage()
             
             if let image2Image {
                 ImageCacheManager.shared.saveImageToCache(image: image2Image, urlAbsoluteString: image2)
@@ -354,7 +274,7 @@ extension PhotoDetailView {
             .padding(.vertical, 7)
             .padding(.horizontal, 8)
             .background(Rectangle()
-                        .fill(Color.lightGray)
+                .fill(Color.lightGray)
             )
     }
 }

@@ -6,14 +6,10 @@
 //
 
 import Foundation
-import Firebase
-import FirebaseFirestore
-import FirebaseStorage
 
 class CalendarManager {
 
     static let shared = CalendarManager()
     private init() { }
-    private let db = Firestore.firestore()
 }
 

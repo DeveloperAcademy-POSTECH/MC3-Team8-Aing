@@ -7,9 +7,6 @@
 
 import SwiftUI
 import Foundation
-import Firebase
-import FirebaseFirestore
-import FirebaseStorage
 
 
 struct Photos {
@@ -41,10 +38,9 @@ final class ArchiveViewModel: ObservableObject {
     @Published var isLoading = false
     
     @Published var startDay = 0
-    @Published var startDate: Timestamp? //fetchMonthlyCalender에서 사용
+    @Published var startDate: Date? //fetchMonthlyCalender에서 사용
     @Published var todayPhoto: Photo?
     @Published var isCompleted = false
-    private let db = Firestore.firestore()
 
     // MARK: - Initializer
     
@@ -62,34 +58,16 @@ final class ArchiveViewModel: ObservableObject {
 
     //MARK: - 컨텐츠 필드  데이터 가져오기
     func fetchQuestion() async {
-        do {
-            let contentSnapshot = try await db.collection("contents")
-                // .whereField("order", isGreaterThanOrEqualTo: 0)
-                .getDocuments()
-            // self.questions = contentSnapshot.documents.compactMap { document in
-            //     guard let question = document.data()["question"] as? String,
-            //           let id = document.data()["id"] as? String
-            //     else {return nil}
-            //     return Questions(id: id, question: question)
-            // }
-            self.questions = contentSnapshot.documents.map { document in
-                Questions(id: document.data()["id"] as? String ?? "", question: document.data()["question"] as? String ?? "")
-            }
-        } catch { print(error.localizedDescription) }
+        // let contentSnapshot = try await db.collection("contents")
+        //     .getDocuments()
+        
+        // TODO: - [Backend] 질문 가져오기
+        self.questions = [Questions(id: UUID().uuidString, question: "서버로부터 가져온 질문")]
     }
     
     // MARK: - 컨텐츠 컬랙션에서 완성된 질문만 배열 만들기
     func makeTrueQuestions() async -> [Questions] {
-        // photos.forEach { photo in
-        //       // if photo.isCompleted, let contentID = photo.contentID {
-        //       //     let data = questions.filter { $0.id == contentID  }
-        //       //     trueQuestions.append(contentsOf: data)
-        //       // }
-        //
-        //   }
-        print(questions)
         trueQuestions = photos.map { photo in
-            print(photo.contentID)
             if let contentId = photo.contentID,
                let question = questions.first(where: { $0.id == contentId }),
                photo.isCompleted {
@@ -98,7 +76,6 @@ final class ArchiveViewModel: ObservableObject {
                 return Questions(id: UUID().uuidString, question: "오늘 나에게 감명깊은 에러는?")
             }
         }
-        // print("count: \(trueQuestions.count)")
         return trueQuestions
     }
     
@@ -115,19 +92,15 @@ final class ArchiveViewModel: ObservableObject {
     // MARK: - 시작 날짜 가져오기
     func fetchStartDate() async {
         guard let albumId = currentUser?.coupleAlbumId else { return }
-        do {
-            print("albumId:", albumId)
-            let startDaySnapshot = try await db.collection("albums")
-                .whereField("id", isEqualTo: albumId)
-                .getDocuments()
-            print("startdaysnapshot count:" ,startDaySnapshot.count)
-            let data = startDaySnapshot.documents[0].data()
-            guard let startDate = data["startDate"] as? Timestamp else { return }
-            let startDay = startDate.dateValue().get(.day)
-            self.startDay = startDay
-            self.startDate = startDate
-        } catch { print(error.localizedDescription) }
-    }//:fetchStartDate
+        // let startDaySnapshot = try await db.collection("albums")
+        //     .whereField("id", isEqualTo: albumId)
+        //     .getDocuments()
+        
+        let startDate = Date(timeIntervalSince1970: 1687279445)
+        let startDay = startDate.get(.day)
+        self.startDay = startDay
+        self.startDate = startDate
+    }
     
     
     
@@ -135,57 +108,55 @@ final class ArchiveViewModel: ObservableObject {
     func fetchPhotosData() async {
         guard let albumId = currentUser?.coupleAlbumId else { return }
         guard let startDate = startDate else { return }
-        do {
-//            if 변화사항 있어? {
-//
-//            } else {
-//                if 캐싱 된거 있어? {
-//                    캐싱 된거 씀
-//                } else {
-//
-//                }
-//            }
-            let querySnapshot = try await db.collection("photos")
-                .whereField("albumId", isEqualTo: albumId)
-                .whereField("date", isGreaterThanOrEqualTo: startDate)
-                .getDocuments()
-            for document in querySnapshot.documents {
-                let photo = try document.data(as: Photo.self)
-                let isCompleted = photo.isCompleted
-                let thumbnail = photo.thumbnail
-                let firstPhoto = photo.photoFirst
-                let secondPhoto = photo.photoSecond
-                let contentId = photo.contentId
-                let date = Date(timeIntervalSince1970: TimeInterval(photo.date.seconds))
-                guard let month = Calendar.current.dateComponents([.month], from: date).month else { return }
-                
-                /// Photos 배열 생성
-                if isCompleted {
-                    await MainActor.run {
-                        photos.append(Photos(isCompleted: true, thumbnail: thumbnail,
-                                             photoFirstURL: firstPhoto, photoSecondURL: secondPhoto,
-                                             contentID: contentId, date: date, month: month))
-                    }
-                } else {
-                    await MainActor.run {
-                        photos.append(Photos(isCompleted: false, thumbnail: nil,
-                                             photoFirstURL: nil, photoSecondURL: nil,
-                                             contentID: contentId, date: date, month: month))
-                    }
-                }
+        
+        // let querySnapshot = try await db.collection("photos")
+        //     .whereField("albumId", isEqualTo: albumId)
+        //     .whereField("date", isGreaterThanOrEqualTo: startDate)
+        //     .getDocuments()
+        
+        // TODO: - [Backend] photo는 서버에서 가져옴
+        let photo = Photo(id: UUID().uuidString,
+                          photoFirst: "",
+                          photoSecond: "",
+                          thumbnail: "",
+                          date: Date(),
+                          contentId: "",
+                          albumId: "",
+                          isCompleted: false)
+        let isCompleted = photo.isCompleted
+        let thumbnail = photo.thumbnail
+        let firstPhoto = photo.photoFirst
+        let secondPhoto = photo.photoSecond
+        let contentId = photo.contentId
+        let date = photo.date
+        guard let month = Calendar.current.dateComponents([.month], from: date).month else { return }
+        
+        // Photos 배열 생성
+        if isCompleted {
+            await MainActor.run {
+                photos.append(Photos(isCompleted: true, thumbnail: thumbnail,
+                                     photoFirstURL: firstPhoto, photoSecondURL: secondPhoto,
+                                     contentID: contentId, date: date, month: month))
             }
-        } catch { print(error.localizedDescription) }
-    }//: fetchDiptychCalender
+        } else {
+            await MainActor.run {
+                photos.append(Photos(isCompleted: false, thumbnail: nil,
+                                     photoFirstURL: nil, photoSecondURL: nil,
+                                     contentID: contentId, date: date, month: month))
+            }
+        }
+    }
     
     
     //MARK: - 유저 정보 불러오기
     
     func fetchUser() async {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        do {
-            let snapshot = try await Firestore.firestore().collection("users").document(uid).getDocument()
-            self.currentUser = try? snapshot.data(as: DiptychUser.self)
-        } catch { print(error.localizedDescription) }
+        /*
+         서버로부터 유저 정보 가져온 뒤 self.currentUser에 저장
+         self.currentUser = try? snapshot.data(as: DiptychUser.self)
+         */
+        
+        self.currentUser = DiptychUser(id: "test", email: "test@test.com", flow: "what?")
     }
 
     // MARK: - Custom Methods

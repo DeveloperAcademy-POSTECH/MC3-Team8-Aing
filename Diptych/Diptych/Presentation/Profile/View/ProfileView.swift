@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Firebase
 
 var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
 

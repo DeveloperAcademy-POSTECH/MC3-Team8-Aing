@@ -28,7 +28,7 @@ struct LoadingVerificationView: View {
                 Spacer()
                 Button {
                     Task {
-                        await userViewModel.checkEmailVerification3()
+                        // await 이메일인증체크()
                     }
                 } label: {
                     Text("인증 완료")
