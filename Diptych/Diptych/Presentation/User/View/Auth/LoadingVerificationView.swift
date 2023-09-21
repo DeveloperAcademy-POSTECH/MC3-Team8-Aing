@@ -28,7 +28,8 @@ struct LoadingVerificationView: View {
                 Spacer()
                 Button {
                     Task {
-                        // await 이메일인증체크()
+                        // TODO: - [Mockup] 
+                        userViewModel.flow = .coupled
                     }
                 } label: {
                     Text("인증 완료")

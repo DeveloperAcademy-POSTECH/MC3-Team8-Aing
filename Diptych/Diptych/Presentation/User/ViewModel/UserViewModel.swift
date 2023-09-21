@@ -74,6 +74,7 @@ class UserViewModel: ObservableObject {
     func sendEmailVerification() async throws {
         print("DEBUG: sendEmailVerification (Start)")
         // TODO: - [Backend] 등록한 이메일로 이메일 인증요청 전송
+        self.flow = .signedUp
         print("DEBUG: sendEmailVerification (End)")
     }
     
