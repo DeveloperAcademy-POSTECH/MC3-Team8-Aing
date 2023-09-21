@@ -55,7 +55,10 @@ class UserViewModel: ObservableObject {
         print("[DEBUG] signInWithEmailPassword -> result:  \(result)")
         await fetchUserData()
         await fetchLoverData()
-        return ""
+        
+        // TODO: - [Backend] 로그인 성공했을 때 리턴
+        currentUser?.isFirst = true
+        return "fake_login"
     }
     
     func signUpWithEmailPassword(email: String, password: String, name: String) async throws -> String {

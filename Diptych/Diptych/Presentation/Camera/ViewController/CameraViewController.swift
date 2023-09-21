@@ -656,6 +656,11 @@ class CameraViewController: UIViewController {
     }
     
     // MARK: - Network Task
+    func taskIndicator(_ message: Any...) async throws {
+        // TODO: - [Mockup] sleep
+        print("[Camera Upload] \(message)")
+        try await Task.sleep(nanoseconds: 1_000_000_000)
+    }
     
     func taskUpload(image uiImage: UIImage) async throws {
         /*
@@ -679,17 +684,18 @@ class CameraViewController: UIViewController {
         // TODO: - 가로 가이드라인일때는?
         let thumbnail = uiImage.resize(width: THUMB_SIZE / 2, height: THUMB_SIZE)
         
+        // TODO: - [Backend] isFirst는 nil이 아니어야 함
+        viewModel?.currentUser?.isFirst = true
         guard let isFirst = viewModel?.currentUser?.isFirst else {
             return
         }
-        print("isFirst?", isFirst)
         
-        // print는 로딩 인디케이터 또는 작업상황 구분점임
-        print("파일 업로드 시작....")
+        // taskIndicator는 로딩 인디케이터 또는 작업상황 구분점임
+        try await taskIndicator("파일 업로드 시작....")
         LottieUIViews.shared.label.text = "이미지 파일 업로드 중..."
         // TODO: - [Backend] 서버에 이미지 파일 업로드
         let url = URL(string: "fakeURL")
-        print("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
+        try await taskIndicator("파일 업로드 끝:", url?.absoluteString ?? "unknown URL")
         
         guard let url else {
             print("url이 존재하지 않습니다.")
@@ -713,11 +719,11 @@ class CameraViewController: UIViewController {
                let mergedThumb = thumbnail.merge(with: halfAnotherThumb, division: isFirst ? .verticalLeft : .verticalRight),
                let uploadThumb = mergedThumb.jpegData(compressionQuality: THUMB_COMPRESSION_QUALITY) {
                 LottieUIViews.shared.label.text = "섬네일 업로드 중..."
-                print("섬네일 업로드 시작....", halfAnotherThumb.size)
+                try await taskIndicator("섬네일 업로드 시작....", halfAnotherThumb.size)
                 // TODO: - [Backend] 서버에 섬네일 파일 업로드 (uploadThumb)
                 let thumbURL = URL(string: "fakeThumbURL")
                 dictionary["thumbnail"] = thumbURL?.absoluteString
-                print("섬네일 업로드 끝")
+                try await taskIndicator("섬네일 업로드 끝")
             } else {
                 print("섬네일 생성 실패:")
             }
@@ -726,10 +732,9 @@ class CameraViewController: UIViewController {
         let photoKey = isFirst ? "photoFirst" : "photoSecond"
         dictionary[photoKey] = url.absoluteString
         
-        print("정보 업로드 시작....")
+        try await taskIndicator("정보 업로드 시작....")
         LottieUIViews.shared.label.text = "정보 업로드 중..."
-        // TODO:
-        print("정보 업로드 끝")
+        try await taskIndicator("정보 업로드 끝")
     }
     
     // MARK: - OBJC Methods
