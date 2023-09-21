@@ -31,6 +31,7 @@ final class ArchiveViewModel: ObservableObject {
     // MARK: - Properties
 
     @Published var currentUser: DiptychUser?
+    // TODO: - Photos과 Question을 같이 관리할 수는 없는지?
     @Published var photos: [Photos] = [Photos]()
     @Published var questions: [Questions] = [Questions]()
     @Published var truePhotos: [Photos] = []
@@ -54,12 +55,22 @@ final class ArchiveViewModel: ObservableObject {
             _ = await makeTrueQuestions()
             print("🥦:ArchiveViewModel")
         }
+        
+        // TODO: - [Mockup] 사진 한개
+        photos.append(.init(isCompleted: true,
+                            thumbnail: "https://avatars.githubusercontent.com/u/40187546?v=4",
+                            photoFirstURL: "https://avatars.githubusercontent.com/u/40187546?v=4",
+                            photoSecondURL: "https://avatars.githubusercontent.com/u/40187546?v=4",
+                            contentID: "fakeID_1",
+                            date: Date(timeIntervalSince1970: 1693573888),
+                            month: 9))
+        questions.append(.init(id: "fakeID_1", question: "오늘 본 동그라미는?"))
+        questions.append(.init(id: "fakeID_2", question: "오늘 본 동그라미는?"))
     }
 
     //MARK: - 컨텐츠 필드  데이터 가져오기
     func fetchQuestion() async {
-        // let contentSnapshot = try await db.collection("contents")
-        //     .getDocuments()
+        // db.collection("contents")
         
         // TODO: - [Backend] 질문 가져오기
         self.questions = [Questions(id: UUID().uuidString, question: "서버로부터 가져온 질문")]
@@ -92,9 +103,7 @@ final class ArchiveViewModel: ObservableObject {
     // MARK: - 시작 날짜 가져오기
     func fetchStartDate() async {
         guard let albumId = currentUser?.coupleAlbumId else { return }
-        // let startDaySnapshot = try await db.collection("albums")
-        //     .whereField("id", isEqualTo: albumId)
-        //     .getDocuments()
+        // db.collection("albums").whereField("id", isEqualTo: albumId)
         
         let startDate = Date(timeIntervalSince1970: 1687279445)
         let startDay = startDate.get(.day)
@@ -109,10 +118,8 @@ final class ArchiveViewModel: ObservableObject {
         guard let albumId = currentUser?.coupleAlbumId else { return }
         guard let startDate = startDate else { return }
         
-        // let querySnapshot = try await db.collection("photos")
-        //     .whereField("albumId", isEqualTo: albumId)
+        // db.collection("photos").whereField("albumId", isEqualTo: albumId)
         //     .whereField("date", isGreaterThanOrEqualTo: startDate)
-        //     .getDocuments()
         
         // TODO: - [Backend] photo는 서버에서 가져옴
         let photo = Photo(id: UUID().uuidString,

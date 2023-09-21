@@ -216,12 +216,12 @@ extension PhotoDetailView {
     func downloadImage() async {
         if let image1 {
             // TODO: - [Backend] 이미지 1
-            imageUrl1 = URL(string: "image1")
+            imageUrl1 = URL(string: image1)
         }
         
         if let image2 {
             // TODO: - [Backend] 이미지 2
-            imageUrl2 = URL(string: "image2")
+            imageUrl2 = URL(string: image2)
         }
     }
     
@@ -241,8 +241,8 @@ extension PhotoDetailView {
                 return
             }
             
-            // TODO: - [Backend] 서버로부터 이미지1 불러오기
-            image1Image = UIImage()
+            // TODO: - [Mockup] 이미지
+            image1Image = UIImage(named: "diptych_sample1")
             
             if let image1Image {
                 ImageCacheManager.shared.saveImageToCache(image: image1Image, urlAbsoluteString: image1)
@@ -257,8 +257,8 @@ extension PhotoDetailView {
                 return
             }
             
-            // TODO: - [Backend] 서버로부터 이미지2 불러오기
-            image2Image = UIImage()
+            // TODO: - [Mockup] 이미지
+            image2Image = UIImage(named: "diptych_sample1")
             
             if let image2Image {
                 ImageCacheManager.shared.saveImageToCache(image: image2Image, urlAbsoluteString: image2)
