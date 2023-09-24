@@ -8,6 +8,7 @@
 import Foundation
 
 struct WeeklyData {
+    // TODO: date의 타입?
     let date: Int
     let diptychState: DiptychState
 }

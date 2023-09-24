@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import FirebaseStorage
 
 struct CellView: View {
     
@@ -43,7 +42,7 @@ struct CellView: View {
                 .stroke(Color.systemSalmon, lineWidth: isToday ? 2 : 0)
                 .frame(width: 44, height: 44)
                 .overlay{}
-                
+            
             /// 날짜 표시
             Text("\(day)")
                 .font(.pretendard(isThisMonth && isCompleted ? .bold : .bold, size: 16))
@@ -65,12 +64,9 @@ struct CellView: View {
     /// 이미지 불러오기
     func downloadImage() async {
         if let thumbnail = thumbnail, !thumbnail.isEmpty {
-            do {
-                let url = try await Storage.storage().reference(forURL: thumbnail).downloadURL()
-                   thumbnailURL = url
-            } catch {
-                print(error.localizedDescription)
-            }
+            // TODO: - [Backend] 서버로부터 섬네일 불러오기
+            let url = URL(string: "thumbnail")
+            thumbnailURL = url
         }
     }
 }

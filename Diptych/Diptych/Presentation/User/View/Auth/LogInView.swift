@@ -103,6 +103,8 @@ struct LogInView: View {
                         if result != "" {
                             alertMessage = result
                             isAlertShown = true
+                            // TODO: - [Mockup] 로그인 성공
+                            userViewModel.flow = .completed
                         }
                     }
                 } label: {

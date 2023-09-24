@@ -7,9 +7,6 @@
 
 import SwiftUI
 import Foundation
-import Firebase
-import FirebaseFirestore
-import FirebaseStorage
 
 //MARK: - Model
 struct Photo3: Identifiable {
@@ -31,33 +28,10 @@ class PhotoViewModel: ObservableObject {
     
     
     func fetchPhotos() {
-        // Assuming you have already configured Firebase in your app
-        let firestore = Firestore.firestore()
-        
         // Assuming you have a collection called "photos" and each document has "imageURL" and "date" fields
-        firestore.collection("testphotos")
-            .getDocuments { querySnapshot, error in
-                guard let documents = querySnapshot?.documents else {
-                print("Error fetching photos: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-            
-            self.photos = documents.compactMap { document in
-                guard let imageURL = document.data()["imageURL"] as? String,
-                      let timestamp = document.data()["date"] as? Timestamp
-                else {return nil}
-                
-                let day = timestamp.dateValue().get(.day)
-                let month = timestamp.dateValue().get(.month)
-                
-                return Photo3(id: document.documentID,
-                              imageURL: imageURL,
-                              date: timestamp.dateValue(),
-                              dayNum: day,
-                              monthNum: month)
-            }
-        }//: getDocuments
         
+        // TODO: - [Backend] photos 불러오기
+        self.photos = [Photo3(id: "", imageURL: "", date: Date(), dayNum: 1, monthNum: 1)]
     }
 }
 
@@ -70,19 +44,8 @@ class ImageLoader: ObservableObject {
     }
     
     func fetchImage(imageURL: String) {
-        let storage = Storage.storage()
-        let reference = storage.reference(forURL: imageURL)
-        
-        reference.getData(maxSize: 10 * 1024 * 1024) { data, error in
-            guard let data = data else {
-                print("Error fetching image: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.image = UIImage(data: data)
-            }
-        }
+        // TODO: - [Backend] photos 불러오기
+        self.image = UIImage()
     }
 }
 

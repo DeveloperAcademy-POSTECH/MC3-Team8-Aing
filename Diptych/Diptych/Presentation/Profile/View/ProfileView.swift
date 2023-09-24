@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Firebase
 
 var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
 
@@ -28,7 +27,9 @@ struct ProfileView: View {
                                 userNameLabel(text: userViewModel.currentUser?.name ?? "...") // 로딩중일때 "..."로 표현
                                     .padding(.leading, 20)
                                 Image("imgHeart")
-                                userNameLabel(text: userViewModel.lover?.name ?? "...")
+                                // userNameLabel(text: userViewModel.lover?.name ?? "...")
+                                //     .padding(.trailing, 20)
+                                userNameLabel(text: "...")
                                     .padding(.trailing, 20)
                             } else {
                                 userNameLabel(text: userViewModel.lover?.name ?? "...")
@@ -87,7 +88,7 @@ struct ProfileView: View {
                             .font(.pretendard(.light, size: 24))
                             .foregroundColor(.offBlack)
                             .padding(.top, 11)
-                        lightDarkGrayLabel(text: "버전 정보 1.0.0.0")
+                        lightDarkGrayLabel(text: "버전 정보 \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0.0")")
                             .padding(.top, 89)
                             .padding(.bottom, 22)
                         HStack(spacing: 39) {

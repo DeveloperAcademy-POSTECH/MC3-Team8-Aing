@@ -17,11 +17,11 @@ struct AlbumListView: View {
         ScrollViewReader { scrollViewProxy in
             ScrollView {
                 
-                let data = VM.truePhotos
-                let data2 = VM.trueQuestions
+                let data = VM.photos
+                let data2 = VM.questions
                 
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()),count: 3),spacing: 4) {
-                    ForEach((0..<VM.truePhotos.count), id: \.self) { index in
+                    ForEach((0..<VM.photos.count), id: \.self) { index in
                         
                         /// 사진 디테일 뷰
                         NavigationLink {
@@ -66,16 +66,22 @@ struct AlbumImageView: View {
 
     var body: some View {
         VStack{
-            if let image = imageLoader.image {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 128, height: 128)
-//                    .frame(maxWidth: .infinity)
-                    .clipped()
-            } else {
-                ProgressView()
-            }
+            // TODO: - [Mockup] 섬네일
+            Image(uiImage: .init(named: "diptych_sample1")!)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 128, height: 128)
+                .clipped()
+            
+            // if let image = imageLoader.image {
+            //     Image(uiImage: image)
+            //         .resizable()
+            //         .scaledToFill()
+            //         .frame(width: 128, height: 128)
+            //         .clipped()
+            // } else {
+            //     ProgressView()
+            // }
         }//】 VStack
         .frame(width: 128, height: 128)
 //        .frame(maxWidth: .infinity)
