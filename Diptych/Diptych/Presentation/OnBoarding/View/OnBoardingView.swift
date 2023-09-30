@@ -73,7 +73,7 @@ struct NavigationBackItem: View {
             dismiss()
         } label: {
             Image(systemName: "chevron.backward")
-                .foregroundColor(Color.darkGray)
+                .foregroundColor(Color.dtDarkGray)
         }
     }
 }

@@ -42,9 +42,9 @@ struct SignUpView: View {
                     VStack(alignment: .leading) {
                         TextField("", text: $email, prompt: Text("이메일")
                             .font(.pretendard(.light, size: 18))
-                            .foregroundColor(.darkGray))
+                            .foregroundColor(.dtDarkGray))
                         .font(.pretendard(.light, size: 18))
-                        .foregroundColor(.darkGray)
+                        .foregroundColor(.dtDarkGray)
                         .keyboardType(.emailAddress)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
@@ -53,10 +53,10 @@ struct SignUpView: View {
                             isEmailFocused = true
                         }
                         Divider()
-                            .overlay(emailWarning == "" ? Color.darkGray : Color.systemRed)
+                            .overlay(emailWarning == "" ? Color.dtDarkGray : Color.dtRed)
                         Text(emailWarning)
                             .font(.pretendard(.light, size: 12))
-                            .foregroundColor(.systemRed)
+                            .foregroundColor(.dtRed)
                     }
                     VStack(alignment: .leading) {
                         HStack {
@@ -68,14 +68,14 @@ struct SignUpView: View {
                                 isPasswordHidden.toggle()
                             } label: {
                                 Image(systemName: isPasswordHidden ? "eye" : "eye.slash")
-                                    .foregroundColor(.darkGray)
+                                    .foregroundColor(.dtDarkGray)
                             }
                         }
                         Divider()
-                            .overlay(passwordWarning == "" ? Color.darkGray : Color.systemRed)
+                            .overlay(passwordWarning == "" ? Color.dtDarkGray : Color.dtRed)
                         Text(passwordWarning)
                             .font(.pretendard(.light, size: 12))
-                            .foregroundColor(.systemRed)
+                            .foregroundColor(.dtRed)
                     }
                     VStack(alignment: .leading) {
                         HStack {
@@ -87,14 +87,14 @@ struct SignUpView: View {
                                 isPasswordConfirmHidden.toggle()
                             } label: {
                                 Image(systemName: isPasswordConfirmHidden ? "eye" : "eye.slash")
-                                    .foregroundColor(.darkGray)
+                                    .foregroundColor(.dtDarkGray)
                             }
                         }
                         Divider()
-                            .overlay(passwordConfirmWarning == "" ? Color.darkGray : Color.systemRed)
+                            .overlay(passwordConfirmWarning == "" ? Color.dtDarkGray : Color.dtRed)
                         Text(passwordConfirmWarning)
                             .font(.pretendard(.light, size: 12))
-                            .foregroundColor(.systemRed)
+                            .foregroundColor(.dtRed)
                     }
                 }
                 .padding([.leading, .trailing], 15)

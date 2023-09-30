@@ -47,21 +47,21 @@ struct CouplingView: View {
                             }
                         }
                         Divider()
-                            .foregroundColor(.darkGray)
+                            .foregroundColor(.dtDarkGray)
                     }
                     VStack(alignment: .leading) {
                         Text("상대방 코드를 전달받으셨나요?")
                             .font(.pretendard(.light, size: 16))
                         TextField("", text: $loverCode, prompt: Text("전달받은 초대코드 입력")
                             .font(.pretendard(.light, size: 24))
-                            .foregroundColor(.darkGray))
+                            .foregroundColor(.dtDarkGray))
                         .font(.pretendard(.light, size: 24))
-                        .foregroundColor(.darkGray)
+                        .foregroundColor(.dtDarkGray)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
                         .focused($isCodeInputFocused)
                         Divider()
-                            .overlay(Color.darkGray)
+                            .overlay(Color.dtDarkGray)
                     }
                 }
                 Spacer()

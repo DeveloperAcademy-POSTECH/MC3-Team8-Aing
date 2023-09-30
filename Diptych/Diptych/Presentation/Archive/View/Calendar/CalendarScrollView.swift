@@ -20,7 +20,7 @@ struct CalendarScrollView: View {
                                 .environmentObject(VM)
                         }
                         Text("달력의 끝입니다.")
-                            .foregroundColor(.offBlack50)
+                            .foregroundColor(.offWhite)
                             .font(.pretendard(size: 10))
                             .frame(height: 30)
                             .id("bottom")

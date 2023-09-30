@@ -57,7 +57,7 @@ extension PhotoDetailView: View {
                         .frame(height: 1)
                 }//】 VStack
                 .font(.custom(PretendardType.medium.rawValue, size: 16))
-                .foregroundColor(Color.darkGray)
+                .foregroundColor(Color.dtDarkGray)
                 .padding(.top,32)
                 .padding(.horizontal,13)
                 
@@ -81,7 +81,7 @@ extension PhotoDetailView: View {
                     /// [3] 사진 프레임
                     ZStack{
                         RoundedRectangle(cornerRadius: 0)
-                            .foregroundColor(Color.darkGray)
+                            .foregroundColor(Color.dtDarkGray)
                             .frame(width: 393, height: 393)
                         
                         HStack(spacing: 0) {
@@ -274,7 +274,7 @@ extension PhotoDetailView {
             .padding(.vertical, 7)
             .padding(.horizontal, 8)
             .background(Rectangle()
-                .fill(Color.lightGray)
+                .fill(Color.dtLightGray)
             )
     }
 }

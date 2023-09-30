@@ -46,7 +46,7 @@ struct ProfileView: View {
 
                 Divider()
                     .frame(height: 1)
-                    .overlay(Color.darkGray)
+                    .overlay(Color.dtDarkGray)
                     .padding(.top, 93)
                     .padding(.horizontal, 15)
 
@@ -55,7 +55,7 @@ struct ProfileView: View {
                     VStack(spacing: 15) {
                         Text("우리 시작한지")
                             .font(.pretendard(.medium, size: 14))
-                            .foregroundColor(.darkGray)
+                            .foregroundColor(.dtDarkGray)
                         Text("D+\(setDdayCount())")
                             .font(.pretendard(.light, size: 28))
                             .foregroundColor(.offBlack)
@@ -66,7 +66,7 @@ struct ProfileView: View {
                     VStack(spacing: 15) {
                         Text("딥틱 중")
                             .font(.pretendard(.medium, size: 14))
-                            .foregroundColor(.darkGray)
+                            .foregroundColor(.dtDarkGray)
                         Text("\(todayDiptychViewModel.diptychNumber)번째")
                             .font(.pretendard(.light, size: 28))
                             .foregroundColor(.offBlack)
@@ -78,11 +78,11 @@ struct ProfileView: View {
                 .padding(.bottom, 47)
 
                 ZStack(alignment: .top) {
-                    Color.lightGray
+                    Color.dtLightGray
                     VStack(spacing: 0) {
                         Text("내 초대코드")
                             .font(.pretendard(.medium, size: 14))
-                            .foregroundColor(.darkGray)
+                            .foregroundColor(.dtDarkGray)
                             .padding(.top, 77)
                         Text(userViewModel.currentUser?.couplingCode ?? "00000000")
                             .font(.pretendard(.light, size: 24))
@@ -122,7 +122,7 @@ extension ProfileView {
     private func lightDarkGrayLabel(text: String) -> some View {
         Text(text)
             .font(.pretendard(.light, size: 18))
-            .foregroundColor(.darkGray)
+            .foregroundColor(.dtDarkGray)
     }
 
     private func logoutButton() -> some View {

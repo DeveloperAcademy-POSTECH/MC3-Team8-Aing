@@ -39,7 +39,7 @@ struct CellView: View {
             
             /// 오늘 날짜일때 빨간 테두리
             RoundedRectangle(cornerRadius: 18)
-                .stroke(Color.systemSalmon, lineWidth: isToday ? 2 : 0)
+                .stroke(Color.dtSalmon, lineWidth: isToday ? 2 : 0)
                 .frame(width: 44, height: 44)
                 .overlay{}
             
