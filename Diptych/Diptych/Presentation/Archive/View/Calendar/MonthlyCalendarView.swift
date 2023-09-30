@@ -37,7 +37,7 @@ struct MonthlyCalendarView: View {
                 //            .frame(alignment: .bottom)
         
                 RoundedRectangle(cornerRadius: 0)
-                    .foregroundColor(Color.darkGray)
+                    .foregroundColor(Color.dtDarkGray)
                     .frame(height: 1)
             }//】 VStack
             .padding(.horizontal,13)

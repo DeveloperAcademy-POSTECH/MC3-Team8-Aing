@@ -22,7 +22,7 @@ struct LoadingVerificationView: View {
                     .frame(height: 40)
                 Text("입력하신 이메일로 인증 링크를 보냈습니다\n링크 클릭 후 앱으로 돌아와 주세요")
                     .font(.pretendard(.light, size: 18))
-                    .foregroundColor(.darkGray)
+                    .foregroundColor(.dtDarkGray)
                     .multilineTextAlignment(.center)
                     .lineSpacing(6)
                 Spacer()

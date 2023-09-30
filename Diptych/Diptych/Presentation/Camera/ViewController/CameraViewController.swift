@@ -156,7 +156,7 @@ class CameraViewController: UIViewController {
         // 사각형 (또는 이미지)
         let squareWidth: CGFloat = 246
         let squareView = UIView(frame: .init(x: descLabel.frame.midX - (squareWidth / 2.0), y: descLabel.frame.maxY + 28, width: squareWidth, height: squareWidth))
-        squareView.backgroundColor = .diptychDarkGray
+        squareView.backgroundColor = .dtDarkGray
         
         popupView.addSubview(descLabel)
         popupView.addSubview(squareView)
@@ -387,7 +387,7 @@ class CameraViewController: UIViewController {
     
     private func setupLottieLoading() {
         let lottieRect = CGRect(origin: .zero, size: viewLottieLoading.frame.size)
-        let lottieView = LottieUIViews.shared.lottieView(frame: lottieRect, backgroundColor: .diptychLightGray)
+        let lottieView = LottieUIViews.shared.lottieView(frame: lottieRect, backgroundColor: .dtLightGray)
 
         #if targetEnvironment(simulator)
             displayGuideAndOverlay(true)

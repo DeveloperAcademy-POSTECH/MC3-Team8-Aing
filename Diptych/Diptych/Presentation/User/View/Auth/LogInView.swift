@@ -13,7 +13,7 @@ struct LogInView: View {
     @State private var passwordWarning: String = ""
     @State private var isAlertShown: Bool = false
     @State private var alertMessage: String = ""
-    @State private var dividerColor: Color = .darkGray
+    @State private var dividerColor: Color = .dtDarkGray
     @State private var isPasswordHidden: Bool = true
     
     @FocusState var isPasswordFocused: Bool
@@ -38,9 +38,9 @@ struct LogInView: View {
                     VStack(alignment: .leading) {
                         TextField("", text: $email, prompt: Text("이메일")
                             .font(.pretendard(.light, size: 18))
-                            .foregroundColor(.darkGray))
+                            .foregroundColor(.dtDarkGray))
                         .font(.pretendard(.light, size: 18))
-                        .foregroundColor(.darkGray)
+                        .foregroundColor(.dtDarkGray)
                         .keyboardType(.emailAddress)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
@@ -57,11 +57,11 @@ struct LogInView: View {
                                 isPasswordHidden.toggle()
                             } label: {
                                 Image(systemName: isPasswordHidden ? "eye" : "eye.slash")
-                                    .foregroundColor(.darkGray)
+                                    .foregroundColor(.dtDarkGray)
                             }
                         }
                         Divider()
-                            .overlay(passwordWarning == "" ? Color.darkGray : Color.systemRed)
+                            .overlay(passwordWarning == "" ? Color.dtDarkGray : Color.dtRed)
 //                        SecureField("", text: $password, prompt: Text("비밀번호")
 //                            .font(.pretendard(.light, size: 18))
 //                            .foregroundColor(.darkGray))
@@ -83,17 +83,17 @@ struct LogInView: View {
                     } label: {
                         Text("아이디 찾기")
                             .font(.pretendard(.light, size: 14))
-                            .foregroundColor(.darkGray)
+                            .foregroundColor(.dtDarkGray)
                     }
                     Text("|")
                         .font(.pretendard(.light, size: 14))
-                        .foregroundColor(.darkGray)
+                        .foregroundColor(.dtDarkGray)
                     Button{
                         print("pass: 비밀번호 찾기")
                     } label: {
                         Text("비밀번호 찾기")
                             .font(.pretendard(.light, size: 14))
-                            .foregroundColor(.darkGray)
+                            .foregroundColor(.dtDarkGray)
                     }
                 }
                 Spacer()

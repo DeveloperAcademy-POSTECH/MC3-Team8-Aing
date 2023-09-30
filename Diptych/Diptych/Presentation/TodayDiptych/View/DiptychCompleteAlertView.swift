@@ -25,7 +25,7 @@ struct DiptychCompleteAlertView: View {
                 .padding(.leading, 15)
 
                 RoundedRectangle(cornerRadius: 18)
-                    .fill(Color.systemSalmon)
+                    .fill(Color.dtSalmon)
                     .frame(width: 44, height: 44)
                     .overlay {
                         Image("icnCheck")
@@ -38,7 +38,7 @@ struct DiptychCompleteAlertView: View {
                 Text("오늘의 딥틱이 완성되었어요\n확인해보세요")
                     .lineSpacing(3)
                     .font(.pretendard(.light, size: 16))
-                    .foregroundColor(.darkGray)
+                    .foregroundColor(.dtDarkGray)
                     .multilineTextAlignment(.center)
                     .padding(.top, 9)
 

@@ -35,7 +35,7 @@ extension WeeklyCalenderView {
 
     private func strokeCalenderItem(_ lineWidth: CGFloat) -> some View {
         RoundedRectangle(cornerRadius: 18)
-            .stroke(Color.systemSalmon, lineWidth: lineWidth)
+            .stroke(Color.dtSalmon, lineWidth: lineWidth)
     }
 
     @ViewBuilder
@@ -44,19 +44,19 @@ extension WeeklyCalenderView {
         case .none:
             calendarItem(trimFrom: 0, trimTo: 0, color: .clear)
         case .incomplete:
-            calendarItem(trimFrom: 0, trimTo: 1, color: .lightGray)
+            calendarItem(trimFrom: 0, trimTo: 1, color: .dtLightGray)
         case .todayIncomplete:
             calendarItem(trimFrom: 0, trimTo: 1, color: .offWhite)
                 .overlay {
                     strokeCalenderItem(2)
                 }
         case .todayfirst:
-            calendarItem(trimFrom: 0.25, trimTo: 0.75, color: .systemSalmon)
+            calendarItem(trimFrom: 0.25, trimTo: 0.75, color: .dtSalmon)
                 .overlay(
                     strokeCalenderItem(2)
                 )
         case .todaySecond:
-            calendarItem(trimFrom: 0, trimTo: 1, color: .systemSalmon)
+            calendarItem(trimFrom: 0, trimTo: 1, color: .dtSalmon)
                 .overlay(
                     calendarItem(trimFrom: 0.25, trimTo: 0.75, color: .offWhite)
                 )
@@ -64,7 +64,7 @@ extension WeeklyCalenderView {
                     strokeCalenderItem(2)
                 }
         case .complete:
-            calendarItem(trimFrom: 0, trimTo: 1, color: .systemSalmon)
+            calendarItem(trimFrom: 0, trimTo: 1, color: .dtSalmon)
         }
     }
 }

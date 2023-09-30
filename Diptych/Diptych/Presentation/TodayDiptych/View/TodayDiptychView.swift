@@ -76,13 +76,13 @@ extension TodayDiptychView {
                     Text("#\(viewModel.diptychNumber)번째 딥틱")
                 }
                 .font(.pretendard(.medium, size: 16))
-                .foregroundColor(.darkGray)
+                .foregroundColor(.dtDarkGray)
                 .padding(.horizontal, 15)
                 .padding(.top, 75)
 
                 Divider()
                     .frame(height: 1)
-                    .overlay(Color.darkGray)
+                    .overlay(Color.dtDarkGray)
                     .padding(.top, 10)
                     .padding(.horizontal, 15)
 
@@ -134,7 +134,7 @@ extension TodayDiptychView {
         switch todayDiptychState {
         case .incomplete:
             Rectangle()
-                .fill(Color.lightGray)
+                .fill(Color.dtLightGray)
                 .overlay {
                     Image("imgDiptychCamera")
                         .onTapGesture {
@@ -142,7 +142,7 @@ extension TodayDiptychView {
                         }
                 }
         default:
-            rectangleOverlayImage(color: Color.lightGray, url: url, isBlurred: false)
+            rectangleOverlayImage(color: Color.dtLightGray, url: url, isBlurred: false)
         }
     }
 

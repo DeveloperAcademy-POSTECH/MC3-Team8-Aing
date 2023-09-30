@@ -39,7 +39,7 @@ struct ArchiveTabView: View {
                 Rectangle()
                     .frame(maxWidth: .infinity)
                     .frame(height: 1.5)
-                    .foregroundColor(.lightGray)
+                    .foregroundColor(.dtLightGray)
 
                 
                 /// 각 뷰로 이동

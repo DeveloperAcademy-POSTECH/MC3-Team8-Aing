@@ -37,23 +37,23 @@ struct ProfileSettingView: View {
                     VStack(alignment: .leading) {
                         TextField("", text: $name, prompt: Text("닉네임")
                             .font(.pretendard(.light, size: 18))
-                            .foregroundColor(.darkGray))
+                            .foregroundColor(.dtDarkGray))
                         .font(.pretendard(.light, size: 18))
-                        .foregroundColor(.darkGray)
+                        .foregroundColor(.dtDarkGray)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
                         .focused($isNameInputFocused)
                         Divider()
-                            .overlay(nameWarning == "" ? Color.darkGray : Color.systemRed)
+                            .overlay(nameWarning == "" ? Color.dtDarkGray : Color.dtRed)
                         Text(nameWarning)
                             .font(.pretendard(.light, size: 12))
-                            .foregroundColor(.systemRed)
+                            .foregroundColor(.dtRed)
                     }
                     VStack(alignment: .leading) {
                         HStack {
                             Text(formattedDateString)
                                 .font(.pretendard(.light, size: 18))
-                                .foregroundColor(.darkGray)
+                                .foregroundColor(.dtDarkGray)
                                 .onTapGesture(perform: {
                                     isDatePickerShown.toggle()
                                 })
@@ -64,16 +64,16 @@ struct ProfileSettingView: View {
                             
                         }
                         Divider()
-                            .overlay(selectedDateWarning == "" ? Color.darkGray : Color.systemRed)
+                            .overlay(selectedDateWarning == "" ? Color.dtDarkGray : Color.dtRed)
                         Text(selectedDateWarning)
                             .font(.pretendard(.light, size: 12))
-                            .foregroundColor(.systemRed)
+                            .foregroundColor(.dtRed)
                     }
                 }
                 Spacer()
                 Text("내 초대코드: \(userViewModel.couplingCode ?? "문제가 생겼어요 :(")")
                     .font(.pretendard(.light, size: 18))
-                    .foregroundColor(.darkGray)
+                    .foregroundColor(.dtDarkGray)
                 Spacer()
                     .frame(height: 20)
                 Button {
