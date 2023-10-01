@@ -256,16 +256,6 @@
 			path = OnBoarding;
 			sourceTree = "<group>";
 		};
-		98A8E8292A69192D005DF658 /* User */ = {
-			isa = PBXGroup;
-			children = (
-				AB96FE652A89646000382FD9 /* Model */,
-				AB96FE642A89642D00382FD9 /* View */,
-				AB96FE632A89640B00382FD9 /* ViewModel */,
-			);
-			path = User;
-			sourceTree = "<group>";
-		};
 		AB2A9E972A5EC46100D70C33 = {
 			isa = PBXGroup;
 			children = (
@@ -293,6 +283,7 @@
 			children = (
 				ABFD3E7C2A5ED26E008678D0 /* Global */,
 				ABFD3E8A2A5EDADB008678D0 /* Data */,
+				ABB0889F2AC9B74A00A6A667 /* Model */,
 				ABFD3E7F2A5ED280008678D0 /* Resources */,
 				ABFD3E822A5EDA35008678D0 /* Presentation */,
 				AB2AC21C2A5F28DB00B162E1 /* Util */,
@@ -393,6 +384,7 @@
 		AB4E64D42AC9A45F0050B031 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
+				988A277E2A72351900A9B5C0 /* SecureInputView.swift */,
 				AB4E64D52AC9A47E0050B031 /* NavigationBackButton.swift */,
 				AB4E64D72AC9AA440050B031 /* SquareButton.swift */,
 			);
@@ -415,32 +407,6 @@
 				ABC6DAFC2A797465000FE73A /* DiptychCompleteAlertObject.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		AB96FE632A89640B00382FD9 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				98A8E82A2A691938005DF658 /* UserViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		AB96FE642A89642D00382FD9 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				AB96FE722A8968A000382FD9 /* Auth */,
-				AB96FE742A8968CE00382FD9 /* Matching */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		AB96FE652A89646000382FD9 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				AB0974422A8A944300E4DAAA /* DiptychUser.swift */,
-				98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		AB96FE662A89648900382FD9 /* View */ = {
@@ -487,26 +453,6 @@
 			path = Lottie;
 			sourceTree = "<group>";
 		};
-		AB96FE722A8968A000382FD9 /* Auth */ = {
-			isa = PBXGroup;
-			children = (
-				988A277E2A72351900A9B5C0 /* SecureInputView.swift */,
-				985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */,
-				987E425B2A5FE17F00C682D9 /* LoginView.swift */,
-				989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */,
-			);
-			path = Auth;
-			sourceTree = "<group>";
-		};
-		AB96FE742A8968CE00382FD9 /* Matching */ = {
-			isa = PBXGroup;
-			children = (
-				989B44932A65752100D99439 /* CouplingView.swift */,
-				9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */,
-			);
-			path = Matching;
-			sourceTree = "<group>";
-		};
 		AB96FE7B2A8A4C4700382FD9 /* PhotoDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -522,6 +468,59 @@
 				F3263AA12A667AA200B4581C /* PhotoDetailView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		ABB0889A2AC9B6C900A6A667 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				ABB0889C2AC9B6E500A6A667 /* View */,
+				ABB0889D2AC9B71900A6A667 /* ViewModel */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		ABB0889B2AC9B6D900A6A667 /* Matching */ = {
+			isa = PBXGroup;
+			children = (
+				ABB0889E2AC9B73500A6A667 /* View */,
+			);
+			path = Matching;
+			sourceTree = "<group>";
+		};
+		ABB0889C2AC9B6E500A6A667 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */,
+				987E425B2A5FE17F00C682D9 /* LoginView.swift */,
+				989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ABB0889D2AC9B71900A6A667 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				98A8E82A2A691938005DF658 /* UserViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		ABB0889E2AC9B73500A6A667 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */,
+				989B44932A65752100D99439 /* CouplingView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ABB0889F2AC9B74A00A6A667 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AB0974422A8A944300E4DAAA /* DiptychUser.swift */,
+				98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		ABCB30092A6D3661007724DC /* Model */ = {
@@ -591,7 +590,8 @@
 				AB4E64D42AC9A45F0050B031 /* UIComponents */,
 				ABFD3E832A5EDA4E008678D0 /* Common */,
 				989DFFE32A5FDC3A00EBBC12 /* OnBoarding */,
-				98A8E8292A69192D005DF658 /* User */,
+				ABB0889A2AC9B6C900A6A667 /* Auth */,
+				ABB0889B2AC9B6D900A6A667 /* Matching */,
 				ABFD3E862A5EDA79008678D0 /* TodayDiptych */,
 				AB96FE672A8964D900382FD9 /* Camera */,
 				ABFD3E882A5EDAA4008678D0 /* Archive */,
