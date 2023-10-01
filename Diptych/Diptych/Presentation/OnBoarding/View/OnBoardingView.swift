@@ -46,6 +46,15 @@ enum LoginMethod {
             return .offWhite
         }
     }
+
+    func loginButtonDidTap() {
+        switch self {
+        case .kakao:
+            print("카카오 로그인 실행")
+        case .apple:
+            print("애플 로그인 실행")
+        }
+    }
 }
 
 struct OnBoardingView: View {
@@ -110,6 +119,9 @@ extension OnBoardingView {
         .padding(.vertical, 16)
         .frame(maxWidth: .infinity)
         .background(loginMethod.backgroundColor)
+        .onTapGesture {
+            loginMethod.loginButtonDidTap()
+        }
     }
 }
 
