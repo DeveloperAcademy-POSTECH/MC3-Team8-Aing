@@ -30,7 +30,7 @@
 		988A277F2A72351900A9B5C0 /* SecureInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A277E2A72351900A9B5C0 /* SecureInputTextField.swift */; };
 		989B44942A65752100D99439 /* CouplingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44932A65752100D99439 /* CouplingView.swift */; };
 		989DFFE02A5FD75A00EBBC12 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */; };
-		989DFFE52A5FDC4B00EBBC12 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */; };
+		989DFFE52A5FDC4B00EBBC12 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFE42A5FDC4B00EBBC12 /* OnboardingView.swift */; };
 		98A8E82B2A691938005DF658 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A8E82A2A691938005DF658 /* UserViewModel.swift */; };
 		98D4A0842A6A625200EB8C94 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4A0832A6A625200EB8C94 /* Date+.swift */; };
 		98D4A0862A6E3E7D00EB8C94 /* DiptychAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */; };
@@ -148,7 +148,7 @@
 		988A277E2A72351900A9B5C0 /* SecureInputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputTextField.swift; sourceTree = "<group>"; };
 		989B44932A65752100D99439 /* CouplingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplingView.swift; sourceTree = "<group>"; };
 		989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
-		989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
+		989DFFE42A5FDC4B00EBBC12 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		98A8E82A2A691938005DF658 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		98D4A0832A6A625200EB8C94 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychAlbum.swift; sourceTree = "<group>"; };
@@ -248,12 +248,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		989DFFE32A5FDC3A00EBBC12 /* OnBoarding */ = {
+		989DFFE32A5FDC3A00EBBC12 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
 				AB96FE662A89648900382FD9 /* View */,
 			);
-			path = OnBoarding;
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		AB2A9E972A5EC46100D70C33 = {
@@ -412,7 +412,7 @@
 		AB96FE662A89648900382FD9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				989DFFE42A5FDC4B00EBBC12 /* OnBoardingView.swift */,
+				989DFFE42A5FDC4B00EBBC12 /* OnboardingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -589,7 +589,7 @@
 			children = (
 				AB4E64D42AC9A45F0050B031 /* UIComponents */,
 				ABFD3E832A5EDA4E008678D0 /* Common */,
-				989DFFE32A5FDC3A00EBBC12 /* OnBoarding */,
+				989DFFE32A5FDC3A00EBBC12 /* Onboarding */,
 				ABB0889A2AC9B6C900A6A667 /* Auth */,
 				ABB0889B2AC9B6D900A6A667 /* Matching */,
 				ABFD3E862A5EDA79008678D0 /* TodayDiptych */,
@@ -879,7 +879,7 @@
 				44852D332A7012590074D3D4 /* UIColor+.swift in Sources */,
 				AB4E64D62AC9A47E0050B031 /* NavigationBackButton.swift in Sources */,
 				AB2AC2232A5F8E8700B162E1 /* PretendardType.swift in Sources */,
-				989DFFE52A5FDC4B00EBBC12 /* OnBoardingView.swift in Sources */,
+				989DFFE52A5FDC4B00EBBC12 /* OnboardingView.swift in Sources */,
 				AB0974432A8A944300E4DAAA /* DiptychUser.swift in Sources */,
 				AB96A0AB2A66E4DF004C01FF /* TodayDiptychViewModel.swift in Sources */,
 				F35ADA542A6DA53C00A510E7 /* CellView.swift in Sources */,

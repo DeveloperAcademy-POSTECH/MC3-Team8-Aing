@@ -57,7 +57,7 @@ enum LoginMethod {
     }
 }
 
-struct OnBoardingView: View {
+struct OnboardingView: View {
 
     var body: some View {
         NavigationView {
@@ -85,7 +85,7 @@ struct OnBoardingView: View {
 
 // MARK: - UI Components
 
-extension OnBoardingView {
+extension OnboardingView {
 
     var diptychLabel: some View {
         Text("딥틱에서 매일 서로의 일상을\n하나의 사진으로 완성해요")
@@ -127,7 +127,7 @@ extension OnBoardingView {
 
 struct OnBoardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnBoardingView()
+        OnboardingView()
             .environmentObject(UserViewModel())
     }
 }
