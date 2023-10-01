@@ -40,9 +40,9 @@ struct DiptychApp: App {
                         .environmentObject(userViewModel)
                 } else {
                     DiptychTabView()
-                        .environmentObject(userViewModel)
-                        .environmentObject(DiptychCompleteAlertObject())
-                        .environmentObject(VM)
+//                        .environmentObject(userViewModel)
+//                        .environmentObject(DiptychCompleteAlertObject())
+//                        .environmentObject(VM)
                 }
                 
                 // OnBoardingView().environmentObject(userViewModel)

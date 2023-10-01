@@ -16,97 +16,101 @@ struct ProfileView: View {
     @FocusState var isPasswordFocused: Bool
     @EnvironmentObject var userViewModel: UserViewModel
     @StateObject private var todayDiptychViewModel = TodayDiptychViewModel()
-    
+
     var body: some View {
-        ZStack(alignment: .top) {
-            VStack(spacing: 0) {
-                LazyVGrid(columns: columns) {
-                    ForEach(0 ..< 1) { _ in
-                        if let isFirst = userViewModel.currentUser?.isFirst {
-                            if isFirst {
-                                userNameLabel(text: userViewModel.currentUser?.name ?? "...") // 로딩중일때 "..."로 표현
-                                    .padding(.leading, 20)
-                                Image("imgHeart")
-                                // userNameLabel(text: userViewModel.lover?.name ?? "...")
-                                //     .padding(.trailing, 20)
-                                userNameLabel(text: "...")
-                                    .padding(.trailing, 20)
-                            } else {
-                                userNameLabel(text: userViewModel.lover?.name ?? "...")
-                                    .padding(.leading, 20)
-                                Image("imgHeart")
-                                userNameLabel(text: userViewModel.currentUser?.name ?? "...") // 로딩중일때 "..."로 표현
-                                    .padding(.trailing, 20)
-                            }
-                        }
-                    }
-                }
-                .font(.pretendard(.light, size: 24))
-                .padding(.top, 133)
-
-                Divider()
-                    .frame(height: 1)
-                    .overlay(Color.dtDarkGray)
-                    .padding(.top, 93)
-                    .padding(.horizontal, 15)
-
-                HStack() {
-                    Spacer()
-                    VStack(spacing: 15) {
-                        Text("우리 시작한지")
-                            .font(.pretendard(.medium, size: 14))
-                            .foregroundColor(.dtDarkGray)
-                        Text("D+\(setDdayCount())")
-                            .font(.pretendard(.light, size: 28))
-                            .foregroundColor(.offBlack)
-                    }
-                    .frame(maxWidth: .infinity)
-
-                    Spacer()
-                    VStack(spacing: 15) {
-                        Text("딥틱 중")
-                            .font(.pretendard(.medium, size: 14))
-                            .foregroundColor(.dtDarkGray)
-                        Text("\(todayDiptychViewModel.diptychNumber)번째")
-                            .font(.pretendard(.light, size: 28))
-                            .foregroundColor(.offBlack)
-                    }
-                    .frame(maxWidth: .infinity)
-                    Spacer()
-                }
-                .padding(.top, 43)
-                .padding(.bottom, 47)
-
-                ZStack(alignment: .top) {
-                    Color.dtLightGray
-                    VStack(spacing: 0) {
-                        Text("내 초대코드")
-                            .font(.pretendard(.medium, size: 14))
-                            .foregroundColor(.dtDarkGray)
-                            .padding(.top, 77)
-                        Text(userViewModel.currentUser?.couplingCode ?? "00000000")
-                            .font(.pretendard(.light, size: 24))
-                            .foregroundColor(.offBlack)
-                            .padding(.top, 11)
-                        lightDarkGrayLabel(text: "버전 정보 \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0.0")")
-                            .padding(.top, 89)
-                            .padding(.bottom, 22)
-                        HStack(spacing: 39) {
-                            logoutButton()
-                            deleteAccountButton()
-                        }
-                    }
-                }
-            }
-        }
-        .ignoresSafeArea()
-        .onAppear {
-            Task {
-                await todayDiptychViewModel.fetchUser()
-                await todayDiptychViewModel.setDiptychNumber()
-            }
-        }
+        Text("프로필뷰")
     }
+    
+//    var body: some View {
+//        ZStack(alignment: .top) {
+//            VStack(spacing: 0) {
+//                LazyVGrid(columns: columns) {
+//                    ForEach(0 ..< 1) { _ in
+//                        if let isFirst = userViewModel.currentUser?.isFirst {
+//                            if isFirst {
+//                                userNameLabel(text: userViewModel.currentUser?.name ?? "...") // 로딩중일때 "..."로 표현
+//                                    .padding(.leading, 20)
+//                                Image("imgHeart")
+//                                // userNameLabel(text: userViewModel.lover?.name ?? "...")
+//                                //     .padding(.trailing, 20)
+//                                userNameLabel(text: "...")
+//                                    .padding(.trailing, 20)
+//                            } else {
+//                                userNameLabel(text: userViewModel.lover?.name ?? "...")
+//                                    .padding(.leading, 20)
+//                                Image("imgHeart")
+//                                userNameLabel(text: userViewModel.currentUser?.name ?? "...") // 로딩중일때 "..."로 표현
+//                                    .padding(.trailing, 20)
+//                            }
+//                        }
+//                    }
+//                }
+//                .font(.pretendard(.light, size: 24))
+//                .padding(.top, 133)
+//
+//                Divider()
+//                    .frame(height: 1)
+//                    .overlay(Color.dtDarkGray)
+//                    .padding(.top, 93)
+//                    .padding(.horizontal, 15)
+//
+//                HStack() {
+//                    Spacer()
+//                    VStack(spacing: 15) {
+//                        Text("우리 시작한지")
+//                            .font(.pretendard(.medium, size: 14))
+//                            .foregroundColor(.dtDarkGray)
+//                        Text("D+\(setDdayCount())")
+//                            .font(.pretendard(.light, size: 28))
+//                            .foregroundColor(.offBlack)
+//                    }
+//                    .frame(maxWidth: .infinity)
+//
+//                    Spacer()
+//                    VStack(spacing: 15) {
+//                        Text("딥틱 중")
+//                            .font(.pretendard(.medium, size: 14))
+//                            .foregroundColor(.dtDarkGray)
+//                        Text("\(todayDiptychViewModel.diptychNumber)번째")
+//                            .font(.pretendard(.light, size: 28))
+//                            .foregroundColor(.offBlack)
+//                    }
+//                    .frame(maxWidth: .infinity)
+//                    Spacer()
+//                }
+//                .padding(.top, 43)
+//                .padding(.bottom, 47)
+//
+//                ZStack(alignment: .top) {
+//                    Color.dtLightGray
+//                    VStack(spacing: 0) {
+//                        Text("내 초대코드")
+//                            .font(.pretendard(.medium, size: 14))
+//                            .foregroundColor(.dtDarkGray)
+//                            .padding(.top, 77)
+//                        Text(userViewModel.currentUser?.couplingCode ?? "00000000")
+//                            .font(.pretendard(.light, size: 24))
+//                            .foregroundColor(.offBlack)
+//                            .padding(.top, 11)
+//                        lightDarkGrayLabel(text: "버전 정보 \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0.0")")
+//                            .padding(.top, 89)
+//                            .padding(.bottom, 22)
+//                        HStack(spacing: 39) {
+//                            logoutButton()
+//                            deleteAccountButton()
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        .ignoresSafeArea()
+//        .onAppear {
+//            Task {
+//                await todayDiptychViewModel.fetchUser()
+//                await todayDiptychViewModel.setDiptychNumber()
+//            }
+//        }
+//    }
 }
 
 // MARK: - Component

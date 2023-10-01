@@ -17,7 +17,7 @@ struct CalendarScrollView: View {
                     VStack(spacing: 0) {
                         ForEach(0...scrollToID, id: \.self) { index in
                             CalendarView(date: Date.now, changeMonthInt: index - scrollToID)
-                                .environmentObject(VM)
+//                                .environmentObject(VM)
                         }
                         Text("달력의 끝입니다.")
                             .foregroundColor(.offWhite)
