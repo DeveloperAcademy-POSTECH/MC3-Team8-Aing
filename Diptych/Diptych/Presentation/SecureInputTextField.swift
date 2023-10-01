@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SecureInputView: View {
+struct SecureInputTextField: View {
     @Binding var isHidden: Bool
     @Binding var password: String
 
@@ -47,7 +47,7 @@ struct SecureInputView: View {
 
 struct SecureInputView_Previews: PreviewProvider {
     static var previews: some View {
-        SecureInputView(isHidden: .constant(true),
+        SecureInputTextField(isHidden: .constant(true),
                         password: .constant("test!1234"),
                         isFocused: FocusState<Bool>().projectedValue)
     }

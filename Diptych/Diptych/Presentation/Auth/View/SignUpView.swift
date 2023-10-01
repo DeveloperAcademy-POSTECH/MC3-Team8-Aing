@@ -60,7 +60,7 @@ struct SignUpView: View {
                     }
                     VStack(alignment: .leading) {
                         HStack {
-                            SecureInputView(isHidden: $isPasswordHidden, password: $password, isFocused: $isPasswordFocused, prompt: "비밀번호")
+                            SecureInputTextField(isHidden: $isPasswordHidden, password: $password, isFocused: $isPasswordFocused, prompt: "비밀번호")
                                 .onTapGesture {
                                     isPasswordFocused = true
                                 }
@@ -79,7 +79,7 @@ struct SignUpView: View {
                     }
                     VStack(alignment: .leading) {
                         HStack {
-                            SecureInputView(isHidden: $isPasswordConfirmHidden,  password: $passwordConfirm, isFocused: $isPasswordConfirmFocused, prompt: "비밀번호 확인")
+                            SecureInputTextField(isHidden: $isPasswordConfirmHidden,  password: $passwordConfirm, isFocused: $isPasswordConfirmFocused, prompt: "비밀번호 확인")
                                 .onTapGesture {
                                     isPasswordConfirmFocused = true
                                 }

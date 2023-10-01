@@ -77,7 +77,7 @@ extension LoginView {
     var passwordTextField: some View {
         VStack(alignment: .leading) {
             HStack {
-                SecureInputView(isHidden: $isPasswordHidden,
+                SecureInputTextField(isHidden: $isPasswordHidden,
                                 password: $password,
                                 isFocused: $isPasswordFocused,
                                 prompt: "비밀번호")
