@@ -23,8 +23,8 @@ struct TodayDiptychView: View {
             MainDiptychView()
                 .ignoresSafeArea(edges: .vertical)
                 .onAppear {
-                    diptychCompleteAlertObject.checkDateAndResetAlertIfNeeded()
-                    fetchData()
+//                    diptychCompleteAlertObject.checkDateAndResetAlertIfNeeded()
+//                    fetchData()
                 }
                 .fullScreenCover(isPresented: $isShowCamera) {
                     ZStack {

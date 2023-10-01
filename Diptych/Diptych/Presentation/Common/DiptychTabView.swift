@@ -61,16 +61,17 @@ struct DiptychTabView: View {
                     .background(Color.white)
                 }//】 VStack
 
-                if !diptychCompleteAlertObject.isDiptychCompleteAlertShown && diptychCompleteAlertObject.isDiptychCompleted {
-                    Color.black.opacity(0.54)
-                    DiptychCompleteAlertView()
-                        .frame(width: 300, height: 360)
-                }
+//                if !diptychCompleteAlertObject.isDiptychCompleteAlertShown && diptychCompleteAlertObject.isDiptychCompleted {
+//                    Color.black.opacity(0.54)
+//                    DiptychCompleteAlertView()
+//                        .frame(width: 300, height: 360)
+//                }
                 
             }//】 ZStack
             .ignoresSafeArea()
         }//】 Navigation
         .accentColor(Color.offBlack)
+        .navigationBarBackButtonHidden(true)
 
     }//】 Body
 }

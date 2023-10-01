@@ -155,7 +155,7 @@ struct SignUpView: View {
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                NavigationBackItem()
+//                NavigationBackItem()
             }
         }
         

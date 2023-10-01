@@ -26,7 +26,7 @@
 		44EE2BFD2A6E8AAB003B5C1F /* ImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EE2BFC2A6E8AAB003B5C1F /* ImageSize.swift */; };
 		9846144B2A69075E0043EAE9 /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */; };
 		985DBC1E2A699DAA006C64FC /* LoadingVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */; };
-		987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E425B2A5FE17F00C682D9 /* LogInView.swift */; };
+		987E425C2A5FE17F00C682D9 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E425B2A5FE17F00C682D9 /* LoginView.swift */; };
 		988A277F2A72351900A9B5C0 /* SecureInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A277E2A72351900A9B5C0 /* SecureInputView.swift */; };
 		989B44942A65752100D99439 /* CouplingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B44932A65752100D99439 /* CouplingView.swift */; };
 		989DFFE02A5FD75A00EBBC12 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */; };
@@ -81,6 +81,8 @@
 		AB2AC2282A5F922F00B162E1 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC2272A5F922F00B162E1 /* Font+.swift */; };
 		AB2AC2292A5F922F00B162E1 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC2272A5F922F00B162E1 /* Font+.swift */; };
 		AB2AC22A2A5F922F00B162E1 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2AC2272A5F922F00B162E1 /* Font+.swift */; };
+		AB4E64D62AC9A47E0050B031 /* NavigationBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E64D52AC9A47E0050B031 /* NavigationBackButton.swift */; };
+		AB4E64D82AC9AA440050B031 /* SquareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E64D72AC9AA440050B031 /* SquareButton.swift */; };
 		AB6C7B7D2A6DD56600CD5D68 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C7B7C2A6DD56600CD5D68 /* CalendarManager.swift */; };
 		AB96A0AB2A66E4DF004C01FF /* TodayDiptychViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */; };
 		ABB613252A77D5A90063107E /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB613242A77D5A90063107E /* VisualEffectView.swift */; };
@@ -141,7 +143,7 @@
 		44EE2BFC2A6E8AAB003B5C1F /* ImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSize.swift; sourceTree = "<group>"; };
 		9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
 		985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingVerificationView.swift; sourceTree = "<group>"; };
-		987E425B2A5FE17F00C682D9 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
+		987E425B2A5FE17F00C682D9 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		987E425F2A627A2B00C682D9 /* Diptych.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Diptych.entitlements; sourceTree = "<group>"; };
 		988A277E2A72351900A9B5C0 /* SecureInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputView.swift; sourceTree = "<group>"; };
 		989B44932A65752100D99439 /* CouplingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouplingView.swift; sourceTree = "<group>"; };
@@ -178,6 +180,8 @@
 		AB2AC21B2A5F282A00B162E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AB2AC2222A5F8E8700B162E1 /* PretendardType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PretendardType.swift; sourceTree = "<group>"; };
 		AB2AC2272A5F922F00B162E1 /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
+		AB4E64D52AC9A47E0050B031 /* NavigationBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBackButton.swift; sourceTree = "<group>"; };
+		AB4E64D72AC9AA440050B031 /* SquareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareButton.swift; sourceTree = "<group>"; };
 		AB6C7B7C2A6DD56600CD5D68 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
 		AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDiptychViewModel.swift; sourceTree = "<group>"; };
 		ABB613242A77D5A90063107E /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
@@ -386,6 +390,15 @@
 			path = NameSpace;
 			sourceTree = "<group>";
 		};
+		AB4E64D42AC9A45F0050B031 /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				AB4E64D52AC9A47E0050B031 /* NavigationBackButton.swift */,
+				AB4E64D72AC9AA440050B031 /* SquareButton.swift */,
+			);
+			name = UIComponents;
+			sourceTree = "<group>";
+		};
 		AB6C7B7B2A6DCAFE00CD5D68 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -479,7 +492,7 @@
 			children = (
 				988A277E2A72351900A9B5C0 /* SecureInputView.swift */,
 				985DBC1D2A699DAA006C64FC /* LoadingVerificationView.swift */,
-				987E425B2A5FE17F00C682D9 /* LogInView.swift */,
+				987E425B2A5FE17F00C682D9 /* LoginView.swift */,
 				989DFFDF2A5FD75A00EBBC12 /* SignUpView.swift */,
 			);
 			path = Auth;
@@ -575,6 +588,7 @@
 		ABFD3E822A5EDA35008678D0 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				AB4E64D42AC9A45F0050B031 /* UIComponents */,
 				ABFD3E832A5EDA4E008678D0 /* Common */,
 				989DFFE32A5FDC3A00EBBC12 /* OnBoarding */,
 				98A8E8292A69192D005DF658 /* User */,
@@ -857,11 +871,13 @@
 				44DE9B972A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift in Sources */,
 				44852D2F2A6FBA430074D3D4 /* LottieUIViews.swift in Sources */,
 				F3263AB62A691C4400B4581C /* DiptychTabView.swift in Sources */,
+				AB4E64D82AC9AA440050B031 /* SquareButton.swift in Sources */,
 				F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */,
 				98D4A0862A6E3E7D00EB8C94 /* DiptychAlbum.swift in Sources */,
 				445A47AF2A5FD6B6005573DC /* AlbumListView.swift in Sources */,
 				44CE81972A7430A800D1420E /* BlurPopupUIView.swift in Sources */,
 				44852D332A7012590074D3D4 /* UIColor+.swift in Sources */,
+				AB4E64D62AC9A47E0050B031 /* NavigationBackButton.swift in Sources */,
 				AB2AC2232A5F8E8700B162E1 /* PretendardType.swift in Sources */,
 				989DFFE52A5FDC4B00EBBC12 /* OnBoardingView.swift in Sources */,
 				AB0974432A8A944300E4DAAA /* DiptychUser.swift in Sources */,
@@ -870,7 +886,7 @@
 				989B44942A65752100D99439 /* CouplingView.swift in Sources */,
 				98A8E82B2A691938005DF658 /* UserViewModel.swift in Sources */,
 				ABC6DAFB2A784E0E000FE73A /* DiptychCompleteAlertView.swift in Sources */,
-				987E425C2A5FE17F00C682D9 /* LogInView.swift in Sources */,
+				987E425C2A5FE17F00C682D9 /* LoginView.swift in Sources */,
 				ABCB300B2A6D366A007724DC /* Content.swift in Sources */,
 				44DE9B8E2A67DC2100E6615B /* UIDevice+.swift in Sources */,
 				44EE2BFB2A6E6EF5003B5C1F /* Image+.swift in Sources */,

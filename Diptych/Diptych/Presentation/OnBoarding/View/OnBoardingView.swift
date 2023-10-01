@@ -41,7 +41,7 @@ struct OnBoardingView: View {
                         }
                     Spacer()
                     VStack(spacing: 10) { // (S) LogIn, SignUp
-                        NavigationLink(destination: LogInView()) {
+                        NavigationLink(destination: LoginView()) {
                             Text("로그인")
                                 .frame(width: UIScreen.main.bounds.width-30, height:  60)
                                 .background(Color.offBlack)
@@ -65,18 +65,18 @@ struct OnBoardingView: View {
     }
 }
 
-struct NavigationBackItem: View {
-    @Environment(\.dismiss) private var dismiss
-    
-    var body: some View {
-        Button {
-            dismiss()
-        } label: {
-            Image(systemName: "chevron.backward")
-                .foregroundColor(Color.dtDarkGray)
-        }
-    }
-}
+//struct NavigationBackItem: View {
+//    @Environment(\.dismiss) private var dismiss
+//
+//    var body: some View {
+//        Button {
+//            dismiss()
+//        } label: {
+//            Image(systemName: "chevron.backward")
+//                .foregroundColor(Color.dtDarkGray)
+//        }
+//    }
+//}
 
 struct OnBoardingView_Previews: PreviewProvider {
     static var previews: some View {
