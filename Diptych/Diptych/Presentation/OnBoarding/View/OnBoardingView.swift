@@ -7,76 +7,111 @@
 
 import SwiftUI
 
+enum LoginMethod {
+    case kakao, apple
+
+    var imageTitle: String {
+        switch self {
+        case .kakao:
+            return "icnKakao"
+        case .apple:
+            return "icnApple"
+        }
+    }
+
+    var title: String {
+        switch self {
+        case .kakao:
+            return "카카오 로그인"
+        case .apple:
+            return "Apple로 계속하기"
+        }
+    }
+
+    var backgroundColor: Color {
+        switch self {
+        case .kakao:
+            return Color("KakaoLoginYellow")
+        case .apple:
+            return .black
+        }
+    }
+
+    var foregroundColor: Color {
+        switch self {
+        case .kakao:
+            return .black
+                .opacity(0.85)
+        case .apple:
+            return .offWhite
+        }
+    }
+}
+
 struct OnBoardingView: View {
-    @State private var isLogInLinkActive = false
-    @State private var isSignUpLinkActive = false
-    @EnvironmentObject var userViewModel: UserViewModel
-    /// 카메라 표시 여부
-    @State var isShowCamera = false
-    
+
     var body: some View {
         NavigationView {
             ZStack {
                 Color.offWhite
                     .ignoresSafeArea()
-                VStack() {
+                VStack {
+                    diptychLabel
+                        .padding(.top, 80)
                     Spacer()
-                        .frame(height: 124)
-                    Text("딥틱에서 매일 서로의 일상을 하나의 사진으로 완성해요")
-                        .font(.pretendard(.light, size: 28))
-//                        .padding([.leading,.trailing], 41)
-                        .padding(.leading, 39)
-                        .padding(.trailing, 40)
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(6)
-                    Spacer()
-                        .frame(height: 28)
-                    Image("OnBoardingViewImage2")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 393, height: 393)
-                        // 임시로 누르면 카메라 뜨도록 했고 나중에 다 지우겠습니다 (Cliff)
-                        .onTapGesture {
-                            isShowCamera = true
-                        }
-                    Spacer()
-                    VStack(spacing: 10) { // (S) LogIn, SignUp
-                        NavigationLink(destination: LoginView()) {
-                            Text("로그인")
-                                .frame(width: UIScreen.main.bounds.width-30, height:  60)
-                                .background(Color.offBlack)
-                                .foregroundColor(.offWhite)
-                                .border(Color.offBlack)
-                        }
-                        NavigationLink(destination: SignUpView()) {
-                            Text("회원가입")
-                                .frame(width: UIScreen.main.bounds.width-30, height:  60)
-                                .background(Color.offWhite)
-                                .foregroundColor(.offBlack)
-                                .border(Color.offBlack)
-                        }
-                    }// (E) LogIn, SignUp
-                    Spacer()
-                        .frame(height: 47)
+                    VStack(spacing: 0) {
+                        loginButton(.kakao)
+                            .padding(.bottom, 12)
+                        loginButton(.apple)
+                            .padding(.bottom, 17)
+                        emailLoginButton
+                    }
+                    .padding(.horizontal, 15)
+                    .padding(.bottom, 36)
                 }
-                .ignoresSafeArea()
             }
         }
     }
 }
 
-//struct NavigationBackItem: View {
-//    @Environment(\.dismiss) private var dismiss
-//
-//    var body: some View {
-//        Button {
-//            dismiss()
-//        } label: {
-//            Image(systemName: "chevron.backward")
-//                .foregroundColor(Color.dtDarkGray)
-//        }
-//    }
-//}
+// MARK: - UI Components
+
+extension OnBoardingView {
+
+    var diptychLabel: some View {
+        Text("딥틱에서 매일 서로의 일상을\n하나의 사진으로 완성해요")
+            .font(.pretendard(.light, size: 28))
+            .multilineTextAlignment(.center)
+            .lineSpacing(6)
+    }
+
+    var emailLoginButton: some View {
+        NavigationLink {
+            LoginView()
+        } label: {
+            VStack(spacing: 0) {
+                Text("이메일로 로그인하기")
+                    .font(.pretendard(.medium, size: 16))
+                    .foregroundColor(.dtDarkGray)
+                Rectangle()
+                    .foregroundColor(.dtDarkGray)
+                    .frame(width: 130, height: 1)
+            }
+        }
+    }
+
+    private func loginButton(_ loginMethod: LoginMethod) -> some View {
+        HStack(spacing: 16) {
+            Image(loginMethod.imageTitle)
+            Text(loginMethod.title)
+        }
+        .foregroundColor(loginMethod.foregroundColor)
+        .font(.pretendard(.light, size: 20))
+        .padding(.vertical, 16)
+        .frame(maxWidth: .infinity)
+        .background(loginMethod.backgroundColor)
+    }
+}
 
 struct OnBoardingView_Previews: PreviewProvider {
     static var previews: some View {
