@@ -62,6 +62,7 @@ struct DiptychTabView: View {
         .navigationBarBackButtonHidden(true)
         .onAppear {
             UITabBar.appearance().unselectedItemTintColor = .darkGray
+            UITabBar.appearance().backgroundColor = .white
         }
     }
 
