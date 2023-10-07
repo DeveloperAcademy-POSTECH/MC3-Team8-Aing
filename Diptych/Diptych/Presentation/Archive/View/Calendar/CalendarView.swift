@@ -12,13 +12,13 @@ import Foundation
 struct CalendarView: View {
     
     ///Property
-    @EnvironmentObject var VM : ArchiveViewModel
+    @EnvironmentObject var archiveViewModel: ArchiveViewModel
     @State var date: Date
     let changeMonthInt : Int
     
     var body: some View {
         VStack(spacing: 0) {
-            MonthlyCalendarView(changeMonthInt: changeMonthInt, VM: VM, today: date)
+            MonthlyCalendarView(changeMonthInt: changeMonthInt, VM: archiveViewModel, today: date)
         }//】 VStack
         .onAppear{
             

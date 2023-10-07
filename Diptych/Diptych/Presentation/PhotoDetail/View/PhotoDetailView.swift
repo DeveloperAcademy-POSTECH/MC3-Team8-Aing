@@ -11,7 +11,7 @@ import SwiftUI
 
 struct PhotoDetailView {
     
-    @EnvironmentObject var VM : ArchiveViewModel
+    @EnvironmentObject var archiveViewModel: ArchiveViewModel
     @State var date: Date = Date()
     @State var image1: String?
     @State var image2: String?
@@ -102,7 +102,7 @@ extension PhotoDetailView: View {
                         HStack(spacing: 0){
                             if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
                             Spacer()
-                            if currentIndex < VM.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
+                            if currentIndex < archiveViewModel.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
                         }
                         .padding(.horizontal,18)
                         
@@ -113,10 +113,18 @@ extension PhotoDetailView: View {
                 
                 //MARK: - [4] 공유/ 좋아요 버튼
                 HStack(spacing: 0){
-                    ShareSheetView()
-                        .foregroundColor(.offBlack)
-                        .frame(width: 30, height: 30)
-                        .padding(.leading, 70)
+                    if let image1Image, let image2Image {
+                        ShareSheetView(image1: image1Image, image2: image2Image)
+                            .foregroundColor(.offBlack)
+                            .frame(width: 30, height: 30)
+                            .padding(.leading, 70)
+                    } else {
+                        ShareSheetView()
+                            .foregroundColor(.offBlack)
+                            .frame(width: 30, height: 30)
+                            .padding(.leading, 70)
+                    }
+                    
                     Image("imgWhiteHeart")
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
@@ -198,7 +206,7 @@ extension PhotoDetailView {
     
     /// 다음 버튼 로직
     func showNextDetail() {
-        if currentIndex < VM.truePhotos.count - 1{
+        if currentIndex < archiveViewModel.truePhotos.count - 1{
             self.currentIndex += 1
             updateViewWithCurrentIndex()
         }
@@ -206,10 +214,10 @@ extension PhotoDetailView {
     
     /// 사진 상세뷰 업데이트
         private func updateViewWithCurrentIndex() {
-            self.date = VM.truePhotos[currentIndex].date
-            self.image1 = VM.truePhotos[currentIndex].photoFirstURL
-            self.image2 = VM.truePhotos[currentIndex].photoSecondURL
-            self.question = VM.trueQuestions[currentIndex].question
+            self.date = archiveViewModel.truePhotos[currentIndex].date
+            self.image1 = archiveViewModel.truePhotos[currentIndex].photoFirstURL
+            self.image2 = archiveViewModel.truePhotos[currentIndex].photoSecondURL
+            self.question = archiveViewModel.trueQuestions[currentIndex].question
         }
     
     /// 이미지 불러오기

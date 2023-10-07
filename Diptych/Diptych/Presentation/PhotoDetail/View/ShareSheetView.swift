@@ -9,20 +9,23 @@
 import Photos
 import SwiftUI
 
-struct ActivityViewController: UIViewControllerRepresentable {
+struct ActivityRepresentedViewController: UIViewControllerRepresentable {
     var activityItems: [Any]
     var applicationActivities: [UIActivity]? = nil
 
-    func makeUIViewController(context _: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
+    func makeUIViewController(context _: UIViewControllerRepresentableContext<ActivityRepresentedViewController>) -> UIActivityViewController {
         let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
         return controller
     }
 
-    func updateUIViewController(_: UIActivityViewController, context _: UIViewControllerRepresentableContext<ActivityViewController>) {}
+    func updateUIViewController(_: UIActivityViewController, context _: UIViewControllerRepresentableContext<ActivityRepresentedViewController>) {}
 }
 
 struct ShareSheetView: View {
     @State private var isSharePresented: Bool = false
+    @State var image1: UIImage?
+    @State var image2: UIImage?
+    @State var division: ImageDivisionAxis = .verticalLeft
 
     var body: some View {
         // 버튼 크기가 이미지와 딱 맞지 않고 양옆으로 살짝 큼
@@ -38,8 +41,19 @@ struct ShareSheetView: View {
                 .frame(width: 30, height: 30)
         }
         .sheet(isPresented: $isSharePresented) {
-            ActivityViewController(activityItems: [UIImage(named: "imgHeart")!])
-            //TODO: - 다운로드 되는 이미지 변경해야함
+            let halfImageSize: CGSize = .init(width: IMAGE_SIZE / 2, height: IMAGE_SIZE)
+            let fullImageSize: CGSize = .init(width: IMAGE_SIZE, height: IMAGE_SIZE)
+            
+            if let image1,
+               let image2,
+               let mergedImage = image1.merge(
+                with: image2,
+                division: division,
+                contextSize: fullImageSize,
+                customBaseImageSize: halfImageSize,
+                customAnotherImageSize: halfImageSize) {
+                ActivityRepresentedViewController(activityItems: [mergedImage])
+            }
         }
     }
 

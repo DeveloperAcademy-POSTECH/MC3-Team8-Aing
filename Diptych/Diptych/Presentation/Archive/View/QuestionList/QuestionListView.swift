@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct QuestionListView: View {
-    @EnvironmentObject var VM : ArchiveViewModel
+    @EnvironmentObject var archiveViewModel: ArchiveViewModel
     
     var body: some View {
         
-        let data = VM.truePhotos
-        let data2 = VM.trueQuestions
+        let data = archiveViewModel.truePhotos
+        let data2 = archiveViewModel.trueQuestions
         
         ScrollView {
             VStack(spacing: 0){
-                ForEach((0..<VM.trueQuestions.count).reversed(), id: \.self) { index in
+                ForEach((0..<archiveViewModel.trueQuestions.count).reversed(), id: \.self) { index in
                     
                     NavigationLink {
                         PhotoDetailView(
@@ -27,10 +27,10 @@ struct QuestionListView: View {
                             question: data2[index].question,
                             currentIndex: index
                         )
-                        .environmentObject(VM)
+                        .environmentObject(archiveViewModel)
                     } label: {
                         QuestionCellView(questionIndex: String(format: "%02d", index + 1),
-                                         questionText: VM.trueQuestions[index].question!)
+                                         questionText: archiveViewModel.trueQuestions[index].question!)
                     }
                 }//】 Loop
                 Spacer()
