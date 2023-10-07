@@ -18,7 +18,7 @@ struct CalendarView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            MonthlyCalendarView(changeMonthInt: changeMonthInt, VM: archiveViewModel, today: date)
+            MonthlyCalendarView(changeMonthInt: changeMonthInt, today: date, VM: archiveViewModel)
         }//】 VStack
         .onAppear{
             
