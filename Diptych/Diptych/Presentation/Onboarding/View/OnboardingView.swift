@@ -58,6 +58,7 @@ enum LoginMethod {
 }
 
 struct OnboardingView: View {
+    @StateObject var archiveViewModel = ArchiveViewModel()
 
     var body: some View {
         NavigationView {
@@ -97,6 +98,7 @@ extension OnboardingView {
     var emailLoginButton: some View {
         NavigationLink {
             LoginView()
+                .environmentObject(archiveViewModel)
         } label: {
             VStack(spacing: 0) {
                 Text("이메일로 로그인하기")
