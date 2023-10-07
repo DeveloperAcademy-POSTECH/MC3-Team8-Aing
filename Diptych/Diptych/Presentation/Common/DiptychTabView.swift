@@ -1,130 +1,86 @@
 //
-//  DiptychTabView2.swift
+//  DiptychTabView.swift
 //  Diptych
 //
-//  Created by Koo on 2023/07/20.
+//  Created by 김민 on 2023/07/12.
 //
 
 import SwiftUI
 
+enum DiptychTab: Int, CaseIterable {
+    case todyDiptych, archive, profile
+
+    var tabTitle: String {
+        switch self {
+        case .todyDiptych:
+            return "오늘의 딥틱"
+        case .archive:
+            return "보관함"
+        case .profile:
+            return "프로필"
+        }
+    }
+
+    var selectedImage: String {
+        switch self {
+        case .todyDiptych:
+            return "imgTodayDiptychTabSelected"
+        case .archive:
+            return "imgArchiveTabSelected"
+        case .profile:
+            return "imgProfileTabSelected"
+        }
+    }
+
+    var unselectedImage: String {
+        switch self {
+        case .todyDiptych:
+            return "imgTodayDiptychTab"
+        case .archive:
+            return "imgArchiveTab"
+        case .profile:
+            return "imgProfileTab"
+        }
+    }
+}
+
 struct DiptychTabView: View {
-    ///Property
-    @EnvironmentObject var VM : ArchiveViewModel
-    @State var currentTab : Int = 0
-    @Namespace var namespace
-    @EnvironmentObject var diptychCompleteAlertObject: DiptychCompleteAlertObject
-    var tabBarTitle: [String] = ["오늘의 딥틱", "보관함", "프로필"]
-    var selectedIcons: [String] = ["imgTodayDiptychTabSelected", "imgArchiveTabSelected", "imgProfileTabSelected"]
-    var UnselectedIcons: [String] = ["imgTodayDiptychTab", "imgArchiveTab", "imgProfileTab"]
-    
+    @State private var selection = DiptychTab.todyDiptych
+
     var body: some View {
-        NavigationView{
-            ZStack{
-                /// 각 뷰로 이동
-                VStack(spacing: 0){
-                    if currentTab == 0 {
-                        TodayDiptychView()
+        TabView(selection: $selection) {
+            ForEach(DiptychTab.allCases, id: \.self) { tab in
+                diptychTabDestinationView(for: tab)
+                    .tabItem {
+                        selection == tab ?
+                        Image(tab.selectedImage) : Image(tab.unselectedImage)
+                        Text(tab.tabTitle)
                     }
-                    else if currentTab == 1 {
-                        ArchiveTabView(currentTab: 0)
-                            .environmentObject(VM)
-                    }
-                    else if currentTab == 2 {
-                        ProfileView()
-                    }
-                }//】 VStack
-                .frame(maxWidth: .infinity)
-                
-                
-                Spacer()
-                
-                /// 하단 탭바
-                VStack{
-                    Spacer()
-                    HStack(spacing: 20) {
-                        ForEach(tabBarTitle.indices, id: \.self) { index in
-                            let title = tabBarTitle[index]
-                            let icon1 = selectedIcons[index]
-                            let icon2 = UnselectedIcons[index]
-                            
-                            Button {
-                                currentTab = index
-                            } label: {
-                                DiptychTabBarItem(isSelected: currentTab == index, title: title,
-                                                  selectedIcon: icon1, UnselectedIcon: icon2)
-                            }//】 Button
-                            .buttonStyle(.plain)
-                        }//】 Loop
-                    }//】 HStack
-                    .frame(height: 100)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.white)
-                }//】 VStack
+            }
+        }
+        .accentColor(.offBlack)
+        .navigationBarBackButtonHidden(true)
+        .onAppear {
+            UITabBar.appearance().unselectedItemTintColor = .darkGray
+            UITabBar.appearance().backgroundColor = .white
+        }
+    }
 
-                if !diptychCompleteAlertObject.isDiptychCompleteAlertShown && diptychCompleteAlertObject.isDiptychCompleted {
-                    Color.black.opacity(0.54)
-                    DiptychCompleteAlertView()
-                        .frame(width: 300, height: 360)
-                }
-                
-            }//】 ZStack
-            .ignoresSafeArea()
-        }//】 Navigation
-        .accentColor(Color.offBlack)
-
-    }//】 Body
+    @ViewBuilder
+    private func diptychTabDestinationView(for diptychTab: DiptychTab) -> some View {
+        switch diptychTab {
+        case .todyDiptych:
+            TodayDiptychView()
+        case .archive:
+            ArchiveTabView()
+        case .profile:
+            ProfileView()
+        }
+    }
 }
 
-
-struct DiptychTabBarItem: View {
-    
-    ///Property
-    var isSelected: Bool
-    var title: String
-    var selectedIcon: String
-    var UnselectedIcon: String
-    
-    var body: some View {
-        
-            VStack(spacing: 0) {
-               
-                /// 탭바 아이콘
-                VStack(spacing: 0) {
-                    if isSelected{
-                        Image(selectedIcon)
-                    } else {
-                        Image(UnselectedIcon)
-                            .opacity(0.5)
-                    }
-                    
-                }//】 VStack
-                .padding(.bottom,5)
-                
-                /// 탭바 텍스트
-                VStack(spacing: 0){
-                    if isSelected{
-                        Text(title)
-                            .font(.system(size:12, weight: .medium))
-                            
-                    } else {
-                        Text(title)
-                            .font(.system(size:12, weight: .medium))
-                            .foregroundColor(.gray.opacity(0.5))
-                    }
-                }//】 VStack
-               
-                
-            }//】 VStack
-            .frame(width: 100)
-            .offset(y:-7)
-            .animation(.spring(), value: isSelected) // 애니메이션 타입
-    }//】 Body
-}
-
-
-struct DiptychTabView2_Previews: PreviewProvider {
+struct DiptychTabView_Previews: PreviewProvider {
     static var previews: some View {
         DiptychTabView()
-            .environmentObject(DiptychCompleteAlertObject())
     }
 }

@@ -27,7 +27,7 @@ struct DiptychApp: App {
         WindowGroup {
             if isSplashCompleted {
                 if userViewModel.flow == .initialized {
-                    OnBoardingView()
+                    OnboardingView()
                         .environmentObject(userViewModel)
                 } else if userViewModel.flow == .signedUp {
                     LoadingVerificationView()
@@ -40,9 +40,9 @@ struct DiptychApp: App {
                         .environmentObject(userViewModel)
                 } else {
                     DiptychTabView()
-                        .environmentObject(userViewModel)
-                        .environmentObject(DiptychCompleteAlertObject())
-                        .environmentObject(VM)
+//                        .environmentObject(userViewModel)
+//                        .environmentObject(DiptychCompleteAlertObject())
+//                        .environmentObject(VM)
                 }
                 
                 // OnBoardingView().environmentObject(userViewModel)

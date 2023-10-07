@@ -19,30 +19,42 @@ struct TodayDiptychView: View {
     let days = ["월", "화", "수", "목", "금", "토", "일"]
 
     var body: some View {
-        NavigationStack {
-            MainDiptychView()
-                .ignoresSafeArea(edges: .vertical)
-                .onAppear {
-                    diptychCompleteAlertObject.checkDateAndResetAlertIfNeeded()
-                    fetchData()
+        NavigationView {
+            ZStack {
+                Color.offWhite
+                VStack(spacing: 0) {
+                    todayDiptychLabel
+                        .padding(.horizontal, 15)
+                    Divider()
+                        .frame(height: 1)
+                        .overlay(Color.dtDarkGray)
+                        .padding(.top, 10)
+                        .padding(.horizontal, 15)
+                    todayQuestionLabel
+                        .padding(.leading, 15)
+                    diptychImage
+                    weeklyDiptychCalendar
+                        .padding(.bottom, 28)
                 }
-                .fullScreenCover(isPresented: $isShowCamera) {
-                    ZStack {
-                        Color.offWhite.ignoresSafeArea()
-                        CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
-                            .toolbar(.hidden, for: .tabBar)
-                            .onDisappear {
-                                viewModel.weeklyData.removeAll()
-                                Task {
-                                    await viewModel.fetchTodayImage()
-                                    await viewModel.fetchWeeklyCalender()
-
-                                    guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
-                                    diptychCompleteAlertObject.isDiptychCompleted = isCompleted
-                                }
+            }
+            .ignoresSafeArea(edges: .vertical)
+            .fullScreenCover(isPresented: $isShowCamera) {
+                ZStack {
+                    Color.offWhite.ignoresSafeArea()
+                    CameraRepresentableView(viewModel: viewModel, imageCacheViewModel: imageCacheViewModel)
+                        .toolbar(.hidden, for: .tabBar)
+                        .onDisappear {
+                            viewModel.weeklyData.removeAll()
+                            Task {
+                                await viewModel.fetchTodayImage()
+                                await viewModel.fetchWeeklyCalender()
+                                
+                                guard let isCompleted = viewModel.todayPhoto?.isCompleted else { return }
+                                diptychCompleteAlertObject.isDiptychCompleted = isCompleted
                             }
-                    }
+                        }
                 }
+            }
         }
     }
 
@@ -66,65 +78,52 @@ struct TodayDiptychView: View {
 
 extension TodayDiptychView {
 
-    private func MainDiptychView() -> some View {
-        ZStack(alignment: .top) {
-            Color.offWhite
-            VStack(spacing: 0) {
-                HStack(spacing: 0) {
-                    Text("\(viewModel.setTodayDateString())")
-                    Spacer()
-                    Text("#\(viewModel.diptychNumber)번째 딥틱")
-                }
-                .font(.pretendard(.medium, size: 16))
-                .foregroundColor(.dtDarkGray)
-                .padding(.horizontal, 15)
-                .padding(.top, 75)
+    var todayDiptychLabel: some View {
+        HStack(spacing: 0) {
+            Text("\(viewModel.setTodayDateString())")
+            Spacer()
+            Text("#\(viewModel.diptychNumber)번째 딥틱")
+        }
+        .font(.pretendard(.medium, size: 16))
+        .foregroundColor(.dtDarkGray)
+    }
 
-                Divider()
-                    .frame(height: 1)
-                    .overlay(Color.dtDarkGray)
-                    .padding(.top, 10)
-                    .padding(.horizontal, 15)
+    var todayQuestionLabel: some View {
+        HStack(spacing: 0) {
+            Text("오늘의 손하트를\n보여주세요!")
+                .font(.pretendard(.light, size: 28))
+                .foregroundColor(.offBlack)
+                .lineSpacing(6)
+            Spacer()
+        }
+    }
 
-                HStack(spacing: 0) {
-                    Text("\(viewModel.question)")
-                        .frame(height: 78, alignment: .topLeading)
-                        .lineSpacing(6)
-                        .font(.pretendard(.light, size: 28))
-                        .foregroundColor(.offBlack)
-                        .padding(.top, 29)
-                        .padding(.horizontal, 15)
-                        .padding(.bottom, 42)
-                    Spacer()
-                }
+    var diptychImage: some View {
+        HStack(spacing: 0) {
+            switch viewModel.isFirst {
+            case true:
+                myDiptychImageView(viewModel.photoFirstState, viewModel.photoFirstURL)
+                loverDiptychImageView(viewModel.photoSecondState, viewModel.photoSecondURL)
+            case false:
+                loverDiptychImageView(viewModel.photoFirstState, viewModel.photoFirstURL)
+                myDiptychImageView(viewModel.photoSecondState, viewModel.photoSecondURL)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .aspectRatio(1.0, contentMode: .fit)
+    }
 
-                HStack(spacing: 0) {
-                    switch viewModel.isFirst {
-                    case true:
-                        myDiptychImageView(viewModel.photoFirstState, viewModel.photoFirstURL)
-                        loverDiptychImageView(viewModel.photoSecondState, viewModel.photoSecondURL)
-                    case false:
-                        loverDiptychImageView(viewModel.photoFirstState, viewModel.photoFirstURL)
-                        myDiptychImageView(viewModel.photoSecondState, viewModel.photoSecondURL)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .aspectRatio(1.0, contentMode: .fit)
-                .padding(.bottom, 28)
-                .font(.pretendard(.light, size: 14))
-                .foregroundColor(.offWhite)
-                .multilineTextAlignment(.center)
-
-                HStack(spacing: 9) {
-                    let weeklyDates = viewModel.setWeeklyDates()
-                    ForEach(0..<7) { index in
-                        let date = weeklyDates[index]
-                        let data = viewModel.weeklyData.filter { $0.date == date }
-                        WeeklyCalenderView(day: days[index],
-                                           diptychState: data.isEmpty ? .none : data[0].diptychState)
-                    }
-                }
-                .padding(.bottom, 28)
+    var weeklyDiptychCalendar: some View {
+        HStack(spacing: 9) {
+            let weeklyDates = viewModel.setWeeklyDates()
+            ForEach(0..<7) { index in
+                let date = weeklyDates[index]
+                let data = viewModel.weeklyData.filter { $0.date == date }
+                // MARK: - 캘린더 데이터 연결
+//                WeeklyCalenderView(day: days[index],
+//                                   diptychState: data.isEmpty ? .none : data[0].diptychState)
+                WeeklyCalenderView(day: days[index],
+                                   diptychState: .complete)
             }
         }
     }
@@ -142,7 +141,9 @@ extension TodayDiptychView {
                         }
                 }
         default:
-            rectangleOverlayImage(color: Color.dtLightGray, url: url, isBlurred: false)
+            rectangleOverlayImage(color: Color.dtLightGray,
+                                  url: url,
+                                  isBlurred: false)
         }
     }
 
@@ -157,19 +158,29 @@ extension TodayDiptychView {
                         Image("icnCross")
                         Text("상대방이 오늘 딥틱을\n아직 완성하지 않았어요")
                     }
+                    .font(.pretendard(.light, size: 14))
+                    .foregroundColor(.offWhite)
+                    .multilineTextAlignment(.center)
                 }
         case .upload:
             ZStack {
-                rectangleOverlayImage(color: Color.offBlack, url: url, isBlurred: true)
+                rectangleOverlayImage(color: Color.offBlack,
+                                      url: url,
+                                      isBlurred: true)
                 Color.black
                     .opacity(0.54)
                 VStack(spacing: 17) {
                     Image("icnCheck")
                     Text("상대방이 오늘 딥틱을\n완성했어요")
                 }
+                .font(.pretendard(.light, size: 14))
+                .foregroundColor(.offWhite)
+                .multilineTextAlignment(.center)
             }
         case .complete:
-            rectangleOverlayImage(color: Color.offBlack, url: url, isBlurred: false)
+            rectangleOverlayImage(color: Color.offBlack,
+                                  url: url,
+                                  isBlurred: false)
         }
     }
 
@@ -198,7 +209,7 @@ extension TodayDiptychView {
 
 struct TodayDiptychView_Previews: PreviewProvider {
     static var previews: some View {
-        TodayDiptychView()
-            .environmentObject(DiptychCompleteAlertObject())
+                DiptychTabView()
+//        TodayDiptychView()
     }
 }
