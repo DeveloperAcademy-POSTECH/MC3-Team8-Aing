@@ -37,12 +37,12 @@ struct ArchiveTabView: View {
 extension ArchiveTabView {
 
     var archiveTabView: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: 37) {
+            Spacer()
             ForEach(ArchiveTabInfo.allCases, id: \.self) { tab in
-                Spacer()
                 VStack(spacing: 15) {
                     Text(tab.rawValue)
-                        .font(.pretendard(.light, size: 20))
+                        .font(.pretendard(.light, size: 24))
                         .foregroundColor(selection == tab ? .offBlack : .dtDarkGray)
                     Rectangle()
                         .foregroundColor(selection == tab ? .offBlack : .offWhite)
@@ -53,9 +53,10 @@ extension ArchiveTabView {
                         selection = tab
                     }
                 }
-                Spacer()
             }
+            Spacer()
         }
+        .background(Color.offWhite)
     }
 
     @ViewBuilder
