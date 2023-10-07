@@ -8,20 +8,19 @@
 import SwiftUI
 
 struct AlbumListView: View {
-    
-    ///Property
-    @EnvironmentObject var VM : ArchiveViewModel
+    // Property
+    @EnvironmentObject var archiveViewModel: ArchiveViewModel
     var scrollToID : Int = 18 // 스크롤뷰 시작 위치 지정
   
     var body: some View {
         ScrollViewReader { scrollViewProxy in
             ScrollView {
                 
-                let data = VM.photos
-                let data2 = VM.questions
+                let data = archiveViewModel.photos
+                let data2 = archiveViewModel.questions
                 
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()),count: 3),spacing: 4) {
-                    ForEach((0..<VM.photos.count), id: \.self) { index in
+                    ForEach((0..<archiveViewModel.photos.count), id: \.self) { index in
                         
                         /// 사진 디테일 뷰
                         NavigationLink {
@@ -32,7 +31,7 @@ struct AlbumListView: View {
                                 question: (data2[index].question),
                                 currentIndex: index
                             )
-                            .environmentObject(VM)
+                            .environmentObject(archiveViewModel)
                         } label: {
                             AlbumImageView(imageURL: data[index].thumbnail!)
                                 .aspectRatio(1.0, contentMode: .fit)
@@ -49,8 +48,8 @@ struct AlbumListView: View {
         }//】 ScrollViewReader
     }//】 Body
     private func indexOfCompleted(_ index: Int) -> Int {
-        guard let completedPhoto = VM.photos[index].thumbnail else { return 0 }
-        return VM.truePhotos.firstIndex { $0.thumbnail == completedPhoto } ?? 0
+        guard let completedPhoto = archiveViewModel.photos[index].thumbnail else { return 0 }
+        return archiveViewModel.truePhotos.firstIndex { $0.thumbnail == completedPhoto } ?? 0
     }
 }
 
@@ -84,7 +83,6 @@ struct AlbumImageView: View {
             // }
         }//】 VStack
         .frame(width: 128, height: 128)
-//        .frame(maxWidth: .infinity)
     }//】 Body
 }
 
@@ -93,5 +91,6 @@ struct AlbumImageView: View {
 struct AlbumListView_Previews: PreviewProvider {
     static var previews: some View {
         AlbumListView()
+            .environmentObject(ArchiveViewModel())
     }
 }
