@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CalendarScrollView: View {
-    @EnvironmentObject var VM: ArchiveViewModel
+    @EnvironmentObject var archiveViewModel: ArchiveViewModel
     let scrollToID = 12 // 스크롤뷰 시작 위치 지정
 
     var body: some View {

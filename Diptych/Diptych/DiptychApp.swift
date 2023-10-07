@@ -21,7 +21,7 @@ struct DiptychApp: App {
     @State var isSplashCompleted: Bool = false
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var userViewModel: UserViewModel = UserViewModel()
-    @StateObject var VM : ArchiveViewModel = ArchiveViewModel()
+    @StateObject var archiveViewModel : ArchiveViewModel = ArchiveViewModel()
     
     var body: some Scene {
         WindowGroup {

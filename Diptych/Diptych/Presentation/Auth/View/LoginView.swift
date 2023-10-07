@@ -17,6 +17,7 @@ struct LoginView: View {
     
     @FocusState var isPasswordFocused: Bool
     @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var archiveViewModel: ArchiveViewModel
 
     var body: some View {
         ZStack {
@@ -117,7 +118,7 @@ extension LoginView {
     }
 
     var loginButton: some View {
-        NavigationLink(destination: DiptychTabView()) {
+        NavigationLink(destination: DiptychTabView().environmentObject(archiveViewModel)) {
             SquareButton(buttonTitle: "로그인하기",
                          buttonBackgroundColor: .offBlack,
                          titleColor: .offWhite)
@@ -137,6 +138,8 @@ struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             LoginView()
+                .environmentObject(UserViewModel())
+                .environmentObject(ArchiveViewModel())
         }
     }
 }
