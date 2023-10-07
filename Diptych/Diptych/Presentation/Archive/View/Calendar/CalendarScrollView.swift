@@ -8,25 +8,25 @@
 import SwiftUI
 
 struct CalendarScrollView: View {
-    @EnvironmentObject var VM : ArchiveViewModel
+    @EnvironmentObject var VM: ArchiveViewModel
     let scrollToID = 12 // 스크롤뷰 시작 위치 지정
-    
+
     var body: some View {
-            ScrollViewReader { scrollViewProxy in
-                ScrollView(.vertical) {
-                    VStack(spacing: 0) {
-                        ForEach(0...scrollToID, id: \.self) { index in
-                            CalendarView(date: Date.now, changeMonthInt: index - scrollToID)
-//                                .environmentObject(VM)
-                        }
-                        Text("달력의 끝입니다.")
-                            .foregroundColor(.offWhite)
-                            .font(.pretendard(size: 10))
-                            .frame(height: 30)
-                            .id("bottom")
+        ScrollViewReader { scrollViewProxy in
+            ScrollView(.vertical) {
+                VStack(spacing: 0) {
+                    ForEach(0...scrollToID, id: \.self) { index in
+                        CalendarView(date: Date.now,
+                                     changeMonthInt: index - scrollToID)
+                                .environmentObject(VM)
                     }
-                    .padding(.bottom, 40)
-                }//】 Scroll
+                    Text("달력의 끝입니다.")
+                        .foregroundColor(.offWhite)
+                        .font(.pretendard(size: 10))
+                        .frame(height: 30)
+                        .id("bottom")
+                }
+                .padding(.bottom, 40)
                 .background(Color.offWhite)
                 .onAppear{
                     var timerCount = 0
@@ -49,9 +49,9 @@ struct CalendarScrollView: View {
                     }
                 }
                 .padding(.bottom, 15)
-            }//】 ScrollViewReader
-
-    }//】 Body
+            }
+        }
+    }
 }
 
 
@@ -60,6 +60,7 @@ struct CalendarScrollView: View {
 struct CalendarScrollView_Previews: PreviewProvider {
     static var previews: some View {
         CalendarScrollView()
+            .environmentObject(ArchiveViewModel())
     }
 }
 

@@ -9,14 +9,15 @@ import SwiftUI
 
 /// 월별 캘린더 뷰
 struct MonthlyCalendarView: View {
+
+    let changeMonthInt: Int
+    let today: Date
+    let calendar = Calendar.current
     var date: Date {
         changeMonth(by: changeMonthInt)
     }
-    let changeMonthInt: Int
+
     @StateObject var VM: ArchiveViewModel
-    
-    let today: Date
-    let calendar = Calendar.current
     
     var body: some View {
         let daysInMonth: Int = numberOfDays(in: date)
@@ -138,7 +139,7 @@ extension MonthlyCalendarView {
     func numberOfDays(in data: Date) -> Int {
         return Calendar.current.range(of: .day, in: .month, for: data)?.count ?? 0
     }
-
+ 
     /// 이번달 1일 몇번째 요일 -> Int (일요일 = 0)
     func firstWeekdayOfMonth(in data: Date) -> Int {
         let components = Calendar.current.dateComponents([.year, .month], from: data)
@@ -173,8 +174,11 @@ extension MonthlyCalendarView {
     static let weekdaySymbols: [String] = ["월", "화", "수", "목", "금", "토", "일"]
 }
 
-// struct MonthlyCalendarView_Previews: PreviewProvider {
-//     static var previews: some View {
-//         MonthlyCalendarView()
-//     }
-// }
+ struct MonthlyCalendarView_Previews: PreviewProvider {
+     static var previews: some View {
+         MonthlyCalendarView(changeMonthInt: 0,
+                             today: Date.now,
+                             VM: ArchiveViewModel())
+             .environmentObject(ArchiveViewModel())
+     }
+ }

@@ -333,6 +333,7 @@
 		AB2AC1EE2A5F094600B162E1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F3263A922A6543F700B4581C /* ArchiveTabView.swift */,
 				F3263A942A65441B00B4581C /* Calendar */,
 				F3263A952A65442700B4581C /* Album */,
 				F3263A9C2A65B66F00B4581C /* QuestionList */,
@@ -608,7 +609,6 @@
 				44852D2E2A6FBA430074D3D4 /* LottieUIViews.swift */,
 				ABB613242A77D5A90063107E /* VisualEffectView.swift */,
 				98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */,
-				F3263A922A6543F700B4581C /* ArchiveTabView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
