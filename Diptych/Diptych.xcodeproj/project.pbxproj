@@ -87,6 +87,7 @@
 		AB730B5B2AD298AE00BA5CE4 /* LikeSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB730B5A2AD298AE00BA5CE4 /* LikeSegmentedControl.swift */; };
 		AB730B5D2AD2AB6500BA5CE4 /* QuestionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB730B5C2AD2AB6500BA5CE4 /* QuestionCellView.swift */; };
 		AB730B5F2AD2B1E600BA5CE4 /* LikedQuestionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB730B5E2AD2B1E600BA5CE4 /* LikedQuestionCellView.swift */; };
+		AB730B622AD2D9E300BA5CE4 /* QuestionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB730B612AD2D9E300BA5CE4 /* QuestionListViewModel.swift */; };
 		AB96A0AB2A66E4DF004C01FF /* TodayDiptychViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */; };
 		ABB613252A77D5A90063107E /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB613242A77D5A90063107E /* VisualEffectView.swift */; };
 		ABC6DAFB2A784E0E000FE73A /* DiptychCompleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC6DAFA2A784E0E000FE73A /* DiptychCompleteAlertView.swift */; };
@@ -189,6 +190,7 @@
 		AB730B5A2AD298AE00BA5CE4 /* LikeSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeSegmentedControl.swift; sourceTree = "<group>"; };
 		AB730B5C2AD2AB6500BA5CE4 /* QuestionCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCellView.swift; sourceTree = "<group>"; };
 		AB730B5E2AD2B1E600BA5CE4 /* LikedQuestionCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedQuestionCellView.swift; sourceTree = "<group>"; };
+		AB730B612AD2D9E300BA5CE4 /* QuestionListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionListViewModel.swift; sourceTree = "<group>"; };
 		AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDiptychViewModel.swift; sourceTree = "<group>"; };
 		ABB613242A77D5A90063107E /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		ABC6DAFA2A784E0E000FE73A /* DiptychCompleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychCompleteAlertView.swift; sourceTree = "<group>"; };
@@ -697,6 +699,7 @@
 			isa = PBXGroup;
 			children = (
 				F33434F02A70393100389FF3 /* ArchiveViewModel.swift */,
+				AB730B612AD2D9E300BA5CE4 /* QuestionListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -903,6 +906,7 @@
 				C1F79A4E2A700E9500A1D63A /* ShareSheetView.swift in Sources */,
 				AB730B5B2AD298AE00BA5CE4 /* LikeSegmentedControl.swift in Sources */,
 				988A277F2A72351900A9B5C0 /* SecureInputTextField.swift in Sources */,
+				AB730B622AD2D9E300BA5CE4 /* QuestionListViewModel.swift in Sources */,
 				ABCB300D2A6D367F007724DC /* Photo.swift in Sources */,
 				44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */,
 				447E05012A79549F005AACE7 /* ImageCacheManager.swift in Sources */,
