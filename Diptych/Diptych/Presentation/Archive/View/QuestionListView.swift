@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct Question {
-    let number: String
+struct Question: Identifiable {
+    var id = UUID()
+    let number: Int
     let question: String
     var isLiked: Bool
 }
@@ -16,6 +17,17 @@ struct Question {
 struct QuestionListView: View {
     @State private var selection = LikeFilter.all
     @State private var question = ""
+    private let dummyQuestions = [
+        Question(number: 199,
+                 question: "질문111111111111111111111",
+                 isLiked: false),
+        Question(number: 199,
+                 question: "질문222222222222222222222222222222",
+                 isLiked: true),
+        Question(number: 199,
+                 question: "질문333333333333333",
+                 isLiked: false)
+    ]
 
     var body: some View {
         VStack(spacing: 0) {
@@ -23,7 +35,8 @@ struct QuestionListView: View {
                 .padding(.top, 15)
             questionSearchField
                 .padding(.top, 21)
-            questionSegmentedControlDetailView(for: selection)
+            questionList(for: selection)
+                .padding(.top, 30)
             Spacer()
         }
         .padding(.horizontal, 15)
@@ -56,12 +69,20 @@ extension QuestionListView {
     }
 
     @ViewBuilder
-    private func questionSegmentedControlDetailView(for filter: LikeFilter) -> some View {
+    private func questionList(for filter: LikeFilter) -> some View {
         switch filter {
         case .all:
-            Text("전체")
+            List(dummyQuestions) { question in
+                QuestionCellView(question: question)
+            }
+            .scrollContentBackground(.hidden)
+            .listStyle(.plain)
         case .like:
-            Text("좋아요")
+            List(dummyQuestions.filter { $0.isLiked == true }) { question in
+                LikedQuestionCellView(question: question)
+            }
+            .scrollContentBackground(.hidden)
+            .listStyle(.plain)
         }
     }
 }
