@@ -340,11 +340,9 @@
 			isa = PBXGroup;
 			children = (
 				F3263A922A6543F700B4581C /* ArchiveTabView.swift */,
-				F3263A9D2A65B6AE00B4581C /* QuestionListView.swift */,
-				AB730B5C2AD2AB6500BA5CE4 /* QuestionCellView.swift */,
-				AB730B5E2AD2B1E600BA5CE4 /* LikedQuestionCellView.swift */,
 				F3263A942A65441B00B4581C /* Calendar */,
 				F3263A952A65442700B4581C /* Album */,
+				AB730B602AD2B96000BA5CE4 /* Questions */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -408,6 +406,16 @@
 				447E05002A79549E005AACE7 /* ImageCacheManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		AB730B602AD2B96000BA5CE4 /* Questions */ = {
+			isa = PBXGroup;
+			children = (
+				AB730B5E2AD2B1E600BA5CE4 /* LikedQuestionCellView.swift */,
+				AB730B5C2AD2AB6500BA5CE4 /* QuestionCellView.swift */,
+				F3263A9D2A65B6AE00B4581C /* QuestionListView.swift */,
+			);
+			path = Questions;
 			sourceTree = "<group>";
 		};
 		AB96A0A92A66E4C8004C01FF /* ViewModel */ = {
