@@ -15,22 +15,45 @@ struct Question {
 
 struct QuestionListView: View {
     @State private var selection = LikeFilter.all
+    @State private var question = ""
 
     var body: some View {
-        ScrollView {
+        VStack(spacing: 0) {
             LikeSegmentedControl(selection: $selection)
                 .padding(.top, 15)
-                .padding(.horizontal, 15)
-            Text("검색")
+            questionSearchField
+                .padding(.top, 21)
             questionSegmentedControlDetailView(for: selection)
+            Spacer()
         }
-        .ignoresSafeArea()
+        .padding(.horizontal, 15)
     }
 }
 
 extension QuestionListView {
 
     // MARK: - UI Components
+
+    var questionSearchField: some View {
+        VStack(spacing: 0) {
+            HStack {
+                TextField("", text: $question)
+                searchButton
+            }
+            .padding(.bottom, 9)
+            Rectangle()
+                .foregroundColor(.dtDarkGray)
+                .frame(height: 1)
+        }
+    }
+
+    var searchButton: some View {
+        Button {
+            question.removeAll()
+        } label: {
+            Image("icnSearch")
+        }
+    }
 
     @ViewBuilder
     private func questionSegmentedControlDetailView(for filter: LikeFilter) -> some View {
