@@ -47,13 +47,12 @@ final class ArchiveViewModel: ObservableObject {
     
     init() {
         Task {
-            await fetchQuestion()
+//            await fetchQuestion()
             await fetchUser()
             await fetchStartDate()
             await fetchPhotosData()
             _ = await makeTruePhotos()
-            _ = await makeTrueQuestions()
-            print("🥦:ArchiveViewModel")
+//            _ = await makeTrueQuestions()
         }
         
         // TODO: - [Mockup] 사진 한개
@@ -64,31 +63,31 @@ final class ArchiveViewModel: ObservableObject {
                             contentID: "fakeID_1",
                             date: Date(timeIntervalSince1970: 1693573888),
                             month: 9))
-        questions.append(.init(id: "fakeID_1", question: "오늘 본 동그라미는?"))
-        questions.append(.init(id: "fakeID_2", question: "오늘 본 동그라미는?"))
+//        questions.append(.init(id: "fakeID_1", question: "오늘 본 동그라미는?"))
+//        questions.append(.init(id: "fakeID_2", question: "오늘 본 동그라미는?"))
     }
 
     //MARK: - 컨텐츠 필드  데이터 가져오기
-    func fetchQuestion() async {
-        // db.collection("contents")
-        
-        // TODO: - [Backend] 질문 가져오기
-        self.questions = [Questions(id: UUID().uuidString, question: "서버로부터 가져온 질문")]
-    }
+//    func fetchQuestion() async {
+//        // db.collection("contents")
+//
+//        // TODO: - [Backend] 질문 가져오기
+//        self.questions = [Questions(id: UUID().uuidString, question: "서버로부터 가져온 질문")]
+//    }
     
     // MARK: - 컨텐츠 컬랙션에서 완성된 질문만 배열 만들기
-    func makeTrueQuestions() async -> [Questions] {
-        trueQuestions = photos.map { photo in
-            if let contentId = photo.contentID,
-               let question = questions.first(where: { $0.id == contentId }),
-               photo.isCompleted {
-                return question
-            } else {
-                return Questions(id: UUID().uuidString, question: "오늘 나에게 감명깊은 에러는?")
-            }
-        }
-        return trueQuestions
-    }
+//    func makeTrueQuestions() async -> [Questions] {
+//        trueQuestions = photos.map { photo in
+//            if let contentId = photo.contentID,
+//               let question = questions.first(where: { $0.id == contentId }),
+//               photo.isCompleted {
+//                return question
+//            } else {
+//                return Questions(id: UUID().uuidString, question: "오늘 나에게 감명깊은 에러는?")
+//            }
+//        }
+//        return trueQuestions
+//    }
     
     // MARK: - 포토 컬랙션에서 완성된 사진만 배열 만들기
     func makeTruePhotos() async -> [Photos] {

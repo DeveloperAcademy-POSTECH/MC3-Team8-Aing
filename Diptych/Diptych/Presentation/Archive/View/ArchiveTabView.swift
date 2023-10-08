@@ -23,7 +23,7 @@ struct ArchiveTabView: View {
                 archiveTabView
                 Divider()
                     .overlay(Color.dtLightGray)
-            }
+            } 
             .padding(.top, 15)
             archiveTabDestinationView(for: selection)
             Spacer()
@@ -38,7 +38,6 @@ extension ArchiveTabView {
 
     var archiveTabView: some View {
         HStack(spacing: 37) {
-            Spacer()
             ForEach(ArchiveTabInfo.allCases, id: \.self) { tab in
                 VStack(spacing: 15) {
                     Text(tab.rawValue)
@@ -54,7 +53,6 @@ extension ArchiveTabView {
                     }
                 }
             }
-            Spacer()
         }
         .background(Color.offWhite)
     }
@@ -67,7 +65,7 @@ extension ArchiveTabView {
         case .album:
             Text("Album")
         case .questions:
-            Text("Questions")
+            QuestionListView()
         }
     }
 }
