@@ -14,11 +14,11 @@ struct CalendarView: View {
     ///Property
     @EnvironmentObject var archiveViewModel: ArchiveViewModel
     @State var date: Date
-    let changeMonthInt : Int
+    let changeMonthInt: Int
     
     var body: some View {
         VStack(spacing: 0) {
-            MonthlyCalendarView(changeMonthInt: changeMonthInt, VM: archiveViewModel, today: date)
+            MonthlyCalendarView(changeMonthInt: changeMonthInt, today: date, VM: archiveViewModel)
         }//】 VStack
         .onAppear{
             
@@ -30,5 +30,6 @@ struct CalendarView: View {
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
         CalendarView(date: Date(), changeMonthInt: 0)
+            .environmentObject(ArchiveViewModel())
     }
 }

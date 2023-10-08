@@ -84,6 +84,9 @@
 		AB4E64D62AC9A47E0050B031 /* NavigationBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E64D52AC9A47E0050B031 /* NavigationBackButton.swift */; };
 		AB4E64D82AC9AA440050B031 /* SquareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E64D72AC9AA440050B031 /* SquareButton.swift */; };
 		AB6C7B7D2A6DD56600CD5D68 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C7B7C2A6DD56600CD5D68 /* CalendarManager.swift */; };
+		AB730B5B2AD298AE00BA5CE4 /* LikeSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB730B5A2AD298AE00BA5CE4 /* LikeSegmentedControl.swift */; };
+		AB730B5D2AD2AB6500BA5CE4 /* QuestionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB730B5C2AD2AB6500BA5CE4 /* QuestionCellView.swift */; };
+		AB730B5F2AD2B1E600BA5CE4 /* LikedQuestionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB730B5E2AD2B1E600BA5CE4 /* LikedQuestionCellView.swift */; };
 		AB96A0AB2A66E4DF004C01FF /* TodayDiptychViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */; };
 		ABB613252A77D5A90063107E /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB613242A77D5A90063107E /* VisualEffectView.swift */; };
 		ABC6DAFB2A784E0E000FE73A /* DiptychCompleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC6DAFA2A784E0E000FE73A /* DiptychCompleteAlertView.swift */; };
@@ -183,6 +186,9 @@
 		AB4E64D52AC9A47E0050B031 /* NavigationBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBackButton.swift; sourceTree = "<group>"; };
 		AB4E64D72AC9AA440050B031 /* SquareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareButton.swift; sourceTree = "<group>"; };
 		AB6C7B7C2A6DD56600CD5D68 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
+		AB730B5A2AD298AE00BA5CE4 /* LikeSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeSegmentedControl.swift; sourceTree = "<group>"; };
+		AB730B5C2AD2AB6500BA5CE4 /* QuestionCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCellView.swift; sourceTree = "<group>"; };
+		AB730B5E2AD2B1E600BA5CE4 /* LikedQuestionCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedQuestionCellView.swift; sourceTree = "<group>"; };
 		AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDiptychViewModel.swift; sourceTree = "<group>"; };
 		ABB613242A77D5A90063107E /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		ABC6DAFA2A784E0E000FE73A /* DiptychCompleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychCompleteAlertView.swift; sourceTree = "<group>"; };
@@ -333,9 +339,10 @@
 		AB2AC1EE2A5F094600B162E1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F3263A922A6543F700B4581C /* ArchiveTabView.swift */,
 				F3263A942A65441B00B4581C /* Calendar */,
 				F3263A952A65442700B4581C /* Album */,
-				F3263A9C2A65B66F00B4581C /* QuestionList */,
+				AB730B602AD2B96000BA5CE4 /* Questions */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -387,6 +394,7 @@
 				988A277E2A72351900A9B5C0 /* SecureInputTextField.swift */,
 				AB4E64D52AC9A47E0050B031 /* NavigationBackButton.swift */,
 				AB4E64D72AC9AA440050B031 /* SquareButton.swift */,
+				AB730B5A2AD298AE00BA5CE4 /* LikeSegmentedControl.swift */,
 			);
 			name = UIComponents;
 			sourceTree = "<group>";
@@ -398,6 +406,16 @@
 				447E05002A79549E005AACE7 /* ImageCacheManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		AB730B602AD2B96000BA5CE4 /* Questions */ = {
+			isa = PBXGroup;
+			children = (
+				AB730B5E2AD2B1E600BA5CE4 /* LikedQuestionCellView.swift */,
+				AB730B5C2AD2AB6500BA5CE4 /* QuestionCellView.swift */,
+				F3263A9D2A65B6AE00B4581C /* QuestionListView.swift */,
+			);
+			path = Questions;
 			sourceTree = "<group>";
 		};
 		AB96A0A92A66E4C8004C01FF /* ViewModel */ = {
@@ -608,7 +626,6 @@
 				44852D2E2A6FBA430074D3D4 /* LottieUIViews.swift */,
 				ABB613242A77D5A90063107E /* VisualEffectView.swift */,
 				98D4A08C2A6E6EF100EB8C94 /* LottieView.swift */,
-				F3263A922A6543F700B4581C /* ArchiveTabView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -674,14 +691,6 @@
 				445A47AE2A5FD6B6005573DC /* AlbumListView.swift */,
 			);
 			path = Album;
-			sourceTree = "<group>";
-		};
-		F3263A9C2A65B66F00B4581C /* QuestionList */ = {
-			isa = PBXGroup;
-			children = (
-				F3263A9D2A65B6AE00B4581C /* QuestionListView.swift */,
-			);
-			path = QuestionList;
 			sourceTree = "<group>";
 		};
 		F3263AA32A667D4F00B4581C /* ViewModel */ = {
@@ -864,6 +873,7 @@
 			files = (
 				AB2AC2282A5F922F00B162E1 /* Font+.swift in Sources */,
 				F3263A972A65448400B4581C /* CalendarView.swift in Sources */,
+				AB730B5F2AD2B1E600BA5CE4 /* LikedQuestionCellView.swift in Sources */,
 				F3263A932A6543F700B4581C /* ArchiveTabView.swift in Sources */,
 				F3263A9E2A65B6AE00B4581C /* QuestionListView.swift in Sources */,
 				44DE9B952A67DCA000E6615B /* CameraViewController.swift in Sources */,
@@ -891,6 +901,7 @@
 				44DE9B8E2A67DC2100E6615B /* UIDevice+.swift in Sources */,
 				44EE2BFB2A6E6EF5003B5C1F /* Image+.swift in Sources */,
 				C1F79A4E2A700E9500A1D63A /* ShareSheetView.swift in Sources */,
+				AB730B5B2AD298AE00BA5CE4 /* LikeSegmentedControl.swift in Sources */,
 				988A277F2A72351900A9B5C0 /* SecureInputTextField.swift in Sources */,
 				ABCB300D2A6D367F007724DC /* Photo.swift in Sources */,
 				44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */,
@@ -914,6 +925,7 @@
 				ABCB300F2A6D368D007724DC /* WeeklyData.swift in Sources */,
 				F3263AA22A667AA200B4581C /* PhotoDetailView.swift in Sources */,
 				F33434F12A70393100389FF3 /* ArchiveViewModel.swift in Sources */,
+				AB730B5D2AD2AB6500BA5CE4 /* QuestionCellView.swift in Sources */,
 				98D4A08D2A6E6EF100EB8C94 /* LottieView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
