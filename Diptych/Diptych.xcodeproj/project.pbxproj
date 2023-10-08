@@ -84,7 +84,7 @@
 		AB4E64D62AC9A47E0050B031 /* NavigationBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E64D52AC9A47E0050B031 /* NavigationBackButton.swift */; };
 		AB4E64D82AC9AA440050B031 /* SquareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E64D72AC9AA440050B031 /* SquareButton.swift */; };
 		AB6C7B7D2A6DD56600CD5D68 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6C7B7C2A6DD56600CD5D68 /* CalendarManager.swift */; };
-		AB730B592AD26C4A00BA5CE4 /* LikeSegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB730B582AD26C4A00BA5CE4 /* LikeSegmentedControlView.swift */; };
+		AB730B5B2AD298AE00BA5CE4 /* LikeSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB730B5A2AD298AE00BA5CE4 /* LikeSegmentedControl.swift */; };
 		AB96A0AB2A66E4DF004C01FF /* TodayDiptychViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */; };
 		ABB613252A77D5A90063107E /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB613242A77D5A90063107E /* VisualEffectView.swift */; };
 		ABC6DAFB2A784E0E000FE73A /* DiptychCompleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC6DAFA2A784E0E000FE73A /* DiptychCompleteAlertView.swift */; };
@@ -184,7 +184,7 @@
 		AB4E64D52AC9A47E0050B031 /* NavigationBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBackButton.swift; sourceTree = "<group>"; };
 		AB4E64D72AC9AA440050B031 /* SquareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareButton.swift; sourceTree = "<group>"; };
 		AB6C7B7C2A6DD56600CD5D68 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
-		AB730B582AD26C4A00BA5CE4 /* LikeSegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeSegmentedControlView.swift; sourceTree = "<group>"; };
+		AB730B5A2AD298AE00BA5CE4 /* LikeSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeSegmentedControl.swift; sourceTree = "<group>"; };
 		AB96A0AA2A66E4DF004C01FF /* TodayDiptychViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDiptychViewModel.swift; sourceTree = "<group>"; };
 		ABB613242A77D5A90063107E /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		ABC6DAFA2A784E0E000FE73A /* DiptychCompleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychCompleteAlertView.swift; sourceTree = "<group>"; };
@@ -336,9 +336,9 @@
 			isa = PBXGroup;
 			children = (
 				F3263A922A6543F700B4581C /* ArchiveTabView.swift */,
+				F3263A9D2A65B6AE00B4581C /* QuestionListView.swift */,
 				F3263A942A65441B00B4581C /* Calendar */,
 				F3263A952A65442700B4581C /* Album */,
-				F3263A9C2A65B66F00B4581C /* QuestionList */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -390,6 +390,7 @@
 				988A277E2A72351900A9B5C0 /* SecureInputTextField.swift */,
 				AB4E64D52AC9A47E0050B031 /* NavigationBackButton.swift */,
 				AB4E64D72AC9AA440050B031 /* SquareButton.swift */,
+				AB730B5A2AD298AE00BA5CE4 /* LikeSegmentedControl.swift */,
 			);
 			name = UIComponents;
 			sourceTree = "<group>";
@@ -678,15 +679,6 @@
 			path = Album;
 			sourceTree = "<group>";
 		};
-		F3263A9C2A65B66F00B4581C /* QuestionList */ = {
-			isa = PBXGroup;
-			children = (
-				F3263A9D2A65B6AE00B4581C /* QuestionListView.swift */,
-				AB730B582AD26C4A00BA5CE4 /* LikeSegmentedControlView.swift */,
-			);
-			path = QuestionList;
-			sourceTree = "<group>";
-		};
 		F3263AA32A667D4F00B4581C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -883,7 +875,6 @@
 				AB4E64D62AC9A47E0050B031 /* NavigationBackButton.swift in Sources */,
 				AB2AC2232A5F8E8700B162E1 /* PretendardType.swift in Sources */,
 				989DFFE52A5FDC4B00EBBC12 /* OnboardingView.swift in Sources */,
-				AB730B592AD26C4A00BA5CE4 /* LikeSegmentedControlView.swift in Sources */,
 				AB0974432A8A944300E4DAAA /* DiptychUser.swift in Sources */,
 				AB96A0AB2A66E4DF004C01FF /* TodayDiptychViewModel.swift in Sources */,
 				F35ADA542A6DA53C00A510E7 /* CellView.swift in Sources */,
@@ -895,6 +886,7 @@
 				44DE9B8E2A67DC2100E6615B /* UIDevice+.swift in Sources */,
 				44EE2BFB2A6E6EF5003B5C1F /* Image+.swift in Sources */,
 				C1F79A4E2A700E9500A1D63A /* ShareSheetView.swift in Sources */,
+				AB730B5B2AD298AE00BA5CE4 /* LikeSegmentedControl.swift in Sources */,
 				988A277F2A72351900A9B5C0 /* SecureInputTextField.swift in Sources */,
 				ABCB300D2A6D367F007724DC /* Photo.swift in Sources */,
 				44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */,
