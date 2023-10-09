@@ -15,27 +15,15 @@ struct Question: Identifiable {
 }
 
 struct QuestionListView: View {
-    @State private var selection = LikeFilter.all
-    @State private var question = ""
-    private let dummyQuestions = [
-        Question(number: 199,
-                 question: "질문111111111111111111111",
-                 isLiked: false),
-        Question(number: 199,
-                 question: "질문222222222222222222222222222222",
-                 isLiked: true),
-        Question(number: 199,
-                 question: "질문333333333333333",
-                 isLiked: false)
-    ]
+    @StateObject private var questionListViewModel = QuestionListViewModel()
 
     var body: some View {
         VStack(spacing: 0) {
-            LikeSegmentedControl(selection: $selection)
+            LikeSegmentedControl(selection: $questionListViewModel.selection)
                 .padding(.top, 15)
             questionSearchField
                 .padding(.top, 21)
-            questionList(for: selection)
+            questionList(for: questionListViewModel.selection)
                 .padding(.top, 30)
             Spacer()
         }
@@ -50,7 +38,18 @@ extension QuestionListView {
     var questionSearchField: some View {
         VStack(spacing: 0) {
             HStack {
-                TextField("", text: $question)
+                TextField("SearchQuestion",
+                          text: $questionListViewModel.searchWord,
+                          prompt: Text("검색어를 입력해주세요")
+                                    .foregroundColor(.dtDarkGray))
+                    .font(.pretendard(.light, size: 16))
+                    .foregroundColor(.dtDarkGray)
+                    .onChange(of: questionListViewModel.searchWord) { newValue in
+                        if newValue.isEmpty {
+                            questionListViewModel.searchedQuestions = questionListViewModel.dummyQuestions
+                        }
+                    }
+                    .accentColor(.dtDarkGray)
                 searchButton
             }
             .padding(.bottom, 9)
@@ -62,7 +61,7 @@ extension QuestionListView {
 
     var searchButton: some View {
         Button {
-            question.removeAll()
+            questionListViewModel.setQuestionList()
         } label: {
             Image("icnSearch")
         }
@@ -72,13 +71,13 @@ extension QuestionListView {
     private func questionList(for filter: LikeFilter) -> some View {
         switch filter {
         case .all:
-            List(dummyQuestions) { question in
+            List(questionListViewModel.searchedQuestions) { question in
                 QuestionCellView(question: question)
             }
             .scrollContentBackground(.hidden)
             .listStyle(.plain)
         case .like:
-            List(dummyQuestions.filter { $0.isLiked == true }) { question in
+            List(questionListViewModel.searchedQuestions.filter { $0.isLiked == true }) { question in
                 LikedQuestionCellView(question: question)
             }
             .scrollContentBackground(.hidden)
