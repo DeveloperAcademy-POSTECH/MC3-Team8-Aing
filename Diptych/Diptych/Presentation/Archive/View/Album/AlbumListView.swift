@@ -21,14 +21,7 @@ struct AlbumListView: View {
                 // TODO: - 개수 임의 지정
                 ForEach((0..<20), id: \.self) { index in
                     NavigationLink {
-    //                    PhotoDetailView(
-    //                        date: data[index].date,
-    //                        image1: data[index].photoFirstURL,
-    //                        image2: data[index].photoSecondURL,
-    //                        question: (data2[index].question),
-    //                        currentIndex: index
-    //                    )
-    //                    .environmentObject(archiveViewModel)
+                        PhotoDetailView(currentIndex: 0)
                     } label: {
                         albumList(for: selection)
                     }
