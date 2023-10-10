@@ -63,7 +63,7 @@ extension ArchiveTabView {
         case .calendar:
             Text("Calendar")
         case .album:
-            Text("Album")
+            AlbumListView()
         case .questions:
             QuestionListView()
         }
