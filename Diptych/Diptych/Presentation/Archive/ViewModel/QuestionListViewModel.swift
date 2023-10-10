@@ -8,6 +8,7 @@
 import SwiftUI
 
 class QuestionListViewModel: ObservableObject {
+
     @Published var searchedQuestions: [Question] = []
     @Published var selection = LikeFilter.all
     @Published var searchWord = ""
@@ -29,10 +30,10 @@ class QuestionListViewModel: ObservableObject {
     }
 
     func setQuestionList() {
-        if searchWord.isEmpty {
+        guard !searchWord.isEmpty else {
             searchedQuestions = dummyQuestions
-        } else {
-            searchedQuestions = dummyQuestions.filter { $0.question.contains(searchWord)}
+            return
         }
+        searchedQuestions = dummyQuestions.filter { $0.question.contains(searchWord)}
     }
 }
