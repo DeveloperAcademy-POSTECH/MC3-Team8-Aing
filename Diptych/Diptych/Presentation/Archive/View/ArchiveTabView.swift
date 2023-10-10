@@ -29,6 +29,7 @@ struct ArchiveTabView: View {
             Spacer()
         }
         .background(Color.offWhite)
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 

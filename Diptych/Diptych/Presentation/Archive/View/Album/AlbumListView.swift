@@ -14,16 +14,17 @@ struct AlbumListView: View {
 
     var body: some View {
         ScrollView(.vertical) {
-            LikeSegmentedControl(selection: $selection)
-                .padding(.horizontal, 15)
-                .padding(.top, 15)
-            LazyVGrid(columns: columns, spacing: 4) {
-                // TODO: - 개수 임의 지정
-                ForEach((0..<20), id: \.self) { index in
-                    NavigationLink {
-                        PhotoDetailView(currentIndex: 0)
-                    } label: {
-                        albumList(for: selection)
+            VStack(spacing: 0) {
+                LikeSegmentedControl(selection: $selection)
+                    .padding(.all, 15)
+                LazyVGrid(columns: columns, spacing: 4) {
+                    // TODO: - 개수 임의 지정
+                    ForEach((0..<20), id: \.self) { index in
+                        NavigationLink {
+                            PhotoDetailView(currentIndex: 0)
+                        } label: {
+                            albumList(for: selection)
+                        }
                     }
                 }
             }
