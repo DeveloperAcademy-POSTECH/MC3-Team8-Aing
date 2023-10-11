@@ -8,53 +8,45 @@
 import SwiftUI
 
 struct AlbumListView: View {
-    // Property
-    @EnvironmentObject var archiveViewModel: ArchiveViewModel
-    var scrollToID : Int = 18 // 스크롤뷰 시작 위치 지정
-  
+
+    @State var selection = LikeFilter.all
+    var columns = Array(repeating: GridItem(spacing: 4), count: 3)
+
     var body: some View {
-        ScrollViewReader { scrollViewProxy in
-            ScrollView {
-                
-                let data = archiveViewModel.photos
-                let data2 = archiveViewModel.questions
-                
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible()),count: 3),spacing: 4) {
-                    ForEach((0..<archiveViewModel.photos.count), id: \.self) { index in
-                        
-                        /// 사진 디테일 뷰
+        ScrollView(.vertical) {
+            VStack(spacing: 0) {
+                LikeSegmentedControl(selection: $selection)
+                    .padding(.all, 15)
+                LazyVGrid(columns: columns, spacing: 4) {
+                    // TODO: - 개수 임의 지정
+                    ForEach((0..<20), id: \.self) { index in
                         NavigationLink {
-                            PhotoDetailView(
-                                date: data[index].date,
-                                image1: data[index].photoFirstURL,
-                                image2: data[index].photoSecondURL,
-                                question: (data2[index].question),
-                                currentIndex: index
-                            )
-                            .environmentObject(archiveViewModel)
+                            PhotoDetailView(currentIndex: 0)
                         } label: {
-                            AlbumImageView(imageURL: data[index].thumbnail!)
-                                .aspectRatio(1.0, contentMode: .fit)
+                            albumList(for: selection)
                         }
-                        .navigationTitle("")
-                    }//】 Loop
-                }//】 Grid
-                
-            }//】 Scroll
-            .background(Color.offWhite)
-            .onChange(of: scrollToID) { newValue in
-                scrollViewProxy.scrollTo(newValue, anchor: .bottom)
+                    }
+                }
             }
-        }//】 ScrollViewReader
-    }//】 Body
-    private func indexOfCompleted(_ index: Int) -> Int {
-        guard let completedPhoto = archiveViewModel.photos[index].thumbnail else { return 0 }
-        return archiveViewModel.truePhotos.firstIndex { $0.thumbnail == completedPhoto } ?? 0
+        }
     }
 }
 
-//MARK: - 사진 뷰
+extension AlbumListView {
+
+    @ViewBuilder
+    private func albumList(for filter: LikeFilter) -> some View {
+        switch filter {
+        case .all:
+            AlbumImageView(imageURL: "")
+        case .like:
+            AlbumLikedImageView(imageURL: "")
+        }
+    }
+}
+
 struct AlbumImageView: View {
+    
     @StateObject private var imageLoader: ImageLoader
     private let imageURL: String
 
@@ -64,33 +56,41 @@ struct AlbumImageView: View {
     }
 
     var body: some View {
-        VStack{
-            // TODO: - [Mockup] 섬네일
-            Image(uiImage: .init(named: "diptych_sample1")!)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 128, height: 128)
-                .clipped()
-            
-            // if let image = imageLoader.image {
-            //     Image(uiImage: image)
-            //         .resizable()
-            //         .scaledToFill()
-            //         .frame(width: 128, height: 128)
-            //         .clipped()
-            // } else {
-            //     ProgressView()
-            // }
-        }//】 VStack
-        .frame(width: 128, height: 128)
-    }//】 Body
+        Rectangle()
+            .aspectRatio(contentMode: .fit)
+            .foregroundColor(.dtLightGray)
+    }
+}
+
+struct AlbumLikedImageView: View {
+
+    @StateObject private var imageLoader: ImageLoader
+    private let imageURL: String
+
+    init(imageURL: String) {
+        self.imageURL = imageURL
+        _imageLoader = StateObject(wrappedValue: ImageLoader(imageURL: imageURL))
+    }
+
+    var body: some View {
+        ZStack(alignment: .bottomTrailing) {
+            Rectangle()
+                .aspectRatio(contentMode: .fit)
+                .foregroundColor(.dtLightGray)
+
+            // TODO: - 추후 모델이 완성되면 AlbumImageView - AlbumLikedImageView를 합쳐 isLiked로 구분하기
+            Image("icnLikedHeart")
+                .shadow(color: .black.opacity(0.25),
+                        radius: 20)
+                .padding(.trailing, 7)
+                .padding(.bottom, 5)
+        }
+    }
 }
 
 
-//MARK: - Preview
 struct AlbumListView_Previews: PreviewProvider {
     static var previews: some View {
         AlbumListView()
-            .environmentObject(ArchiveViewModel())
     }
 }
