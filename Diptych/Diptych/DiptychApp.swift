@@ -26,24 +26,27 @@ struct DiptychApp: App {
     var body: some Scene {
         WindowGroup {
             if isSplashCompleted {
-                if userViewModel.flow == .initialized {
-                    OnboardingView()
-                        .environmentObject(userViewModel)
-                } else if userViewModel.flow == .signedUp {
-                    LoadingVerificationView()
-                        .environmentObject(userViewModel)
-                } else if userViewModel.flow == .emailVerified {
-                    CouplingView()
-                        .environmentObject(userViewModel)
-                } else if userViewModel.flow == .coupled {
-                    ProfileSettingView()
-                        .environmentObject(userViewModel)
-                } else {
-                    DiptychTabView()
-//                        .environmentObject(userViewModel)
-//                        .environmentObject(DiptychCompleteAlertObject())
-//                        .environmentObject(VM)
-                }
+//                 if userViewModel.flow == .initialized {
+//                     OnboardingView()
+//                         .environmentObject(userViewModel)
+//                 } else if userViewModel.flow == .signedUp {
+//                     LoadingVerificationView()
+//                         .environmentObject(userViewModel)
+//                 } else if userViewModel.flow == .emailVerified {
+//                     CouplingView()
+//                         .environmentObject(userViewModel)
+//                 } else if userViewModel.flow == .coupled {
+//                     ProfileSettingView()
+//                         .environmentObject(userViewModel)
+//                 } else {
+//                     DiptychTabView()
+// //                        .environmentObject(userViewModel)
+// //                        .environmentObject(DiptychCompleteAlertObject())
+// //                        .environmentObject(VM)
+//                 }
+                
+                // 댓글 뷰 테스트 - 말풍선 아이콘 버튼 누르면 열림
+                PhotoDetailView(currentIndex: 0).environmentObject(archiveViewModel)
                 
                 // OnBoardingView().environmentObject(userViewModel)
             } else {

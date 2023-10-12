@@ -8,22 +8,66 @@
 import SwiftUI
 
 struct CommentView: View {
-    @State var comments: [DiptychPhotoComment] = [
-        .init(id: "1", authorID: "쏜야", comment: "이번 사진 진짜 너무 웃기다하항\n정말 웃기지 않니 하하ㅏ", createdDate: Date(), modifiedDate: Date()),
-        .init(id: "2", authorID: "밍니", comment: "그러게 말이야 정말 웃기다 너 표정이 왜그러니", createdDate: Date(), modifiedDate: Date()),
-    ]
+    private enum Field: Int, CaseIterable {
+        case comment
+    }
+    
+    @State var currentCommentText = ""
+    @State var showEmptyTextAlert = false
+    @FocusState private var focusedField: Field?
+    @StateObject var viewModel = CommentViewModel()
     
     var body: some View {
         ZStack(alignment: .topLeading) {
             Color.offWhite.ignoresSafeArea()
             VStack {
-                ForEach(comments, id: \.id) { comment in
-                    CommentCell(nickname: comment.authorID, comment: comment.comment, date: comment.createdDate)
+                CommentListScrollView(viewModel: viewModel)
+                Spacer()
+                VStack(spacing: 0) {
+                    HStack(spacing: 0) {
+                        TextField("댓글을 입력해주세요", text: $currentCommentText)
+                            .font(.pretendard(.medium, size: 16))
+                            .background(Color.offWhite)
+                            .padding(.bottom, 10)
+                            .focused($focusedField, equals: .comment)
+                            .onSubmit {
+                                submitCurrentComment()
+                            }
+                        Button {
+                            submitCurrentComment()
+                        } label: {
+                            Image("imgCommentUpload")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                        }
+                    }
+                    Rectangle()
+                        .foregroundColor(.dtDarkGray)
+                        // 피그마에서는 높이 1이지만 1로 지정하면 뭔가 얇아보임
+                        .frame(height: 1.5)
+                        .padding(.bottom, 10)
                 }
+                
             }
             .padding(.horizontal, 10)
-            .padding(.top, 58)
+            .padding(.top, 36)
         }
+        .alert("댓글을 입력해주세요", isPresented: $showEmptyTextAlert) {
+            Button("OK") {}
+        }
+    }
+}
+
+extension CommentView {
+    private func submitCurrentComment() {
+        guard !currentCommentText.isEmpty else {
+            showEmptyTextAlert = true
+            return
+        }
+        
+        viewModel.addComment(currentCommentText)
+        currentCommentText = ""
+        focusedField = nil
     }
 }
 
