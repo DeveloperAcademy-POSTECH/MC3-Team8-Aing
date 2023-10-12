@@ -29,6 +29,7 @@ struct ArchiveTabView: View {
             Spacer()
         }
         .background(Color.offWhite)
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 
@@ -63,7 +64,7 @@ extension ArchiveTabView {
         case .calendar:
             Text("Calendar")
         case .album:
-            Text("Album")
+            AlbumListView()
         case .questions:
             QuestionListView()
         }
