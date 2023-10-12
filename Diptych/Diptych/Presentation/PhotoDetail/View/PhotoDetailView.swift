@@ -39,7 +39,18 @@ extension PhotoDetailView: View {
         ZStack {
             Color.offWhite
                 .edgesIgnoringSafeArea(.top)
-            Text("PhotoDetailView")
+            VStack {
+                Text("PhotoDetailView")
+                // 코멘트 버튼
+                Button {
+                    showCommentView = true
+                } label: {
+                    Image("imgComment")
+                        .foregroundColor(.offBlack)
+                        .frame(width: 30, height: 30)
+                        .padding(.trailing, 70)
+                }
+            }
 
 //            VStack(spacing: 0) {
 //
