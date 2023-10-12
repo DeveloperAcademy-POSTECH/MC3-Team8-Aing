@@ -20,6 +20,7 @@ struct PhotoDetailView {
     @State var question: String?
     @State var currentIndex: Int
     @State private var isImageLoaded = false
+    @State private var showCommentView = false
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -37,7 +38,7 @@ extension PhotoDetailView: View {
     var body: some View {
         ZStack {
             Color.offWhite.edgesIgnoringSafeArea(.top)
-
+            
             VStack(spacing: 0) {
                 
                 //MARK: - [1] 해더
@@ -62,54 +63,54 @@ extension PhotoDetailView: View {
                 .padding(.horizontal,13)
                 
                 
-                    //MARK: - [2] 질문
-                    VStack(spacing: 0){
-                        HStack(spacing: 0){
-                            Text("\(question ?? "")")
-                                .font(.custom(PretendardType.light.rawValue, size: 24))
-                                .foregroundColor(.offBlack)
-                                .multilineTextAlignment(.leading)
-                                .padding(.leading, 17)
-                            Spacer()
-                        }//】 HStack
-                        .padding(.top,23)
+                //MARK: - [2] 질문
+                VStack(spacing: 0){
+                    HStack(spacing: 0){
+                        Text("\(question ?? "")")
+                            .font(.custom(PretendardType.light.rawValue, size: 24))
+                            .foregroundColor(.offBlack)
+                            .multilineTextAlignment(.leading)
+                            .padding(.leading, 17)
                         Spacer()
-                    }//】 VStack
-                    .frame(height: 120)
+                    }//】 HStack
+                    .padding(.top,23)
+                    Spacer()
+                }//】 VStack
+                .frame(height: 120)
+                
+                
+                /// [3] 사진 프레임
+                ZStack{
+                    RoundedRectangle(cornerRadius: 0)
+                        .foregroundColor(Color.dtDarkGray)
+                        .frame(width: 393, height: 393)
                     
-                    
-                    /// [3] 사진 프레임
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 0)
-                            .foregroundColor(Color.dtDarkGray)
-                            .frame(width: 393, height: 393)
-                        
-                        HStack(spacing: 0) {
-                            if let image1Image, let image2Image {
-                                HStack(spacing: 0) {
-                                    Image(uiImage: image1Image)
-                                        .resizable()
-                                        .frame(width: 196.5, height: 393)
-                                    Image(uiImage: image2Image)
-                                        .resizable()
-                                        .frame(width: 196.5, height: 393)
-                                }
-                            }
-                            else {
-                                ProgressView()
+                    HStack(spacing: 0) {
+                        if let image1Image, let image2Image {
+                            HStack(spacing: 0) {
+                                Image(uiImage: image1Image)
+                                    .resizable()
+                                    .frame(width: 196.5, height: 393)
+                                Image(uiImage: image2Image)
+                                    .resizable()
+                                    .frame(width: 196.5, height: 393)
                             }
                         }
-                        HStack(spacing: 0){
-                            if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
-                            Spacer()
-                            if currentIndex < archiveViewModel.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
+                        else {
+                            ProgressView()
                         }
-                        .padding(.horizontal,18)
-                        
-                    }//】 ZStack
-                    .frame(height: 393, alignment: .center)
-                    .frame(maxWidth: .infinity)
-                    .aspectRatio(1, contentMode: .fit)
+                    }
+                    HStack(spacing: 0){
+                        if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
+                        Spacer()
+                        if currentIndex < archiveViewModel.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
+                    }
+                    .padding(.horizontal,18)
+                    
+                }//】 ZStack
+                .frame(height: 393, alignment: .center)
+                .frame(maxWidth: .infinity)
+                .aspectRatio(1, contentMode: .fit)
                 
                 //MARK: - [4] 공유/ 좋아요 버튼
                 HStack(spacing: 0){
@@ -129,10 +130,15 @@ extension PhotoDetailView: View {
                         .foregroundColor(.offBlack)
                         .frame(width: 30, height: 30)
                         .padding(.horizontal, 80)
-                    Image("imgComment")
-                        .foregroundColor(.offBlack)
-                        .frame(width: 30, height: 30)
-                        .padding(.trailing, 70)
+                    // 코멘트 버튼
+                    Button {
+                        showCommentView = true
+                    } label: {
+                        Image("imgComment")
+                            .foregroundColor(.offBlack)
+                            .frame(width: 30, height: 30)
+                            .padding(.trailing, 70)
+                    }
                 }//】 HStack
                 .frame(height: 100)
                 .padding(.bottom,100)
@@ -145,6 +151,20 @@ extension PhotoDetailView: View {
             //     await downloadImage()
             // }
             downloadImageWithCache()
+        }
+        .sheet(isPresented: $showCommentView) {
+            if #available(iOS 16.4, *) {
+                CommentView()
+                    .presentationDetents([.height(UIScreen.main.bounds.height - 120)])
+                    .presentationDragIndicator(.visible)
+                    // 16.4 only
+                    .presentationCornerRadius(20)
+            } else {
+                CommentView()
+                    .presentationDetents([.height(UIScreen.main.bounds.height - 120)])
+                    .presentationDragIndicator(.visible)
+            }
+            
         }
     }//】 Body
 }
@@ -213,12 +233,12 @@ extension PhotoDetailView {
     }
     
     /// 사진 상세뷰 업데이트
-        private func updateViewWithCurrentIndex() {
-            self.date = archiveViewModel.truePhotos[currentIndex].date
-            self.image1 = archiveViewModel.truePhotos[currentIndex].photoFirstURL
-            self.image2 = archiveViewModel.truePhotos[currentIndex].photoSecondURL
-            self.question = archiveViewModel.trueQuestions[currentIndex].question
-        }
+    private func updateViewWithCurrentIndex() {
+        self.date = archiveViewModel.truePhotos[currentIndex].date
+        self.image1 = archiveViewModel.truePhotos[currentIndex].photoFirstURL
+        self.image2 = archiveViewModel.truePhotos[currentIndex].photoSecondURL
+        self.question = archiveViewModel.trueQuestions[currentIndex].question
+    }
     
     /// 이미지 불러오기
     func downloadImage() async {
@@ -287,3 +307,9 @@ extension PhotoDetailView {
     }
 }
 
+struct PhotoDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        PhotoDetailView(currentIndex: 0)
+            .environmentObject(ArchiveViewModel())
+    }
+}
