@@ -20,6 +20,7 @@ struct PhotoDetailView {
     @State var question: String?
     @State var currentIndex: Int
     @State private var isImageLoaded = false
+    @State private var showCommentView = false
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -38,7 +39,18 @@ extension PhotoDetailView: View {
         ZStack {
             Color.offWhite
                 .edgesIgnoringSafeArea(.top)
-            Text("PhotoDetailView")
+            VStack {
+                Text("PhotoDetailView")
+                // 코멘트 버튼
+                Button {
+                    showCommentView = true
+                } label: {
+                    Image("imgComment")
+                        .foregroundColor(.offBlack)
+                        .frame(width: 30, height: 30)
+                        .padding(.trailing, 70)
+                }
+            }
 
 //            VStack(spacing: 0) {
 //
@@ -147,6 +159,20 @@ extension PhotoDetailView: View {
             //     await downloadImage()
             // }
             downloadImageWithCache()
+        }
+        .sheet(isPresented: $showCommentView) {
+            if #available(iOS 16.4, *) {
+                CommentView()
+                    .presentationDetents([.height(UIScreen.main.bounds.height - 120)])
+                    .presentationDragIndicator(.visible)
+                    // 16.4 only
+                    .presentationCornerRadius(20)
+            } else {
+                CommentView()
+                    .presentationDetents([.height(UIScreen.main.bounds.height - 120)])
+                    .presentationDragIndicator(.visible)
+            }
+            
         }
     }//】 Body
 }
@@ -289,3 +315,9 @@ extension PhotoDetailView {
     }
 }
 
+struct PhotoDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        PhotoDetailView(currentIndex: 0)
+            .environmentObject(ArchiveViewModel())
+    }
+}
