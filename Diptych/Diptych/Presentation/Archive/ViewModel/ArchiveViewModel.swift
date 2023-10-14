@@ -8,7 +8,6 @@
 import SwiftUI
 import Foundation
 
-
 struct Photos {
     let isCompleted: Bool
     let thumbnail: String?
@@ -23,7 +22,6 @@ struct Questions{
     let id: String?
     let question: String?
 }
-
 
 @MainActor
 final class ArchiveViewModel: ObservableObject {

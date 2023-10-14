@@ -30,6 +30,7 @@ struct PhotoDetailView: View {
     @State var question: String?
     @State var currentIndex: Int
     @State private var isImageLoaded = false
+    @State private var showCommentView = false
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -61,6 +62,21 @@ struct PhotoDetailView: View {
                 Spacer()
             }
         }
+        .sheet(isPresented: $showCommentView) {
+            if #available(iOS 16.4, *) {
+                CommentView()
+                    .presentationDetents([.height(UIScreen.main.bounds.height - 120)])
+                    .presentationDragIndicator(.visible)
+                    // 16.4 only
+                    .presentationCornerRadius(20)
+            } else {
+                CommentView()
+                    .presentationDetents([.height(UIScreen.main.bounds.height - 120)])
+                    .presentationDragIndicator(.visible)
+            }
+            
+        }
+    }//】 Body
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {

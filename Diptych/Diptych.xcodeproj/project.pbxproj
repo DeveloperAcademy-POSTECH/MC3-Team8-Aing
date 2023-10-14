@@ -22,6 +22,11 @@
 		44DE9B952A67DCA000E6615B /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B942A67DCA000E6615B /* CameraViewController.swift */; };
 		44DE9B972A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */; };
 		44DE9B9A2A67EBD700E6615B /* CameraStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44DE9B982A67E8C000E6615B /* CameraStoryboard.storyboard */; };
+		44EDE05A2AD7FC9D0004195D /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EDE0592AD7FC9D0004195D /* CommentView.swift */; };
+		44EDE05C2AD80AB50004195D /* DiptychPhotoComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EDE05B2AD80AB50004195D /* DiptychPhotoComment.swift */; };
+		44EDE05E2AD8105B0004195D /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EDE05D2AD8105A0004195D /* CommentCell.swift */; };
+		44EDE0612AD826D90004195D /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EDE0602AD826D90004195D /* CommentViewModel.swift */; };
+		44EDE0632AD82C790004195D /* CommentListScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EDE0622AD82C790004195D /* CommentListScrollView.swift */; };
 		44EE2BFB2A6E6EF5003B5C1F /* Image+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EE2BFA2A6E6EF5003B5C1F /* Image+.swift */; };
 		44EE2BFD2A6E8AAB003B5C1F /* ImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EE2BFC2A6E8AAB003B5C1F /* ImageSize.swift */; };
 		9846144B2A69075E0043EAE9 /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */; };
@@ -143,6 +148,11 @@
 		44DE9B942A67DCA000E6615B /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		44DE9B962A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformImageBasedOnContainerView.swift; sourceTree = "<group>"; };
 		44DE9B982A67E8C000E6615B /* CameraStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CameraStoryboard.storyboard; sourceTree = "<group>"; };
+		44EDE0592AD7FC9D0004195D /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
+		44EDE05B2AD80AB50004195D /* DiptychPhotoComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiptychPhotoComment.swift; sourceTree = "<group>"; };
+		44EDE05D2AD8105A0004195D /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		44EDE0602AD826D90004195D /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
+		44EDE0622AD82C790004195D /* CommentListScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListScrollView.swift; sourceTree = "<group>"; };
 		44EE2BFA2A6E6EF5003B5C1F /* Image+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+.swift"; sourceTree = "<group>"; };
 		44EE2BFC2A6E8AAB003B5C1F /* ImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSize.swift; sourceTree = "<group>"; };
 		9846144A2A69075E0043EAE9 /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
@@ -247,6 +257,33 @@
 				44CE81962A7430A800D1420E /* BlurPopupUIView.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		44EDE0572AD7FBD90004195D /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				44EDE05F2AD826A70004195D /* ViewModel */,
+				44EDE0582AD7FC8D0004195D /* View */,
+			);
+			path = Comment;
+			sourceTree = "<group>";
+		};
+		44EDE0582AD7FC8D0004195D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				44EDE0592AD7FC9D0004195D /* CommentView.swift */,
+				44EDE05D2AD8105A0004195D /* CommentCell.swift */,
+				44EDE0622AD82C790004195D /* CommentListScrollView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		44EDE05F2AD826A70004195D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				44EDE0602AD826D90004195D /* CommentViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		989B44952A65977200D99439 /* Frameworks */ = {
@@ -539,6 +576,7 @@
 			children = (
 				AB0974422A8A944300E4DAAA /* DiptychUser.swift */,
 				98D4A0852A6E3E7D00EB8C94 /* DiptychAlbum.swift */,
+				44EDE05B2AD80AB50004195D /* DiptychPhotoComment.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -607,6 +645,7 @@
 		ABFD3E822A5EDA35008678D0 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				44EDE0572AD7FBD90004195D /* Comment */,
 				AB4E64D42AC9A45F0050B031 /* UIComponents */,
 				ABFD3E832A5EDA4E008678D0 /* Common */,
 				989DFFE32A5FDC3A00EBBC12 /* Onboarding */,
@@ -883,6 +922,7 @@
 				98D4A0842A6A625200EB8C94 /* Date+.swift in Sources */,
 				44DE9B972A67DCDD00E6615B /* TransformImageBasedOnContainerView.swift in Sources */,
 				44852D2F2A6FBA430074D3D4 /* LottieUIViews.swift in Sources */,
+				44EDE0612AD826D90004195D /* CommentViewModel.swift in Sources */,
 				F3263AB62A691C4400B4581C /* DiptychTabView.swift in Sources */,
 				AB4E64D82AC9AA440050B031 /* SquareButton.swift in Sources */,
 				F3263A992A6544AA00B4581C /* CalendarScrollView.swift in Sources */,
@@ -891,6 +931,7 @@
 				44CE81972A7430A800D1420E /* BlurPopupUIView.swift in Sources */,
 				44852D332A7012590074D3D4 /* UIColor+.swift in Sources */,
 				AB4E64D62AC9A47E0050B031 /* NavigationBackButton.swift in Sources */,
+				44EDE05C2AD80AB50004195D /* DiptychPhotoComment.swift in Sources */,
 				AB2AC2232A5F8E8700B162E1 /* PretendardType.swift in Sources */,
 				989DFFE52A5FDC4B00EBBC12 /* OnboardingView.swift in Sources */,
 				AB0974432A8A944300E4DAAA /* DiptychUser.swift in Sources */,
@@ -908,8 +949,10 @@
 				988A277F2A72351900A9B5C0 /* SecureInputTextField.swift in Sources */,
 				AB730B622AD2D9E300BA5CE4 /* QuestionListViewModel.swift in Sources */,
 				ABCB300D2A6D367F007724DC /* Photo.swift in Sources */,
+				44EDE05E2AD8105B0004195D /* CommentCell.swift in Sources */,
 				44DE9B922A67DC6500E6615B /* CameraRepresentableView.swift in Sources */,
 				447E05012A79549F005AACE7 /* ImageCacheManager.swift in Sources */,
+				44EDE05A2AD7FC9D0004195D /* CommentView.swift in Sources */,
 				AB2AC1F32A5F097400B162E1 /* ProfileView.swift in Sources */,
 				4421D7732A8BDA40003299BD /* CalendarHelper.swift in Sources */,
 				9846144B2A69075E0043EAE9 /* ProfileSettingView.swift in Sources */,
@@ -917,6 +960,7 @@
 				AB2A9EA42A5EC46100D70C33 /* DiptychApp.swift in Sources */,
 				44DE9B902A67DC3B00E6615B /* UIImage+.swift in Sources */,
 				AB2AC1ED2A5F093B00B162E1 /* TodayDiptychView.swift in Sources */,
+				44EDE0632AD82C790004195D /* CommentListScrollView.swift in Sources */,
 				44EE2BFD2A6E8AAB003B5C1F /* ImageSize.swift in Sources */,
 				F316E8CA2A6DBA98003CBD4D /* ExampleCode.swift in Sources */,
 				44C0C3352A8D20BF0072A0B8 /* MonthlyCalendarView.swift in Sources */,
