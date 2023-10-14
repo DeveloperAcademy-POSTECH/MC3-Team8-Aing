@@ -5,7 +5,6 @@
 //  Created by Nayun Kim on 2023/07/25.
 //
 
-
 import Photos
 import SwiftUI
 
@@ -28,32 +27,30 @@ struct ShareSheetView: View {
     @State var division: ImageDivisionAxis = .verticalLeft
 
     var body: some View {
-        // 버튼 크기가 이미지와 딱 맞지 않고 양옆으로 살짝 큼
-        // 이것 때문에 패딩으로 조정해둔 간격이랑 맞지 않아서 가운데 정렬이 안 됨
         Button() {
             Task {
                 guard await isPhotoLibraryReadWriteAccessGranted else { return }
                 self.isSharePresented = true
             }
         } label: {
-            Image("imgShareBox")
-                .foregroundColor(.offBlack)
-                .frame(width: 30, height: 30)
+            Image("icnShareBox")
         }
         .sheet(isPresented: $isSharePresented) {
-            let halfImageSize: CGSize = .init(width: IMAGE_SIZE / 2, height: IMAGE_SIZE)
-            let fullImageSize: CGSize = .init(width: IMAGE_SIZE, height: IMAGE_SIZE)
+//            let halfImageSize: CGSize = .init(width: IMAGE_SIZE / 2, height: IMAGE_SIZE)
+//            let fullImageSize: CGSize = .init(width: IMAGE_SIZE, height: IMAGE_SIZE)
             
-            if let image1,
-               let image2,
-               let mergedImage = image1.merge(
-                with: image2,
-                division: division,
-                contextSize: fullImageSize,
-                customBaseImageSize: halfImageSize,
-                customAnotherImageSize: halfImageSize) {
-                ActivityRepresentedViewController(activityItems: [mergedImage])
-            }
+//            if let image1,
+//               let image2,
+//               let mergedImage = image1.merge(
+//                with: image2,
+//                division: division,
+//                contextSize: fullImageSize,
+//                customBaseImageSize: halfImageSize,
+//                customAnotherImageSize: halfImageSize) {
+//                ActivityRepresentedViewController(activityItems: [mergedImage])
+//            }
+            // TODO: - 사진과 연결, 추후엔 이미지 1개로 받아올 예정
+            ActivityRepresentedViewController(activityItems: [UIImage(named: "diptych_sample1")!])
         }
     }
 
