@@ -18,18 +18,20 @@ struct ArchiveTabView: View {
     @State private var selection = ArchiveTabInfo.calendar
 
     var body: some View {
-        VStack {
-            ZStack(alignment: .bottom) {
-                archiveTabView
-                Divider()
-                    .overlay(Color.dtLightGray)
-            } 
-            .padding(.top, 15)
-            archiveTabDestinationView(for: selection)
-            Spacer()
+        NavigationView {
+            VStack {
+                ZStack(alignment: .bottom) {
+                    archiveTabView
+                    Divider()
+                        .overlay(Color.dtLightGray)
+                }
+                .padding(.top, 15)
+                archiveTabDestinationView(for: selection)
+                Spacer()
+            }
+            .background(Color.offWhite)
+            .ignoresSafeArea(edges: .bottom)
         }
-        .background(Color.offWhite)
-        .ignoresSafeArea(edges: .bottom)
     }
 }
 

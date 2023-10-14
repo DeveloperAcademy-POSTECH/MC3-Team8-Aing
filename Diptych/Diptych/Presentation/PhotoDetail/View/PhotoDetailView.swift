@@ -7,11 +7,21 @@
 
 import SwiftUI
 
-// MARK: - Property
+enum PhotoIndexDirection {
+    case previous, next
+
+    var imageName: String {
+        switch self {
+        case .previous:
+            return "chevron.left"
+        case .next:
+            return "chevron.right"
+        }
+    }
+}
 
 struct PhotoDetailView: View {
-    
-//    @EnvironmentObject var archiveViewModel: ArchiveViewModel
+
     @State var date: Date = Date()
     @State var image1: String?
     @State var image2: String?
@@ -34,7 +44,22 @@ struct PhotoDetailView: View {
         ZStack {
             Color.offWhite
                 .ignoresSafeArea()
-            
+            VStack(spacing: 0) {
+                diptychHeader
+                    .padding(.horizontal, 15)
+                Spacer()
+                diptychQuestion
+                    .padding(.leading, 15)
+                Spacer()
+                diptychPhoto
+                Spacer()
+                HStack(spacing: 80) {
+                    shareBoxButton
+                    likeButton
+                    commentButton
+                }
+                Spacer()
+            }
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -45,196 +70,108 @@ struct PhotoDetailView: View {
     }
 }
 
-// MARK: - View
+// MARK: - UI Components
 
 extension PhotoDetailView {
-//    var body: some View {
-//        ZStack {
-//            Color.offWhite
-//                .edgesIgnoringSafeArea(.top)
-//            Text("PhotoDetailView")
-//
-////            VStack(spacing: 0) {
-////
-////                //MARK: - [1] 해더
-////                VStack(spacing: 0){
-////                    HStack(spacing: 0) {
-////                        Text(dateFormatter.string(from: date))
-////                        Spacer()
-////
-////                        Text("\(currentIndex + 1)")
-////                            .italic()
-////                            .font(.custom(PretendardType.medium.rawValue, size: 16))
-////                        Text("번째 딥틱")
-////                    }//: HStack
-////                    .padding(.bottom,10)
-////
-////                    RoundedRectangle(cornerRadius: 0)
-////                        .frame(height: 1)
-////                }//】 VStack
-////                .font(.custom(PretendardType.medium.rawValue, size: 16))
-////                .foregroundColor(Color.dtDarkGray)
-////                .padding(.top,32)
-////                .padding(.horizontal,13)
-////
-////
-////                    //MARK: - [2] 질문
-////                    VStack(spacing: 0){
-////                        HStack(spacing: 0){
-////                            Text("\(question ?? "")")
-////                                .font(.custom(PretendardType.light.rawValue, size: 24))
-////                                .foregroundColor(.offBlack)
-////                                .multilineTextAlignment(.leading)
-////                                .padding(.leading, 17)
-////                            Spacer()
-////                        }//】 HStack
-////                        .padding(.top,23)
-////                        Spacer()
-////                    }//】 VStack
-////                    .frame(height: 120)
-////
-////
-////                    /// [3] 사진 프레임
-////                    ZStack{
-////                        RoundedRectangle(cornerRadius: 0)
-////                            .foregroundColor(Color.dtDarkGray)
-////                            .frame(width: 393, height: 393)
-////
-////                        HStack(spacing: 0) {
-////                            if let image1Image, let image2Image {
-////                                HStack(spacing: 0) {
-////                                    Image(uiImage: image1Image)
-////                                        .resizable()
-////                                        .frame(width: 196.5, height: 393)
-////                                    Image(uiImage: image2Image)
-////                                        .resizable()
-////                                        .frame(width: 196.5, height: 393)
-////                                }
-////                            }
-////                            else {
-////                                ProgressView()
-////                            }
-////                        }
-////                        HStack(spacing: 0){
-////                            if currentIndex > 0 {previousButton} else {EmptyView()} /// 이전 버튼
-////                            Spacer()
-////                            if currentIndex < archiveViewModel.truePhotos.count - 1{nextButton} else {EmptyView()} /// 다음 버튼
-////                        }
-////                        .padding(.horizontal,18)
-////
-////                    }//】 ZStack
-////                    .frame(height: 393, alignment: .center)
-////                    .frame(maxWidth: .infinity)
-////                    .aspectRatio(1, contentMode: .fit)
-////
-////                //MARK: - [4] 공유/ 좋아요 버튼
-////                HStack(spacing: 0){
-////                    if let image1Image, let image2Image {
-////                        ShareSheetView(image1: image1Image, image2: image2Image)
-////                            .foregroundColor(.offBlack)
-////                            .frame(width: 30, height: 30)
-////                            .padding(.leading, 70)
-////                    } else {
-////                        ShareSheetView()
-////                            .foregroundColor(.offBlack)
-////                            .frame(width: 30, height: 30)
-////                            .padding(.leading, 70)
-////                    }
-////
-////                    Image("imgWhiteHeart")
-////                        .foregroundColor(.offBlack)
-////                        .frame(width: 30, height: 30)
-////                        .padding(.horizontal, 80)
-////                    Image("imgComment")
-////                        .foregroundColor(.offBlack)
-////                        .frame(width: 30, height: 30)
-////                        .padding(.trailing, 70)
-////                }//】 HStack
-////                .frame(height: 100)
-////                .padding(.bottom,100)
-////
-////            } // VStack
-//
-//        } // ZStack
-//        .onAppear {
-//            // Task {
-//            //     await downloadImage()
-//            // }
-//            downloadImageWithCache()
-//        }
-//    }//】 Body
-}
 
-// MARK: - 이미지 셀
+    private var diptychHeader: some View {
+        VStack(spacing: 10) {
+            HStack {
+                Text("2023년 9월 9일")
+                Spacer()
+                Text("#999번째 딥틱")
+            }
+            Divider()
+                .frame(height: 1)
+                .overlay(Color.dtDarkGray)
+        }
+        .font(.pretendard(size: 16))
+        .foregroundColor(.dtDarkGray)
+    }
 
-// MARK: - 버튼 디자인
-struct IndexButton: View {
-    let icon : String
-    var body: some View {
+    private var diptychQuestion: some View {
+        HStack {
+            Text("“상대방의 표정 중 당신이\n가장 좋아하는 표정은?“")
+                .font(.pretendard(.light, size: 24))
+                .foregroundColor(.offBlack)
+                .lineSpacing(6)
+            Spacer()
+        }
+    }
+
+    private var diptychPhoto: some View {
+        ZStack {
+            Rectangle()
+                .foregroundColor(.dtLightGray)
+                .aspectRatio(contentMode: .fit)
+            HStack {
+                photoIndexButton(for: .previous)
+                Spacer()
+                photoIndexButton(for: .next)
+            }
+            .padding(.horizontal, 11)
+        }
+    }
+
+    private var shareBoxButton: some View {
+        Image("icnShareBox")
+    }
+
+    private var likeButton: some View {
+        Image("imgWhiteHeart")
+    }
+
+    private var commentButton: some View {
+        Image("icnComment")
+    }
+
+    private func photoIndexButton(for direction: PhotoIndexDirection) -> some View {
         ZStack{
             Circle()
                 .frame(width: 28, height: 28)
                 .foregroundColor(.offBlack.opacity(0.5))
-            
-            Image(systemName: icon)
+            Image(systemName: direction.imageName)
                 .foregroundColor(.white)
                 .font(.headline)
                 .fontWeight(.bold)
         }
+        .onTapGesture {
+            switch direction {
+            case .previous:
+                showPreviousDetail()
+            case .next:
+                showNextDetail()
+            }
+        }
+    }
+
+    // MARK: - Custom Methods
+
+    func showPreviousDetail() {
+        print("이전 photoDetail 불러오기")
+        if currentIndex > 0 {
+            self.currentIndex -= 1
+        }
+    }
+
+    func showNextDetail() {
+        print("다음 photoDetail 불러오기")
+        if currentIndex < 19 {
+            self.currentIndex += 1
+        }
+    }
+
+    private func updateViewWithCurrentIndex() {
+//        self.date = archiveViewModel.truePhotos[currentIndex].date
+//        self.image1 = archiveViewModel.truePhotos[currentIndex].photoFirstURL
+//        self.image2 = archiveViewModel.truePhotos[currentIndex].photoSecondURL
+//        self.question = archiveViewModel.trueQuestions[currentIndex].question
     }
 }
 
 // MARK: - Component
+
 extension PhotoDetailView {
-    /// 이전 버튼
-    private var previousButton: some View {
-        return Button {
-            Task {
-                showPrevDetail()
-                downloadImageWithCache()
-            }
-        } label: {
-            IndexButton(icon: "chevron.left")
-        }//】 Button
-        .onTapGesture { withAnimation(.easeInOut) {showPrevDetail()} }
-    }// 이전 버튼
-    
-    /// 다음 버튼
-    private var nextButton: some View {
-        return Button {
-            Task {
-//                showNextDetail()
-                downloadImageWithCache()
-            }
-        } label: {
-            IndexButton(icon: "chevron.right")
-        }//】 Button
-//        .onTapGesture { withAnimation(.easeInOut) {showNextDetail()} }
-    }// 다음 버튼
-    
-    /// 이전 버튼 로직
-    func showPrevDetail() {
-        if currentIndex > 0{
-            self.currentIndex -= 1
-//            updateViewWithCurrentIndex()
-        }
-    }
-    
-    /// 다음 버튼 로직
-//    func showNextDetail() {
-//        if currentIndex < archiveViewModel.truePhotos.count - 1{
-//            self.currentIndex += 1
-//            updateViewWithCurrentIndex()
-//        }
-//    }
-//
-//    /// 사진 상세뷰 업데이트
-//        private func updateViewWithCurrentIndex() {
-//            self.date = archiveViewModel.truePhotos[currentIndex].date
-//            self.image1 = archiveViewModel.truePhotos[currentIndex].photoFirstURL
-//            self.image2 = archiveViewModel.truePhotos[currentIndex].photoSecondURL
-//            self.question = archiveViewModel.trueQuestions[currentIndex].question
-//        }
     
     /// 이미지 불러오기
     func downloadImage() async {
@@ -290,23 +227,10 @@ extension PhotoDetailView {
             }
         }
     }
-    
-    func textLabel(text: String) -> some View {
-        return Text(text)
-            .font(.custom(PretendardType.medium.rawValue, size: 16))
-            .foregroundColor(.offBlack)
-            .padding(.vertical, 7)
-            .padding(.horizontal, 8)
-            .background(Rectangle()
-                .fill(Color.dtLightGray)
-            )
-    }
 }
 
 struct PhotoDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            PhotoDetailView(currentIndex: 0)
-        }
+        DiptychTabView()
     }
 }
