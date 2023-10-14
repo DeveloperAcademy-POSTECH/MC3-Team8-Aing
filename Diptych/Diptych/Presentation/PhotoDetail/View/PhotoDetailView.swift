@@ -62,6 +62,12 @@ struct PhotoDetailView: View {
                 Spacer()
             }
         }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                NavigationBackButton()
+            }
+        }
         .sheet(isPresented: $showCommentView) {
             if #available(iOS 16.4, *) {
                 CommentView()
@@ -74,14 +80,9 @@ struct PhotoDetailView: View {
                     .presentationDetents([.height(UIScreen.main.bounds.height - 120)])
                     .presentationDragIndicator(.visible)
             }
-            
         }
-    }//】 Body
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                NavigationBackButton()
-            }
+        .onAppear {
+            downloadImageWithCache()
         }
     }
 }
@@ -130,8 +131,9 @@ extension PhotoDetailView {
     }
 
     private var shareBoxButton: some View {
-        Image("icnShareBox")
+        ShareSheetView(image1: image1Image, image2: image2Image)
     }
+
 
     private var likeButton: some View {
         Image("imgWhiteHeart")
@@ -139,6 +141,9 @@ extension PhotoDetailView {
 
     private var commentButton: some View {
         Image("icnComment")
+            .onTapGesture {
+                showCommentView = true
+            }
     }
 
     private func photoIndexButton(for direction: PhotoIndexDirection) -> some View {
