@@ -1,6 +1,6 @@
 # 📹 Diptych
  
-<img width= 80% alt="screen" src="https://github.com/DeveloperAcademy-POSTECH/MC3-Team8-Aing/assets/108191001/5424d9c8-0ff8-41d7-a917-ab3bd30aafd1">
+<img width= 100% alt="screen" src="https://github.com/DeveloperAcademy-POSTECH/MC3-Team8-Aing/assets/108191001/5424d9c8-0ff8-41d7-a917-ab3bd30aafd1">
 
 </br>
 
